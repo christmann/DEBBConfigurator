@@ -1,0 +1,3 @@
+debb_config_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: DebbConfigBundle:Default:index }

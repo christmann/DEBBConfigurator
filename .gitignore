@@ -1,0 +1,34 @@
+web/bundles/
+app/bootstrap.php.cache
+app/cache/*
+app/logs/*
+build/
+vendor
+bin
+composer.phar
+
+#ignore thumbnails created by windows
+Thumbs.db
+
+# ignore symfony2 files
+/web/bundles
+/app/config/parameters.yml
+/app/bootstrap*
+/app/cache
+/app/logs
+/vendor
+/bin
+
+# ignore composer.phar
+composer.phar
+
+# IDE specific files & folder
+/.idea
+/nbproject
+*~
+sftp-config*.json
+*.sublime*
+
+# Upload and Cache folder
+web/cache
+web/media
