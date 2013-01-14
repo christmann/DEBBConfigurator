@@ -18,7 +18,9 @@
         "sensio/generator-bundle": "2.2.*",
         "jms/security-extra-bundle": "1.4.*",
         "jms/di-extra-bundle": "1.3.*",
-		"widop/plupload-bundle": "dev-master"
+		"widop/plupload-bundle": "dev-master",
+		"knplabs/knp-menu-bundle": "dev-master",
+		"localdev/admin-bundle": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [
@@ -41,5 +43,11 @@
     "extra": {
         "symfony-app-dir": "app",
         "symfony-web-dir": "web"
-    }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://satis.localdev.de"
+        }
+    ]
 }

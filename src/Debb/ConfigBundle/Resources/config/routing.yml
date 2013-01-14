@@ -4,6 +4,6 @@ homepage:
     requirements:
         _locale: en|de
 
-DebbConfigBundleStep:
+DebbConfigBundle:
     resource: "@DebbConfigBundle/Controller/"
     type:     annotation

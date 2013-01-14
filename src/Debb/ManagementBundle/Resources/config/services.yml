@@ -1,0 +1,7 @@
+parameters:
+#    debb_management.example.class: Debb\ManagementBundle\Example
+
+services:
+#    debb_management.example:
+#        class: %debb_management.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

@@ -35,27 +35,9 @@
 				<div class="clear"></div>
 
 				<div id="config-menu">
-					<ul>
-						{% block menu %}
-							<li>
-								<a class="first one" href="node_overview.html">{{ 'configure.%what%' | trans({'%what%': 'node' | trans}) }}</a>
-								<ul>
-									<li>
-										<a class="current" href="node_overview.html">{{ 'overview' | trans }}</a>
-									</li>
-									<li>
-										<a href="node_add.html">{{ 'create.%what%' | trans({'%what%': 'node' | trans}) }}</a>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<a class="first two" href="node-group_overview.html">{{ 'define.%what%' | trans({'%what%': 'node.group' | trans}) }}</a>
-							</li>
-							<li>
-								<a class="first three" href="#">{{ 'equip.%what%' | trans({'%what%': 'rack' | trans}) }}</a>
-							</li>
-						{% endblock %}
-					</ul>
+					{% block menu %}
+						{{ knp_menu_render('main') }}
+					{% endblock %}
 				</div>
 
 				<div id="content">

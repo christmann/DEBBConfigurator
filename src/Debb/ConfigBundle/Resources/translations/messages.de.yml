@@ -9,3 +9,4 @@ node: Knoten
 node.group: Knotengruppe
 overview: Übersicht
 rack: Rack
+management: Verwaltung

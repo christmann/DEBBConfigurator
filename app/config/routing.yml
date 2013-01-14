@@ -1,2 +1,5 @@
 DebbConfigBundle:
     resource: "@DebbConfigBundle/Resources/config/routing.yml"
+
+DebbManagementBundle:
+    resource: "@DebbManagementBundle/Resources/config/routing.yml"

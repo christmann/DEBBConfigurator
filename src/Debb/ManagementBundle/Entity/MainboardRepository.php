@@ -1,6 +1,6 @@
 <?php
 
-namespace Debb\ConfigBundle\Entity;
+namespace Debb\ManagementBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 

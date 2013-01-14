@@ -1,6 +1,6 @@
 <?php
 
-namespace Debb\ConfigBundle\Entity;
+namespace Debb\ManagementBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Processor
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Debb\ConfigBundle\Entity\ProcessorRepository")
+ * @ORM\Entity(repositoryClass="Debb\ManagementBundle\Entity\ProcessorRepository")
  */
 class Processor
 {
