@@ -1,5 +1,5 @@
 {
-    "hash": "c39ee10f1f975cf5833e4646640ed619",
+    "hash": "a47c89e3fdf92a7ebf31cd1d8566722d",
     "packages": [
         {
             "name": "doctrine/common",
@@ -1448,6 +1448,90 @@
             "keywords": [
                 "templating"
             ]
+        },
+        {
+            "name": "widop/plupload-bundle",
+            "version": "dev-master",
+            "target-dir": "Widop/PluploadBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/widop/WidopPluploadBundle",
+                "reference": "2878f71ceb6ef65cc92993b8755acc669a4d2dad"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/widop/WidopPluploadBundle/archive/2878f71ceb6ef65cc92993b8755acc669a4d2dad.zip",
+                "reference": "2878f71ceb6ef65cc92993b8755acc669a4d2dad",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/framework-bundle": "2.*",
+                "willdurand/expose-translation-bundle": "dev-master"
+            },
+            "time": "2012-09-17 12:28:56",
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-0": {
+                    "Widop\\PluploadBundle": ""
+                }
+            },
+            "notification-url": "http://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Widop",
+                    "email": "contact@widop.com"
+                }
+            ],
+            "description": "Provides a Plupload integration for your Symfony2 project.",
+            "keywords": [
+                "plupload"
+            ]
+        },
+        {
+            "name": "willdurand/expose-translation-bundle",
+            "version": "dev-master",
+            "target-dir": "Bazinga/ExposeTranslationBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/willdurand/BazingaExposeTranslationBundle",
+                "reference": "e8f5a65a5db8147b0e183c54c181f02d4891fb4f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/willdurand/BazingaExposeTranslationBundle/archive/e8f5a65a5db8147b0e183c54c181f02d4891fb4f.zip",
+                "reference": "e8f5a65a5db8147b0e183c54c181f02d4891fb4f",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/framework-bundle": ">=2.0,<2.3-dev",
+                "symfony/finder": ">=2.0,<2.3-dev"
+            },
+            "time": "2013-01-09 17:45:33",
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-0": {
+                    "Bazinga\\ExposeTranslationBundle": ""
+                }
+            },
+            "notification-url": "http://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "William Durand",
+                    "email": "william.durand1@gmail.com",
+                    "homepage": "http://www.willdurand.fr"
+                }
+            ],
+            "description": "A pretty nice way to expose your translation messages to your JavaScript.",
+            "keywords": [
+                "translation",
+                "javascript"
+            ]
         }
     ],
     "packages-dev": null,
@@ -1455,7 +1539,7 @@
 
     ],
     "minimum-stability": "dev",
-    "stability-flags": [
-
-    ]
+    "stability-flags": {
+        "widop/plupload-bundle": 20
+    }
 }
