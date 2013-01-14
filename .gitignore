@@ -32,3 +32,5 @@ sftp-config*.json
 # Upload and Cache folder
 web/cache
 web/media
+web/css/*
+web/js/*

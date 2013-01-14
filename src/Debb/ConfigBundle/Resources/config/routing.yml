@@ -1,3 +1,9 @@
-debb_config_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: DebbConfigBundle:Default:index }
+homepage:
+    pattern:  /{_locale}
+    defaults: { _controller: DebbConfigBundle:Step:first, _locale: en }
+    requirements:
+        _locale: en|de
+
+DebbConfigBundleStep:
+    resource: "@DebbConfigBundle/Controller/"
+    type:     annotation

@@ -1,4 +1,2 @@
-debb_config:
+DebbConfigBundle:
     resource: "@DebbConfigBundle/Resources/config/routing.yml"
-    prefix:   /
-

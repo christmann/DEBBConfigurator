@@ -1,0 +1,11 @@
+page.title: DEBB Konfigurator
+page.description: DEBB konfigurieren
+page.keywords: debb, konfigurator
+create.%what%: %what% erstellen
+configure.%what%: %what% konfigurieren
+define.%what%: %what% definieren
+equip.%what%: %what% ausstatten
+node: Knoten
+node.group: Knotengruppe
+overview: Übersicht
+rack: Rack

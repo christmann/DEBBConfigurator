@@ -1,0 +1,11 @@
+page.title: DEBB Configurator
+page.description: Configure DEBB
+page.keywords: debb, configurator
+create.%what%: Create %what%
+configure.%what%: Configure %what%
+define.%what%: Define %what%
+equip.%what%: Equip %what%
+node: node
+node.group: node group
+overview: Overview
+rack: rack
