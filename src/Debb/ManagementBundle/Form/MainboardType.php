@@ -11,6 +11,9 @@ class MainboardType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('manufacturer')
+            ->add('product')
+            ->add('model')
             ->add('description')
             ->add('socket')
             ->add('connections')
