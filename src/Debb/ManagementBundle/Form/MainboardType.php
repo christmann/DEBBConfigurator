@@ -1,6 +1,6 @@
 <?php
 
-namespace Debb\ConfigBundle\Form;
+namespace Debb\ManagementBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,12 +20,12 @@ class MainboardType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Debb\ConfigBundle\Entity\Mainboard'
+            'data_class' => 'Debb\ManagementBundle\Entity\Mainboard'
         ));
     }
 
     public function getName()
     {
-        return 'debb_configbundle_mainboardtype';
+        return 'debb_managementbundle_mainboardtype';
     }
 }

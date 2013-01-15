@@ -10,3 +10,5 @@ node.group: Knotengruppe
 overview: Übersicht
 rack: Rack
 management: Verwaltung
+processor: Prozessor
+mainboard: Mainboard

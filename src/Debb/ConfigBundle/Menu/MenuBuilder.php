@@ -37,9 +37,11 @@ class MenuBuilder
 		$node = $menu->addChild($this->translateIt('management'), array(
 			'uri' => '#',
 			'displayChildren' => true,
-			'linkAttributes' => array('onclick' => '$(this).parent().find(".menu_level_1").toggle(); return false;')
+			'linkAttributes' => array('onclick' => '$(this).parent().find(".menu_level_1").toggle(); return false;'),
+			'attributes' => array('class' => 'current')
 			));
 		$node->addChild($this->translateIt('processor'), array('route' => 'debb_management_processor_index', 'attributes' => array('noclass' => true)));
+		$node->addChild($this->translateIt('mainboard'), array('route' => 'debb_management_mainboard_index', 'attributes' => array('noclass' => true)));
 
 		$node = $menu->addChild($this->translateIt('configure.%what%', array('%what%' => 'node')), array('route' => 'homepage', 'attributes' => array('class' => 'one first')));
 		$node->addChild($this->translateIt('overview'), array('uri' => 'homepage', 'attributes' => array('noclass' => true)));
