@@ -36,7 +36,7 @@ class Processor extends Base
     /**
      * @var string
      *
-     * @ORM\Column(name="picture", type="string", length=255)
+	 * @ORM\ManyToOne(targetEntity="Mainboard", cascade={"all"})
      */
     private $picture;
 

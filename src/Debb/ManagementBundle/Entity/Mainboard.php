@@ -102,5 +102,5 @@ class Mainboard extends Base
     public function getConnections()
     {
         return $this->connections;
-    }
+	}
 }

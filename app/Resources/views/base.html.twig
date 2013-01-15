@@ -16,12 +16,29 @@
 				<link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
 			{% endstylesheets %}
 		{% endblock %}
+		{% block javascripts %}
+			{% javascripts
+				'@DebbConfigBundle/Resources/public/js/jquery.min.js'
+				'@DebbConfigBundle/Resources/public/js/bootstrap.min.js'
+			%}
+				<script src="{{ asset_url }}" type="text/javascript"></script>
+			{% endjavascripts %}
+		{% endblock %}
 	</head>
 	<body>
 		<div id="wrapper">
 			<div id="main-menu">
 				<div id="app-logo"></div>
 			</div>
+
+			{% if showTitle is defined %}
+				<div class="pageTitle">
+					<div class="pageTitleText">{% block title %}{% endblock %}</div>
+					<div class="pageTitleFooter"></div>
+				</div>
+			{% else %}
+				<div class="pageTitleEmpty"></div>
+			{% endif %}
 
 			<div class="clear"></div>
 
@@ -32,19 +49,11 @@
 			</div>
 
 			<div id="content">
-				{% block body %}{% endblock %}
+				{% block body %}{% block content %}{% endblock %}{% endblock %}
 			</div>
 
 			<div class="clear"></div>
 
 		</div>
-		{% block javascripts %}
-			{% javascripts
-				'@DebbConfigBundle/Resources/public/js/jquery.min.js'
-				'@DebbConfigBundle/Resources/public/js/bootstrap.min.js'
-			%}
-				<script src="{{ asset_url }}" type="text/javascript"></script>
-			{% endjavascripts %}
-		{% endblock %}
 	</body>
 </html>

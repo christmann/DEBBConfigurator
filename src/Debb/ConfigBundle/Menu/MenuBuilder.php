@@ -37,7 +37,7 @@ class MenuBuilder
 		$node = $menu->addChild($this->translateIt('management'), array(
 			'uri' => '#',
 			'displayChildren' => true,
-			'linkAttributes' => array('onclick' => '$(this).parent().find(".menu_level_1").toggle(); return false;'),
+			'linkAttributes' => array('onclick' => '$(this).next().toggle(); return false;'),
 			'attributes' => array('class' => 'current')
 			));
 		$node->addChild($this->translateIt('processor'), array('route' => 'debb_management_processor_index', 'attributes' => array('noclass' => true)));

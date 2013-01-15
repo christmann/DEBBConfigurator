@@ -441,10 +441,55 @@ table tr td
 	clear: both;	
 }
 
-.current + ul {
-	display: block !important;
+.current + .menu_level_1 {
+	display: block;
 }
 
 .menu_level_1 {
 	display: none;
+}
+
+.pageTitleEmpty {
+	height: 44px;
+	position: relative;
+	width: 242px;
+}
+
+.pageTitle {
+	height: 44px;
+	position: relative;
+	border-width: 0px 1px 1px;
+	border-style: none solid solid;
+	border-color: rgb(222, 222, 222);
+	-moz-border-top-colors: none;
+	-moz-border-right-colors: none;
+	-moz-border-bottom-colors: none;
+	-moz-border-left-colors: none;
+	border-image: none;
+	top: 1px;
+	padding-bottom: 0px;
+	background-color: rgb(255, 255, 255);
+	padding-top: 0px;
+	width: 242px;
+	color: rgb(58, 112, 146);
+	left: 231px;
+}
+
+.pageTitleText {
+	position: relative;
+	left: 22px;
+	top: -7px;
+	font-size: 12px;
+}
+
+.pageTitleFooter {
+	position: relative;
+	left: 0px;
+	background-color: rgb(202, 219, 229);
+	padding-top: 0px;
+	padding-bottom: 0px;
+	margin-bottom: 0px;
+	margin-top: 0px;
+	height: 6px;
+	width: 242px;
 }

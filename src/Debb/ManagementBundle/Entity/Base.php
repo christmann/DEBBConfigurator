@@ -120,4 +120,19 @@ class Base
     {
         return $this->model;
     }
+
+	/**
+	 * Returns the name of the product
+	 * 
+	 * @return string the name of the product
+	 */
+	public function __toString()
+	{
+		return $this->getName();
+	}
+
+	public function getName()
+	{
+		return $this->getProduct() . ' - ' . $this->getModel();
+	}
 }
