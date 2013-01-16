@@ -10,38 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity
  */
-class Node
+class Node extends \Debb\ManagementBundle\Entity\Base
 {
-
-	/**
-	 * @var integer
-	 *
-	 * @ORM\Column(name="id", type="integer")
-	 * @ORM\Id
-	 * @ORM\GeneratedValue(strategy="AUTO")
-	 */
-	private $id;
-
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="title", type="string", length=255)
-	 */
-	private $title;
-
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="manufacturer", type="string", length=255)
-	 */
-	private $manufacturer;
-
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="product", type="string", length=255)
-	 */
-	private $product;
 
 	/**
 	 * @var integer
@@ -56,85 +26,6 @@ class Node
 	 * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\Component", mappedBy="node")
 	 */
 	private $components;
-
-	/**
-	 * Get id
-	 *
-	 * @return integer 
-	 */
-	public function getId()
-	{
-		return $this->id;
-	}
-
-	/**
-	 * Set title
-	 *
-	 * @param string $title
-	 * @return Node
-	 */
-	public function setTitle($title)
-	{
-		$this->title = $title;
-
-		return $this;
-	}
-
-	/**
-	 * Get title
-	 *
-	 * @return string 
-	 */
-	public function getTitle()
-	{
-		return $this->title;
-	}
-
-	/**
-	 * Set manufacturer
-	 *
-	 * @param string $manufacturer
-	 * @return Node
-	 */
-	public function setManufacturer($manufacturer)
-	{
-		$this->manufacturer = $manufacturer;
-
-		return $this;
-	}
-
-	/**
-	 * Get manufacturer
-	 *
-	 * @return string 
-	 */
-	public function getManufacturer()
-	{
-		return $this->manufacturer;
-	}
-
-	/**
-	 * Set product
-	 *
-	 * @param string $product
-	 * @return Node
-	 */
-	public function setProduct($product)
-	{
-		$this->product = $product;
-
-		return $this;
-	}
-
-	/**
-	 * Get product
-	 *
-	 * @return string 
-	 */
-	public function getProduct()
-	{
-		return $this->product;
-	}
 
 	/**
 	 * Set mainboard
