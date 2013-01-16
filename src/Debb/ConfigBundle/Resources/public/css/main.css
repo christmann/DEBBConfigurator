@@ -16,13 +16,16 @@ body
 	width: 1200px;	
 }
 
-
 #content
 {
 	float: left;
-	width: 942px;
-	margin-top: 40px;
-	padding: 0px 0px 0px 30px;
+	width: 921px;
+	margin-top: 30px;
+	margin-bottom: 50px;
+	padding: 28px 22px 0 22px;
+	color: #555;
+	border: 1px solid #DDD;
+	background: none repeat scroll 0 0 #FFFFFF;
 }
 
 h5
@@ -125,7 +128,7 @@ table tr td
 	width: 180px;
 	margin-right: 20px;
 	margin-left: 18px;
-	margin-top: 50px;
+	margin-top: 30px;
 }
 
 #config-menu ul
@@ -472,7 +475,7 @@ table tr td
 	padding-top: 0px;
 	width: 242px;
 	color: rgb(58, 112, 146);
-	left: 231px;
+	left: 218px;
 }
 
 .pageTitleText {

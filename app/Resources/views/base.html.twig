@@ -49,6 +49,17 @@
 			</div>
 
 			<div id="content">
+				{% block flashes %}
+					{% for key, flash in app.session.getFlashes() %}
+						<div class="{{ key }}">
+							{% if flash | trans({}, 'crud') != flash %}
+								{{ flash | trans({}, 'crud') }}
+							{% else %}
+								{{ flash | trans({}) }}
+							{% endif %}
+						</div>
+					{% endfor %}
+				{% endblock %}
 				{% block body %}{% block content %}{% endblock %}{% endblock %}
 			</div>
 

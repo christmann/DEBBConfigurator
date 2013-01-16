@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new Debb\ConfigBundle\DebbConfigBundle(),
 			new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Debb\ManagementBundle\DebbManagementBundle(),
+			new Localdev\FrameworkExtraBundle\LocaldevFrameworkExtraBundle(),
 			new Localdev\AdminBundle\LocaldevAdminBundle(),
 			new CIM\PluploadBundle\CIMPluploadBundle(),
 			new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
