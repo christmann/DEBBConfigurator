@@ -12,3 +12,16 @@ rack: Rack
 management: Verwaltung
 processor: Prozessor
 mainboard: Mainboard
+
+# form fields which not defined above
+Product: Produkt
+Title: Titel
+Manufacturer: Hersteller
+Components: Komponenten
+Model: Model
+Cores: Cores
+Maxfrequency: max. Frequenz
+Image: Bild
+Description: Beschreibung
+Socket: Sockel
+Connections: Verbindungen

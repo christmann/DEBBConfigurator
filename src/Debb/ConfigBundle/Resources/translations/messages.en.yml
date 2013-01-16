@@ -12,3 +12,16 @@ rack: rack
 management: Management
 processor: Processor
 mainboard: Mainboard
+
+# form fields which not defined above
+Product: Product
+Title: Title
+Manufacturer: Manufacturer
+Components: Components
+Model: Model
+Cores: Cores
+Maxfrequency: Max frequency
+Image: Image
+Description: Description
+Socket: Socket
+Connections: Connections

@@ -53,7 +53,7 @@ class Node
 	/**
 	 * @var array
 	 *
-	 * @ORM\Column(name="components", type="array")
+	 * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\Component", mappedBy="node")
 	 */
 	private $components;
 
@@ -160,29 +160,6 @@ class Node
 	}
 
 	/**
-	 * Set components
-	 *
-	 * @param array $components
-	 * @return Node
-	 */
-	public function setComponents($components)
-	{
-		$this->components = $components;
-
-		return $this;
-	}
-
-	/**
-	 * Get components
-	 *
-	 * @return array 
-	 */
-	public function getComponents()
-	{
-		return $this->components;
-	}
-
-	/**
 	 * Returns the name of this node for the table view or selections
 	 * 
 	 * @return string the name of this node
@@ -192,4 +169,63 @@ class Node
 		return '[' . $this->getId() . '] ' . $this->getTitle();
 	}
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->components = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add components
+     *
+     * @param \Debb\ManagementBundle\Entity\Component $components
+     * @return Node
+     */
+    public function addComponent(\Debb\ManagementBundle\Entity\Component $component)
+    {
+		$component->setNode($this);
+        $this->components[] = $component;
+    
+        return $this;
+    }
+    
+    /**
+     * Set components
+     *
+     * @param \Debb\ManagementBundle\Entity\Component[] $components
+     * @return Node
+     */
+    public function setComponents($components)
+    {
+        $this->components[] = $components;
+
+		foreach($this->components as $component)
+		{
+			$component->setNode($this);
+		}
+    
+        return $this;
+    }
+
+    /**
+     * Remove components
+     *
+     * @param \Debb\ManagementBundle\Entity\Component $components
+     */
+    public function removeComponent(\Debb\ManagementBundle\Entity\Component $components)
+    {
+        $this->components->removeElement($components);
+    }
+
+    /**
+     * Get components
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getComponents()
+    {
+        return $this->components;
+    }
 }
