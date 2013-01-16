@@ -17,7 +17,7 @@ class ProcessorType extends AbstractType
             ->add('title')
             ->add('cores')
             ->add('maxFrequency')
-            ->add('picture')
+            ->add('image', 'plupload')
         ;
     }
 

@@ -34,11 +34,11 @@ class Processor extends Base
     private $maxFrequency;
 
     /**
-     * @var string
+     * @var Image
      *
-	 * @ORM\ManyToOne(targetEntity="Mainboard", cascade={"all"})
+	 * @ORM\ManyToOne(targetEntity="File", cascade={"all"})
      */
-    private $picture;
+    private $image;
 
 
     /**
@@ -111,25 +111,25 @@ class Processor extends Base
     }
 
     /**
-     * Set picture
+     * Set image
      *
-     * @param string $picture
+     * @param \Debb\ManagementBundle\Entity\File $image
      * @return Processor
      */
-    public function setPicture($picture)
+    public function setImage(\Debb\ManagementBundle\Entity\File $image = null)
     {
-        $this->picture = $picture;
+        $this->image = $image;
     
         return $this;
     }
 
     /**
-     * Get picture
+     * Get image
      *
-     * @return string 
+     * @return \Debb\ManagementBundle\Entity\File 
      */
-    public function getPicture()
+    public function getImage()
     {
-        return $this->picture;
+        return $this->image;
     }
 }

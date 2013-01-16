@@ -24,6 +24,7 @@ class AppKernel extends Kernel
             new Debb\ManagementBundle\DebbManagementBundle(),
 			new Localdev\AdminBundle\LocaldevAdminBundle(),
 			new CIM\PluploadBundle\CIMPluploadBundle(),
+			new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

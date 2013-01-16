@@ -64,3 +64,15 @@ swiftmailer:
 knp_menu:
     twig:
         template: DebbConfigBundle:Menu:knp_menu.html.twig
+
+cim_plupload:
+    entity: Debb\ManagementBundle\Entity\File
+
+avalanche_imagine:
+    web_root: %kernel.root_dir%/../web
+    cache_prefix: cache
+    driver: gd
+    filters:
+        admin_thumb:
+            type: thumbnail
+            options: { size: [150, 150], mode: inset }

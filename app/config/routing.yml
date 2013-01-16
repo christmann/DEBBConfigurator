@@ -3,3 +3,12 @@ DebbConfigBundle:
 
 DebbManagementBundle:
     resource: "@DebbManagementBundle/Resources/config/routing.yml"
+
+CIMPluploadBundle:
+    resource: "@CIMPluploadBundle/Controller/"
+    type:     annotation
+    prefix:   /plupload
+
+_imagine:
+    resource: .
+    type: imagine
