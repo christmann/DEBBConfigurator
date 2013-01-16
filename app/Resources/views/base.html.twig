@@ -33,7 +33,7 @@
 
 			{% if showTitle is defined %}
 				<div class="pageTitle">
-					<div class="pageTitleText">{% block title %}{% endblock %}</div>
+					<div class="pageTitleText"><br />{% block title %}{% endblock %}</div>
 					<div class="pageTitleFooter"></div>
 				</div>
 			{% else %}
@@ -48,19 +48,26 @@
 				{% endblock %}
 			</div>
 
-			<div id="content">
-				{% block flashes %}
-					{% for key, flash in app.session.getFlashes() %}
-						<div class="{{ key }}">
-							{% if flash | trans({}, 'crud') != flash %}
-								{{ flash | trans({}, 'crud') }}
-							{% else %}
-								{{ flash | trans({}) }}
-							{% endif %}
-						</div>
-					{% endfor %}
-				{% endblock %}
-				{% block body %}{% block content %}{% endblock %}{% endblock %}
+			<div style="float: left;">
+				<div id="content">
+					{% block flashes %}
+						{% for key, flash in app.session.getFlashes() %}
+							<div class="{{ key }}">
+								{% if flash | trans({}, 'crud') != flash %}
+									{{ flash | trans({}, 'crud') }}
+								{% else %}
+									{{ flash | trans({}) }}
+								{% endif %}
+							</div>
+						{% endfor %}
+					{% endblock %}
+					{% block body %}{% block content %}{% endblock %}{% endblock %}
+				</div>
+
+				<div class="buttonbar pull-right">
+					{# Example Button: <button class="button">Test</button> --- extra class: buttonBlue / buttonWhite#}
+					{% block buttonbar %}{% endblock %}
+				</div>
 			</div>
 
 			<div class="clear"></div>

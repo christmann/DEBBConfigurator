@@ -18,14 +18,40 @@ body
 
 #content
 {
-	float: left;
 	width: 921px;
 	margin-top: 30px;
-	margin-bottom: 50px;
 	padding: 28px 22px 28px 22px;
 	color: #555;
 	border: 1px solid #DDD;
 	background: none repeat scroll 0 0 #FFFFFF;
+}
+
+.buttonbar {
+	margin-bottom: 50px;
+	margin-top: 15px;
+	color: #C2D1D8;
+	position: relative;
+}
+
+.buttonbar .button {
+	float: right;
+	margin-left: 8px;
+	padding-left: 8px;
+	padding-right: 8px;
+}
+
+.buttonbar .buttonBlue {
+	display: block;
+	height: 28px;
+	border: 1px solid #36718F;
+	background-color: #487B98;
+}
+
+.buttonbar .buttonWhite {
+	display: block;
+	height: 28px;
+	border: 1px solid #36718F;
+	background-color: #487B98;
 }
 
 h5
@@ -445,6 +471,10 @@ table tr td
 }
 
 .current + .menu_level_1 {
+	display: block;
+}
+
+.current_ancestor + .menu_level_1 {
 	display: block;
 }
 
