@@ -43,9 +43,9 @@ class MenuBuilder
 		$node->addChild($this->translateIt('processor'), array('route' => 'debb_management_processor_index', 'attributes' => array('noclass' => true)));
 		$node->addChild($this->translateIt('mainboard'), array('route' => 'debb_management_mainboard_index', 'attributes' => array('noclass' => true)));
 
-		$node = $menu->addChild($this->translateIt('configure.%what%', array('%what%' => 'node')), array('route' => 'homepage', 'attributes' => array('class' => 'one first')));
-		$node->addChild($this->translateIt('overview'), array('uri' => 'homepage', 'attributes' => array('noclass' => true)));
-		$node->addChild($this->translateIt('create.%what%', array('%what%' => 'node')), array('uri' => 'homepage', 'attributes' => array('noclass' => true)));
+		$node = $menu->addChild($this->translateIt('configure.%what%', array('%what%' => 'node')), array('route' => 'debb_config_node_index', 'attributes' => array('class' => 'one first')));
+		$node->addChild($this->translateIt('overview'), array('route' => 'debb_config_node_index', 'attributes' => array('noclass' => true)));
+		$node->addChild($this->translateIt('create.%what%', array('%what%' => 'node')), array('route' => 'debb_config_node_form', 'attributes' => array('noclass' => true)));
 
 		$menu->addChild($this->translateIt('define.%what%', array('%what%' => 'node.group')), array('route' => 'homepage', 'attributes' => array('class' => 'two first')));
 

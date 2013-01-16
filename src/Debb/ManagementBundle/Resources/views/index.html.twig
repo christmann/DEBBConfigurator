@@ -3,18 +3,6 @@
 {% block title %}{{ localdev_admin_name(true) }}{% endblock %}
 
 {% block content %}
-	{% block index_header %}
-		<div class="row{{ localdev_admin.layout.fluid }}">
-			<div class="span12">
-				<div class="btn-group">
-					{% block buttons %}
-						<a href="{{ path(localdev_admin_route("_form")) }}"
-						   class="btn btn-primary">{{ 'localdev_admin.actions.add' | trans({"%name%":localdev_admin_name()}, 'crud') }}</a>
-					{% endblock %}
-				</div>
-			</div>
-		</div>
-	{% endblock %}
 	{% block index_table %}
 		<table class="table table-striped">
 			<thead>
@@ -75,8 +63,10 @@
 				{% endfor %}
 			</tbody>
 		</table>
-		<div class="btn-group">
-			{{ block('buttons') }}
-		</div>
 	{% endblock %}
+{% endblock %}
+
+{% block buttonbar %}
+	<a href="{{ path(localdev_admin_route("_form")) }}"
+	   class="button btn btn-primary">{{ 'localdev_admin.actions.add' | trans({"%name%":localdev_admin_name()}, 'crud') }}</a>
 {% endblock %}
