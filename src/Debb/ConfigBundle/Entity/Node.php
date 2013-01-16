@@ -182,9 +182,14 @@ class Node
 		return $this->components;
 	}
 
+	/**
+	 * Returns the name of this node for the table view or selections
+	 * 
+	 * @return string the name of this node
+	 */
 	public function __toString()
 	{
-		return '[' . $this->getId() . '] ' . $this->getProduct();
+		return '[' . $this->getId() . '] ' . $this->getTitle();
 	}
 
 }

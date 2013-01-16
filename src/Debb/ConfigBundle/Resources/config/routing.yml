@@ -1,6 +1,6 @@
 homepage:
     pattern:  /{_locale}
-    defaults: { _controller: DebbConfigBundle:Step:first, _locale: en }
+    defaults: { _controller: DebbConfigBundle:Default:debb, _locale: en }
     requirements:
         _locale: en|de
 
