@@ -11,5 +11,18 @@ use Localdev\AdminBundle\Controller\CRUDController;
  */
 class MainboardController extends CRUDController
 {
-	
+	/**
+	 * Displays the mainboard image from mainboard with id
+	 *
+	 * @Route("/get/image/{id}")
+	 * @return \Symfony\Component\HttpFoundation\Response
+	 */
+    public function getImageAction()
+    {
+		$mainboard = $this->getEntity($id);
+
+		return $this->jsonResponse(array(
+//			'path' => $mainboard->getFile
+		));
+    }
 }

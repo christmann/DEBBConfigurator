@@ -11,16 +11,5 @@ use Localdev\AdminBundle\Controller\CRUDController;
  */
 class NodeController extends CRUDController
 {
-	/**
-	 * Shows step - 1 - of configuration.
-	 * Configure the node.
-	 *
-	 * @Route("/overview")
-	 * @Template()
-	 * @return array the twig render array
-	 */
-//    public function firstAction()
-//    {
-//		return array();
-//    }
+
 }
