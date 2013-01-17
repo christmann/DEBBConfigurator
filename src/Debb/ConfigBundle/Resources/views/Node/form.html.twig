@@ -41,23 +41,59 @@
 			</div>
 			<div style="width: 100%; border-bottom: 1px dashed #DFDFDF; height: 1px;"></div>
 
+			{% autoescape false %}{% set componentPrototype = form_row(form.components.vars.prototype) %}{% endautoescape %}
+
 			<div class="row-fluid">
 				<div class="span6">
-					<div class="componentBox" style="border-left: 1px solid #DFDFDF; padding-left: 5px;" data-prototype="{{ form_row(form.components.vars.prototype) | escape }}">
-						{% for component in form.components %}
+					<div class="componentBox" style="border-left: 1px solid #DFDFDF; padding-left: 5px;" data-prototype="{{ componentPrototype | escape }}">
+						{% set processorSet = false %}
+						{% set coolingDeviceSet = false %}
+						{% set powerSupplySet = false %}
+						{% set memorySet = false %}
+						{% set lastId = 0 %}
+
+						{% for component in form.components if component.vars.data.type != component_type('STORAGE') %}
+							{% if component.vars.data.type == component_type('PROCESSOR') %}{% set processorSet = true %}{% endif %}
+							{% if component.vars.data.type == component_type('COOLING_DEVICE') %}{% set coolingDeviceSet = true %}{% endif %}
+							{% if component.vars.data.type == component_type('POWER_SUPPLY') %}{% set powerSupplySet = true %}{% endif %}
+							{% if component.vars.data.type == component_type('MEMORY') %}{% set memorySet = true %}{% endif %}
 							<div class="component">
 								{{ form_widget(component) }}
 							</div>
+							{% set lastId = loop.index %}
 						{% endfor %}
+
+						{% autoescape false %}
+							{% if processorSet == false %}
+								<div class="component">{{ componentPrototype | replace({'__name__': plus_it(lastId)}) }}</div>
+							{% endif %}
+							{% if coolingDeviceSet == false %}
+								<div class="component">{{ componentPrototype | replace({'__name__': plus_it(lastId)}) }}</div>
+							{% endif %}
+							{% if powerSupplySet == false %}
+								<div class="component">{{ componentPrototype | replace({'__name__': plus_it(lastId)}) }}</div>
+							{% endif %}
+							{% if memorySet == false %}
+								<div class="component">{{ componentPrototype | replace({'__name__': plus_it(lastId)}) }}</div>
+							{% endif %}
+						{% endautoescape %}
 					</div>
 				</div>
 				<div class="span6">
-					<div class="componentBox" data-prototype="{{ form_row(form.components.vars.prototype) | escape }}">
-						{% for component in form.components if component.vars.data.type == 3 %}
+					<div class="componentBoxHdds" data-prototype="{{ form_row(form.components.vars.prototype) | escape }}">
+						{% set hddSet = false %}
+						{% for component in form.components if component.vars.data.type == component_type('STORAGE') %}
+							{% set hddSet = true %}
 							<div class="component">
 								{{ form_widget(component) }}
 							</div>
+							{{ plus_it(lastId) }}
 						{% endfor %}
+						{% autoescape false %}
+							{% if hddSet == false %}
+								<div class="component">{{ componentPrototype | replace({'__name__': plus_it(lastId)}) }}</div>
+							{% endif %}
+						{% endautoescape %}
 					</div>
 				</div>
 			</div>

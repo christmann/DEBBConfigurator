@@ -14,3 +14,8 @@ services:
         scope: request
         tags:
             - { name: knp_menu.menu, alias: main }
+
+    debbconfig.twig.configbundle_extension:
+        class: Debb\ConfigBundle\Twig\Extension
+        tags:
+            - { name: twig.extension }
