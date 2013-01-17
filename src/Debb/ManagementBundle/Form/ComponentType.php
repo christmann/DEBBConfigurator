@@ -8,7 +8,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ComponentType extends AbstractType
 {
-
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder
@@ -16,6 +15,10 @@ class ComponentType extends AbstractType
 			->add('node', null, array('required' => false))
 			->add('processor', null, array('required' => false))
 			->add('mainboard', null, array('required' => false))
+			->add('coolingDevice', null, array('required' => false))
+			->add('memory', null, array('required' => false))
+			->add('powersupply', null, array('required' => false))
+			->add('storage', null, array('required' => false))
 		;
 	}
 
@@ -30,5 +33,4 @@ class ComponentType extends AbstractType
 	{
 		return 'debb_managementbundle_componenttype';
 	}
-
 }

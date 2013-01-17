@@ -33,6 +33,34 @@ class Component
 	 */
 	const TYPE_PROCESSOR = 2;
 
+	/**
+	 * [Type] Cooling Device
+	 *
+	 * @var int
+	 */
+	const TYPE_COOLING_DEVICE = 3;
+
+	/**
+	 * [Type] Memory
+	 *
+	 * @var int
+	 */
+	const TYPE_MEMORY = 4;
+
+	/**
+	 * [Type] Power Supply
+	 *
+	 * @var int
+	 */
+	const TYPE_POWER_SUPPLY = 5;
+
+	/**
+	 * [Type] Storage
+	 *
+	 * @var int
+	 */
+	const TYPE_STORAGE = 6;
+
     /**
      * @var integer
      *
@@ -69,6 +97,34 @@ class Component
 	 * @ORM\ManyToOne(targetEntity="Mainboard")
 	 */
 	private $mainboard;
+
+	/**
+	 * @var Debb\ManagementBundle\Entity\CoolingDevice
+	 * 
+	 * @ORM\ManyToOne(targetEntity="CoolingDevice")
+	 */
+	private $coolingDevice;
+
+	/**
+	 * @var Debb\ManagementBundle\Entity\Memory
+	 * 
+	 * @ORM\ManyToOne(targetEntity="Memory")
+	 */
+	private $memory;
+
+	/**
+	 * @var Debb\ManagementBundle\Entity\PowerSupply
+	 * 
+	 * @ORM\ManyToOne(targetEntity="PowerSupply")
+	 */
+	private $powersupply;
+
+	/**
+	 * @var Debb\ManagementBundle\Entity\Storage
+	 * 
+	 * @ORM\ManyToOne(targetEntity="Storage")
+	 */
+	private $storage;
 
     /**
      * Get id
@@ -170,5 +226,97 @@ class Component
     public function getMainboard()
     {
         return $this->mainboard;
+    }
+
+    /**
+     * Set coolingDevice
+     *
+     * @param \Debb\ManagementBundle\Entity\CoolingDevice $coolingDevice
+     * @return Component
+     */
+    public function setCoolingDevice(\Debb\ManagementBundle\Entity\CoolingDevice $coolingDevice = null)
+    {
+        $this->coolingDevice = $coolingDevice;
+    
+        return $this;
+    }
+
+    /**
+     * Get coolingDevice
+     *
+     * @return \Debb\ManagementBundle\Entity\CoolingDevice 
+     */
+    public function getCoolingDevice()
+    {
+        return $this->coolingDevice;
+    }
+
+    /**
+     * Set memory
+     *
+     * @param \Debb\ManagementBundle\Entity\Memory $memory
+     * @return Component
+     */
+    public function setMemory(\Debb\ManagementBundle\Entity\Memory $memory = null)
+    {
+        $this->memory = $memory;
+    
+        return $this;
+    }
+
+    /**
+     * Get memory
+     *
+     * @return \Debb\ManagementBundle\Entity\Memory 
+     */
+    public function getMemory()
+    {
+        return $this->memory;
+    }
+
+    /**
+     * Set powersupply
+     *
+     * @param \Debb\ManagementBundle\Entity\PowerSupply $powersupply
+     * @return Component
+     */
+    public function setPowersupply(\Debb\ManagementBundle\Entity\PowerSupply $powersupply = null)
+    {
+        $this->powersupply = $powersupply;
+    
+        return $this;
+    }
+
+    /**
+     * Get powersupply
+     *
+     * @return \Debb\ManagementBundle\Entity\PowerSupply 
+     */
+    public function getPowersupply()
+    {
+        return $this->powersupply;
+    }
+
+    /**
+     * Set storage
+     *
+     * @param \Debb\ManagementBundle\Entity\Storage $storage
+     * @return Component
+     */
+    public function setStorage(\Debb\ManagementBundle\Entity\Storage $storage = null)
+    {
+        $this->storage = $storage;
+    
+        return $this;
+    }
+
+    /**
+     * Get storage
+     *
+     * @return \Debb\ManagementBundle\Entity\Storage 
+     */
+    public function getStorage()
+    {
+        return $this->storage;
     }
 }
