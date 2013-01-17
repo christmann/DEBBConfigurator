@@ -34,3 +34,4 @@ web/cache
 web/media
 web/css/*
 web/js/*
+src/CIM/PluploadBundle/
