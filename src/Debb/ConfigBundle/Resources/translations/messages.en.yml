@@ -5,6 +5,8 @@ create.%what%: Create %what%
 configure.%what%: Configure %what%
 define.%what%: Define %what%
 equip.%what%: Equip %what%
+add.%what%: add %what%
+delete.%what%: delete %what%
 node: node
 node.group: node group
 overview: Overview
@@ -25,3 +27,4 @@ Image: Image
 Description: Description
 Socket: Socket
 Connections: Connections
+Component: Component

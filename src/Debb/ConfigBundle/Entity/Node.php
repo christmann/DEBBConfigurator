@@ -23,9 +23,16 @@ class Node extends \Debb\ManagementBundle\Entity\Base
 	/**
 	 * @var array
 	 *
-	 * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\Component", mappedBy="node")
+	 * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\Component", mappedBy="node", cascade={"persist"}, orphanRemoval=true)
 	 */
 	private $components;
+
+    /**
+     * @var Image
+     *
+	 * @ORM\ManyToOne(targetEntity="Debb\ManagementBundle\Entity\File", cascade={"all"})
+     */
+    private $image;
 
 	/**
 	 * Set mainboard
@@ -57,7 +64,7 @@ class Node extends \Debb\ManagementBundle\Entity\Base
 	 */
 	public function __toString()
 	{
-		return '[' . $this->getId() . '] ' . $this->getTitle();
+		return '[' . $this->getId() . '] ' . $this->getProduct();
 	}
 
     /**
@@ -118,5 +125,28 @@ class Node extends \Debb\ManagementBundle\Entity\Base
     public function getComponents()
     {
         return $this->components;
+    }
+
+    /**
+     * Set image
+     *
+     * @param \Debb\ManagementBundle\Entity\File $image
+     * @return Node
+     */
+    public function setImage(\Debb\ManagementBundle\Entity\File $image = null)
+    {
+        $this->image = $image;
+    
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \Debb\ManagementBundle\Entity\File 
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }

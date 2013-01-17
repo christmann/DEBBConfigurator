@@ -5,6 +5,8 @@ create.%what%: %what% erstellen
 configure.%what%: %what% konfigurieren
 define.%what%: %what% definieren
 equip.%what%: %what% ausstatten
+add.%what%: %what% hinzufügen
+delete.%what%: %what% löschen
 node: Knoten
 node.group: Knotengruppe
 overview: Übersicht
@@ -25,3 +27,4 @@ Image: Bild
 Description: Beschreibung
 Socket: Sockel
 Connections: Verbindungen
+Component: Komponente

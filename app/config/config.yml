@@ -75,4 +75,4 @@ avalanche_imagine:
     filters:
         admin_thumb:
             type: thumbnail
-            options: { size: [150, 150], mode: inset }
+            options: { size: [195, 130], mode: inset }

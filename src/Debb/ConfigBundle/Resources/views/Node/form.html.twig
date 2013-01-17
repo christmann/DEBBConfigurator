@@ -1,2 +1,69 @@
 {% extends "DebbManagementBundle::form.html.twig" %}
 {% form_theme form "DebbManagementBundle::form_theme.html.twig" %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{% javascripts '@DebbConfigBundle/Resources/public/js/node.js' %}
+		<script src="{{ asset_url }}" type="text/javascript"></script>
+	{% endjavascripts %}
+{% endblock %}
+
+{% block content %}
+	<div class="row-fluid">
+		<div class="span3" style="">
+			<div class="node_img">
+				{{ form_widget(form.image) }}
+			</div>
+			<div class="node_mainboard">
+				{{ form_label(form.mainboard) }}
+				{{ form_widget(form.mainboard) }}
+			</div>
+		</div>
+		<div class="span9" style="border-left: 1px solid #DFDFDF; padding-left: 5px;">
+			<div class="row-fluid">
+				<div class="span6">
+					<div class="node_product">
+						{{ 'Product' | trans }}: {{ form_widget(form.product) }}
+					</div>
+				</div>
+			</div>
+			<div class="row-fluid">
+				<div class="span6">
+					<div class="node_manufacturer">
+						{{ 'Manufacturer' | trans }}: {{ form_widget(form.manufacturer) }}
+					</div>
+				</div>
+				<div class="span6">
+					<div class="node_model">
+						{{ 'Model' | trans }}: {{ form_widget(form.model) }}
+					</div>
+				</div>
+			</div>
+			<div style="width: 100%; border-bottom: 1px dashed #DFDFDF; height: 1px;"></div>
+
+			<div class="row-fluid">
+				<div class="span6">
+					<div class="componentBox" style="border-left: 1px solid #DFDFDF; padding-left: 5px;" data-prototype="{{ form_row(form.components.vars.prototype) | escape }}">
+						{% for component in form.components %}
+							<div class="component">
+								{{ form_widget(component) }}
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="span6">
+					<div class="componentBox" data-prototype="{{ form_row(form.components.vars.prototype) | escape }}">
+						{% for component in form.components if component.vars.data.type == 3 %}
+							<div class="component">
+								{{ form_widget(component) }}
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+			<div class="clear"></div>
+			<a href="#" class="addComponent">{{ 'add.%what%' | trans({'%what%': 'Component' | trans}) }}</a>
+			{{ form_rest(form) }}
+		</div>
+	</div>
+{% endblock %}

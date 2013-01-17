@@ -2,21 +2,27 @@
 {% extends "::base.html.twig" %}
 {% block title %}{{ localdev_admin_name(true) }}{% endblock %}
 
-{% block content %}
+{% block form_header %}
 	<form action="{% if item.id is null %}{{ path( localdev_admin_route('_form')) }}{% else %}{{ path( localdev_admin_route('_form'), {id: item.id}) }}{% endif %}"
 		  class="clearfix"
 		  method="post" {{ form_enctype(form) }}>
-		<h1>{{ ((item.id == null) ? 'localdev_admin.title.add' : 'localdev_admin.title.edit') | trans({"%name%":localdev_admin_name()}, 'crud') }}</h1>
+{% endblock %}
 
-		{% block form %}
-			<div class="row{{ localdev_admin.layout.fluid }}">
-				{{ form_widget(form) }}
-			</div>
-		{% endblock %}
-	</form>
+{% block content %}
+	<h1>{{ ((item.id == null) ? 'localdev_admin.title.add' : 'localdev_admin.title.edit') | trans({"%name%":localdev_admin_name()}, 'crud') }}</h1>
+
+	{% block form %}
+		<div class="row{{ localdev_admin.layout.fluid }}">
+			{{ form_widget(form) }}
+		</div>
+	{% endblock %}
 {% endblock %}
 
 {% block buttonbar %}
 	<button class="button btn btn-primary" type="submit">{{ 'localdev_admin.actions.save'|trans({}, 'crud') }}</button>
 	<a href="{{ path(localdev_admin_route('_index')) }}" class="button btn">{{ 'localdev_admin.actions.back'|trans({}, 'crud') }}</a>
+{% endblock %}
+
+{% block form_footer %}
+	</form>
 {% endblock %}

@@ -14,6 +14,7 @@ class Rack extends \Debb\ManagementBundle\Entity\Base
 {
 	/**
 	 * @ORM\ManyToMany(targetEntity="NodeGroup", cascade={"persist"})
+	 * @ORM\OrderBy({"rank" = "ASC"})
 	 */
 	private $nodeGroups;
 

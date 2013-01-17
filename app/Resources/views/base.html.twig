@@ -49,6 +49,7 @@
 			</div>
 
 			<div style="float: left;">
+				{% block form_header %}{% endblock %}
 				<div id="content">
 					{% block flashes %}
 						{% for key, flash in app.session.getFlashes() %}
@@ -68,6 +69,7 @@
 					{# Example Button: <button class="button">Test</button> --- extra class: buttonBlue / buttonWhite#}
 					{% block buttonbar %}{% endblock %}
 				</div>
+				{% block form_footer %}{% endblock %}
 			</div>
 
 			<div class="clear"></div>

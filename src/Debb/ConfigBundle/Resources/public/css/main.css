@@ -526,3 +526,17 @@ table tr td
 	height: 6px;
 	width: 242px;
 }
+
+.component {
+	float: left;
+	width: 314px;
+	margin-right: 8px;
+	margin-top: 8px;
+	height: 65px;
+	border: 1px solid #CADBE3;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	padding-right: 6px;
+	padding-left: 6px;
+	overflow: hidden;
+}

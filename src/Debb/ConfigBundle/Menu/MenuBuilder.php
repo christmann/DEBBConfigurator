@@ -42,6 +42,10 @@ class MenuBuilder
 			));
 		$node->addChild($this->translateIt('processor'), array('route' => 'debb_management_processor_index', 'attributes' => array('noclass' => true)));
 		$node->addChild($this->translateIt('mainboard'), array('route' => 'debb_management_mainboard_index', 'attributes' => array('noclass' => true)));
+		$node->addChild($this->translateIt('coolingdevice'), array('route' => 'debb_management_coolingdevice_index', 'attributes' => array('noclass' => true)));
+		$node->addChild($this->translateIt('memory'), array('route' => 'debb_management_memory_index', 'attributes' => array('noclass' => true)));
+		$node->addChild($this->translateIt('powersupply'), array('route' => 'debb_management_powersupply_index', 'attributes' => array('noclass' => true)));
+		$node->addChild($this->translateIt('storage'), array('route' => 'debb_management_storage_index', 'attributes' => array('noclass' => true)));
 
 		$node = $menu->addChild($this->translateIt('configure.%what%', array('%what%' => 'node')), array('route' => 'debb_config_node_index', 'attributes' => array('class' => 'one first')));
 		$node->addChild($this->translateIt('overview'), array('route' => 'debb_config_node_index', 'attributes' => array('noclass' => true)));

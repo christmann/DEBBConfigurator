@@ -1,4 +1,12 @@
-debb_management.processor.plural: Processors
-debb_management.processor.singular: Processor
-debb_management.mainboard.plural: Mainboards
-debb_management.mainboard.singular: Mainboard
+debb_management.processor.plural: processors
+debb_management.processor.singular: processor
+debb_management.mainboard.plural: mainboards
+debb_management.mainboard.singular: mainboard
+debb_management.coolingdevice.plural: cooling device
+debb_management.coolingdevice.singular: cooling device
+debb_management.memory.plural: memory
+debb_management.memory.singular: memory
+debb_management.powersupply.plural: power supply
+debb_management.powersupply.singular: power supply
+debb_management.storage.plural: HDDs
+debb_management.storage.singular: HDD
