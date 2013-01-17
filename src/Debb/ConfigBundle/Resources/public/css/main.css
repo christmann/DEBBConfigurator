@@ -195,6 +195,11 @@ table tr td
 	box-shadow: inset 0 0 1px #bbb;
 }
 
+#config-menu ul li a.first.zero
+{
+	background-image: url('../img/null-icon.png');
+}
+
 #config-menu ul li a.first.one
 {
 	background-image: url('../img/eins-icon.png');
