@@ -14,6 +14,10 @@ rack: Rack
 management: Verwaltung
 processor: Prozessor
 mainboard: Mainboard
+coolingdevice: Kühler
+memory: Speicher
+powersupply: Stromversorgung
+storage: HDDs
 
 # form fields which not defined above
 Product: Produkt
