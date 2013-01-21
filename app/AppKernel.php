@@ -26,6 +26,7 @@ class AppKernel extends Kernel
 			new Localdev\AdminBundle\LocaldevAdminBundle(),
 			new CIM\PluploadBundle\CIMPluploadBundle(),
 			new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
+			new Bazinga\ExposeTranslationBundle\BazingaExposeTranslationBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

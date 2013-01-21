@@ -1,5 +1,5 @@
 {
-    "hash": "d312b977ac8cba7e3d72f93e4f83f361",
+    "hash": "d2b54ab6d9796f35f80f50aaa1032456",
     "packages": [
         {
             "name": "avalanche123/imagine-bundle",
@@ -1816,6 +1816,7 @@
     "stability-flags": {
         "knplabs/knp-menu-bundle": 20,
         "localdev/admin-bundle": 20,
-        "avalanche123/imagine-bundle": 20
+        "avalanche123/imagine-bundle": 20,
+        "willdurand/expose-translation-bundle": 20
     }
 }
