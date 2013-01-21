@@ -35,3 +35,4 @@ web/media
 web/css/*
 web/js/*
 src/CIM/PluploadBundle/
+index.php

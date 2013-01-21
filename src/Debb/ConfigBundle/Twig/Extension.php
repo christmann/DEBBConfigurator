@@ -8,7 +8,6 @@ class Extension extends \Twig_Extension
     {
         return array(
             'component_type' => new \Twig_Function_Method($this, 'componentType'),
-			'plus_it' => new \Twig_Function_Method($this, 'plusIt'),
         );
     }
 
@@ -16,11 +15,6 @@ class Extension extends \Twig_Extension
     {
 		$type = 'TYPE_' . $prefix;
         return constant('\Debb\ManagementBundle\Entity\Component::'. $type);
-    }
-
-    public function plusIt($var, $countFirst=false)
-    {
-		return $countFirst ? ++$var : $var++;
     }
 
     public function getName()

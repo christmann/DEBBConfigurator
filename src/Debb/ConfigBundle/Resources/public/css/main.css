@@ -537,11 +537,57 @@ table tr td
 	width: 314px;
 	margin-right: 8px;
 	margin-top: 8px;
-	height: 65px;
+	height: 66px;
 	border: 1px solid #CADBE3;
 	padding-bottom: 5px;
 	padding-top: 5px;
 	padding-right: 6px;
 	padding-left: 6px;
 	overflow: hidden;
+}
+
+.component label {
+	display: inline-block;
+	width: 80px;
+	vertical-align: middle;
+}
+
+.component input, .component select, .component input:focus {
+	display: inline-block;
+	border: 1px solid #D7D7D7;
+	box-shadow: none;
+	border-radius: 0;
+}
+
+.component select {
+	height: 29px;
+	width: 200px;
+}
+
+.component input {
+	height: 17px;
+	width: 186px;
+}
+
+.component div:first-of-type {
+	float: left;
+}
+
+.component .componentExtras {
+    height: 61px;
+    padding-left: 6px;
+    padding-top: 5px;
+    width: 20px;
+    background-color: #CADBE3;
+    float: right;
+    font-size: 25px;
+}
+
+.component .componentExtras div {
+	height: 20px;
+	cursor: pointer;
+}
+
+.component .componentExtras .addComponent {
+	margin-bottom: 19px;
 }

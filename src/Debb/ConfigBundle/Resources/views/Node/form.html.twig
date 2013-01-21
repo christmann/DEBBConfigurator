@@ -39,67 +39,63 @@
 					</div>
 				</div>
 			</div>
+			<div class="row-fluid">
+				<div class="span4">
+					<div class="node_sizex">
+						{{ 'SizeX' | trans }}: {{ form_widget(form.sizeX) }}
+					</div>
+				</div>
+				<div class="span4">
+					<div class="node_sizey">
+						{{ 'SizeY' | trans }}: {{ form_widget(form.sizeY) }}
+					</div>
+				</div>
+				<div class="span4">
+					<div class="node_sizez">
+						{{ 'SizeZ' | trans }}: {{ form_widget(form.sizeZ) }}
+					</div>
+				</div>
+			</div>
 			<div style="width: 100%; border-bottom: 1px dashed #DFDFDF; height: 1px;"></div>
-
-			{% autoescape false %}{% set componentPrototype = form_row(form.components.vars.prototype) %}{% endautoescape %}
 
 			<div class="row-fluid">
 				<div class="span6">
-					<div class="componentBox" style="border-left: 1px solid #DFDFDF; padding-left: 5px;" data-prototype="{{ componentPrototype | escape }}">
-						{% set processorSet = false %}
-						{% set coolingDeviceSet = false %}
-						{% set powerSupplySet = false %}
-						{% set memorySet = false %}
-						{% set lastId = 0 %}
-
+					<div class="componentBox" style="border-left: 1px solid #DFDFDF; padding-left: 5px;" data-prototype="{{ form_row(form.components.vars.prototype) | e }}">
 						{% for component in form.components if component.vars.data.type != component_type('STORAGE') %}
-							{% if component.vars.data.type == component_type('PROCESSOR') %}{% set processorSet = true %}{% endif %}
-							{% if component.vars.data.type == component_type('COOLING_DEVICE') %}{% set coolingDeviceSet = true %}{% endif %}
-							{% if component.vars.data.type == component_type('POWER_SUPPLY') %}{% set powerSupplySet = true %}{% endif %}
-							{% if component.vars.data.type == component_type('MEMORY') %}{% set memorySet = true %}{% endif %}
 							<div class="component">
 								{{ form_widget(component) }}
+								<div class="componentExtras">
+									<div class="addComponent">
+										<i class="icon-plus"></i>
+									</div>
+									<div class="delComponent">
+										<i class="icon-remove"></i>
+									</div>
+								</div>
 							</div>
-							{% set lastId = loop.index %}
 						{% endfor %}
-
-						{% autoescape false %}
-							{% if processorSet == false %}
-								<div class="component">{{ componentPrototype | replace({'__name__': plus_it(lastId)}) }}</div>
-							{% endif %}
-							{% if coolingDeviceSet == false %}
-								<div class="component">{{ componentPrototype | replace({'__name__': plus_it(lastId)}) }}</div>
-							{% endif %}
-							{% if powerSupplySet == false %}
-								<div class="component">{{ componentPrototype | replace({'__name__': plus_it(lastId)}) }}</div>
-							{% endif %}
-							{% if memorySet == false %}
-								<div class="component">{{ componentPrototype | replace({'__name__': plus_it(lastId)}) }}</div>
-							{% endif %}
-						{% endautoescape %}
 					</div>
 				</div>
 				<div class="span6">
 					<div class="componentBoxHdds" data-prototype="{{ form_row(form.components.vars.prototype) | escape }}">
-						{% set hddSet = false %}
 						{% for component in form.components if component.vars.data.type == component_type('STORAGE') %}
-							{% set hddSet = true %}
 							<div class="component">
 								{{ form_widget(component) }}
+								<div class="componentExtras">
+									<div class="addComponent">
+										<i class="icon-plus"></i>
+									</div>
+									<div class="delComponent">
+										<i class="icon-remove"></i>
+									</div>
+								</div>
 							</div>
-							{{ plus_it(lastId) }}
 						{% endfor %}
-						{% autoescape false %}
-							{% if hddSet == false %}
-								<div class="component">{{ componentPrototype | replace({'__name__': plus_it(lastId)}) }}</div>
-							{% endif %}
-						{% endautoescape %}
 					</div>
 				</div>
 			</div>
 			<div class="clear"></div>
-			<a href="#" class="addComponent">{{ 'add.%what%' | trans({'%what%': 'Component' | trans}) }}</a>
-			{{ form_rest(form) }}
+			{{ form_widget(form._token) }}
 		</div>
 	</div>
 {% endblock %}

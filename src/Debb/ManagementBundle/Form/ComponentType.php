@@ -19,6 +19,7 @@ class ComponentType extends AbstractType
 			->add('memory', null, array('required' => false))
 			->add('powersupply', null, array('required' => false))
 			->add('storage', null, array('required' => false))
+			->add('amount', null, array('required' => true, 'data' => 1))
 		;
 	}
 

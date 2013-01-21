@@ -13,21 +13,21 @@ class NodeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('model')
-            ->add('manufacturer')
-            ->add('product')
+            ->add('product', null, array('required' => false))
+            ->add('manufacturer', null, array('required' => false))
+            ->add('model', null, array('required' => false))
+            ->add('sizeX', null, array('required' => false))
+            ->add('sizeY', null, array('required' => false))
+            ->add('sizeZ', null, array('required' => false))
             ->add('components', 'collection', array(
 				'type' => new ComponentType(),
 				'allow_add' => true,
 				'allow_delete' => true,
 				'by_reference' => false,
+				'required' => false,
 			))
-			->add('mainboard', 'entity', array(
-				'class' => 'DebbManagementBundle:Mainboard',
-				'query_builder' => function($repository) { return $repository->createQueryBuilder('p')->orderBy('p.id', 'ASC'); },
-				'property' => 'name',
-			))
-            ->add('image', 'plupload')
+			->add('mainboard', null, array('required' => false))
+            ->add('image', 'plupload', array('required' => false))
         ;
     }
 

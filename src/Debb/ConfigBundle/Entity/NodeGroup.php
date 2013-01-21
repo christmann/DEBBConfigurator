@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class NodeGroup extends \Debb\ManagementBundle\Entity\Base
 {
 	/**
-	 * @ORM\ManyToMany(targetEntity="Node", cascade={"persist"})
+	 * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\NodeToNodegroup", cascade={"persist"}, mappedBy="nodeGroup", orphanRemoval=true)
 	 */
 	private $nodes;
 

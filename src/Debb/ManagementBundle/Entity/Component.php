@@ -12,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Component
 {
+	/* Define types always in DebbConfigBundle Resources public js node.js */
+
 	/**
 	 * [Type] Nothing
 	 *
@@ -76,6 +78,13 @@ class Component
      * @ORM\Column(name="type", type="integer")
      */
     private $type = self::TYPE_NOTHING;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="amount", type="integer")
+     */
+    private $amount = 1;
 
     /**
      * @var Debb\ConfigBundle\Entity\Node
@@ -318,5 +327,28 @@ class Component
     public function getStorage()
     {
         return $this->storage;
+    }
+
+    /**
+     * Set amount
+     *
+     * @param integer $amount
+     * @return Component
+     */
+    public function setAmount($amount)
+    {
+        $this->amount = $amount;
+    
+        return $this;
+    }
+
+    /**
+     * Get amount
+     *
+     * @return integer 
+     */
+    public function getAmount()
+    {
+        return $this->amount;
     }
 }

@@ -2,7 +2,10 @@
     RewriteEngine On
 
     #<IfModule mod_vhost_alias.c>
-    #    RewriteBase /
+		# Example localhost
+		RewriteBase /debbconfig/web
+		# Example online page
+	#	RewriteBase /
     #</IfModule>
 
     RewriteCond %{REQUEST_FILENAME} !-f

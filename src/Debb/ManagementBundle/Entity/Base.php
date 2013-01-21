@@ -23,21 +23,21 @@ class Base
     /**
      * @var string
      *
-     * @ORM\Column(name="manufacturer", type="string", length=255)
+     * @ORM\Column(name="manufacturer", type="string", length=255, nullable=true)
      */
     private $manufacturer;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="product", type="string", length=255)
+     * @ORM\Column(name="product", type="string", length=255, nullable=true)
      */
     private $product;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="model", type="string", length=255)
+     * @ORM\Column(name="model", type="string", length=255, nullable=true)
      */
     private $model;
 

@@ -12,12 +12,17 @@ node.group: node group
 overview: Overview
 rack: rack
 management: Management
-processor: Processor
-mainboard: Mainboard
-coolingdevice: cooling devices
-memory: memory
-powersupply: power supplies
-storage: HDDs
+Processor: Processor
+Mainboard: Mainboard
+Coolingdevice: cooling devices
+Memory: memory
+Powersupply: power supplies
+Storage: HDDs
+Amount: amount
+delete.last.entry: Sure? You want to delete the last entry of this kind!
+SizeX: width (in m)
+SizeY: height (in m)
+SizeZ: depth (in m)
 
 # form fields which not defined above
 Product: Product
