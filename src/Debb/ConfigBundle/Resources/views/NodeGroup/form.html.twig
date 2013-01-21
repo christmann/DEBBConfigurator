@@ -1,0 +1,49 @@
+{% extends "DebbManagementBundle::form.html.twig" %}
+{% form_theme form "DebbManagementBundle::form_theme.html.twig" %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{% javascripts '@DebbConfigBundle/Resources/public/js/nodegroup.js' %}
+		<script src="{{ asset_url }}" type="text/javascript"></script>
+	{% endjavascripts %}
+{% endblock %}
+
+{% block content %}
+	<div id="sirius">
+		{% for node in form.nodes %}
+			<div class="node">
+				<span class="nodeTitle">&nbsp;</span>
+				{{ form_widget(node, {attr: {'style': 'display: none'}}) }}
+				<a href="#" class="selectNode">{{ 'select.%what%' | trans({'%what%': 'node' | trans}) }}</a>
+			</div>
+		{% endfor %}
+	</div>
+
+	<div id="sirius-configarea">
+		<div id="grouptitle-box">
+			<h5>{{ 'Product' | trans }}:</h5>
+			{{ form_widget(form.product) }}
+			<h5>{{ 'Manufacturer' | trans }}:</h5>
+			{{ form_widget(form.manufacturer) }}
+			<h5>{{ 'Model' | trans }}:</h5>
+			{{ form_widget(form.model) }}
+			<a href="#" class="blue-button">save group</a>
+			<div class="clear"></div>
+		</div>
+		<div id="node-select-box">
+			<h5>{{ 'select.%what%' | trans({'%what%': 'node' | trans}) }}:</h5>
+			<div id="node-pic">&nbsp;</div>
+			<select id="node-chooser" size="16">
+				<option value="0" selected="selected">&nbsp;</option>
+				{% for node in nodes %}
+						<option value="{{ node.id }}"
+								{% if node.image is not null %}img="{{ node.image.getFullPath | apply_filter('node_thumb') }}"{% endif %}>
+								{{ node }}</option>
+				{% endfor %}
+			</select>
+			<a href="#" class="blue-button adopt"><img src="{{ asset('bundles/debbconfig/img/adopt-icon.png') }}" />Adopt</a>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="clear"></div>
+{% endblock %}

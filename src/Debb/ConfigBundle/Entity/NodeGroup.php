@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity
  */
-class NodeGroup extends \Debb\ManagementBundle\Entity\Base
+class NodeGroup extends Dimensions
 {
 	/**
 	 * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\NodeToNodegroup", cascade={"persist"}, mappedBy="nodeGroup", orphanRemoval=true)
@@ -28,12 +28,31 @@ class NodeGroup extends \Debb\ManagementBundle\Entity\Base
     /**
      * Add nodes
      *
-     * @param \Debb\ConfigBundle\Entity\Node $nodes
+     * @param \Debb\ManagementBundle\Entity\NodeToNodegroup $nodes
      * @return NodeGroup
      */
-    public function addNode(\Debb\ConfigBundle\Entity\Node $nodes)
+    public function addNode(\Debb\ManagementBundle\Entity\NodeToNodegroup $nodes)
     {
+		$nodes->setNodeGroup($this);
         $this->nodes[] = $nodes;
+    
+        return $this;
+    }
+    
+    /**
+     * Set nodes
+     *
+     * @param \Debb\ManagementBundle\Entity\NodeToNodegroup[] $nodes
+     * @return NodeGroup
+     */
+    public function setNodes($nodes)
+    {
+        $this->nodes = $nodes;
+
+		foreach($this->nodes as $node)
+		{
+			$node->setNodeGroup($this);
+		}
     
         return $this;
     }
@@ -41,9 +60,9 @@ class NodeGroup extends \Debb\ManagementBundle\Entity\Base
     /**
      * Remove nodes
      *
-     * @param \Debb\ConfigBundle\Entity\Node $nodes
+     * @param \Debb\ManagementBundle\Entity\NodeToNodegroup $nodes
      */
-    public function removeNode(\Debb\ConfigBundle\Entity\Node $nodes)
+    public function removeNode(\Debb\ManagementBundle\Entity\NodeToNodegroup $nodes)
     {
         $this->nodes->removeElement($nodes);
     }
@@ -57,4 +76,29 @@ class NodeGroup extends \Debb\ManagementBundle\Entity\Base
     {
         return $this->nodes;
     }
+
+	/**
+	 * Get the next free field in node array
+	 * 
+	 * @return int the next free field in node array
+	 */
+	public function getFreeNode()
+	{
+		$ids = array();
+		foreach($this->getNodes() as $node)
+		{
+			$ids[] = $node->getField();
+		}
+		ksort($ids);
+
+		$res = 0;
+		foreach($ids as $id)
+		{
+			if($id == $res)
+			{
+				$res++;
+			}
+		}
+		return $res;
+	}
 }

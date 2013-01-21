@@ -1000,14 +1000,14 @@
             "source": {
                 "type": "git",
                 "url": "git://localdev.de/bundles/LocaldevAdminBundle.git",
-                "reference": "c213c2a07fdccba506890711ac19844abea8d493"
+                "reference": "cf153f3f39b53517fcbf170f99b6054f7117d190"
             },
             "require": {
                 "php": ">=5.3.3",
                 "symfony/symfony": ">=2.1",
                 "localdev/framework-extra-bundle": "dev-symfony2.1"
             },
-            "time": "2013-01-21 12:04:46",
+            "time": "2013-01-21 13:40:25",
             "type": "symfony-bundle",
             "autoload": {
                 "psr-0": {

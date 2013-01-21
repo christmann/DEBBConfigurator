@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Mainboard
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Debb\ManagementBundle\Entity\MainboardRepository")
+ * @ORM\Entity()
  */
 class Mainboard extends Base
 {

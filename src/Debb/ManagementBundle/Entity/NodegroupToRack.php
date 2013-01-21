@@ -13,4 +13,18 @@ use Doctrine\ORM\Mapping as ORM;
 class NodegroupToRack extends Connector
 {
 
+	/**
+	 * @var NodeGroup
+	 *
+	 * @ORM\OneToOne(targetEntity="Debb\ConfigBundle\Entity\NodeGroup")
+	 */
+	private $nodegroup;
+
+	/**
+	 * @var NodeGroup
+	 *
+	 * @ORM\OneToOne(targetEntity="Debb\ConfigBundle\Entity\Rack")
+	 */
+	private $rack;
+
 }

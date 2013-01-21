@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Processor
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Debb\ManagementBundle\Entity\ProcessorRepository")
+ * @ORM\Entity()
  */
 class Processor extends Base
 {

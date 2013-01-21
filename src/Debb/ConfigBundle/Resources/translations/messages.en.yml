@@ -7,6 +7,7 @@ define.%what%: Define %what%
 equip.%what%: Equip %what%
 add.%what%: add %what%
 delete.%what%: delete %what%
+select.%what%: select %what%
 node: node
 node.group: node group
 overview: Overview

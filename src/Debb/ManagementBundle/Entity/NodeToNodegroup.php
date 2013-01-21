@@ -12,63 +12,65 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class NodeToNodegroup extends Connector
 {
-    /**
-     * @var Node
-     *
+
+	/**
+	 * @var Node
+	 *
 	 * @ORM\OneToOne(targetEntity="Debb\ConfigBundle\Entity\Node")
-     */
-    private $node;
+	 */
+	private $node;
 
-    /**
-     * @var NodeGroup
-     *
+	/**
+	 * @var NodeGroup
+	 *
 	 * @ORM\OneToOne(targetEntity="Debb\ConfigBundle\Entity\NodeGroup")
-     */
-    private $nodeGroup;
+	 */
+	private $nodeGroup;
 
-    /**
-     * Set node
-     *
-     * @param \Debb\ConfigBundle\Entity\Node $node
-     * @return NodeToNodegroup
-     */
-    public function setNode(\Debb\ConfigBundle\Entity\Node $node = null)
-    {
-        $this->node = $node;
-    
-        return $this;
-    }
+	/**
+	 * Set node
+	 *
+	 * @param \Debb\ConfigBundle\Entity\Node $node
+	 * @return NodeToNodegroup
+	 */
+	public function setNode(\Debb\ConfigBundle\Entity\Node $node = null)
+	{
+		$this->node = $node;
 
-    /**
-     * Get node
-     *
-     * @return \Debb\ConfigBundle\Entity\Node 
-     */
-    public function getNode()
-    {
-        return $this->node;
-    }
+		return $this;
+	}
 
-    /**
-     * Set nodeGroup
-     *
-     * @param \Debb\ConfigBundle\Entity\NodeGroup $nodeGroup
-     * @return NodeToNodegroup
-     */
-    public function setNodeGroup(\Debb\ConfigBundle\Entity\NodeGroup $nodeGroup = null)
-    {
-        $this->nodeGroup = $nodeGroup;
-    
-        return $this;
-    }
+	/**
+	 * Get node
+	 *
+	 * @return \Debb\ConfigBundle\Entity\Node 
+	 */
+	public function getNode()
+	{
+		return $this->node;
+	}
 
-    /**
-     * Get nodeGroup
-     *
-     * @return \Debb\ConfigBundle\Entity\NodeGroup 
-     */
-    public function getNodeGroup()
-    {
-        return $this->nodeGroup;
-    }
+	/**
+	 * Set nodeGroup
+	 *
+	 * @param \Debb\ConfigBundle\Entity\NodeGroup $nodeGroup
+	 * @return NodeToNodegroup
+	 */
+	public function setNodeGroup(\Debb\ConfigBundle\Entity\NodeGroup $nodeGroup = null)
+	{
+		$this->nodeGroup = $nodeGroup;
+
+		return $this;
+	}
+
+	/**
+	 * Get nodeGroup
+	 *
+	 * @return \Debb\ConfigBundle\Entity\NodeGroup 
+	 */
+	public function getNodeGroup()
+	{
+		return $this->nodeGroup;
+	}
+
 }

@@ -97,7 +97,7 @@ class Node extends Dimensions
      */
     public function setComponents($components)
     {
-        $this->components[] = $components;
+        $this->components = $components;
 
 		foreach($this->components as $component)
 		{

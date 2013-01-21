@@ -7,6 +7,7 @@ define.%what%: %what% definieren
 equip.%what%: %what% ausstatten
 add.%what%: %what% hinzufügen
 delete.%what%: %what% löschen
+select.%what%: %what% auswählen
 node: Knoten
 node.group: Knotengruppe
 overview: Übersicht

@@ -76,3 +76,6 @@ avalanche_imagine:
         admin_thumb:
             type: thumbnail
             options: { size: [195, 130], mode: inset }
+        node_thumb:
+            type: thumbnail
+            options: { size: [195, 130], mode: inset }

@@ -1,2 +1,4 @@
 debb_config.node.plural: Knoten
 debb_config.node.singular: Knoten
+debb_config.nodegroup.plural: Knotengruppen
+debb_config.nodegroup.singular: Knotengruppe

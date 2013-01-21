@@ -6,12 +6,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Localdev\AdminBundle\Controller\CRUDController;
 use Symfony\Component\HttpFoundation\Request;
-use Debb\ManagementBundle\Entity\Component;
+use Debb\ManagementBundle\Entity\NodeToNodegroup;
 
 /**
- * @Route("/{_locale}/node", requirements={"_locale" = "en|de"}, defaults={"_locale" = "en"})
+ * @Route("/{_locale}/nodegroup", requirements={"_locale" = "en|de"}, defaults={"_locale" = "en"})
  */
-class NodeController extends CRUDController
+class NodeGroupController extends CRUDController
 {
 
 	/**
@@ -28,47 +28,21 @@ class NodeController extends CRUDController
 	public function formAction(Request $request, $id = 0)
 	{
 		$item = $this->getEntity($id);
+		$nodes = $this->getEntities('DebbConfigBundle:Node');
 
 		if ($request->getMethod() != 'POST' && $item->getId() < 1)
 		{
-			/* define required components */
-			$required = array(
-				Component::TYPE_PROCESSOR => false,
-				Component::TYPE_COOLING_DEVICE => false,
-				Component::TYPE_POWER_SUPPLY => false,
-				Component::TYPE_MEMORY => false,
-				Component::TYPE_STORAGE => false
-			);
-
-			/* check components */
-			$components = $item->getComponents();
-			foreach ($components as $component)
+			while(count($item->getNodes()) < 18)
 			{
-				foreach ($required as $key => $val)
-				{
-					if ($component->getType() == $key)
-					{
-						$required[$key] = true;
-						continue;
-					}
-				}
-			}
-
-			/* create required components */
-			foreach ($required as $key => $val)
-			{
-				if ($val == false)
-				{
-					$component = new Component();
-					$component->setType($key);
-					$item->addComponent($component);
-				}
+				/* create required nodes */
+				$node = new NodeToNodegroup();
+				$node->setField($item->getFreeNode());
+				$item->addNode($node);
 			}
 
 			$this->getManager()->persist($item);
 		}
 
-		/* copied rest of CRUDController::formAction() */
 		$form = $this->createForm($this->getFormType($item), $item);
 		if ($request->getMethod() == 'POST')
 		{
@@ -83,7 +57,8 @@ class NodeController extends CRUDController
 
 		return $this->render($this->resolveTemplate(__METHOD__), array(
 				'form' => $form->createView(),
-				'item' => $item
+				'item' => $item,
+				'nodes' => $nodes
 			));
 	}
 

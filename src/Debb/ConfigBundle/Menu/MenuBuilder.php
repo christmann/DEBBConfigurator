@@ -62,6 +62,8 @@ class MenuBuilder
 			'linkAttributes' => array('onclick' => '$(this).next().toggle(); return false;'),
 			'attributes' => array('class' => 'two first')
 			));
+		$nodeGroup->addChild($this->translateIt('overview'), array('route' => 'debb_config_nodegroup_index', 'attributes' => array('noclass' => true)));
+		$nodeGroup->addChild($this->translateIt('create.%what%', array('%what%' => 'node.group')), array('route' => 'debb_config_nodegroup_form', 'attributes' => array('noclass' => true)));
 
 		$rack = $menu->addChild($this->translateIt('equip.%what%', array('%what%' => 'rack')), array(
 			'uri' => '#',
