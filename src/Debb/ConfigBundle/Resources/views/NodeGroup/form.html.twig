@@ -10,7 +10,11 @@
 
 {% block content %}
 	<div id="sirius">
-		{% for node in form.nodes %}
+		{% set formNodes = form.nodes | reverse %}
+		{% if formNodes[0].vars.value.field == 0 %}
+			{% set formNodes = formNodes | reverse %}
+		{% endif %}
+		{% for node in formNodes %}
 			<div class="node">
 				<span class="nodeTitle">&nbsp;</span>
 				{{ form_widget(node, {attr: {'style': 'display: none'}}) }}
@@ -27,13 +31,13 @@
 			{{ form_widget(form.manufacturer) }}
 			<h5>{{ 'Model' | trans }}:</h5>
 			{{ form_widget(form.model) }}
-			<a href="#" class="blue-button">save group</a>
+			<button type="submit" class="blue-button">{{ 'save.%what%' | trans({'%what%': 'node.group' | trans}) }}</button>
 			<div class="clear"></div>
 		</div>
 		<div id="node-select-box">
 			<h5>{{ 'select.%what%' | trans({'%what%': 'node' | trans}) }}:</h5>
 			<div id="node-pic">&nbsp;</div>
-			<select id="node-chooser" size="16">
+			<select id="node-chooser" size="16" disabled="disabled">
 				<option value="0" selected="selected">&nbsp;</option>
 				{% for node in nodes %}
 						<option value="{{ node.id }}"
@@ -41,9 +45,10 @@
 								{{ node }}</option>
 				{% endfor %}
 			</select>
-			<a href="#" class="blue-button adopt"><img src="{{ asset('bundles/debbconfig/img/adopt-icon.png') }}" />Adopt</a>
+			<a href="#" class="blue-button adopt"><img src="{{ asset('bundles/debbconfig/img/adopt-icon.png') }}" />{{ 'adopt' | trans }}</a>
 		</div>
 		<div class="clear"></div>
 	</div>
+	{{ form_widget(form._token) }}
 	<div class="clear"></div>
 {% endblock %}

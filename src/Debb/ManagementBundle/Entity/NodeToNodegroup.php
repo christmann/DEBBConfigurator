@@ -16,14 +16,14 @@ class NodeToNodegroup extends Connector
 	/**
 	 * @var Node
 	 *
-	 * @ORM\OneToOne(targetEntity="Debb\ConfigBundle\Entity\Node")
+	 * @ORM\ManyToOne(targetEntity="Debb\ConfigBundle\Entity\Node")
 	 */
 	private $node;
 
 	/**
 	 * @var NodeGroup
 	 *
-	 * @ORM\OneToOne(targetEntity="Debb\ConfigBundle\Entity\NodeGroup")
+	 * @ORM\ManyToOne(targetEntity="Debb\ConfigBundle\Entity\NodeGroup")
 	 */
 	private $nodeGroup;
 

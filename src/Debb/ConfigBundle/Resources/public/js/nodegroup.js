@@ -10,21 +10,25 @@ $(function()
 		});
 		$(document).on('click', '.selectNode', function(e)
 		{
-			var nodeId = $(this).parents('.node').find('[id$="_node"] [selected="selected"]').val(),
+			var nodeId = $(this).parents('.node').find('[id$="_node"]').val(),
 				field = getExactId($(this).parents('.node').find('div:first').attr('id'));
-			if(typeof(nodeId) == undefined || nodeId.length < 1)
+			if(nodeId == null)
 			{
 				nodeId = 0;
 			}
 			$('#node-chooser').val(nodeId);
+			$('#node-chooser').change();
+			$('#node-chooser').removeAttr('disabled');
 			$('.adopt').attr('field', field);
 			e.preventDefault();
 		});
 		$('.adopt').on('click', function(e)
 		{
 			var field = $(this).attr('field');
-			$('#debb_configbundle_nodegrouptype_nodes_' + field + '_node option[value="' + $('#node-chooser option:selected') + '"]').attr('selected', 'selected')
+			$('#debb_configbundle_nodegrouptype_nodes_' + field + '_node').val($('#node-chooser').val());
 			$('.adopt').removeAttr('field');
+			$('#node-chooser').attr('disabled', 'disabled');
+			$('#node-chooser').val(0);
 			updateNodes();
 			e.preventDefault();
 		});
@@ -36,7 +40,7 @@ function updateNodes()
 {
 	$('.nodeTitle').each(function()
 	{
-		var node = $(this).parents('node'),
+		var node = $(this).parents('.node'),
 			nodeId = $(node).find('[id$="_node"]').val();
 		$(this).html($('#node-chooser [value="' + nodeId + '"]').html());
 	});

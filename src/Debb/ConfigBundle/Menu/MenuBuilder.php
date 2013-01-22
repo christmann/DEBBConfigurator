@@ -38,7 +38,7 @@ class MenuBuilder
 			'uri' => '#',
 			'displayChildren' => true,
 			'linkAttributes' => array('onclick' => '$(this).next().toggle(); return false;'),
-			'attributes' => array('class' => 'zero first current')
+			'attributes' => array('class' => 'zero first')
 			));
 		$management->addChild($this->translateIt('Processor'), array('route' => 'debb_management_processor_index', 'attributes' => array('noclass' => true)));
 		$management->addChild($this->translateIt('Mainboard'), array('route' => 'debb_management_mainboard_index', 'attributes' => array('noclass' => true)));

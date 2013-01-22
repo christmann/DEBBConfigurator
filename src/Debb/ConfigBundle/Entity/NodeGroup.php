@@ -77,6 +77,22 @@ class NodeGroup extends Dimensions
         return $this->nodes;
     }
 
+	public function sortNodes($reversed=false)
+	{
+		$ordered = new \Doctrine\Common\Collections\ArrayCollection();
+		for($i = $this->nodes->count() - 1; $i >= 0; $i--) {
+			$ordered->add($this->nodes[$i]);
+		}
+		$this->nodes = $ordered;
+
+		$x = 0;
+		foreach($this->nodes as $node)
+		{
+			$node->setField($x);
+			$x++;
+		}
+	}
+
 	/**
 	 * Get the next free field in node array
 	 * 

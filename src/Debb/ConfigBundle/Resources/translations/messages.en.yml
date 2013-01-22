@@ -8,6 +8,7 @@ equip.%what%: Equip %what%
 add.%what%: add %what%
 delete.%what%: delete %what%
 select.%what%: select %what%
+save.%what%: save %what%
 node: node
 node.group: node group
 overview: Overview
@@ -24,6 +25,7 @@ delete.last.entry: Sure? You want to delete the last entry of this kind!
 SizeX: width (in m)
 SizeY: height (in m)
 SizeZ: depth (in m)
+adopt: Adopt
 
 # form fields which not defined above
 Product: Product

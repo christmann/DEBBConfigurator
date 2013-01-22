@@ -8,6 +8,7 @@ equip.%what%: %what% ausstatten
 add.%what%: %what% hinzufügen
 delete.%what%: %what% löschen
 select.%what%: %what% auswählen
+save.%what%: %what% speichern
 node: Knoten
 node.group: Knotengruppe
 overview: Übersicht
@@ -24,6 +25,7 @@ delete.last.entry: Sicher, dass Sie den letzten Eintrag dieser Art löschen woll
 SizeX: Breite (in m)
 SizeY: Höhe (in m)
 SizeZ: Tiefe (in m)
+adopt: Auswählen
 
 # form fields which not defined above
 Product: Produkt

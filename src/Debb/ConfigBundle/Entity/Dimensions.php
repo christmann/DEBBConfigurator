@@ -15,63 +15,63 @@ class Dimensions extends \Debb\ManagementBundle\Entity\Base
     /**
      * @var float
      *
-     * @ORM\Column(name="sizeX", type="float")
+     * @ORM\Column(name="sizeX", type="float", nullable=true)
      */
     private $sizeX;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="sizeY", type="float")
+     * @ORM\Column(name="sizeY", type="float", nullable=true)
      */
     private $sizeY;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="sizeZ", type="float")
+     * @ORM\Column(name="sizeZ", type="float", nullable=true)
      */
     private $sizeZ;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="spaceLeft", type="float")
+     * @ORM\Column(name="spaceLeft", type="float", nullable=true)
      */
     private $spaceLeft;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="spaceRight", type="float")
+     * @ORM\Column(name="spaceRight", type="float", nullable=true)
      */
     private $spaceRight;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="spaceTop", type="float")
+     * @ORM\Column(name="spaceTop", type="float", nullable=true)
      */
     private $spaceTop;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="spaceBottom", type="float")
+     * @ORM\Column(name="spaceBottom", type="float", nullable=true)
      */
     private $spaceBottom;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="spaceFront", type="float")
+     * @ORM\Column(name="spaceFront", type="float", nullable=true)
      */
     private $spaceFront;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="spaceBehind", type="float")
+     * @ORM\Column(name="spaceBehind", type="float", nullable=true)
      */
     private $spaceBehind;
 
