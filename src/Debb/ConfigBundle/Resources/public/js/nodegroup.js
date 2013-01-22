@@ -7,6 +7,10 @@ $(function()
 			{
 				$('#node-pic').css('background-image', 'url("' + selected.attr('img') + '")');
 			}
+			else
+			{
+				$('#node-pic').css('background-image', '');
+			}
 		});
 		$(document).on('click', '.selectNode', function(e)
 		{
@@ -27,8 +31,9 @@ $(function()
 			var field = $(this).attr('field');
 			$('#debb_configbundle_nodegrouptype_nodes_' + field + '_node').val($('#node-chooser').val());
 			$('.adopt').removeAttr('field');
-			$('#node-chooser').attr('disabled', 'disabled');
 			$('#node-chooser').val(0);
+			$('#node-chooser').change();
+			$('#node-chooser').attr('disabled', 'disabled');
 			updateNodes();
 			e.preventDefault();
 		});

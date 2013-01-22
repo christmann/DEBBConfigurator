@@ -291,6 +291,7 @@ table tr td
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e7e7e7', endColorstr='#ffffff',GradientType=0 );
 	overflow: hidden;
 	text-align: center;
+	line-height: 15px;
 }
 
 #sirius-configarea
