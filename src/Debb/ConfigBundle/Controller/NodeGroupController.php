@@ -30,7 +30,7 @@ class NodeGroupController extends CRUDController
 		$item = $this->getEntity($id);
 		$nodes = $this->getEntities('DebbConfigBundle:Node');
 
-		if ($request->getMethod() != 'POST' && count($item->getNodeGroups()) < 1)
+		if ($request->getMethod() != 'POST' && count($item->getNodes()) < 1)
 		{
 			while(count($item->getNodes()) < 18)
 			{
