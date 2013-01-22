@@ -16,6 +16,7 @@ $(function()
 				if(getExactId($(this).find('div[id!=""]').attr('id')) > id)
 				{
 					id = getExactId($(this).children('div').attr('id'));
+					id++;
 				}
 			});
 			id++;
@@ -85,6 +86,10 @@ function updateComponents() {
 
 function getExactId(str)
 {
-	var array = str.split('_');
-	return array[array.length - 1];
+	if(str != null)
+	{
+		var array = str.split('_');
+		return array[array.length - 1];
+	}
+	return 0;
 }
