@@ -13,7 +13,6 @@ $(function()
 			var id = 0;
 			$('.component').each(function()
 			{
-				console.log($(this).find('div:first[id!=""]'));
 				if(getExactId($(this).find('div[id!=""]').attr('id')) > id)
 				{
 					id = getExactId($(this).children('div').attr('id'));
@@ -26,7 +25,6 @@ $(function()
 					.append('<div class="componentExtras"><div class="addComponent"><i class="icon-plus"></i></div><div class="delComponent"><i class="icon-remove"></i></div></div>'),
 				type = $(this).parents('.component:first').find('input[id$="_type"]').attr('value');
 			$(this).parents('.component:first').after(newFormLi);
-			console.log($('#debb_configbundle_nodetype_components_' + id + '_type'));
 			$('#debb_configbundle_nodetype_components_' + id + '_type').attr('value', type);
 			updateComponents();
 			e.preventDefault();

@@ -62,7 +62,7 @@
 
 			<div class="row-fluid">
 				<div class="span6">
-					<div class="componentBox" style="border-left: 1px solid #DFDFDF; padding-left: 5px;" data-prototype="{{ form_row(form.components.vars.prototype) | e }}">
+					<div class="componentBox" style="border-left: 1px solid #DFDFDF; padding-left: 5px;" data-prototype="{{ form_row(form.components.vars.prototype) | escape }}">
 						{% for component in form.components if component.vars.data.type != component_type('STORAGE') %}
 							<div class="component">
 								{{ form_widget(component) }}
@@ -79,7 +79,7 @@
 					</div>
 				</div>
 				<div class="span6">
-					<div class="componentBoxHdds" data-prototype="{{ form_row(form.components.vars.prototype) | escape }}">
+					<div class="componentBoxHdds">
 						{% for component in form.components if component.vars.data.type == component_type('STORAGE') %}
 							<div class="component">
 								{{ form_widget(component) }}
