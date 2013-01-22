@@ -7,11 +7,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Localdev\AdminBundle\Controller\CRUDController;
 use Symfony\Component\HttpFoundation\Request;
 use Debb\ManagementBundle\Entity\NodeToNodegroup;
+use Debb\ManagementBundle\Entity\NodegroupToRack;
 
 /**
- * @Route("/{_locale}/nodegroup", requirements={"_locale" = "en|de"}, defaults={"_locale" = "en"})
+ * @Route("/{_locale}/rack", requirements={"_locale" = "en|de"}, defaults={"_locale" = "en"})
  */
-class NodeGroupController extends CRUDController
+class RackController extends CRUDController
 {
 
 	/**
@@ -28,16 +29,16 @@ class NodeGroupController extends CRUDController
 	public function formAction(Request $request, $id = 0)
 	{
 		$item = $this->getEntity($id);
-		$nodes = $this->getEntities('DebbConfigBundle:Node');
+		$nodegroups = $this->getEntities('DebbConfigBundle:NodeGroup');
 
 		if ($request->getMethod() != 'POST' && count($item->getNodeGroups()) < 1)
 		{
-			while(count($item->getNodes()) < 18)
+			while (count($item->getNodeGroups()) < 42)
 			{
-				/* create required nodes */
-				$node = new NodeToNodegroup();
-				$node->setField($item->getFreeNode());
-				$item->addNode($node);
+				/* create required node groups */
+				$nodeGroup = new NodegroupToRack();
+				$nodeGroup->setField($item->getFreeNodeGroup());
+				$item->addNodeGroup($nodeGroup);
 			}
 
 			$this->getManager()->persist($item);
@@ -58,7 +59,7 @@ class NodeGroupController extends CRUDController
 		return $this->render($this->resolveTemplate(__METHOD__), array(
 				'form' => $form->createView(),
 				'item' => $item,
-				'nodes' => $nodes
+				'nodegroups' => $nodegroups
 			));
 	}
 

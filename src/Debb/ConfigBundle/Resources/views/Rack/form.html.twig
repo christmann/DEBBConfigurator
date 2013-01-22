@@ -1,0 +1,74 @@
+{% extends "DebbManagementBundle::form.html.twig" %}
+{% form_theme form "DebbManagementBundle::form_theme.html.twig" %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{% javascripts '@DebbConfigBundle/Resources/public/js/rack.js' %}
+		<script src="{{ asset_url }}" type="text/javascript"></script>
+	{% endjavascripts %}
+{% endblock %}
+
+{% block content %}
+	<style type="text/css">
+		#content {
+			padding: 0 0 0 0 !important;
+		}
+	</style>
+	<div class="rackTop">&nbsp;</div>
+	<div class="rack">
+		{% set formNodeGroups = form.nodegroups | reverse %}
+		{% if formNodeGroups[0].vars.value.field == 0 %}
+			{% set formNodeGroups = formNodeGroups | reverse %}
+		{% endif %}
+		{% for nodeGroup in formNodeGroups %}
+			<div class="nodegroup">
+				{{ form_widget(nodeGroup, {attr: {'style': 'display: none'}}) }}
+			</div>
+		{% endfor %}
+	</div>
+
+	<div class="extraContent">
+		<div class="row-fluid">
+			<div class="span2" style="text-align: right;">
+				{{ 'Model' | trans }}:
+			</div>
+			<div class="span4">
+				{{ form_widget(form.model) }}
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span2" style="text-align: right;">
+				{{ 'Manufacturer' | trans }}:
+			</div>
+			<div class="span4">
+				{{ form_widget(form.manufacturer) }}
+			</div>
+			<div class="span2" style="text-align: right;">
+				{{ 'Product' | trans }}:
+			</div>
+			<div class="span4">
+				{{ form_widget(form.product) }}
+			</div>
+		</div>
+	</div>
+
+	<div class="rackConfigArea">
+		<div class="nodegroup-selector">
+			<h5>{{ 'node.group' | trans }}:</h5>
+		</div>
+
+		<div class="rackConfig">
+			<select id="selectedNodeGroup" disabled="disabled" style="margin-right: 15px;">
+				<option value="0" selected="selected">- {{ 'chose.%person%.%what%' | trans({'%person%': 'your' | trans, '%what%': 'node.group' | trans}) }} -</option>
+				{% for nodegroup in nodegroups %}
+						<option value="{{ nodegroup.id }}">{{ nodegroup }}</option>
+				{% endfor %}
+			</select>
+			<strong>{{ 'free rack units' | trans }}:</strong> <span id="freeUnits" style="margin-right: 15px;">0</span>
+			<strong>{{ 'selected rack unit' | trans }}:</strong> <span id="selectedUnit" style="margin-right: 15px;">{{ 'none' | trans }}</span>
+		</div>
+	</div>
+
+	{{ form_widget(form._token) }}
+	<div class="clear"></div>
+{% endblock %}

@@ -251,6 +251,91 @@ table tr td
 }
 
 /***************************************/
+/********** Rack Content ***************/
+/***************************************/
+
+.rack {
+	border-bottom: 8px solid #757575;
+    border-right: 8px solid #757575;
+    border-top: 8px solid #757575;
+	width: 227px;
+	float: left;
+	margin-bottom: 3px;
+}
+
+.rackTop {
+	background-image: url('../img/rack-top.png');
+	background-repeat: no-repeat;
+	background-position: center center;
+	height: 39px;
+	width: 234px;
+	margin-top: 50px;
+}
+
+.nodegroup-selector {
+    background-color: #E5E5E5;
+    border-left: 1px solid #D6D6D6;
+    border-right: 1px solid #D6D6D6;
+    border-top: 1px solid #D6D6D6;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    height: 20px;
+    margin-left: 73px;
+    padding: 12px;
+    width: 110px;
+	position: relative;
+	margin-top: 15px;
+}
+
+.rackConfig {
+	background-color: #E5E5E5;
+	border-bottom: 1px solid #D7D7D7;
+	border-right: 1px solid #D7D7D7;
+	border-top: 1px solid #D7D7D7;
+	height: 30px;
+	margin-left: 8px;
+	margin-top: -1px;
+	padding-bottom: 10px;
+	padding-left: 75px;
+	padding-top: 10px;
+	width: 611px;
+}
+
+.nodegroup {
+	height: 10px;
+	border-bottom: 1px solid #DEDEDE;
+	cursor: pointer;
+}
+
+.nodegroup:hover {
+	box-shadow: 0 0 7px black;
+}
+
+.nodegroup-selected {
+	background-color: #E5E5E5;
+}
+
+.extraContent {
+	float: right;
+	height: 93px;
+	margin-right: 20px;
+	padding-right: 0;
+	line-height: 30px;
+	color: #346C85;
+	font-weight: bold;
+	width: 658px;
+}
+
+.rackConfigArea {
+	width: 430px;
+	position: relative;
+	top: 0px;
+	left: -8px;
+	float: left;
+	z-index: 9;
+}
+
+/***************************************/
 /******* Node-Group Content ************/
 /***************************************/
 

@@ -2,3 +2,5 @@ debb_config.node.plural: Knoten
 debb_config.node.singular: Knoten
 debb_config.nodegroup.plural: Knotengruppen
 debb_config.nodegroup.singular: Knotengruppe
+debb_config.rack.plural: Racks
+debb_config.rack.singular: Rack

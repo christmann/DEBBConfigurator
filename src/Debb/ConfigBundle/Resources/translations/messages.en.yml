@@ -9,6 +9,7 @@ add.%what%: add %what%
 delete.%what%: delete %what%
 select.%what%: select %what%
 save.%what%: save %what%
+chose.%person%.%what%: chose %person% %what%
 node: node
 node.group: node group
 overview: Overview
@@ -26,6 +27,10 @@ SizeX: width (in m)
 SizeY: height (in m)
 SizeZ: depth (in m)
 adopt: Adopt
+yours: yours
+free rack units: free rack units
+selected rack unit: selected rack unit
+none: none
 
 # form fields which not defined above
 Product: Product

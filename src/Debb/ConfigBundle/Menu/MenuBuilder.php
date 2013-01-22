@@ -71,6 +71,8 @@ class MenuBuilder
 			'linkAttributes' => array('onclick' => '$(this).next().toggle(); return false;'),
 			'attributes' => array('class' => 'three first')
 			));
+		$rack->addChild($this->translateIt('overview'), array('route' => 'debb_config_rack_index', 'attributes' => array('noclass' => true)));
+		$rack->addChild($this->translateIt('create.%what%', array('%what%' => 'rack')), array('route' => 'debb_config_rack_form', 'attributes' => array('noclass' => true)));
 
 		return $menu;
 	}

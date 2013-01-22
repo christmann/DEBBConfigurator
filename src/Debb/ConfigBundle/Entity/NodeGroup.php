@@ -77,7 +77,10 @@ class NodeGroup extends Dimensions
         return $this->nodes;
     }
 
-	public function sortNodes($reversed=false)
+	/**
+	 * Sort nodes (unused) (reverse)
+	 */
+	public function sortNodes()
 	{
 		$ordered = new \Doctrine\Common\Collections\ArrayCollection();
 		for($i = $this->nodes->count() - 1; $i >= 0; $i--) {

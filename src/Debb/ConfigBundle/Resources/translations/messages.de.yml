@@ -9,6 +9,7 @@ add.%what%: %what% hinzufügen
 delete.%what%: %what% löschen
 select.%what%: %what% auswählen
 save.%what%: %what% speichern
+chose.%person%.%what%: Wähle %person% %what%
 node: Knoten
 node.group: Knotengruppe
 overview: Übersicht
@@ -26,6 +27,10 @@ SizeX: Breite (in m)
 SizeY: Höhe (in m)
 SizeZ: Tiefe (in m)
 adopt: Auswählen
+yours: deine
+free rack units: freie HE's
+selected rack unit: ausgewählte HE
+none: Keine
 
 # form fields which not defined above
 Product: Produkt
