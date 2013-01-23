@@ -115,11 +115,11 @@ class Processor extends Base
 		{
 			$array['Title'] = $this->getTitle();
 		}
-		if ($this->getManufacturer() != null)
+		if ($this->getCores() != null)
 		{
 			$array['Cores'] = $this->getCores();
 		}
-		if ($this->getProduct() != null)
+		if ($this->getMaxFrequency() != null)
 		{
 			$array['MaxFrequency'] = $this->getMaxFrequency();
 		}

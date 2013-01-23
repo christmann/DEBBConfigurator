@@ -149,15 +149,15 @@ class Base
 	public function getXmlArray()
 	{
 		$array = array();
-		if ($this->getModel())
+		if ($this->getModel() != null)
 		{
 			$array['ComponentId'] = $this->getModel();
 		}
-		if ($this->getManufacturer())
+		if ($this->getManufacturer() != null)
 		{
 			$array['Manufacturer'] = $this->getManufacturer();
 		}
-		if ($this->getProduct())
+		if ($this->getProduct() != null)
 		{
 			$array['Product'] = $this->getProduct();
 		}
