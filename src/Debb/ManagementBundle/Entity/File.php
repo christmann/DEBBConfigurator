@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class File extends \CIM\PluploadBundle\Entity\File
 {
+
 	/**
 	 * Id
 	 *
@@ -43,4 +44,5 @@ class File extends \CIM\PluploadBundle\Entity\File
 		list(, $type) = explode('/', $this->getMimeType());
 		return $type;
 	}
+
 }
