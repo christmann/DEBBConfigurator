@@ -31,6 +31,11 @@
 													<a href="{{ path(localdev_admin_route("_form"), {"id":item.id}) }}" class="btn">
 														<i class="icon-edit"></i>
 													</a>
+													{% if route_exists(localdev_admin_route("_asxml")) %}
+														<a href="{{ path(localdev_admin_route("_asxml"), {"id": item.id}) }}" class="btn">
+															<i class="icon-file"></i>
+														</a>
+													{% endif %}
 													<a class="btn btn-danger" data-toggle="modal"
 													   href="#delete{{ item.id }}">
 														<i class="icon-remove icon-white"></i>
