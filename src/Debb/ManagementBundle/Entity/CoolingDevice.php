@@ -13,124 +13,151 @@ use Doctrine\ORM\Mapping as ORM;
 class CoolingDevice extends Base
 {
 
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="MaxPower", type="float")
-     */
-    private $maxPower;
+	/**
+	 * @var float
+	 *
+	 * @ORM\Column(name="MaxPower", type="float")
+	 */
+	private $maxPower;
 
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="MaxCoolingCapacity", type="decimal")
-     */
-    private $maxCoolingCapacity;
+	/**
+	 * @var float
+	 *
+	 * @ORM\Column(name="MaxCoolingCapacity", type="decimal")
+	 */
+	private $maxCoolingCapacity;
 
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="MaxAirThroughput", type="decimal")
-     */
-    private $maxAirThroughput;
+	/**
+	 * @var float
+	 *
+	 * @ORM\Column(name="MaxAirThroughput", type="decimal")
+	 */
+	private $maxAirThroughput;
 
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="MaxWaterThroughput", type="decimal")
-     */
-    private $maxWaterThroughput;
+	/**
+	 * @var float
+	 *
+	 * @ORM\Column(name="MaxWaterThroughput", type="decimal")
+	 */
+	private $maxWaterThroughput;
 
+	/**
+	 * Set maxPower
+	 *
+	 * @param float $maxPower
+	 * @return CoolingDevice
+	 */
+	public function setMaxPower($maxPower)
+	{
+		$this->maxPower = $maxPower;
 
-    /**
-     * Set maxPower
-     *
-     * @param float $maxPower
-     * @return CoolingDevice
-     */
-    public function setMaxPower($maxPower)
-    {
-        $this->maxPower = $maxPower;
-    
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get maxPower
-     *
-     * @return float 
-     */
-    public function getMaxPower()
-    {
-        return $this->maxPower;
-    }
+	/**
+	 * Get maxPower
+	 *
+	 * @return float 
+	 */
+	public function getMaxPower()
+	{
+		return $this->maxPower;
+	}
 
-    /**
-     * Set maxCoolingCapacity
-     *
-     * @param float $maxCoolingCapacity
-     * @return CoolingDevice
-     */
-    public function setMaxCoolingCapacity($maxCoolingCapacity)
-    {
-        $this->maxCoolingCapacity = $maxCoolingCapacity;
-    
-        return $this;
-    }
+	/**
+	 * Set maxCoolingCapacity
+	 *
+	 * @param float $maxCoolingCapacity
+	 * @return CoolingDevice
+	 */
+	public function setMaxCoolingCapacity($maxCoolingCapacity)
+	{
+		$this->maxCoolingCapacity = $maxCoolingCapacity;
 
-    /**
-     * Get maxCoolingCapacity
-     *
-     * @return float 
-     */
-    public function getMaxCoolingCapacity()
-    {
-        return $this->maxCoolingCapacity;
-    }
+		return $this;
+	}
 
-    /**
-     * Set maxAirThroughput
-     *
-     * @param float $maxAirThroughput
-     * @return CoolingDevice
-     */
-    public function setMaxAirThroughput($maxAirThroughput)
-    {
-        $this->maxAirThroughput = $maxAirThroughput;
-    
-        return $this;
-    }
+	/**
+	 * Get maxCoolingCapacity
+	 *
+	 * @return float 
+	 */
+	public function getMaxCoolingCapacity()
+	{
+		return $this->maxCoolingCapacity;
+	}
 
-    /**
-     * Get maxAirThroughput
-     *
-     * @return float 
-     */
-    public function getMaxAirThroughput()
-    {
-        return $this->maxAirThroughput;
-    }
+	/**
+	 * Set maxAirThroughput
+	 *
+	 * @param float $maxAirThroughput
+	 * @return CoolingDevice
+	 */
+	public function setMaxAirThroughput($maxAirThroughput)
+	{
+		$this->maxAirThroughput = $maxAirThroughput;
 
-    /**
-     * Set maxWaterThroughput
-     *
-     * @param float $maxWaterThroughput
-     * @return CoolingDevice
-     */
-    public function setMaxWaterThroughput($maxWaterThroughput)
-    {
-        $this->maxWaterThroughput = $maxWaterThroughput;
-    
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get maxWaterThroughput
-     *
-     * @return float 
-     */
-    public function getMaxWaterThroughput()
-    {
-        return $this->maxWaterThroughput;
-    }
+	/**
+	 * Get maxAirThroughput
+	 *
+	 * @return float 
+	 */
+	public function getMaxAirThroughput()
+	{
+		return $this->maxAirThroughput;
+	}
+
+	/**
+	 * Set maxWaterThroughput
+	 *
+	 * @param float $maxWaterThroughput
+	 * @return CoolingDevice
+	 */
+	public function setMaxWaterThroughput($maxWaterThroughput)
+	{
+		$this->maxWaterThroughput = $maxWaterThroughput;
+
+		return $this;
+	}
+
+	/**
+	 * Get maxWaterThroughput
+	 *
+	 * @return float 
+	 */
+	public function getMaxWaterThroughput()
+	{
+		return $this->maxWaterThroughput;
+	}
+
+	/**
+	 * Returns a array for later converting
+	 * 
+	 * @return array the array for later converting
+	 */
+	public function getXmlArray()
+	{
+		$array = parent::getXmlArray();
+		if ($this->getMaxPower() != null)
+		{
+			$array['MaxPower'] = $this->getMaxPower();
+		}
+		if ($this->getMaxCoolingCapacity() != null)
+		{
+			$array['MaxCoolingCapacity'] = $this->getMaxCoolingCapacity();
+		}
+		if ($this->getMaxAirThroughput() != null)
+		{
+			$array['MaxAirThroughput'] = $this->getMaxAirThroughput();
+		}
+		if ($this->getMaxWaterThroughput() != null)
+		{
+			$array['MaxWaterThroughput'] = $this->getMaxWaterThroughput();
+		}
+		return $array;
+	}
+
 }
