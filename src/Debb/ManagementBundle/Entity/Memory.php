@@ -13,64 +13,83 @@ use Doctrine\ORM\Mapping as ORM;
 class Memory extends Base
 {
 
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="MaxPower", type="float")
-     */
-    private $maxPower;
+	/**
+	 * @var float
+	 *
+	 * @ORM\Column(name="MaxPower", type="float")
+	 */
+	private $maxPower;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="Capacity", type="integer")
-     */
-    private $capacity;
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="Capacity", type="integer")
+	 */
+	private $capacity;
 
+	/**
+	 * Set maxPower
+	 *
+	 * @param float $maxPower
+	 * @return Memory
+	 */
+	public function setMaxPower($maxPower)
+	{
+		$this->maxPower = $maxPower;
 
-    /**
-     * Set maxPower
-     *
-     * @param float $maxPower
-     * @return Memory
-     */
-    public function setMaxPower($maxPower)
-    {
-        $this->maxPower = $maxPower;
-    
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get maxPower
-     *
-     * @return float 
-     */
-    public function getMaxPower()
-    {
-        return $this->maxPower;
-    }
+	/**
+	 * Get maxPower
+	 *
+	 * @return float 
+	 */
+	public function getMaxPower()
+	{
+		return $this->maxPower;
+	}
 
-    /**
-     * Set capacity
-     *
-     * @param integer $capacity
-     * @return Memory
-     */
-    public function setCapacity($capacity)
-    {
-        $this->capacity = $capacity;
-    
-        return $this;
-    }
+	/**
+	 * Set capacity
+	 *
+	 * @param integer $capacity
+	 * @return Memory
+	 */
+	public function setCapacity($capacity)
+	{
+		$this->capacity = $capacity;
 
-    /**
-     * Get capacity
-     *
-     * @return integer 
-     */
-    public function getCapacity()
-    {
-        return $this->capacity;
-    }
+		return $this;
+	}
+
+	/**
+	 * Get capacity
+	 *
+	 * @return integer 
+	 */
+	public function getCapacity()
+	{
+		return $this->capacity;
+	}
+
+	/**
+	 * Returns a array for later converting
+	 * 
+	 * @return array the array for later converting
+	 */
+	public function getXmlArray()
+	{
+		$array = parent::getXmlArray();
+		if ($this->getMaxPower() != null)
+		{
+			$array['MaxPower'] = $this->getMaxPower();
+		}
+		if ($this->getCapacity() != null)
+		{
+			$array['Capacity'] = $this->getCapacity();
+		}
+		return $array;
+	}
+
 }
