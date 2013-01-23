@@ -39,24 +39,24 @@ class Rack extends \Debb\ManagementBundle\Entity\Base
 
 		return $this;
 	}
-    
-    /**
-     * Set node groups
-     *
-     * @param \Debb\ManagementBundle\Entity\NodegroupToRack[] $nodeGroups
-     * @return Rack
-     */
-    public function setNodeGroups($nodeGroups)
-    {
-        $this->nodeGroups = $nodeGroups;
 
-		foreach($this->nodeGroups as $nodeGroup)
+	/**
+	 * Set node groups
+	 *
+	 * @param \Debb\ManagementBundle\Entity\NodegroupToRack[] $nodeGroups
+	 * @return Rack
+	 */
+	public function setNodeGroups($nodeGroups)
+	{
+		$this->nodeGroups = $nodeGroups;
+
+		foreach ($this->nodeGroups as $nodeGroup)
 		{
 			$nodeGroup->setRack($this);
 		}
-    
-        return $this;
-    }
+
+		return $this;
+	}
 
 	/**
 	 * Remove nodeGroups
@@ -101,6 +101,24 @@ class Rack extends \Debb\ManagementBundle\Entity\Base
 			}
 		}
 		return $res;
+	}
+
+	/**
+	 * Returns a array for later converting
+	 * 
+	 * @return array the array for later converting
+	 */
+	public function getXmlArray()
+	{
+		$array['Rack'] = parent::getXmlArray();
+		foreach ($this->getNodeGroups() as $nodegroup)
+		{
+			if ($nodegroup->getNodegroup() != null)
+			{
+				$array['Rack'][] = $nodegroup->getNodegroup()->getXmlArray();
+			}
+		}
+		return $array;
 	}
 
 }

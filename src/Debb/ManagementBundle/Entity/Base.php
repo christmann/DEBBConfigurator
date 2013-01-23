@@ -189,7 +189,7 @@ class Base
 			}
 			else
 			{
-				$element->addChild($key, $value);
+				$element->addChild($key, htmlentities($value));
 			}
 		}
 	}

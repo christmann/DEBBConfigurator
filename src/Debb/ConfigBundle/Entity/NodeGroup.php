@@ -133,7 +133,7 @@ class NodeGroup extends Dimensions
 		$array['NodeGroup'] = parent::getXmlArray();
 		foreach ($this->getNodes() as $node)
 		{
-			if($node->getNode() != null)
+			if ($node->getNode() != null)
 			{
 				$array['NodeGroup'][] = $node->getNode()->getXmlArray();
 			}
