@@ -12,94 +12,118 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Processor extends Base
 {
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="title", type="string", length=255)
-     */
-    private $title;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="cores", type="integer")
-     */
-    private $cores;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="title", type="string", length=255)
+	 */
+	private $title;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="max_frequency", type="integer")
-     */
-    private $maxFrequency;
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="cores", type="integer")
+	 */
+	private $cores;
 
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="max_frequency", type="integer")
+	 */
+	private $maxFrequency;
 
-    /**
-     * Set title
-     *
-     * @param string $title
-     * @return Processor
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-    
-        return $this;
-    }
+	/**
+	 * Set title
+	 *
+	 * @param string $title
+	 * @return Processor
+	 */
+	public function setTitle($title)
+	{
+		$this->title = $title;
 
-    /**
-     * Get title
-     *
-     * @return string 
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
+		return $this;
+	}
 
-    /**
-     * Set cores
-     *
-     * @param integer $cores
-     * @return Processor
-     */
-    public function setCores($cores)
-    {
-        $this->cores = $cores;
-    
-        return $this;
-    }
+	/**
+	 * Get title
+	 *
+	 * @return string 
+	 */
+	public function getTitle()
+	{
+		return $this->title;
+	}
 
-    /**
-     * Get cores
-     *
-     * @return integer 
-     */
-    public function getCores()
-    {
-        return $this->cores;
-    }
+	/**
+	 * Set cores
+	 *
+	 * @param integer $cores
+	 * @return Processor
+	 */
+	public function setCores($cores)
+	{
+		$this->cores = $cores;
 
-    /**
-     * Set maxFrequency
-     *
-     * @param integer $maxFrequency
-     * @return Processor
-     */
-    public function setMaxFrequency($maxFrequency)
-    {
-        $this->maxFrequency = $maxFrequency;
-    
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get maxFrequency
-     *
-     * @return integer 
-     */
-    public function getMaxFrequency()
-    {
-        return $this->maxFrequency;
-    }
+	/**
+	 * Get cores
+	 *
+	 * @return integer 
+	 */
+	public function getCores()
+	{
+		return $this->cores;
+	}
+
+	/**
+	 * Set maxFrequency
+	 *
+	 * @param integer $maxFrequency
+	 * @return Processor
+	 */
+	public function setMaxFrequency($maxFrequency)
+	{
+		$this->maxFrequency = $maxFrequency;
+
+		return $this;
+	}
+
+	/**
+	 * Get maxFrequency
+	 *
+	 * @return integer 
+	 */
+	public function getMaxFrequency()
+	{
+		return $this->maxFrequency;
+	}
+
+	/**
+	 * Returns a array for later converting
+	 * 
+	 * @return array the array for later converting
+	 */
+	public function getXmlArray()
+	{
+		$array = parent::getXmlArray();
+		if ($this->getTitle() != null)
+		{
+			$array['Title'] = $this->getTitle();
+		}
+		if ($this->getManufacturer() != null)
+		{
+			$array['Cores'] = $this->getCores();
+		}
+		if ($this->getProduct() != null)
+		{
+			$array['MaxFrequency'] = $this->getMaxFrequency();
+		}
+		return $array;
+	}
+
 }
