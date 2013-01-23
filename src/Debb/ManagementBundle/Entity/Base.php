@@ -171,7 +171,7 @@ class Base
 	 * @param array $array the array which you would convert to xml
 	 * @param SimpleXMLElement $element the SimpleXMLElement for adding childs
 	 */
-	public static function array_to_xml(Array $array, SimpleXMLElement &$element)
+	public static function array_to_xml(Array $array, \SimpleXMLElement &$element)
 	{
 		foreach ($array as $key => $value)
 		{
@@ -180,11 +180,11 @@ class Base
 				if (!is_numeric($key))
 				{
 					$subnode = $element->addChild($key);
-					array_to_xml($value, $subnode);
+					self::array_to_xml($value, $subnode);
 				}
 				else
 				{
-					array_to_xml($value, $element);
+					self::array_to_xml($value, $element);
 				}
 			}
 			else

@@ -87,4 +87,27 @@ class NodeController extends CRUDController
 			));
 	}
 
+	/**
+	 * Download entity as xml file
+	 *
+	 * @Route("/xml/{id}", defaults={"id"=0}, requirements={"id"="\d+|"});
+	 *
+	 * @param int                                       $id       item id
+	 *
+	 * @return \Symfony\Component\HttpFoundation\Response
+	 */
+	public function asXmlAction($id = 0)
+	{
+		$response = new \Symfony\Component\HttpFoundation\Response();
+		$response->headers->set('Content-Type', 'text/xml');
+
+		$item = $this->getEntity($id);
+
+		$xml = new \SimpleXMLElement("<?xml version=\"1.0\"?><test />");
+		\Debb\ManagementBundle\Entity\Base::array_to_xml($item->getXmlArray(), $xml);
+		echo $xml->asXML();
+
+		return $response;
+	}
+
 }
