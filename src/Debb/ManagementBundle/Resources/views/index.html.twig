@@ -32,7 +32,7 @@
 														<i class="icon-edit"></i>
 													</a>
 													{% if route_exists(localdev_admin_route("_asxml")) %}
-														<a href="{{ path(localdev_admin_route("_asxml"), {"id": item.id}) }}" class="btn">
+														<a target="_blank" href="{{ path(localdev_admin_route("_asxml"), {"id": item.id}) }}" class="btn">
 															<i class="icon-file"></i>
 														</a>
 													{% endif %}
