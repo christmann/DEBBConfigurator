@@ -19,6 +19,7 @@ class Component
 	 *
 	 * @var int
 	 */
+
 	const TYPE_NOTHING = 0;
 
 	/**
@@ -63,35 +64,35 @@ class Component
 	 */
 	const TYPE_STORAGE = 6;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="id", type="integer")
+	 * @ORM\Id
+	 * @ORM\GeneratedValue(strategy="AUTO")
+	 */
+	private $id;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="type", type="integer")
-     */
-    private $type = self::TYPE_NOTHING;
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="type", type="integer")
+	 */
+	private $type = self::TYPE_NOTHING;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="amount", type="integer")
-     */
-    private $amount = 1;
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="amount", type="integer")
+	 */
+	private $amount = 1;
 
-    /**
-     * @var Debb\ConfigBundle\Entity\Node
-     *
+	/**
+	 * @var Debb\ConfigBundle\Entity\Node
+	 *
 	 * @ORM\ManyToOne(targetEntity="Debb\ConfigBundle\Entity\Node", inversedBy="components")
-     */
-    private $node;
+	 */
+	private $node;
 
 	/**
 	 * @var Debb\ManagementBundle\Entity\Processor
@@ -135,220 +136,256 @@ class Component
 	 */
 	private $storage;
 
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+	/**
+	 * Get id
+	 *
+	 * @return integer 
+	 */
+	public function getId()
+	{
+		return $this->id;
+	}
 
-    /**
-     * Set type
-     *
-     * @param integer $type
-     * @return Component
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-    
-        return $this;
-    }
+	/**
+	 * Set type
+	 *
+	 * @param integer $type
+	 * @return Component
+	 */
+	public function setType($type)
+	{
+		$this->type = $type;
 
-    /**
-     * Get type
-     *
-     * @return integer 
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
+		return $this;
+	}
 
-    /**
-     * Set node
-     *
-     * @param \Debb\ConfigBundle\Entity\Node $node
-     * @return Component
-     */
-    public function setNode(\Debb\ConfigBundle\Entity\Node $node = null)
-    {
-        $this->node = $node;
-    
-        return $this;
-    }
+	/**
+	 * Get type
+	 *
+	 * @return integer 
+	 */
+	public function getType()
+	{
+		return $this->type;
+	}
 
-    /**
-     * Get node
-     *
-     * @return \Debb\ConfigBundle\Entity\Node 
-     */
-    public function getNode()
-    {
-        return $this->node;
-    }
+	/**
+	 * Set node
+	 *
+	 * @param \Debb\ConfigBundle\Entity\Node $node
+	 * @return Component
+	 */
+	public function setNode(\Debb\ConfigBundle\Entity\Node $node = null)
+	{
+		$this->node = $node;
 
-    /**
-     * Set processor
-     *
-     * @param \Debb\ManagementBundle\Entity\Processor $processor
-     * @return Component
-     */
-    public function setProcessor(\Debb\ManagementBundle\Entity\Processor $processor = null)
-    {
-        $this->processor = $processor;
-    
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get processor
-     *
-     * @return \Debb\ManagementBundle\Entity\Processor 
-     */
-    public function getProcessor()
-    {
-        return $this->processor;
-    }
+	/**
+	 * Get node
+	 *
+	 * @return \Debb\ConfigBundle\Entity\Node 
+	 */
+	public function getNode()
+	{
+		return $this->node;
+	}
 
-    /**
-     * Set mainboard
-     *
-     * @param \Debb\ManagementBundle\Entity\Mainboard $mainboard
-     * @return Component
-     */
-    public function setMainboard(\Debb\ManagementBundle\Entity\Mainboard $mainboard = null)
-    {
-        $this->mainboard = $mainboard;
-    
-        return $this;
-    }
+	/**
+	 * Set processor
+	 *
+	 * @param \Debb\ManagementBundle\Entity\Processor $processor
+	 * @return Component
+	 */
+	public function setProcessor(\Debb\ManagementBundle\Entity\Processor $processor = null)
+	{
+		$this->processor = $processor;
 
-    /**
-     * Get mainboard
-     *
-     * @return \Debb\ManagementBundle\Entity\Mainboard 
-     */
-    public function getMainboard()
-    {
-        return $this->mainboard;
-    }
+		return $this;
+	}
 
-    /**
-     * Set coolingDevice
-     *
-     * @param \Debb\ManagementBundle\Entity\CoolingDevice $coolingDevice
-     * @return Component
-     */
-    public function setCoolingDevice(\Debb\ManagementBundle\Entity\CoolingDevice $coolingDevice = null)
-    {
-        $this->coolingDevice = $coolingDevice;
-    
-        return $this;
-    }
+	/**
+	 * Get processor
+	 *
+	 * @return \Debb\ManagementBundle\Entity\Processor 
+	 */
+	public function getProcessor()
+	{
+		return $this->processor;
+	}
 
-    /**
-     * Get coolingDevice
-     *
-     * @return \Debb\ManagementBundle\Entity\CoolingDevice 
-     */
-    public function getCoolingDevice()
-    {
-        return $this->coolingDevice;
-    }
+	/**
+	 * Set mainboard
+	 *
+	 * @param \Debb\ManagementBundle\Entity\Mainboard $mainboard
+	 * @return Component
+	 */
+	public function setMainboard(\Debb\ManagementBundle\Entity\Mainboard $mainboard = null)
+	{
+		$this->mainboard = $mainboard;
 
-    /**
-     * Set memory
-     *
-     * @param \Debb\ManagementBundle\Entity\Memory $memory
-     * @return Component
-     */
-    public function setMemory(\Debb\ManagementBundle\Entity\Memory $memory = null)
-    {
-        $this->memory = $memory;
-    
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get memory
-     *
-     * @return \Debb\ManagementBundle\Entity\Memory 
-     */
-    public function getMemory()
-    {
-        return $this->memory;
-    }
+	/**
+	 * Get mainboard
+	 *
+	 * @return \Debb\ManagementBundle\Entity\Mainboard 
+	 */
+	public function getMainboard()
+	{
+		return $this->mainboard;
+	}
 
-    /**
-     * Set powersupply
-     *
-     * @param \Debb\ManagementBundle\Entity\PowerSupply $powersupply
-     * @return Component
-     */
-    public function setPowersupply(\Debb\ManagementBundle\Entity\PowerSupply $powersupply = null)
-    {
-        $this->powersupply = $powersupply;
-    
-        return $this;
-    }
+	/**
+	 * Set coolingDevice
+	 *
+	 * @param \Debb\ManagementBundle\Entity\CoolingDevice $coolingDevice
+	 * @return Component
+	 */
+	public function setCoolingDevice(\Debb\ManagementBundle\Entity\CoolingDevice $coolingDevice = null)
+	{
+		$this->coolingDevice = $coolingDevice;
 
-    /**
-     * Get powersupply
-     *
-     * @return \Debb\ManagementBundle\Entity\PowerSupply 
-     */
-    public function getPowersupply()
-    {
-        return $this->powersupply;
-    }
+		return $this;
+	}
 
-    /**
-     * Set storage
-     *
-     * @param \Debb\ManagementBundle\Entity\Storage $storage
-     * @return Component
-     */
-    public function setStorage(\Debb\ManagementBundle\Entity\Storage $storage = null)
-    {
-        $this->storage = $storage;
-    
-        return $this;
-    }
+	/**
+	 * Get coolingDevice
+	 *
+	 * @return \Debb\ManagementBundle\Entity\CoolingDevice 
+	 */
+	public function getCoolingDevice()
+	{
+		return $this->coolingDevice;
+	}
 
-    /**
-     * Get storage
-     *
-     * @return \Debb\ManagementBundle\Entity\Storage 
-     */
-    public function getStorage()
-    {
-        return $this->storage;
-    }
+	/**
+	 * Set memory
+	 *
+	 * @param \Debb\ManagementBundle\Entity\Memory $memory
+	 * @return Component
+	 */
+	public function setMemory(\Debb\ManagementBundle\Entity\Memory $memory = null)
+	{
+		$this->memory = $memory;
 
-    /**
-     * Set amount
-     *
-     * @param integer $amount
-     * @return Component
-     */
-    public function setAmount($amount)
-    {
-        $this->amount = $amount;
-    
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get amount
-     *
-     * @return integer 
-     */
-    public function getAmount()
-    {
-        return $this->amount;
-    }
+	/**
+	 * Get memory
+	 *
+	 * @return \Debb\ManagementBundle\Entity\Memory 
+	 */
+	public function getMemory()
+	{
+		return $this->memory;
+	}
+
+	/**
+	 * Set powersupply
+	 *
+	 * @param \Debb\ManagementBundle\Entity\PowerSupply $powersupply
+	 * @return Component
+	 */
+	public function setPowersupply(\Debb\ManagementBundle\Entity\PowerSupply $powersupply = null)
+	{
+		$this->powersupply = $powersupply;
+
+		return $this;
+	}
+
+	/**
+	 * Get powersupply
+	 *
+	 * @return \Debb\ManagementBundle\Entity\PowerSupply 
+	 */
+	public function getPowersupply()
+	{
+		return $this->powersupply;
+	}
+
+	/**
+	 * Set storage
+	 *
+	 * @param \Debb\ManagementBundle\Entity\Storage $storage
+	 * @return Component
+	 */
+	public function setStorage(\Debb\ManagementBundle\Entity\Storage $storage = null)
+	{
+		$this->storage = $storage;
+
+		return $this;
+	}
+
+	/**
+	 * Get storage
+	 *
+	 * @return \Debb\ManagementBundle\Entity\Storage 
+	 */
+	public function getStorage()
+	{
+		return $this->storage;
+	}
+
+	/**
+	 * Set amount
+	 *
+	 * @param integer $amount
+	 * @return Component
+	 */
+	public function setAmount($amount)
+	{
+		$this->amount = $amount;
+
+		return $this;
+	}
+
+	/**
+	 * Get amount
+	 *
+	 * @return integer 
+	 */
+	public function getAmount()
+	{
+		return $this->amount;
+	}
+
+	/**
+	 * Returns a array for later converting
+	 * 
+	 * @return array the array for later converting
+	 */
+	public function getXmlArray()
+	{
+		$array = array();
+		if($this->getType() == $this::TYPE_MAINBOARD && $this->getMainboard() != null)
+		{
+			$array['mainboard'] = $this->getMainboard()->getXmlArray();
+		}
+		else if($this->getType() == $this::TYPE_PROCESSOR && $this->getProcessor() != null)
+		{
+			$array['processor'] = $this->getProcessor()->getXmlArray();
+		}
+		else if($this->getType() == $this::TYPE_COOLING_DEVICE && $this->getCoolingDevice() != null)
+		{
+			$array['coolingdevice'] = $this->getCoolingDevice()->getXmlArray();
+		}
+		else if($this->getType() == $this::TYPE_MEMORY && $this->getMemory() != null)
+		{
+			$array['memory'] = $this->getMemory()->getXmlArray();
+		}
+		else if($this->getType() == $this::TYPE_POWER_SUPPLY && $this->getPowersupply() != null)
+		{
+			$array['powersupply'] = $this->getPowersupply()->getXmlArray();
+		}
+		else if($this->getType() == $this::TYPE_STORAGE && $this->getStorage() != null)
+		{
+			$array['storage'] = $this->getStorage()->getXmlArray();
+		}
+		return $array;
+	}
+
 }
