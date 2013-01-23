@@ -157,14 +157,14 @@ class Node extends Dimensions
 	 */
 	public function getXmlArray()
 	{
-		$array['node'] = parent::getXmlArray();
+		$array['Node'] = parent::getXmlArray();
 		if ($this->getMainboard() != null)
 		{
-			$array['node']['Mainboard'] = $this->getMainboard()->getXmlArray();
+			$array['Node']['Mainboard'] = $this->getMainboard()->getXmlArray();
 		}
 		foreach($this->getComponents() as $component)
 		{
-			$array['node'][] = $component->getXmlArray();
+			$array['Node'][] = $component->getXmlArray();
 		}
 		return $array;
 	}

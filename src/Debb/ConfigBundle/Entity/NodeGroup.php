@@ -12,70 +12,71 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class NodeGroup extends Dimensions
 {
+
 	/**
 	 * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\NodeToNodegroup", cascade={"persist"}, mappedBy="nodeGroup", orphanRemoval=true)
 	 */
 	private $nodes;
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->nodes = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
-    /**
-     * Add nodes
-     *
-     * @param \Debb\ManagementBundle\Entity\NodeToNodegroup $nodes
-     * @return NodeGroup
-     */
-    public function addNode(\Debb\ManagementBundle\Entity\NodeToNodegroup $nodes)
-    {
-		$nodes->setNodeGroup($this);
-        $this->nodes[] = $nodes;
-    
-        return $this;
-    }
-    
-    /**
-     * Set nodes
-     *
-     * @param \Debb\ManagementBundle\Entity\NodeToNodegroup[] $nodes
-     * @return NodeGroup
-     */
-    public function setNodes($nodes)
-    {
-        $this->nodes = $nodes;
+	/**
+	 * Constructor
+	 */
+	public function __construct()
+	{
+		$this->nodes = new \Doctrine\Common\Collections\ArrayCollection();
+	}
 
-		foreach($this->nodes as $node)
+	/**
+	 * Add nodes
+	 *
+	 * @param \Debb\ManagementBundle\Entity\NodeToNodegroup $nodes
+	 * @return NodeGroup
+	 */
+	public function addNode(\Debb\ManagementBundle\Entity\NodeToNodegroup $nodes)
+	{
+		$nodes->setNodeGroup($this);
+		$this->nodes[] = $nodes;
+
+		return $this;
+	}
+
+	/**
+	 * Set nodes
+	 *
+	 * @param \Debb\ManagementBundle\Entity\NodeToNodegroup[] $nodes
+	 * @return NodeGroup
+	 */
+	public function setNodes($nodes)
+	{
+		$this->nodes = $nodes;
+
+		foreach ($this->nodes as $node)
 		{
 			$node->setNodeGroup($this);
 		}
-    
-        return $this;
-    }
 
-    /**
-     * Remove nodes
-     *
-     * @param \Debb\ManagementBundle\Entity\NodeToNodegroup $nodes
-     */
-    public function removeNode(\Debb\ManagementBundle\Entity\NodeToNodegroup $nodes)
-    {
-        $this->nodes->removeElement($nodes);
-    }
+		return $this;
+	}
 
-    /**
-     * Get nodes
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getNodes()
-    {
-        return $this->nodes;
-    }
+	/**
+	 * Remove nodes
+	 *
+	 * @param \Debb\ManagementBundle\Entity\NodeToNodegroup $nodes
+	 */
+	public function removeNode(\Debb\ManagementBundle\Entity\NodeToNodegroup $nodes)
+	{
+		$this->nodes->removeElement($nodes);
+	}
+
+	/**
+	 * Get nodes
+	 *
+	 * @return \Doctrine\Common\Collections\Collection 
+	 */
+	public function getNodes()
+	{
+		return $this->nodes;
+	}
 
 	/**
 	 * Sort nodes (unused) (reverse)
@@ -83,13 +84,14 @@ class NodeGroup extends Dimensions
 	public function sortNodes()
 	{
 		$ordered = new \Doctrine\Common\Collections\ArrayCollection();
-		for($i = $this->nodes->count() - 1; $i >= 0; $i--) {
+		for ($i = $this->nodes->count() - 1; $i >= 0; $i--)
+		{
 			$ordered->add($this->nodes[$i]);
 		}
 		$this->nodes = $ordered;
 
 		$x = 0;
-		foreach($this->nodes as $node)
+		foreach ($this->nodes as $node)
 		{
 			$node->setField($x);
 			$x++;
@@ -104,20 +106,39 @@ class NodeGroup extends Dimensions
 	public function getFreeNode()
 	{
 		$ids = array();
-		foreach($this->getNodes() as $node)
+		foreach ($this->getNodes() as $node)
 		{
 			$ids[] = $node->getField();
 		}
 		ksort($ids);
 
 		$res = 0;
-		foreach($ids as $id)
+		foreach ($ids as $id)
 		{
-			if($id == $res)
+			if ($id == $res)
 			{
 				$res++;
 			}
 		}
 		return $res;
 	}
+
+	/**
+	 * Returns a array for later converting
+	 * 
+	 * @return array the array for later converting
+	 */
+	public function getXmlArray()
+	{
+		$array['NodeGroup'] = parent::getXmlArray();
+		foreach ($this->getNodes() as $node)
+		{
+			if($node->getNode() != null)
+			{
+				$array['NodeGroup'][] = $node->getNode()->getXmlArray();
+			}
+		}
+		return $array;
+	}
+
 }
