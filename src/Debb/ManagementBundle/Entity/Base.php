@@ -167,7 +167,7 @@ class Base
 	/**
 	 * function definition to convert array to xml
 	 * 
-	 * @source http://stackoverflow.com/a/5965940/1979651
+	 * @author http://stackoverflow.com/a/5965940/1979651
 	 * @param array $array the array which you would convert to xml
 	 * @param SimpleXMLElement $element the SimpleXMLElement for adding childs
 	 */

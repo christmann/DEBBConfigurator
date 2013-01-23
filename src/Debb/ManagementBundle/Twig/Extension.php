@@ -61,7 +61,7 @@ class Extension extends \Twig_Extension
 	 */
 	public function getName()
 	{
-		return 'extension_extension';
+		return 'managementbundle_extension';
 	}
 
 }
