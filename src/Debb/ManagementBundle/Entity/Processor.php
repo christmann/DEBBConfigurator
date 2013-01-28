@@ -14,13 +14,6 @@ class Processor extends Base
 {
 
 	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="title", type="string", length=255)
-	 */
-	private $title;
-
-	/**
 	 * @var integer
 	 *
 	 * @ORM\Column(name="cores", type="integer")
@@ -33,29 +26,6 @@ class Processor extends Base
 	 * @ORM\Column(name="max_frequency", type="integer")
 	 */
 	private $maxFrequency;
-
-	/**
-	 * Set title
-	 *
-	 * @param string $title
-	 * @return Processor
-	 */
-	public function setTitle($title)
-	{
-		$this->title = $title;
-
-		return $this;
-	}
-
-	/**
-	 * Get title
-	 *
-	 * @return string 
-	 */
-	public function getTitle()
-	{
-		return $this->title;
-	}
 
 	/**
 	 * Set cores
@@ -111,10 +81,6 @@ class Processor extends Base
 	public function getXmlArray()
 	{
 		$array = parent::getXmlArray();
-		if ($this->getTitle() != null)
-		{
-			$array['Title'] = $this->getTitle();
-		}
 		if ($this->getCores() != null)
 		{
 			$array['Cores'] = $this->getCores();

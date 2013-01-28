@@ -14,7 +14,6 @@ class ProcessorType extends AbstractType
             ->add('manufacturer', 'text')
             ->add('product', 'text')
             ->add('model', 'text')
-            ->add('title', 'text')
             ->add('cores', 'number')
             ->add('maxFrequency', 'number')
         ;
