@@ -34,12 +34,12 @@ class MenuBuilder
 	{
 		$menu = $this->factory->createItem('root');
 
-		$management = $menu->addChild($this->translateIt('management'), array(
+		$management = $menu->addChild($this->translateIt('Components'), array(
 			'uri' => '#',
 			'displayChildren' => true,
 			'linkAttributes' => array('onclick' => '$(this).next().toggle(); return false;'),
-			'attributes' => array('class' => 'zero first')
-			));
+			'attributes' => array('class' => 'zero first current')
+		));
 		$management->addChild($this->translateIt('Processor'), array('route' => 'debb_management_processor_index', 'attributes' => array('noclass' => true)));
 		$management->addChild($this->translateIt('Mainboard'), array('route' => 'debb_management_mainboard_index', 'attributes' => array('noclass' => true)));
 		$management->addChild($this->translateIt('Coolingdevice'), array('route' => 'debb_management_coolingdevice_index', 'attributes' => array('noclass' => true)));
@@ -47,32 +47,20 @@ class MenuBuilder
 		$management->addChild($this->translateIt('Powersupply'), array('route' => 'debb_management_powersupply_index', 'attributes' => array('noclass' => true)));
 		$management->addChild($this->translateIt('Storage'), array('route' => 'debb_management_storage_index', 'attributes' => array('noclass' => true)));
 
-		$node = $menu->addChild($this->translateIt('configure.%what%', array('%what%' => 'node')), array(
-			'uri' => '#',
-			'displayChildren' => true,
-			'linkAttributes' => array('onclick' => '$(this).next().toggle(); return false;'),
+		$menu->addChild($this->translateIt('node'), array(
+			'route' => 'debb_config_node_index',
 			'attributes' => array('class' => 'one first')
-			));
-		$node->addChild($this->translateIt('overview'), array('route' => 'debb_config_node_index', 'attributes' => array('noclass' => true)));
-		$node->addChild($this->translateIt('create.%what%', array('%what%' => 'node')), array('route' => 'debb_config_node_form', 'attributes' => array('noclass' => true)));
+		));
 
-		$nodeGroup = $menu->addChild($this->translateIt('define.%what%', array('%what%' => 'node.group')), array(
-			'uri' => '#',
-			'displayChildren' => true,
-			'linkAttributes' => array('onclick' => '$(this).next().toggle(); return false;'),
+		$menu->addChild($this->translateIt('node.group'), array(
+			'route' => 'debb_config_nodegroup_index',
 			'attributes' => array('class' => 'two first')
-			));
-		$nodeGroup->addChild($this->translateIt('overview'), array('route' => 'debb_config_nodegroup_index', 'attributes' => array('noclass' => true)));
-		$nodeGroup->addChild($this->translateIt('create.%what%', array('%what%' => 'node.group')), array('route' => 'debb_config_nodegroup_form', 'attributes' => array('noclass' => true)));
+		));
 
-		$rack = $menu->addChild($this->translateIt('equip.%what%', array('%what%' => 'rack')), array(
-			'uri' => '#',
-			'displayChildren' => true,
-			'linkAttributes' => array('onclick' => '$(this).next().toggle(); return false;'),
+		$menu->addChild($this->translateIt('rack'), array(
+			'route' => 'debb_config_rack_index',
 			'attributes' => array('class' => 'three first')
-			));
-		$rack->addChild($this->translateIt('overview'), array('route' => 'debb_config_rack_index', 'attributes' => array('noclass' => true)));
-		$rack->addChild($this->translateIt('create.%what%', array('%what%' => 'rack')), array('route' => 'debb_config_rack_form', 'attributes' => array('noclass' => true)));
+		));
 
 		return $menu;
 	}

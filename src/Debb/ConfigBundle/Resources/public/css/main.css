@@ -222,7 +222,7 @@ table tr td
 	padding: 0px;
 }
 
-#config-menu ul ul li a
+#config-menu ul ul li > a:not(div)
 {
 	background-color: #f8f8f8;
 	cursor: pointer;
@@ -241,7 +241,7 @@ table tr td
 	text-transform: uppercase;
 }
 
-#config-menu ul ul li a:hover, #config-menu ul ul li a.current
+#config-menu ul ul li > a:not(div):hover, #config-menu ul ul li > a.current:not(div)
 {
 	background-color: #fff;
 }
@@ -690,4 +690,15 @@ label, input, button, select, textarea {
 
 .component .componentExtras .addComponent {
 	margin-bottom: 19px;
+}
+
+#config-menu ul li {
+	position: relative;
+}
+
+
+.ulExtra {
+	position: absolute;
+	right: 7px;
+	top: 8px;
 }

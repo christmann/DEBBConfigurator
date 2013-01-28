@@ -74,6 +74,11 @@
         {%- set childrenClasses = childrenClasses|merge(['menu_level_' ~ item.level]) %}
         {%- set listAttributes = item.childrenAttributes|merge({'class': childrenClasses|join(' ') }) %}
         {{ block('list') }}
+		{% if item.hasChildren == false %}
+			<div class="ulExtra">
+				<a href="{{ item.uri | replace({'/index': '/form'}) }}"><i class="icon-plus"></i></a>
+			</div>
+		{% endif %}
     </li>
 {% endif %}
 {% endblock %}
