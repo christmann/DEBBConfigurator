@@ -170,7 +170,7 @@ table tr td
 	background-repeat: no-repeat;
 	background-position: 10px center;
 	width: 135px;
-	padding: 10px 5px 5px 40px;
+	padding: 5px 5px 5px 40px;
 	display: block;
 	border-left: 1px solid #666;
 	border-top: 1px solid #666;
@@ -227,7 +227,7 @@ table tr td
 	background-color: #f8f8f8;
 	cursor: pointer;
 	width: 135px;
-	padding: 10px 5px 5px 40px;
+	padding: 5px 5px 5px 40px;
 	display: block;
 	border-left: 1px solid #ddd;
 	border-top: 1px solid #ddd;
@@ -700,5 +700,5 @@ label, input, button, select, textarea {
 .ulExtra {
 	position: absolute;
 	right: 7px;
-	top: 8px;
+	top: 5px;
 }
