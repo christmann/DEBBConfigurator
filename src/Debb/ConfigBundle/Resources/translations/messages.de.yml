@@ -24,9 +24,9 @@ Storage: HDD
 Amount: Anzahl
 delete.last.entry: Sicher, dass Sie den letzten Eintrag dieser Art löschen wollen?
 only.one.of.this: Sie können maximal nur eine Auswahl dieses Typs haben!
-SizeX: Breite (in m)
-SizeY: Höhe (in m)
-SizeZ: Tiefe (in m)
+SizeX: Breite (in mm)
+SizeY: Höhe (in mm)
+SizeZ: Tiefe (in mm)
 adopt: Auswählen
 yours: deine
 free rack units: freie HE's

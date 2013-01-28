@@ -24,9 +24,9 @@ Storage: HDDs
 Amount: Amount
 delete.last.entry: Sure? You want to delete the last entry of this kind!
 only.one.of.this: You can have a maximum of only a selection of this type!
-SizeX: width (in m)
-SizeY: height (in m)
-SizeZ: depth (in m)
+SizeX: width (in mm)
+SizeY: height (in mm)
+SizeZ: depth (in mm)
 adopt: Adopt
 yours: yours
 free rack units: free rack units
