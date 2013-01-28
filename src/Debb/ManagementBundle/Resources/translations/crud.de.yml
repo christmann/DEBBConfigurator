@@ -10,3 +10,4 @@ debb_management.powersupply.plural: Stromversorgungen
 debb_management.powersupply.singular: Stromversorgung
 debb_management.storage.plural: HDDs
 debb_management.storage.singular: HDD
+localdev_admin.actions.create: %name% erstellen
