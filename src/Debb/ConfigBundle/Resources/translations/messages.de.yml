@@ -23,6 +23,7 @@ Powersupply: Netzteil
 Storage: HDD
 Amount: Anzahl
 delete.last.entry: Sicher, dass Sie den letzten Eintrag dieser Art löschen wollen?
+only.one.of.this: Sie können maximal nur eine Auswahl dieses Typs haben!
 SizeX: Breite (in m)
 SizeY: Höhe (in m)
 SizeZ: Tiefe (in m)

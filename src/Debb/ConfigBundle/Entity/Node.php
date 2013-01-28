@@ -162,9 +162,12 @@ class Node extends Dimensions
 		{
 			$array['Node']['Mainboard'] = $this->getMainboard()->getXmlArray();
 		}
-		foreach($this->getComponents() as $component)
+		foreach ($this->getComponents() as $component)
 		{
-			$array['Node'][] = $component->getXmlArray();
+			if ($component->getAmount() > 1 && $component->getType() != \Debb\ManagementBundle\Entity\Component::TYPE_NOTHING)
+			{
+				$array['Node'][] = $component->getXmlArray();
+			}
 		}
 		return $array;
 	}

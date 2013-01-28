@@ -632,6 +632,10 @@ label, input, button, select, textarea {
 	font-size: 12px;
 }
 
+label {
+	margin-bottom: 0px;
+}
+
 .component {
 	float: left;
 	width: 314px;
@@ -673,6 +677,10 @@ label, input, button, select, textarea {
 	float: left;
 }
 
+.component > div:first-of-type {
+	position: relative;
+}
+
 .component .componentExtras {
     height: 61px;
     padding-left: 6px;
@@ -701,4 +709,10 @@ label, input, button, select, textarea {
 	position: absolute;
 	right: 7px;
 	top: 5px;
+}
+
+.amountExtras {
+	position: absolute;
+    right: 68px;
+    top: 44px;
 }

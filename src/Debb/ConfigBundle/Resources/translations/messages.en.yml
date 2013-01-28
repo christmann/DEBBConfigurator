@@ -17,12 +17,13 @@ rack: rack
 management: Management
 Processor: Processor
 Mainboard: Mainboard
-Coolingdevice: cooling devices
-Memory: memory
+Coolingdevice: Cooler
+Memory: Memory
 Powersupply: power supplies
 Storage: HDDs
-Amount: amount
+Amount: Amount
 delete.last.entry: Sure? You want to delete the last entry of this kind!
+only.one.of.this: You can have a maximum of only a selection of this type!
 SizeX: width (in m)
 SizeY: height (in m)
 SizeZ: depth (in m)

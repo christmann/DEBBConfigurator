@@ -83,9 +83,9 @@ class Component
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="amount", type="integer")
+	 * @ORM\Column(name="amount", type="integer", nullable=true)
 	 */
-	private $amount = 1;
+	private $amount;
 
 	/**
 	 * @var Debb\ConfigBundle\Entity\Node
@@ -361,29 +361,32 @@ class Component
 	public function getXmlArray()
 	{
 		$array = array();
-		if($this->getType() == $this::TYPE_MAINBOARD && $this->getMainboard() != null)
+		for($x = 0; $x < $this->getAmount(); $x++)
 		{
-			$array['mainboard'] = $this->getMainboard()->getXmlArray();
-		}
-		else if($this->getType() == $this::TYPE_PROCESSOR && $this->getProcessor() != null)
-		{
-			$array['processor'] = $this->getProcessor()->getXmlArray();
-		}
-		else if($this->getType() == $this::TYPE_COOLING_DEVICE && $this->getCoolingDevice() != null)
-		{
-			$array['coolingdevice'] = $this->getCoolingDevice()->getXmlArray();
-		}
-		else if($this->getType() == $this::TYPE_MEMORY && $this->getMemory() != null)
-		{
-			$array['memory'] = $this->getMemory()->getXmlArray();
-		}
-		else if($this->getType() == $this::TYPE_POWER_SUPPLY && $this->getPowersupply() != null)
-		{
-			$array['powersupply'] = $this->getPowersupply()->getXmlArray();
-		}
-		else if($this->getType() == $this::TYPE_STORAGE && $this->getStorage() != null)
-		{
-			$array['storage'] = $this->getStorage()->getXmlArray();
+			if($this->getType() == $this::TYPE_MAINBOARD && $this->getMainboard() != null)
+			{
+				$array[]['mainboard'] = $this->getMainboard()->getXmlArray();
+			}
+			else if($this->getType() == $this::TYPE_PROCESSOR && $this->getProcessor() != null)
+			{
+				$array[]['processor'] = $this->getProcessor()->getXmlArray();
+			}
+			else if($this->getType() == $this::TYPE_COOLING_DEVICE && $this->getCoolingDevice() != null)
+			{
+				$array[]['coolingdevice'] = $this->getCoolingDevice()->getXmlArray();
+			}
+			else if($this->getType() == $this::TYPE_MEMORY && $this->getMemory() != null)
+			{
+				$array[]['memory'] = $this->getMemory()->getXmlArray();
+			}
+			else if($this->getType() == $this::TYPE_POWER_SUPPLY && $this->getPowersupply() != null)
+			{
+				$array[]['powersupply'] = $this->getPowersupply()->getXmlArray();
+			}
+			else if($this->getType() == $this::TYPE_STORAGE && $this->getStorage() != null)
+			{
+				$array[]['storage'] = $this->getStorage()->getXmlArray();
+			}
 		}
 		return $array;
 	}

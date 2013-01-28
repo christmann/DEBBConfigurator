@@ -19,8 +19,22 @@ class ComponentType extends AbstractType
 			->add('memory', null, array('required' => false))
 			->add('powersupply', null, array('required' => false))
 			->add('storage', null, array('required' => false))
-			->add('amount', null, array('required' => true, 'data' => 1))
+			->add('amount', 'choice', array('choices' => $this->getAmountChoices(), 'required' => false,
+				'empty_value' => false, 'attr' => array('style' => 'width: 90px;')))
 		;
+	}
+
+	/**
+	 * @return array the choices for the amount select
+	 */
+	public function getAmountChoices()
+	{
+		$res = array();
+		for($x = 0; $x < 50; $x++)
+		{
+			$res[$x] = $x;
+		}
+		return $res;
 	}
 
 	public function setDefaultOptions(OptionsResolverInterface $resolver)
