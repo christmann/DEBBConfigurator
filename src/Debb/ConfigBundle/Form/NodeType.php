@@ -28,6 +28,8 @@ class NodeType extends AbstractType
 			))
 			->add('mainboard', null, array('required' => false))
             ->add('image', 'plupload', array('required' => false))
+            ->add('vrmlFile', null, array('required' => false))
+            ->add('stlFile', null, array('required' => false))
         ;
     }
 

@@ -35,6 +35,20 @@ class Node extends Dimensions
 	private $image;
 
 	/**
+	 * @var VRML
+	 *
+	 * @ORM\ManyToOne(targetEntity="Debb\ManagementBundle\Entity\File", cascade={"all"})
+	 */
+	private $vrmlFile;
+
+	/**
+	 * @var STL
+	 *
+	 * @ORM\ManyToOne(targetEntity="Debb\ManagementBundle\Entity\File", cascade={"all"})
+	 */
+	private $stlFile;
+
+	/**
 	 * Set mainboard
 	 *
 	 * @param Debb\ManagementBundle\Entity\Mainboard $mainboard
@@ -170,6 +184,52 @@ class Node extends Dimensions
 			}
 		}
 		return $array;
+	}
+
+	/**
+	 * Set vrmlFile
+	 *
+	 * @param \Debb\ManagementBundle\Entity\File $vrmlFile
+	 * @return Node
+	 */
+	public function setVrmlFile(\Debb\ManagementBundle\Entity\File $vrmlFile = null)
+	{
+		$this->vrmlFile = $vrmlFile;
+
+		return $this;
+	}
+
+	/**
+	 * Get vrmlFile
+	 *
+	 * @return \Debb\ManagementBundle\Entity\File 
+	 */
+	public function getVrmlFile()
+	{
+		return $this->vrmlFile;
+	}
+
+	/**
+	 * Set stlFile
+	 *
+	 * @param \Debb\ManagementBundle\Entity\File $stlFile
+	 * @return Node
+	 */
+	public function setStlFile(\Debb\ManagementBundle\Entity\File $stlFile = null)
+	{
+		$this->stlFile = $stlFile;
+
+		return $this;
+	}
+
+	/**
+	 * Get stlFile
+	 *
+	 * @return \Debb\ManagementBundle\Entity\File 
+	 */
+	public function getStlFile()
+	{
+		return $this->stlFile;
 	}
 
 }

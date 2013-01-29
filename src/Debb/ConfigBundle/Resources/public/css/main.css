@@ -729,3 +729,18 @@ label {
     right: 68px;
     top: 44px;
 }
+
+.uploadVrl {
+	border-top: 1px solid #DFDFDF;
+	border-right: 1px solid #DFDFDF;
+	bottom: 77px;
+	height: 0;
+	padding-left: 10px;
+	padding-top: 10px;
+	position: absolute;
+	width: 248px;
+	background-color: #F3F3F3;
+	margin-left: -22px;
+	height: 91px;
+	margin-bottom: -105px;
+}

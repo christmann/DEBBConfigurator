@@ -1,16 +1,63 @@
 {% extends "DebbManagementBundle::form.html.twig" %}
 {% form_theme form "DebbManagementBundle::form_theme.html.twig" %}
 
+{% block stylesheets %}
+	{% stylesheets filter='cssrewrite'
+		'bundles/debbconfig/css/uploadify.css'
+	%}
+		<link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
+	{% endstylesheets %}
+	{{ parent() }}
+{% endblock %}
+
 {% block javascripts %}
 	{{ parent() }}
-	{% javascripts '@DebbConfigBundle/Resources/public/js/node.js' %}
+	{% javascripts
+					'@DebbConfigBundle/Resources/public/js/node.js'
+					'@DebbConfigBundle/Resources/public/js/jquery.uploadify.min.js'
+	%}
 		<script src="{{ asset_url }}" type="text/javascript"></script>
 	{% endjavascripts %}
+	<script type="text/javascript">
+		$(function() {
+			$("#upload_vrml").uploadify({
+				height          : 15,
+				swf             : '{{ asset('bundles/debbconfig/swf/uploadify.swf') }}',
+				uploader        : '{{ path('debb_config_default_upload') }}',
+				width           : 80,
+				multi           : false,
+				fileTypeExts    : '*.vrml',
+				buttonText	    : 'VRML',
+				buttonClass     : 'some-class',
+				onUploadSuccess : function(file, data, response)
+				{
+					var obj = jQuery.parseJSON(data);
+					$('#debb_configbundle_nodetype_vrmlFile').val(obj.fileId);
+					$('#vrmlFileName').html(file.name);
+				}
+			});
+			$("#upload_stl").uploadify({
+				height          : 15,
+				swf             : '{{ asset('bundles/debbconfig/swf/uploadify.swf') }}',
+				uploader        : '{{ path('debb_config_default_upload') }}',
+				width           : 80,
+				multi           : false,
+				fileTypeExts    : '*.stl',
+				buttonText	    : 'STL',
+				onUploadSuccess : function(file, data, response)
+				{
+					var obj = jQuery.parseJSON(data);
+					$('#debb_configbundle_nodetype_stlFile').val(obj.fileId);
+					$('#stlFileName').html(file.name);
+				}
+			});
+		});
+	</script>
 {% endblock %}
 
 {% block content %}
-	<div class="row-fluid">
-		<div class="span3" style="">
+	<div class="row-fluid" style="position: relative;">
+		<div class="span3" style="position: relative;">
 			<div class="node_img">
 				{{ form_widget(form.image) }}
 			</div>
@@ -19,6 +66,40 @@
 				{{ form_widget(form.mainboard) }}
 			</div>
 		</div>
+			<div class="uploadVrl">
+				<div class="row">
+					<div class="span5" style="text-align: right; font-weight: bold;">
+						{{ 'Dimensions' | trans }}:
+					</div>
+					<div class="span7" style="text-align: left;">
+						X mm x X mm x X mm
+					</div>
+				</div>
+				<div class="row">
+					<div class="span5" style="text-align: right; font-weight: bold;">
+						{{ '3D model' | trans }}:
+					</div>
+					<div class="span4" style="text-align: left;">
+						<input type="file" name="upload_vrml" id="upload_vrml" />
+						<input type="hidden" name="debb_configbundle_nodetype[vrmlFile]" id="debb_configbundle_nodetype_vrmlFile"
+							   value="{% if form.vrmlFile.vars.data is not null %}{{ form.vrmlFile.vars.data.id }}{% endif %}" />
+					</div>
+					<div class="span3" style="text-align: left;" id="vrmlFileName">
+						{% if form.vrmlFile.vars.data is not null %}{{ form.vrmlFile.vars.data.name }}{% endif %}
+					</div>
+				</div>
+				<div class="row">
+					<div class="span5">&nbsp;</div>
+					<div class="span4" style="text-align: left;">
+						<input type="file" name="upload_stl" id="upload_stl" />
+						<input type="hidden" name="debb_configbundle_nodetype[stlFile]" id="debb_configbundle_nodetype_stlFile"
+							   value="{% if form.stlFile.vars.data is not null %}{{ form.stlFile.vars.data.id }}{% endif %}" />
+					</div>
+					<div class="span3" style="text-align: left;" id="stlFileName">
+						{% if form.stlFile.vars.data is not null %}{{ form.stlFile.vars.data.name }}{% endif %}
+					</div>
+				</div>
+			</div>
 		<div class="span9" style="border-left: 1px solid #DFDFDF; padding-left: 5px;">
 			<div class="row-fluid" style="text-align: right;">
 				<div class="span6">
