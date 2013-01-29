@@ -11,9 +11,15 @@ $(function()
 			{
 				$('#node-pic').css('background-image', '');
 			}
+			$('#node-pic').html(selected.attr('text'));
+			$('#node-pic [rel="tooltip"]').tooltip();
 		});
 		$(document).on('click', '.selectNode', function(e)
 		{
+			if($('.adopt').attr('field') != null)
+			{
+				$('#debb_configbundle_nodegrouptype_nodes_' + $('.adopt').attr('field') + '_node').parents('.node').removeClass('nodeSelected');
+			}
 			var nodeId = $(this).parents('.node').find('[id$="_node"]').val(),
 				field = getExactId($(this).parents('.node').find('div:first').attr('id'));
 			if(nodeId == null)
@@ -24,12 +30,14 @@ $(function()
 			$('#node-chooser').change();
 			$('#node-chooser').removeAttr('disabled');
 			$('.adopt').attr('field', field);
+			$(this).parents('.node').addClass('nodeSelected');
 			e.preventDefault();
 		});
 		$('.adopt').on('click', function(e)
 		{
 			var field = $(this).attr('field');
 			$('#debb_configbundle_nodegrouptype_nodes_' + field + '_node').val($('#node-chooser').val());
+			$('#debb_configbundle_nodegrouptype_nodes_' + field + '_node').parents('.node').removeClass('nodeSelected');
 			$('.adopt').removeAttr('field');
 			$('#node-chooser').val(0);
 			$('#node-chooser').change();
