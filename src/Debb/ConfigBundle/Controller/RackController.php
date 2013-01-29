@@ -93,4 +93,180 @@ class RackController extends CRUDController
 		return $response;
 	}
 
+	/**
+	 * Download entity as plm xml file
+	 *
+	 * @Route("/plmxml/{id}.xml", requirements={"id"="\d+"});
+	 *
+	 * @param int $id item id
+	 *
+	 * @return \Symfony\Component\HttpFoundation\Response
+	 */
+	public function asPlmXmlAction($id)
+	{
+		$response = new \Symfony\Component\HttpFoundation\Response();
+		$response->headers->set('Content-Type', 'text/xml');
+		header('Content-Type: text/xml');
+
+		$item = $this->getEntity($id);
+
+		$xml = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><PLMXML xmlns:PLMXML="http://www.plmxml.org/Schemas/PLMXMLSchema"
+	xmlns:vis="PLMXMLTcVisSchema" schemaVersion="1" date="'.date('Y-m-d').'" time="'.date('H:i:s').'"
+	author="Generator" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.plmxml.org/Schemas/PLMXMLSchema PLMXMLSchema.xsd" />');
+		$productDef = $xml->addChild('ProductDef');
+		$productDef->addAttribute('id', 'id1');
+		$instanceGraph = $productDef->addChild('InstanceGraph');
+
+		echo $xml->asXML();
+
+		return $response;
+	}
+
+	/**
+	 * Adds a ProductInstance entry to the SimpleXMLElement $xml [PLMXML]
+	 * 
+	 * @param \SimpleXMLElement $xml the SimpleXMLElement
+	 * @param string $id the id of the ProductRevisionView
+	 * @param null|string optional $name the name of this product instance
+	 * @param null|string optional $partRef the part reference of this product instance
+	 * @param null|string optional $hostname the hostname of this product instance
+	 * @param null|string optional $transform the position of this product instance
+	 */
+	public function addPlmXmlProductInstance(\SimpleXMLElement &$xml, $id, $name=null, $partRef=null, $hostname=null, $transform=null)
+	{
+		$productInstance = $xml->addChild('ProductInstance');
+
+		$isId = explode('_', $id);
+		$iId = (int)$isId[count($isId) - 1];
+		unset($isId[count($isId) - 1]);
+		$exId = implode('_', $isId);
+		$id = $exId . '_' . $iId;
+
+		while(count($xml->xpath('//ProductInstance[@id="' . $id . '"]/@id')) > 0)
+		{
+			$iId++;
+			$id = $exId . '_' . $iId;
+		}
+
+		$productInstance->addAttribute('id', $id); // example: inst71_01_7
+		if($name != null)
+		{
+			$productInstance->addAttribute('name', $name); // example: Node7
+		}
+		if($partRef != null)
+		{
+			$productInstance->addAttribute('partRef', $partRef); // example: #id71_01_1
+		}
+
+		$userData = $productInstance->addChild('UserData');
+		$userData->addAttribute('id', str_replace('inst', 'id', $id) . '_1'); // example: id71_01_7_1
+
+		if($hostname != null)
+		{
+			$userValue = $userData->addChild('UserValue');
+			$userValue->addAttribute('value', $hostname); // example: n007
+			$userValue->addAttribute('title', 'hostname');
+		}
+
+		if($transform != null)
+		{
+			$transform = $productInstance->addChild('Transform', ''); // example: 0 1 0 0 -1 0 0 0 0 0 1 0 0.175 0.744 0.005 1
+			$transform->addAttribute('id', $this->convertIdToTransId($id)); // example: id71_01_07
+		}
+	}
+
+	/**
+	 * Adds a ProductRevisionView entry to the SimpleXMLElement $xml [PLMXML]
+	 * 
+	 * @param \SimpleXMLElement $xml the SimpleXMLElement
+	 * @param string $id the id of the ProductRevisionView
+	 * @param null|string optional $name the name of the ProductRevisionView
+	 * @param null|array optional $instanceRefs array of instance refs
+	 * @param null|string optional $type the type of ProductRevisionView
+	 * @param null|string optional $format the file format of $location file
+	 * @param null|string optional $location the path to file for representation
+	 * @param null|string optional $DEBBComponentId the ComponentID from DEBBComponents.xml file
+	 * @param null|string optional $DEBBLevel the type from DEBBComponents.xml file (Node, NodeGroup, Computebox1, ComputeBox2, Sensor, CoolingDevice, Powersupply, ...)
+	 */
+	public function addPlmXmlProductRevisionView(\SimpleXMLElement &$xml, $id, $name=null, $instanceRefs=array(), $type=null, $format='VRML', $location='.\objects\\', $DEBBComponentId=null, $DEBBLevel=null)
+	{
+		$productRevisionView = $xml->addChild('ProductRevisionView');
+		$productRevisionView->addAttribute('id', $id); // example: id84_04_1
+		if($name != null)
+		{
+			$productRevisionView->addAttribute('name', $name); // example: NodeGeometry
+		}
+		if(is_array($instanceRefs) && count($instanceRefs) > 1)
+		{
+			$productRevisionView->addAttribute('instanceRefs', implode(' ', $instanceRefs)); // example: inst83_01_1 inst83_01_2 inst83_01_3 inst83_01_4 inst83_01_5 inst83_01_6
+		}
+		if($type != null)
+		{
+			$productRevisionView->addAttribute('type', $type); // example: assembly
+		}
+
+		if($DEBBComponentId != null && $DEBBLevel != null)
+		{
+			$userData = $xml->addChild('UserData');
+			$userData->addAttribute('id', $id . '_1'); // example: id84_04_1_1
+
+			if($DEBBLevel != null)
+			{
+				$userValue = $userData->addChild('UserValue');
+				$userValue->addAttribute('value', $DEBBLevel); // example: Node (Node, NodeGroup, Computebox1, ComputeBox2, Sensor, CoolingDevice, Powersupply, ...)
+				$userValue->addAttribute('title', 'DEBBLevel'); // example: DEBBLevel
+			}
+			if($DEBBComponentId != null)
+			{
+				$userValue = $userData->addChild('UserValue');
+				$userValue->addAttribute('value', $DEBBComponentId); // example: node_psnc_i7-16GB-sandy
+				$userValue->addAttribute('title', 'DEBBComponentId'); // example: DEBBComponentId
+			}
+		}
+
+		if($format != null || $location != null)
+		{
+			$representation = $productRevisionView->addChild('Representation');
+			$representation->addAttribute('id', $this->convertIdToRevId($id)); // example: id1084_04_1
+			if($format != null)
+			{
+				$representation->addAttribute('format', $format); // example: VRML
+			}
+			if($location != null)
+			{
+				$representation->addAttribute('location', $location); // example: .\objects\NodeBoard.wrl
+			}
+		}
+	}
+
+	/**
+	 * Convert a id to another id
+	 * 
+	 * @param string $id the id to convert (example: inst83_01_3)
+	 * @return string the converted id (example: id83_01_03)
+	 */
+	public function convertIdToTransId($id)
+	{
+		$id = str_replace('inst', 'id', $id);
+		$cache = explode('_', $id);
+		if(count($cache) > 1)
+		{
+			$last =& $cache[count($cache) - 1];
+			$last = sprintf('%02d', $last);
+		}
+		return implode('_', $cache);
+	}
+
+	/**
+	 * Convert a id to another id
+	 * 
+	 * @param string $id the id to convert (example: id84_04_1)
+	 * @return string the converted id (example: id1084_04_1)
+	 */
+	public function convertIdToRevId($id)
+	{
+		return str_replace('id', 'id10', $id);
+	}
+
 }
