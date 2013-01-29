@@ -81,7 +81,7 @@ class RackController extends CRUDController
 		$item = $this->getEntity($id);
 
 		$xml = new \SimpleXMLElement("<?xml version=\"1.0\"?><Rack />");
-		$rack = $item->getXmlArray();
+		$rack = $item->getDebbXmlArray();
 		$rack = $rack['Rack'];
 		\Debb\ManagementBundle\Entity\Base::array_to_xml($rack, $xml);
 		echo $xml->asXML();

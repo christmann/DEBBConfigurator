@@ -128,14 +128,14 @@ class NodeGroup extends Dimensions
 	 * 
 	 * @return array the array for later converting
 	 */
-	public function getXmlArray()
+	public function getDebbXmlArray()
 	{
-		$array['NodeGroup'] = parent::getXmlArray();
+		$array['NodeGroup'] = parent::getDebbXmlArray();
 		foreach ($this->getNodes() as $node)
 		{
 			if ($node->getNode() != null)
 			{
-				$array['NodeGroup'][] = $node->getNode()->getXmlArray();
+				$array['NodeGroup'][] = $node->getNode()->getDebbXmlArray();
 			}
 		}
 		return $array;

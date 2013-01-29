@@ -105,7 +105,7 @@ class NodeController extends CRUDController
 		$item = $this->getEntity($id);
 
 		$xml = new \SimpleXMLElement("<?xml version=\"1.0\"?><Node />");
-		$node = $item->getXmlArray();
+		$node = $item->getDebbXmlArray();
 		$node = $node['Node'];
 		\Debb\ManagementBundle\Entity\Base::array_to_xml($node, $xml);
 		echo $xml->asXML();

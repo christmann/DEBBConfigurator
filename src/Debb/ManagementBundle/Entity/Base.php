@@ -146,7 +146,7 @@ class Base
 	 * 
 	 * @return array the array for later converting
 	 */
-	public function getXmlArray()
+	public function getDebbXmlArray()
 	{
 		$array = array();
 		if ($this->getModel() != null)

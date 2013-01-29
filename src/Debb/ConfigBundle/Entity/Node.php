@@ -155,18 +155,18 @@ class Node extends Dimensions
 	 * 
 	 * @return array the array for later converting
 	 */
-	public function getXmlArray()
+	public function getDebbXmlArray()
 	{
-		$array['Node'] = parent::getXmlArray();
+		$array['Node'] = parent::getDebbXmlArray();
 		if ($this->getMainboard() != null)
 		{
-			$array['Node']['Mainboard'] = $this->getMainboard()->getXmlArray();
+			$array['Node']['Mainboard'] = $this->getMainboard()->getDebbXmlArray();
 		}
 		foreach ($this->getComponents() as $component)
 		{
 			if ($component->getAmount() > 1 && $component->getType() != \Debb\ManagementBundle\Entity\Component::TYPE_NOTHING)
 			{
-				$array['Node'][] = $component->getXmlArray();
+				$array['Node'][] = $component->getDebbXmlArray();
 			}
 		}
 		return $array;

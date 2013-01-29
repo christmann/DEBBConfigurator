@@ -108,14 +108,14 @@ class Rack extends \Debb\ManagementBundle\Entity\Base
 	 * 
 	 * @return array the array for later converting
 	 */
-	public function getXmlArray()
+	public function getDebbXmlArray()
 	{
-		$array['Rack'] = parent::getXmlArray();
+		$array['Rack'] = parent::getDebbXmlArray();
 		foreach ($this->getNodeGroups() as $nodegroup)
 		{
 			if ($nodegroup->getNodegroup() != null)
 			{
-				$array['Rack'][] = $nodegroup->getNodegroup()->getXmlArray();
+				$array['Rack'][] = $nodegroup->getNodegroup()->getDebbXmlArray();
 			}
 		}
 		return $array;

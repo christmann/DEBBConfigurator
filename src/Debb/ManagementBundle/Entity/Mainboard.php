@@ -110,7 +110,7 @@ class Mainboard extends Base
 	 */
 	public function getXmlArray()
 	{
-		$array = parent::getXmlArray();
+		$array = parent::getDebbXmlArray();
 		if ($this->getDescription() != null)
 		{
 			$array['Description'] = $this->getDescription();

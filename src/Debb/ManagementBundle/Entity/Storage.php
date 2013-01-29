@@ -108,9 +108,9 @@ class Storage extends Base
 	 * 
 	 * @return array the array for later converting
 	 */
-	public function getXmlArray()
+	public function getDebbXmlArray()
 	{
-		$array = parent::getXmlArray();
+		$array = parent::getDebbXmlArray();
 		if ($this->getMaxPower() != null)
 		{
 			$array['MaxPower'] = $this->getMaxPower();

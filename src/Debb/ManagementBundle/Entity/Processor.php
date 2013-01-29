@@ -78,9 +78,9 @@ class Processor extends Base
 	 * 
 	 * @return array the array for later converting
 	 */
-	public function getXmlArray()
+	public function getDebbXmlArray()
 	{
-		$array = parent::getXmlArray();
+		$array = parent::getDebbXmlArray();
 		if ($this->getCores() != null)
 		{
 			$array['Cores'] = $this->getCores();
