@@ -80,10 +80,14 @@ class RackController extends CRUDController
 
 		$item = $this->getEntity($id);
 
-		$xml = new \SimpleXMLElement("<?xml version=\"1.0\"?><Rack />");
+		$xml = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><xsd_1:DEBBComponents xmlns:xsd_1="http://www.coolemall.eu/DEBBComponent"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.coolemall.eu/DEBBComponent DEBBComponents.xsd " />');
+		$xmlComputeBoxTwo = $xml->addChild('ComputeBox2');
+		$xmlComputeBoxOne = $xmlComputeBoxTwo->addChild('ComputeBox1');
 		$rack = $item->getDebbXmlArray();
 		$rack = $rack['Rack'];
-		\Debb\ManagementBundle\Entity\Base::array_to_xml($rack, $xml);
+		\Debb\ManagementBundle\Entity\Base::array_to_xml($rack, $xmlComputeBoxOne);
 		echo $xml->asXML();
 
 		return $response;
