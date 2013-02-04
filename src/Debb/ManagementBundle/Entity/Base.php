@@ -43,6 +43,13 @@ class Base
 	private $model;
 
 	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="hostname", type="string", length=255, nullable=true)
+	 */
+	private $hostname;
+
+	/**
 	 * Get id
 	 *
 	 * @return integer 
@@ -149,9 +156,9 @@ class Base
 	public function getDebbXmlArray()
 	{
 		$array = array();
-		if ($this->getModel() != null)
+		if ($this->getModel() != null && $this->getProduct() != null)
 		{
-			$array['ComponentId'] = $this->getModel();
+			$array['ComponentId'] = $this->getProduct() . '_' . $this->getModel();
 		}
 		if ($this->getManufacturer() != null)
 		{
@@ -192,6 +199,29 @@ class Base
 				$element->addChild($key, htmlentities($value));
 			}
 		}
+	}
+
+	/**
+	 * Set hostname
+	 *
+	 * @param string $hostname
+	 * @return Base
+	 */
+	public function setHostname($hostname)
+	{
+		$this->hostname = $hostname;
+
+		return $this;
+	}
+
+	/**
+	 * Get hostname
+	 *
+	 * @return string 
+	 */
+	public function getHostname()
+	{
+		return $this->hostname;
 	}
 
 }
