@@ -30,24 +30,24 @@
 	<div class="extraContent">
 		<div class="row-fluid">
 			<div class="span2" style="text-align: right;">
-				{{ 'Model' | trans }}:
-			</div>
-			<div class="span4">
-				{{ form_widget(form.model) }}
-			</div>
-		</div>
-		<div class="row-fluid">
-			<div class="span2" style="text-align: right;">
 				{{ 'Manufacturer' | trans }}:
 			</div>
 			<div class="span4">
 				{{ form_widget(form.manufacturer) }}
 			</div>
+		</div>
+		<div class="row-fluid">
 			<div class="span2" style="text-align: right;">
 				{{ 'Product' | trans }}:
 			</div>
 			<div class="span4">
 				{{ form_widget(form.product) }}
+			</div>
+			<div class="span2" style="text-align: right;">
+				{{ 'Model' | trans }}:
+			</div>
+			<div class="span4">
+				{{ form_widget(form.model) }}
 			</div>
 		</div>
 	</div>
@@ -58,14 +58,56 @@
 		</div>
 
 		<div class="rackConfig">
-			<select id="selectedNodeGroup" disabled="disabled" style="margin-right: 15px;">
+			<select id="selectedNodeGroup" disabled="disabled">
 				<option value="0" selected="selected">- {{ 'chose.%person%.%what%' | trans({'%person%': 'your' | trans, '%what%': 'node.group' | trans}) }} -</option>
 				{% for nodegroup in nodegroups %}
 						<option value="{{ nodegroup.id }}">{{ nodegroup }}</option>
 				{% endfor %}
 			</select>
+			<a href="#" class="selectNodeGroup" style="margin-right: 15px;"><i class="icon-ok"></i></a>
 			<strong>{{ 'free rack units' | trans }}:</strong> <span id="freeUnits" style="margin-right: 15px;">0</span>
 			<strong>{{ 'selected rack unit' | trans }}:</strong> <span id="selectedUnit" style="margin-right: 15px;">{{ 'none' | trans }}</span>
+		</div>
+
+		<div class="rackNodeInfo">
+			{% for nodegroup in nodegroups %}
+				<div class="nodegroup_infos_{{ nodegroup.id }}" style="display: none;">
+					{{ nodegroup }}:<br />
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th class="span1">{{ 'count' | trans }}</th>
+								<th>{{ 'node' | trans }}</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% set displayedNodes = [] %}
+							{% for node in nodegroup.nodes if node.node is not null %}
+								{% if node.node.id not in displayedNodes %}
+									{% set displayedNodes = displayedNodes | merge([node.node.id]) %}
+									<tr>
+										<td>
+											{% set count = 0 %}
+											{% for nodeY in nodegroup.nodes if nodeY.node is not null %}
+												{% if nodeY.node.id == node.node.id %}
+													{% set count = count + 1 %}
+												{% endif %}
+											{% endfor %}
+											{{ count }}
+										</td>
+										<td>
+											{{ node.node }}
+											{% for component in node.node.components if component.active is not null %}
+												<br />{{ component.amount }} x {{ component.active }}
+											{% endfor %}
+										</td>
+									</tr>
+								{% endif %}
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			{% endfor %}
 		</div>
 	</div>
 

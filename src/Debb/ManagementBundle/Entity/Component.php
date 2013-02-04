@@ -354,6 +354,40 @@ class Component
 	}
 
 	/**
+	 * Get the active element
+	 * 
+	 * null|Class of the type - the active type class
+	 */
+	public function getActive()
+	{
+		if($this->getType() == $this::TYPE_MAINBOARD)
+		{
+			return $this->getMainboard();
+		}
+		else if($this->getType() == $this::TYPE_PROCESSOR)
+		{
+			return $this->getProcessor();
+		}
+		else if($this->getType() == $this::TYPE_COOLING_DEVICE)
+		{
+			return $this->getCoolingDevice();
+		}
+		else if($this->getType() == $this::TYPE_MEMORY)
+		{
+			return $this->getMemory();
+		}
+		else if($this->getType() == $this::TYPE_POWER_SUPPLY)
+		{
+			return $this->getPowersupply();
+		}
+		else if($this->getType() == $this::TYPE_STORAGE)
+		{
+			return $this->getStorage();
+		}
+		return null;
+	}
+
+	/**
 	 * Returns a array for later converting
 	 * 
 	 * @return array the array for later converting

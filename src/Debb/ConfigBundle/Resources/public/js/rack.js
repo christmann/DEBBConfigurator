@@ -2,13 +2,23 @@ $(function()
 	{
 		$('#selectedNodeGroup').on('change', function()
 		{
-			var fieldId = $(this).attr('field');
+			$('[class^="nodegroup_infos_"]').hide();
+			$('.nodegroup_infos_' + $(this).val()).show();
+		});
+		$('.selectNodeGroup').on('click', function(e)
+		{
+			e.preventDefault();
+			var fieldId = $('#selectedNodeGroup').attr('field');
 			if(fieldId != null)
 			{
+				$('#debb_configbundle_racktype_nodegroups_' + fieldId).parent().removeClass('nodegroup-checked');
 				$('#selectedNodeGroup').removeAttr('field');
-				$('#debb_configbundle_racktype_nodegroups_' + fieldId + '_nodegroup').val($('#selectedNodeGroup').val());
+				var value = $('#selectedNodeGroup').val();
+				$('#debb_configbundle_racktype_nodegroups_' + fieldId + '_nodegroup').val(value);
+				$('.nodegroup_infos_' + value).hide();
 				$('#selectedNodeGroup').val(0);
 				$('#selectedNodeGroup').attr('disabled', 'disabled');
+				$('#selectedNodeGroup').change();
 				updateRack();
 			}
 		});
@@ -20,9 +30,16 @@ $(function()
 			{
 				nodeGroupId = 0;
 			}
+			if($('#selectedNodeGroup').attr('field') != null)
+			{
+				$('.nodegroup-checked').removeClass('nodegroup-checked');
+				$('[class^="nodegroup_infos_"]').hide();
+			}
+			$(this).addClass('nodegroup-checked');
 			$('#selectedNodeGroup').val(nodeGroupId);
 			$('#selectedNodeGroup').attr('field', field);
 			$('#selectedNodeGroup').removeAttr('disabled');
+			$('#selectedNodeGroup').change();
 			updateRack();
 			e.preventDefault();
 		});

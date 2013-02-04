@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Manufacturer
+ * Product
+ * Model
+ */
+
 namespace Debb\ConfigBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
