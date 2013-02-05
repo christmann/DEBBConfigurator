@@ -44,6 +44,8 @@ $(function()
 			e.preventDefault();
 		});
 		updateRack();
+		$('#selectedNodeGroup').change();
+		$('[class^="nodegroup_infos_"] [rel="tooltip"]').tooltip();
 	});
 
 function updateRack()

@@ -340,12 +340,13 @@ table tr td
 }
 
 .rackConfigArea {
-	width: 430px;
+	width: 680px;
 	position: relative;
 	top: 0px;
 	left: -8px;
 	float: left;
 	z-index: 9;
+	min-height: 388px;
 }
 
 /***************************************/
@@ -434,8 +435,8 @@ table tr td
 #node-select-box
 {
 	width: 392px;
-	height: 530px;
 	padding: 20px 0px 0px 38px;
+	padding-bottom: 55px;
 	background-color: white;
 	border: 1px solid #CCC;
 	-webkit-box-shadow:  2px 2px 3px 0px rgba(200, 200, 200, 1);
@@ -453,9 +454,9 @@ table tr td
 	background-position: center center;
 	background-repeat: no-repeat;
 	border: 1px solid #DDDDDD;
-	height: 140px;
 	margin-bottom: 5px;
 	width: 157px;
+	min-height: 140px;
 	background-position: left center;
 	padding-left: 213px;
 }
@@ -756,4 +757,18 @@ label {
 	margin-left: -22px;
 	height: 91px;
 	margin-bottom: -105px;
+}
+
+#content h1 {
+	font-size: 25px;
+}
+
+#content h5, #content .row-fluid .span2 {
+	color: #555;
+}
+
+.eAdopt {
+	position: absolute;
+	bottom: 0px;
+	right: -30px;
 }

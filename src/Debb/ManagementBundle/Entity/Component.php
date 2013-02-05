@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Component
 {
 	/* Define types always in DebbConfigBundle Resources public js node.js */
+	/* Define types always in DebbConfigBundle Resources translations messages.*.yml */
 
 	/**
 	 * [Type] Nothing
@@ -360,6 +361,10 @@ class Component
 	 */
 	public function getActive()
 	{
+		if($this->getAmount() < 1)
+		{
+			return null;
+		}
 		if($this->getType() == $this::TYPE_MAINBOARD)
 		{
 			return $this->getMainboard();

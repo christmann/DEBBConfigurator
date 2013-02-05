@@ -32,6 +32,13 @@ your: yours
 free rack units: free rack units
 selected rack unit: selected rack unit
 none: none
+component.0: unknown
+component.1: Mainboard
+component.2: Processor
+component.3: Cooler
+component.4: Memory
+component.5: power supplies
+component.6: HDDs
 
 # form fields which not defined above
 Product: Product

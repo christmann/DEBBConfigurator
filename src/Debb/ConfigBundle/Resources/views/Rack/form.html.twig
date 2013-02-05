@@ -64,7 +64,6 @@
 						<option value="{{ nodegroup.id }}">{{ nodegroup }}</option>
 				{% endfor %}
 			</select>
-			<a href="#" class="selectNodeGroup" style="margin-right: 15px;"><i class="icon-ok"></i></a>
 			<strong>{{ 'free rack units' | trans }}:</strong> <span id="freeUnits" style="margin-right: 15px;">0</span>
 			<strong>{{ 'selected rack unit' | trans }}:</strong> <span id="selectedUnit" style="margin-right: 15px;">{{ 'none' | trans }}</span>
 		</div>
@@ -72,8 +71,10 @@
 		<div class="rackNodeInfo">
 			{% for nodegroup in nodegroups %}
 				<div class="nodegroup_infos_{{ nodegroup.id }}" style="display: none;">
-					{{ nodegroup }}:<br />
-					<table class="table table-striped">
+					<span rel="tooltip" data-original-title="{{ 'Manufacturer' | trans }}">{{ nodegroup.manufacturer }}</span>
+					<br /><span rel="tooltip" data-original-title="{{ 'Product' | trans }}">{{ nodegroup.product }}</span>
+					<br /><span rel="tooltip" data-original-title="{{ 'Model' | trans }}">{{ nodegroup.model }}</span>
+					<br /><table class="table table-striped">
 						<thead>
 							<tr>
 								<th class="span1">{{ 'count' | trans }}</th>
@@ -96,9 +97,27 @@
 											{{ count }}
 										</td>
 										<td>
-											{{ node.node }}
-											{% for component in node.node.components if component.active is not null %}
-												<br />{{ component.amount }} x {{ component.active }}
+											{% set first = true %}
+											{% if node.node.manufacturer is not null %}
+												{% if first %}{% set first = false %}{% else %}<br />{% endif %}
+												<span rel="tooltip" data-original-title="{{ 'Manufacturer' | trans }}">{{ node.node.manufacturer }}</span>
+											{% endif %}
+											{% if node.node.product is not null %}
+												{% if first %}{% set first = false %}{% else %}<br />{% endif %}
+												<span rel="tooltip" data-original-title="{{ 'Product' | trans }}">{{ node.node.product }}</span>
+											{% endif %}
+											{% if node.node.model is not null %}
+												{% if first %}{% set first = false %}{% else %}<br />{% endif %}
+												<span rel="tooltip" data-original-title="{{ 'Model' | trans }}">{{ node.node.model }}</span>
+											{% endif %}
+											{% if node.node.mainboard is not null %}
+												{% if first %}{% set first = false %}{% else %}<br />{% endif %}
+												<span rel="tooltip" data-original-title="{{ 'Mainboard' | trans }}">{{ node.node.mainboard }}</span>
+											{% endif %}
+											<br />{% for component in node.node.components if component.active is not null %}
+												{% set transThis = 'component.' ~ component.type %}
+												{% if first %}{% set first = false %}{% else %}<br />{% endif %}
+												{{ component.amount }} x <span rel="tooltip" data-original-title="{{ transThis | trans }}">{{ component.active }}</span>
 											{% endfor %}
 										</td>
 									</tr>
@@ -109,6 +128,8 @@
 				</div>
 			{% endfor %}
 		</div>
+
+		<a href="#" class="selectNodeGroup blue-button adopt eAdopt" style="margin-right: 15px;"><i class="icon-ok icon-white" style="margin-right: 5px;"></i>{{ 'adopt' | trans }}</a>
 	</div>
 
 	{{ form_widget(form._token) }}
