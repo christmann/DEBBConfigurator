@@ -19,8 +19,8 @@
 {% endblock %}
 
 {% block buttonbar %}
-	<button class="button btn btn-primary" type="submit">{{ 'localdev_admin.actions.save'|trans({}, 'crud') }}</button>
-	<a href="{{ path(localdev_admin_route('_index')) }}" class="button btn">{{ 'localdev_admin.actions.back'|trans({}, 'crud') }}</a>
+	<a href="{{ path(localdev_admin_route('_index')) }}" class="blue-button white">{{ 'localdev_admin.actions.back'|trans({}, 'crud') }}</a>
+	<button class="blue-button blue" type="submit">{{ 'localdev_admin.actions.save'|trans({}, 'crud') }}</button>
 {% endblock %}
 
 {% block form_footer %}

@@ -4,7 +4,7 @@
 
 {% block content %}
 	{% block index_table %}
-		<table class="table table-striped">
+		<table class="table table-striped table-condensed">
 			<thead>
 				<tr>
 					{% block thead %}
@@ -73,5 +73,5 @@
 
 {% block buttonbar %}
 	<a href="{{ path(localdev_admin_route("_form")) }}"
-	   class="button btn btn-primary">{{ 'localdev_admin.actions.create' | trans({"%name%":localdev_admin_name()}, 'crud') }}</a>
+	   class="blue-button blue">{{ 'localdev_admin.actions.create' | trans({"%name%":localdev_admin_name()}, 'crud') }}</a>
 {% endblock %}
