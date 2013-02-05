@@ -40,12 +40,12 @@ class MenuBuilder
 			'linkAttributes' => array('onclick' => '$(this).next().toggle(); return false;'),
 			'attributes' => array('class' => 'zero first current')
 		));
-		$management->addChild($this->translateIt('Processor'), array('route' => 'debb_management_processor_index', 'attributes' => array('noclass' => true)));
-		$management->addChild($this->translateIt('Mainboard'), array('route' => 'debb_management_mainboard_index', 'attributes' => array('noclass' => true)));
-		$management->addChild($this->translateIt('Coolingdevice'), array('route' => 'debb_management_coolingdevice_index', 'attributes' => array('noclass' => true)));
-		$management->addChild($this->translateIt('Memory'), array('route' => 'debb_management_memory_index', 'attributes' => array('noclass' => true)));
-		$management->addChild($this->translateIt('Powersupply'), array('route' => 'debb_management_powersupply_index', 'attributes' => array('noclass' => true)));
-		$management->addChild($this->translateIt('Storage'), array('route' => 'debb_management_storage_index', 'attributes' => array('noclass' => true)));
+		$management->addChild($this->translateIt('Processor'), array('route' => 'debb_management_processor_index'));
+		$management->addChild($this->translateIt('Mainboard'), array('route' => 'debb_management_mainboard_index'));
+		$management->addChild($this->translateIt('Coolingdevice'), array('route' => 'debb_management_coolingdevice_index'));
+		$management->addChild($this->translateIt('Memory'), array('route' => 'debb_management_memory_index'));
+		$management->addChild($this->translateIt('Powersupply'), array('route' => 'debb_management_powersupply_index'));
+		$management->addChild($this->translateIt('Storage'), array('route' => 'debb_management_storage_index'));
 
 		$menu->addChild($this->translateIt('node'), array(
 			'route' => 'debb_config_node_index',

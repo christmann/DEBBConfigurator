@@ -157,14 +157,14 @@ table tr td
 	margin-top: 19px;
 }
 
-#config-menu ul
+#config-menu > ul:not(.menu_level_1)
 {
 	list-style-type: none;
 	margin: 0px;
 	padding: 0px;
 }
 
-#config-menu ul li a.first
+#config-menu > ul:not(.menu_level_1) > li > a.first
 {
 	background-color: #747574;
 	background-repeat: no-repeat;
@@ -187,7 +187,7 @@ table tr td
 	text-transform: uppercase;
 }
 
-#config-menu ul li a.first:hover
+#config-menu > ul:not(.menu_level_1) > li > a.first:hover
 {
 	background-color: #7f7f7f;
 	-moz-box-shadow: inset 0 0 1px #bbb;
@@ -195,34 +195,34 @@ table tr td
 	box-shadow: inset 0 0 1px #bbb;
 }
 
-#config-menu ul li a.first.zero
+#config-menu > ul:not(.menu_level_1) li a.first.zero
 {
 	background-image: url('../img/null-icon.png');
 }
 
-#config-menu ul li a.first.one
+#config-menu > ul:not(.menu_level_1) li a.first.one
 {
 	background-image: url('../img/eins-icon.png');
 }
 
-#config-menu ul li a.first.two
+#config-menu > ul:not(.menu_level_1) li a.first.two
 {
 	background-image: url('../img/zwei-icon.png');
 }
-#config-menu ul li a.first.three
+#config-menu > ul:not(.menu_level_1) li a.first.three
 {
 	background-image: url('../img/drei-icon.png');
 	border-bottom: 1px solid #666;
 }
 
-#config-menu ul ul
+#config-menu > ul:not(.menu_level_1) ul
 {
 	list-style-type: none;
 	margin: 0px;
 	padding: 0px;
 }
 
-#config-menu ul ul li > a:not(div)
+#config-menu > ul:not(.menu_level_1) ul > li > a:not(div)
 {
 	background-color: #f8f8f8;
 	cursor: pointer;
@@ -241,12 +241,12 @@ table tr td
 	text-transform: uppercase;
 }
 
-#config-menu ul ul li > a:not(div):hover, #config-menu ul ul li > a.current:not(div)
+#config-menu > ul:not(.menu_level_1) ul > li > a:not(div):hover, #config-menu ul:not(.menu_level_1) ul > li > a.current:not(div)
 {
-	background-color: #fff;
+	background-color: #D6D6D6;
 }
 
-#config-menu ul li {
+#config-menu > ul:not(.menu_level_1) > li {
 	overflow: hidden;
 }
 
