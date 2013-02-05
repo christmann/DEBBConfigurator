@@ -11,8 +11,15 @@ $(function()
 			{
 				$('#node-pic').css('background-image', '');
 			}
-			$('#node-pic').html(selected.attr('text'));
-			$('#node-pic [rel="tooltip"]').tooltip();
+			if(typeof(selected.attr('text')) != 'undefined')
+			{
+				$('#node-pic').html(selected.attr('text'));
+				$('#node-pic [rel="tooltip"]').tooltip();
+			}
+			else
+			{
+				$('#node-pic').html('');
+			}
 		});
 		$(document).on('click', '.selectNode', function(e)
 		{
@@ -28,7 +35,7 @@ $(function()
 			}
 			$('#node-chooser').val(nodeId);
 			$('#node-chooser').change();
-			$('#node-chooser').removeAttr('disabled');
+			$('.adopt').show();
 			$('.adopt').attr('field', field);
 			$(this).parents('.node').addClass('nodeSelected');
 			e.preventDefault();
@@ -41,7 +48,7 @@ $(function()
 			$('.adopt').removeAttr('field');
 			$('#node-chooser').val(0);
 			$('#node-chooser').change();
-			$('#node-chooser').attr('disabled', 'disabled');
+			$('.adopt').hide();
 			updateNodes();
 			e.preventDefault();
 		});

@@ -67,15 +67,35 @@
 			</select>
 			<strong>{{ 'free rack units' | trans }}:</strong> <span id="freeUnits" style="margin-right: 15px;">0</span>
 			<strong>{{ 'selected rack unit' | trans }}:</strong> <span id="selectedUnit" style="margin-right: 15px;">{{ 'none' | trans }}</span>
-		</div>
 
 		<div class="rackNodeInfo">
 			{% for nodegroup in nodegroups %}
 				<div class="nodegroup_infos_{{ nodegroup.id }}" style="display: none;">
-					<span rel="tooltip" data-original-title="{{ 'Manufacturer' | trans }}">{{ nodegroup.manufacturer }}</span>
-					<br /><span rel="tooltip" data-original-title="{{ 'Product' | trans }}">{{ nodegroup.product }}</span>
-					<br /><span rel="tooltip" data-original-title="{{ 'Model' | trans }}">{{ nodegroup.model }}</span>
-					<br /><table class="table table-striped">
+					<div class="row">
+						<div class="span1" style="text-align: right; width: 89px; font-weight: bold;">
+							{{ 'Manufacturer' | trans }}:
+						</div>
+						<div class="span4">
+							{{ nodegroup.manufacturer }}
+						</div>
+					</div>
+					<div class="row">
+						<div class="span1" style="text-align: right; width: 89px; font-weight: bold;">
+							{{ 'Product' | trans }}:
+						</div>
+						<div class="span4">
+							{{ nodegroup.product }}
+						</div>
+					</div>
+					<div class="row">
+						<div class="span1" style="text-align: right; width: 89px; font-weight: bold;">
+							{{ 'Model' | trans }}:
+						</div>
+						<div class="span4">
+							{{ nodegroup.model }}
+						</div>
+					</div>
+					<br /><table class="table table-striped" style="background-color: #fff;">
 						<thead>
 							<tr>
 								<th class="span1">{{ 'count' | trans }}</th>
@@ -131,6 +151,7 @@
 		</div>
 
 		<a href="#" class="selectNodeGroup blue-button adopt eAdopt" style="margin-right: 15px;"><i class="icon-ok icon-white" style="margin-right: 5px;"></i>{{ 'adopt' | trans }}</a>
+		</div>
 	</div>
 
 	{{ form_widget(form._token) }}

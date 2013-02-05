@@ -35,7 +35,7 @@
 		</div>
 		<div id="node-select-box">
 			<h5>{{ 'select.%what%' | trans({'%what%': 'node' | trans}) }}:</h5>
-			<select id="node-chooser" size="16" disabled="disabled">
+			<select id="node-chooser" size="16">
 				<option value="0" selected="selected">&nbsp;</option>
 				{% for node in nodes %}
 					{% set sText %}
@@ -68,7 +68,7 @@
 				{% endfor %}
 			</select>
 			<div id="node-pic">&nbsp;</div>
-			<a href="#" class="blue-button adopt"><i class="icon-ok icon-white" style="margin-right: 5px;"></i>{{ 'adopt' | trans }}</a>
+			<a href="#" class="blue-button adopt" style="display: none;"><i class="icon-ok icon-white" style="margin-right: 5px;"></i>{{ 'adopt' | trans }}</a>
 		</div>
 		<div class="clear"></div>
 	</div>

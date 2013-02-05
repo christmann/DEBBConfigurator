@@ -269,7 +269,7 @@ table tr td
 	background-position: center center;
 	height: 39px;
 	width: 234px;
-	margin-top: 50px;
+	margin-top: 29px;
 }
 
 .nodegroup-selector {
@@ -289,20 +289,18 @@ table tr td
 
 .rackConfig {
 	background-color: #E5E5E5;
-	border-bottom: 1px solid #D7D7D7;
-	border-right: 1px solid #D7D7D7;
-	border-top: 1px solid #D7D7D7;
+	border: 1px solid #D7D7D7;
 	margin-left: 8px;
 	margin-top: -1px;
 	padding-left: 75px;
 	padding-top: 10px;
-	width: 611px;
+	width: 576px;
+	margin-bottom: 20px;
 }
 
 .rackNodeInfo {
-	margin-left: 8px;
-	padding-left: 75px;
 	padding-top: 20px;
+	padding-bottom: 33px;
 	width: 520px;
 }
 
@@ -320,7 +318,12 @@ table tr td
 	vertical-align: middle;
 }
 
-.nodegroup:hover, .nodegroup-checked {
+.nodegroup:hover {
+	background-color: #B2E1F8;
+	border-bottom: 1px solid #B2E1F8;
+}
+
+.nodegroup-checked {
 	background-color: #98C7DE !important;
 	border-bottom: 1px solid #98C7DE;
 }
@@ -344,7 +347,7 @@ table tr td
 	width: 680px;
 	position: relative;
 	top: 0px;
-	left: -8px;
+	left: 6px;
 	float: left;
 	z-index: 9;
 	min-height: 388px;
@@ -756,9 +759,9 @@ label {
 }
 
 .eAdopt {
+	bottom: 27px;
 	position: absolute;
-	bottom: 20px;
-	right: 0px;
+	right: 15px;
 }
 
 .blue-button.white

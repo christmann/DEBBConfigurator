@@ -15,7 +15,6 @@ $(function()
 				$('#selectedNodeGroup').removeAttr('field');
 				var value = $('#selectedNodeGroup').val();
 				$('#debb_configbundle_racktype_nodegroups_' + fieldId + '_nodegroup').val(value);
-				$('#debb_configbundle_racktype_nodegroups_' + fieldId + '_title').html($('#selectedNodeGroup option[value="' + value + '"]').html());
 				$('.nodegroup_infos_' + value).hide();
 				$('#selectedNodeGroup').val(0);
 				$('#selectedNodeGroup').attr('disabled', 'disabled');
@@ -80,6 +79,12 @@ function updateRack()
 	{
 		$('#selectedUnit').html(Translator.get('none'));
 	}
+
+	// names of node groups in rack
+	$('[id^="debb_configbundle_racktype_nodegroups_"][id$="_title"]').each(function()
+	{
+		$(this).html($('#selectedNodeGroup option[value="' + $(this).prev('div[id!=""]').find('select[id$="_nodegroup"]').val() + '"]').html());
+	});
 }
 
 function getExactId(str)

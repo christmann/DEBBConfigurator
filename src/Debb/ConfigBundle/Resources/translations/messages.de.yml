@@ -25,9 +25,9 @@ Storage: HDD
 Amount: Anzahl
 delete.last.entry: Sicher, dass Sie den letzten Eintrag dieser Art löschen wollen?
 only.one.of.this: Sie können maximal nur eine Auswahl dieses Typs haben!
-SizeX: Breite (in mm)
-SizeY: Höhe (in mm)
-SizeZ: Tiefe (in mm)
+SizeX: Breite [mm]
+SizeY: Höhe [mm]
+SizeZ: Tiefe [mm]
 adopt: Auswählen
 your: deine
 free rack units: freie HE's
@@ -48,7 +48,7 @@ Manufacturer: Hersteller
 Components: Komponenten
 Model: Model
 Cores: Cores
-Maxfrequency: max. Frequenz
+Maxfrequency: max. Frequenz [MHz]
 Image: Bild
 Description: Beschreibung
 Socket: Sockel
