@@ -23,6 +23,7 @@
 		{% for nodeGroup in formNodeGroups %}
 			<div class="nodegroup">
 				{{ form_widget(nodeGroup, {attr: {'style': 'display: none'}}) }}
+				<span id="{{ nodeGroup.vars.id }}_title">{{ nodeGroup.vars.value.nodegroup }}</span>
 			</div>
 		{% endfor %}
 	</div>

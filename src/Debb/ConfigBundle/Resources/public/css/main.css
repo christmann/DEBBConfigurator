@@ -19,7 +19,7 @@ body
 #content
 {
 	width: 921px;
-	margin-top: 30px;
+	margin-top: 19px;
 	padding: 28px 22px 28px 22px;
 	color: #555;
 	border: 1px solid #DDD;
@@ -154,7 +154,7 @@ table tr td
 	width: 182px;
 	margin-right: 18px;
 	margin-left: 18px;
-	margin-top: 30px;
+	margin-top: 19px;
 }
 
 #config-menu ul
@@ -311,9 +311,13 @@ table tr td
 }
 
 .nodegroup {
-	height: 10px;
 	border-bottom: 1px solid #DEDEDE;
 	cursor: pointer;
+	font-size: 11px;
+	height: 10px;
+	line-height: 10px;
+	text-align: center;
+	vertical-align: middle;
 }
 
 .nodegroup:hover {
