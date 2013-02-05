@@ -12,11 +12,11 @@ class MainboardType extends AbstractType
     {
         $builder
             ->add('manufacturer')
-            ->add('product')
+            ->add('product', null, array('attr' => array('class' => 'noBreakAfterThis')))
             ->add('model')
-            ->add('description')
-            ->add('socket')
-            ->add('connections')
+            ->add('description', null, array('attr' => array('class' => 'noBreakAfterThis')))
+            ->add('socket', 'text')
+            ->add('connections', null, array('attr' => array('class' => 'bigTextbox')))
         ;
     }
 

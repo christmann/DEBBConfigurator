@@ -757,8 +757,8 @@ label {
 
 .eAdopt {
 	position: absolute;
-	bottom: 0px;
-	right: -30px;
+	bottom: 20px;
+	right: 0px;
 }
 
 .blue-button.white
@@ -828,4 +828,17 @@ label {
 	background: -ms-linear-gradient(top,  #e5e5e5 0%,#ffffff 100%);
 	background: linear-gradient(to bottom,  #e5e5e5 0%,#ffffff 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5e5e5', endColorstr='#ffffff',GradientType=0 );
+}
+
+textarea {
+	background: linear-gradient(to bottom, #F2F2F2 0%, #FFFFFF 100%) repeat scroll 0 0 transparent;
+}
+
+div[class*="noBreakAfterThis"] {
+	float: left;
+}
+
+.bigTextbox {
+	height: 200px;
+	width: 466px;
 }

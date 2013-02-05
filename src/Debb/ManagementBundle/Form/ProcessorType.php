@@ -12,10 +12,10 @@ class ProcessorType extends AbstractType
     {
         $builder
             ->add('manufacturer', 'text')
-            ->add('product', 'text')
+            ->add('product', 'text', array('attr' => array('class' => 'noBreakAfterThis')))
             ->add('model', 'text')
-            ->add('cores', 'number')
-            ->add('maxFrequency', 'number')
+            ->add('cores', 'text', array('attr' => array('class' => 'noBreakAfterThis')))
+            ->add('maxFrequency', 'text')
         ;
     }
 

@@ -12,10 +12,10 @@ class MemoryType extends AbstractType
     {
         $builder
             ->add('manufacturer')
-            ->add('product')
+            ->add('product', null, array('attr' => array('class' => 'noBreakAfterThis')))
             ->add('model')
             ->add('maxPower')
-            ->add('capacity')
+            ->add('capacity', 'text')
         ;
     }
 

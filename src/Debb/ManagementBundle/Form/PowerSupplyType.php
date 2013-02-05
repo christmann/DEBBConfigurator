@@ -12,11 +12,11 @@ class PowerSupplyType extends AbstractType
     {
         $builder
             ->add('manufacturer')
-            ->add('product')
+            ->add('product', null, array('attr' => array('class' => 'noBreakAfterThis')))
             ->add('model')
-            ->add('maxPower')
+            ->add('maxPower', null, array('attr' => array('class' => 'noBreakAfterThis')))
+            ->add('efficiency', 'text')
             ->add('totalOutputPower')
-            ->add('efficiency')
         ;
     }
 

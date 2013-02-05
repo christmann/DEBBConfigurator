@@ -12,11 +12,11 @@ class CoolingDeviceType extends AbstractType
     {
         $builder
             ->add('manufacturer')
-            ->add('product')
+            ->add('product', null, array('attr' => array('class' => 'noBreakAfterThis')))
             ->add('model')
-            ->add('maxPower')
+            ->add('maxPower', null, array('attr' => array('class' => 'noBreakAfterThis')))
             ->add('maxCoolingCapacity')
-            ->add('maxAirThroughput')
+            ->add('maxAirThroughput', null, array('attr' => array('class' => 'noBreakAfterThis')))
             ->add('maxWaterThroughput')
         ;
     }

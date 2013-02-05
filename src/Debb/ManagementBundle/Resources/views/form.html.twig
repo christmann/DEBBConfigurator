@@ -1,6 +1,13 @@
 {% set showTitle = true %}
 {% extends "::base.html.twig" %}
-{% block title %}{{ 'edit.%what%' | trans({'%what%': localdev_admin_name(false) }) }}{% endblock %}
+{% block title %}{{ ((item.id == null) ? 'localdev_admin.title.add' : 'localdev_admin.title.edit') | trans({"%name%":localdev_admin_name(false)}, 'crud') }}{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{% javascripts '@DebbManagementBundle/Resources/public/js/form.js' %}
+		<script src="{{ asset_url }}" type="text/javascript"></script>
+	{% endjavascripts %}
+{% endblock %}
 
 {% block form_header %}
 	<form action="{% if item.id is null %}{{ path( localdev_admin_route('_form')) }}{% else %}{{ path( localdev_admin_route('_form'), {id: item.id}) }}{% endif %}"
