@@ -59,7 +59,7 @@
 		</div>
 
 		<div class="rackConfig">
-			<select id="selectedNodeGroup" disabled="disabled">
+			<select id="selectedNodeGroup" disabled="disabled" style="margin-right: 15px">
 				<option value="0" selected="selected">- {{ 'chose.%person%.%what%' | trans({'%person%': 'your' | trans, '%what%': 'node.group' | trans}) }} -</option>
 				{% for nodegroup in nodegroups %}
 						<option value="{{ nodegroup.id }}">{{ nodegroup }}</option>

@@ -9,6 +9,7 @@ add.%what%: add %what%
 delete.%what%: delete %what%
 select.%what%: select %what%
 save.%what%: save %what%
+edit.%what%: edit %what%
 chose.%person%.%what%: chose %person% %what%
 node: node
 node.group: node group

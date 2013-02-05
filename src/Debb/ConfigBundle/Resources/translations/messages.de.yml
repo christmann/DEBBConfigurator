@@ -9,6 +9,7 @@ add.%what%: %what% hinzufügen
 delete.%what%: %what% löschen
 select.%what%: %what% auswählen
 save.%what%: %what% speichern
+edit.%what%: %what% bearbeiten
 chose.%person%.%what%: Wähle %person% %what%
 node: Knoten
 node.group: Knotengruppe

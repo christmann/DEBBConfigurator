@@ -320,12 +320,9 @@ table tr td
 	vertical-align: middle;
 }
 
-.nodegroup:hover {
-	box-shadow: 0 0 7px black;
-}
-
-.nodegroup-checked {
-	box-shadow: 0 0 14px black;
+.nodegroup:hover, .nodegroup-checked {
+	background-color: #98C7DE !important;
+	border-bottom: 1px solid #98C7DE;
 }
 
 .nodegroup-selected {

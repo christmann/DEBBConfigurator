@@ -1,6 +1,6 @@
 {% set showTitle = true %}
 {% extends "::base.html.twig" %}
-{% block title %}{{ localdev_admin_name(true) }}{% endblock %}
+{% block title %}{{ 'edit.%what%' | trans({'%what%': localdev_admin_name(false) }) }}{% endblock %}
 
 {% block form_header %}
 	<form action="{% if item.id is null %}{{ path( localdev_admin_route('_form')) }}{% else %}{{ path( localdev_admin_route('_form'), {id: item.id}) }}{% endif %}"
