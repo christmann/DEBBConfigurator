@@ -78,29 +78,29 @@ class DefaultController extends Controller
 	 * @param \SimpleXMLElement $xml the xml level from import
 	 * @return boolean true
 	 */
-	public function importDebbComponentsComponent(\SimpleXMLElement &$xml)
+	public function importDebbComponentsComponent(\SimpleXMLElement &$xml, &$nodeGroupNodes = array(), &$nodeComponents = array())
 	{
 		$em = $this->getEntityManager();
 
-		foreach($xml as $type => $obj)
+		foreach ($xml as $type => $obj)
 		{
-			if(in_array(strtolower($type), array('computebox2', 'computebox1')))
+			if (in_array(strtolower($type), array('computebox2', 'computebox1')))
 			{
 				continue;
 			}
 
-			if(!empty($obj))
+			if (!empty($obj))
 			{
-				if(is_array($obj))
+				if (is_array($obj))
 				{
-					foreach($obj as $kKey => $uObj)
+					foreach ($obj as $kKey => $uObj)
 					{
 						$this->importDebbComponentsComponent(array($type => $uObj));
 					}
 				}
 				else
 				{
-					if(in_array(strtolower($type), array('computebox2', 'computebox1', 'node', 'nodegroup')))
+					if (in_array(strtolower($type), array('computebox2', 'computebox1', 'node', 'nodegroup')))
 					{
 						$this->importDebbComponentsComponent($obj);
 					}
@@ -111,16 +111,16 @@ class DefaultController extends Controller
 						$type = 'TYPE_' . strtoupper(implode('_', $m[1]));
 
 						/* check if entry could be a component */
-						if(defined('\Debb\ManagementBundle\Entity\Component::' . $type))
+						if (defined('\Debb\ManagementBundle\Entity\Component::' . $type))
 						{
-							$class = '\\Debb\\ManagementBundle\\Entity\\'.$typeO;
-							if(class_exists($class))
+							$class = '\\Debb\\ManagementBundle\\Entity\\' . $typeO;
+							if (class_exists($class))
 							{
 								$entry = new $class();
-								foreach((array)$obj as $key => $value)
+								foreach ((array) $obj as $key => $value)
 								{
-									$cmd = 'set'.$key;
-									if(method_exists($entry, $cmd))
+									$cmd = 'set' . $key;
+									if (method_exists($entry, $cmd))
 									{
 										$entry->$cmd($value);
 									}
@@ -143,4 +143,5 @@ class DefaultController extends Controller
 
 		return true;
 	}
+
 }
