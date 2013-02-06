@@ -28,6 +28,20 @@ class Processor extends Base
 	private $maxFrequency;
 
 	/**
+	 * @var decimal
+	 *
+	 * @ORM\Column(name="max_power", type="decimal", nullable=true)
+	 */
+	private $maxPower;
+
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="max_clock_speed", type="integer", nullable=true)
+	 */
+	private $maxClockSpeed;
+
+	/**
 	 * Set cores
 	 *
 	 * @param integer $cores
@@ -74,6 +88,52 @@ class Processor extends Base
 	}
 
 	/**
+	 * Set maxPower
+	 *
+	 * @param \double $maxPower
+	 * @return Processor
+	 */
+	public function setMaxPower($maxPower)
+	{
+		$this->maxPower = $maxPower;
+
+		return $this;
+	}
+
+	/**
+	 * Get maxPower
+	 *
+	 * @return decimal 
+	 */
+	public function getMaxPower()
+	{
+		return $this->maxPower;
+	}
+
+	/**
+	 * Set maxClockSpeed
+	 *
+	 * @param integer $maxClockSpeed
+	 * @return Processor
+	 */
+	public function setMaxClockSpeed($maxClockSpeed)
+	{
+		$this->maxClockSpeed = $maxClockSpeed;
+
+		return $this;
+	}
+
+	/**
+	 * Get maxClockSpeed
+	 *
+	 * @return decimal 
+	 */
+	public function getMaxClockSpeed()
+	{
+		return $this->maxClockSpeed;
+	}
+
+	/**
 	 * Returns a array for later converting
 	 * 
 	 * @return array the array for later converting
@@ -88,6 +148,14 @@ class Processor extends Base
 		if ($this->getMaxFrequency() != null)
 		{
 			$array['MaxFrequency'] = $this->getMaxFrequency();
+		}
+		if ($this->getMaxPower() != null)
+		{
+			$array['MaxPower'] = $this->getMaxPower();
+		}
+		if ($this->getMaxClockSpeed() != null)
+		{
+			$array['MaxClockSpeed'] = $this->getMaxClockSpeed();
 		}
 		return $array;
 	}

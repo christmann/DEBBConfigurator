@@ -16,6 +16,8 @@ class ProcessorType extends AbstractType
             ->add('model', 'text')
             ->add('cores', 'text', array('attr' => array('class' => 'noBreakAfterThis')))
             ->add('maxFrequency', 'text')
+            ->add('MaxPower', 'text', array('attr' => array('class' => 'noBreakAfterThis')))
+            ->add('MaxClockSpeed', 'text')
         ;
     }
 

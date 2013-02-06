@@ -16,7 +16,7 @@ class CoolingDevice extends Base
 	/**
 	 * @var float
 	 *
-	 * @ORM\Column(name="MaxPower", type="float", nullable=true)
+	 * @ORM\Column(name="MaxPower", type="decimal", nullable=true)
 	 */
 	private $maxPower;
 

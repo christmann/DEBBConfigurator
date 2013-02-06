@@ -68,6 +68,7 @@ class DefaultController extends Controller
 		$xml = new \SimpleXMLElement(file_get_contents('../utils/DEBBComponents.xml'));
 
 		$this->importDebbComponentsComponent($xml);
+		$this->stackNodeComponents();
 
 		return new Response();
 	}
@@ -186,6 +187,71 @@ class DefaultController extends Controller
 		$em->flush();
 
 		return true;
+	}
+
+	/**
+	 * Remove double component entries
+	 * -> use as cronjob or after DEBBComponents.xml import
+	 */
+	public function stackNodeComponents()
+	{
+		$em = $this->getEntityManager();
+		$doctrine = $this->getDoctrine();
+		$repository = $doctrine->getRepository('DebbConfigBundle:Node');
+		foreach($repository->findAll() as $node)
+		{
+			$components = $node->getComponents();
+			/* count the amount from same types */
+			$nComponents = array();
+			foreach($components as $component)
+			{
+				if($component->getActive() == null)
+				{
+					continue;
+				}
+
+				if(array_key_exists($component->getType() . '.' . $component->getActive()->getId(), $nComponents))
+				{
+					$nComponents[$component->getType() . '.' . $component->getActive()->getId()] += $component->getAmount();
+				}
+				else
+				{
+					$nComponents[$component->getType() . '.' . $component->getActive()->getId()] = $component->getAmount();
+				}
+			}
+
+			/* loop the components and remove double components */
+			$newComponentArray = array();
+			foreach($nComponents as $key => $amount)
+			{
+				$cache = explode('.', $key);
+				$type = $cache[0];
+				$activeId = $cache[1];
+
+				$first = true;
+				foreach($components as $compKey => $component)
+				{
+					if($component->getActive() == null)
+					{
+						continue;
+					}
+					if($component->getType() == $type && $component->getActive()->getId() == $activeId)
+					{
+						if($first)
+						{
+							$first = false;
+							$component->setAmount($amount);
+							$newComponentArray[] = $component;
+						}
+						else
+						{
+							$em->remove($component);
+						}
+					}
+				}
+			}
+		}
+		$em->flush();
 	}
 
 }
