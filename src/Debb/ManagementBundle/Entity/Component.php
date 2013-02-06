@@ -428,27 +428,27 @@ class Component
 		{
 			if($this->getType() == $this::TYPE_MAINBOARD && $this->getMainboard() != null)
 			{
-				$array[]['mainboard'] = $this->getMainboard()->getDebbXmlArray();
+				$array[]['Mainboard'] = $this->getMainboard()->getDebbXmlArray();
 			}
 			else if($this->getType() == $this::TYPE_PROCESSOR && $this->getProcessor() != null)
 			{
-				$array[]['processor'] = $this->getProcessor()->getDebbXmlArray();
+				$array[]['Processor'] = $this->getProcessor()->getDebbXmlArray();
 			}
 			else if($this->getType() == $this::TYPE_COOLING_DEVICE && $this->getCoolingDevice() != null)
 			{
-				$array[]['coolingdevice'] = $this->getCoolingDevice()->getDebbXmlArray();
+				$array[]['CoolingDevice'] = $this->getCoolingDevice()->getDebbXmlArray();
 			}
 			else if($this->getType() == $this::TYPE_MEMORY && $this->getMemory() != null)
 			{
-				$array[]['memory'] = $this->getMemory()->getDebbXmlArray();
+				$array[]['Memory'] = $this->getMemory()->getDebbXmlArray();
 			}
 			else if($this->getType() == $this::TYPE_POWER_SUPPLY && $this->getPowersupply() != null)
 			{
-				$array[]['powersupply'] = $this->getPowersupply()->getDebbXmlArray();
+				$array[]['PowerSupply'] = $this->getPowersupply()->getDebbXmlArray();
 			}
 			else if($this->getType() == $this::TYPE_STORAGE && $this->getStorage() != null)
 			{
-				$array[]['storage'] = $this->getStorage()->getDebbXmlArray();
+				$array[]['Storage'] = $this->getStorage()->getDebbXmlArray();
 			}
 		}
 		return $array;

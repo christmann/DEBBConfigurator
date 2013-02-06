@@ -105,15 +105,15 @@ class NodeController extends CRUDController
 
 		$item = $this->getEntity($id);
 
-		$xml = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><xsd_1:DEBBComponents xmlns:xsd_1="http://www.coolemall.eu/DEBBComponent"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.coolemall.eu/DEBBComponent DEBBComponents.xsd " />');
+		$xml = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><DEBBComponents />');
 		$xmlComputeBoxTwo = $xml->addChild('ComputeBox2');
 		$xmlComputeBoxOne = $xmlComputeBoxTwo->addChild('ComputeBox1');
 		$nodegroup = $xmlComputeBoxOne->addChild('NodeGroup');
 		$node = $item->getDebbXmlArray();
 		\Debb\ManagementBundle\Entity\Base::array_to_xml($node, $nodegroup);
-		echo $xml->asXML();
+		echo str_replace('<DEBBComponents>', '<xsd_1:DEBBComponents xmlns:xsd_1="http://www.coolemall.eu/DEBBComponent"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.coolemall.eu/DEBBComponent DEBBComponents.xsd "><Name>CoolEmAll</Name><Description>Generated DEBBComponent File</Description>', str_replace('</DEBBComponents>', '</xsd_1:DEBBComponents>', $xml->asXML()));
 
 		return $response;
 	}

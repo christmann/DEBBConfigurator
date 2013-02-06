@@ -65,7 +65,9 @@ class DefaultController extends Controller
 	 */
 	public function importDebbComponentsXmlAction()
 	{
-		$xml = new \SimpleXMLElement(file_get_contents('../utils/DEBBComponents.xml'));
+		$xmlString = file_get_contents('../utils/DEBBComponents.xml');
+		$xmlString = preg_replace('#\<[/]{0,1}[a-zA-Z0-9_:]{0,9}ComputeBox[0-9]\>#i', '', $xmlString);
+		$xml = new \SimpleXMLElement($xmlString);
 
 		$this->importDebbComponentsComponent($xml);
 		$this->stackNodeComponents();
