@@ -14,13 +14,6 @@ class Node extends Dimensions
 {
 
 	/**
-	 * @var integer
-	 *
-	 * @ORM\ManyToOne(targetEntity="Debb\ManagementBundle\Entity\Mainboard", cascade={"all"})
-	 */
-	private $mainboard;
-
-	/**
 	 * @var array
 	 *
 	 * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\Component", mappedBy="node", cascade={"persist"}, orphanRemoval=true)
@@ -47,29 +40,6 @@ class Node extends Dimensions
 	 * @ORM\ManyToOne(targetEntity="Debb\ManagementBundle\Entity\File", cascade={"all"})
 	 */
 	private $stlFile;
-
-	/**
-	 * Set mainboard
-	 *
-	 * @param Debb\ManagementBundle\Entity\Mainboard $mainboard
-	 * @return Node
-	 */
-	public function setMainboard(\Debb\ManagementBundle\Entity\Mainboard $mainboard)
-	{
-		$this->mainboard = $mainboard;
-
-		return $this;
-	}
-
-	/**
-	 * Get mainboard
-	 *
-	 * @return Debb\ManagementBundle\Entity\Mainboard 
-	 */
-	public function getMainboard()
-	{
-		return $this->mainboard;
-	}
 
 	/**
 	 * Returns the name of this node for the table view or selections

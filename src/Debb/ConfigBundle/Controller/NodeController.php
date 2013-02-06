@@ -29,10 +29,11 @@ class NodeController extends CRUDController
 	{
 		$item = $this->getEntity($id);
 
-		if ($request->getMethod() != 'POST' && $item->getId() < 1)
+		if ($request->getMethod() != 'POST')
 		{
 			/* define required components */
 			$required = array(
+				Component::TYPE_MAINBOARD => false,
 				Component::TYPE_PROCESSOR => false,
 				Component::TYPE_COOLING_DEVICE => false,
 				Component::TYPE_POWER_SUPPLY => false,
