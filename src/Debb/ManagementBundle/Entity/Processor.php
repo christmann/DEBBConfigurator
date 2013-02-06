@@ -16,14 +16,14 @@ class Processor extends Base
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="cores", type="integer")
+	 * @ORM\Column(name="cores", type="integer", nullable=true)
 	 */
 	private $cores;
 
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="max_frequency", type="integer")
+	 * @ORM\Column(name="max_frequency", type="integer", nullable=true)
 	 */
 	private $maxFrequency;
 

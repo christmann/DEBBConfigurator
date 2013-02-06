@@ -16,21 +16,21 @@ class Storage extends Base
 	/**
 	 * @var float
 	 *
-	 * @ORM\Column(name="MaxPower", type="float")
+	 * @ORM\Column(name="MaxPower", type="float", nullable=true)
 	 */
 	private $maxPower;
 
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="Capacity", type="integer")
+	 * @ORM\Column(name="Capacity", type="integer", nullable=true)
 	 */
 	private $capacity;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="Interface", type="string", length=255)
+	 * @ORM\Column(name="Interface", type="string", length=255, nullable=true)
 	 */
 	private $interface;
 

@@ -5,6 +5,7 @@ namespace Debb\ConfigBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use \Localdev\FrameworkExtraBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use \Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route("/{_locale}", requirements={"_locale" = "en|de"}, defaults={"_locale" = "en"})
@@ -57,4 +58,89 @@ class DefaultController extends Controller
 		return $this->jsonResponse(array('success' => ($request->getMethod() == 'POST'), 'fileId' => $file->getId()) + $result);
 	}
 
+	/**
+	 * Imports a specific file from DEBBComponents format to sql database
+	 * 
+	 * @Route("/import/DEBBComponents.xml")
+	 */
+	public function importDebbComponentsXmlAction()
+	{
+		$xml = new \SimpleXMLElement(file_get_contents('../utils/DEBBComponents.xml'));
+
+		$this->importDebbComponentsComponent($xml);
+
+		return new Response();
+	}
+
+	/**
+	 * Import a depth DEBBComponents.xml
+	 * 
+	 * @param \SimpleXMLElement $xml the xml level from import
+	 * @return boolean true
+	 */
+	public function importDebbComponentsComponent(\SimpleXMLElement &$xml)
+	{
+		$em = $this->getEntityManager();
+
+		foreach($xml as $type => $obj)
+		{
+			if(in_array(strtolower($type), array('computebox2', 'computebox1')))
+			{
+				continue;
+			}
+
+			if(!empty($obj))
+			{
+				if(is_array($obj))
+				{
+					foreach($obj as $kKey => $uObj)
+					{
+						$this->importDebbComponentsComponent(array($type => $uObj));
+					}
+				}
+				else
+				{
+					if(in_array(strtolower($type), array('computebox2', 'computebox1', 'node', 'nodegroup')))
+					{
+						$this->importDebbComponentsComponent($obj);
+					}
+					else
+					{
+						preg_match_all('#([A-Z][a-z]+)#', $type, $m);
+						$typeO = $type;
+						$type = 'TYPE_' . strtoupper(implode('_', $m[1]));
+
+						/* check if entry could be a component */
+						if(defined('\Debb\ManagementBundle\Entity\Component::' . $type))
+						{
+							$class = '\\Debb\\ManagementBundle\\Entity\\'.$typeO;
+							if(class_exists($class))
+							{
+								$entry = new $class();
+								foreach((array)$obj as $key => $value)
+								{
+									$cmd = 'set'.$key;
+									if(method_exists($entry, $cmd))
+									{
+										$entry->$cmd($value);
+									}
+								}
+
+								$entity = new \Debb\ManagementBundle\Entity\Component();
+								$cmd = 'set' . $typeO;
+								$entity->$cmd($entry);
+								$entity->setType($type);
+								$em->persist($entry);
+								$em->persist($entity);
+							}
+						}
+					}
+				}
+			}
+		}
+
+		$em->flush();
+
+		return true;
+	}
 }

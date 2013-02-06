@@ -19,7 +19,7 @@ rack: rack
 management: Management
 Processor: Processor
 Mainboard: Mainboard
-Coolingdevice: Cooler
+Coolingdevice: Cooling device
 Memory: Memory
 Powersupply: power supplies
 Storage: HDDs

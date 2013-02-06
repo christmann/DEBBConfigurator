@@ -16,28 +16,28 @@ class CoolingDevice extends Base
 	/**
 	 * @var float
 	 *
-	 * @ORM\Column(name="MaxPower", type="float")
+	 * @ORM\Column(name="MaxPower", type="float", nullable=true)
 	 */
 	private $maxPower;
 
 	/**
 	 * @var float
 	 *
-	 * @ORM\Column(name="MaxCoolingCapacity", type="decimal")
+	 * @ORM\Column(name="MaxCoolingCapacity", type="decimal", nullable=true)
 	 */
 	private $maxCoolingCapacity;
 
 	/**
 	 * @var float
 	 *
-	 * @ORM\Column(name="MaxAirThroughput", type="decimal")
+	 * @ORM\Column(name="MaxAirThroughput", type="decimal", nullable=true)
 	 */
 	private $maxAirThroughput;
 
 	/**
 	 * @var float
 	 *
-	 * @ORM\Column(name="MaxWaterThroughput", type="decimal")
+	 * @ORM\Column(name="MaxWaterThroughput", type="decimal", nullable=true)
 	 */
 	private $maxWaterThroughput;
 

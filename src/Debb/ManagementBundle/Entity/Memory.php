@@ -16,14 +16,14 @@ class Memory extends Base
 	/**
 	 * @var float
 	 *
-	 * @ORM\Column(name="MaxPower", type="float")
+	 * @ORM\Column(name="MaxPower", type="float", nullable=true)
 	 */
 	private $maxPower;
 
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="Capacity", type="integer")
+	 * @ORM\Column(name="Capacity", type="integer", nullable=true)
 	 */
 	private $capacity;
 

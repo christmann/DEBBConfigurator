@@ -16,21 +16,21 @@ class Mainboard extends Base
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="description", type="string", length=255)
+	 * @ORM\Column(name="description", type="string", length=255, nullable=true)
 	 */
 	private $description;
 
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="socket", type="integer")
+	 * @ORM\Column(name="socket", type="integer", nullable=true)
 	 */
 	private $socket;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="connections", type="text")
+	 * @ORM\Column(name="connections", type="text", nullable=true)
 	 */
 	private $connections;
 

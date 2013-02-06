@@ -16,21 +16,21 @@ class PowerSupply extends Base
 	/**
 	 * @var float
 	 *
-	 * @ORM\Column(name="MaxPower", type="float")
+	 * @ORM\Column(name="MaxPower", type="float", nullable=true)
 	 */
 	private $maxPower;
 
 	/**
 	 * @var float
 	 *
-	 * @ORM\Column(name="TotalOutputPower", type="decimal")
+	 * @ORM\Column(name="TotalOutputPower", type="decimal", nullable=true)
 	 */
 	private $totalOutputPower;
 
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="Efficiency", type="integer")
+	 * @ORM\Column(name="Efficiency", type="integer", nullable=true)
 	 */
 	private $efficiency;
 
