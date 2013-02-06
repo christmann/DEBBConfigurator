@@ -202,6 +202,10 @@ class Component
 	public function setProcessor(\Debb\ManagementBundle\Entity\Processor $processor = null)
 	{
 		$this->processor = $processor;
+		if($this->processor != null)
+		{
+			$this->setType(self::TYPE_PROCESSOR);
+		}
 
 		return $this;
 	}
@@ -225,6 +229,10 @@ class Component
 	public function setMainboard(\Debb\ManagementBundle\Entity\Mainboard $mainboard = null)
 	{
 		$this->mainboard = $mainboard;
+		if($this->mainboard != null)
+		{
+			$this->setType(self::TYPE_MAINBOARD);
+		}
 
 		return $this;
 	}
@@ -248,6 +256,10 @@ class Component
 	public function setCoolingDevice(\Debb\ManagementBundle\Entity\CoolingDevice $coolingDevice = null)
 	{
 		$this->coolingDevice = $coolingDevice;
+		if($this->coolingDevice != null)
+		{
+			$this->setType(self::TYPE_COOLING_DEVICE);
+		}
 
 		return $this;
 	}
@@ -271,6 +283,10 @@ class Component
 	public function setMemory(\Debb\ManagementBundle\Entity\Memory $memory = null)
 	{
 		$this->memory = $memory;
+		if($this->memory != null)
+		{
+			$this->setType(self::TYPE_MEMORY);
+		}
 
 		return $this;
 	}
@@ -294,6 +310,10 @@ class Component
 	public function setPowersupply(\Debb\ManagementBundle\Entity\PowerSupply $powersupply = null)
 	{
 		$this->powersupply = $powersupply;
+		if($this->powersupply != null)
+		{
+			$this->setType(self::TYPE_POWER_SUPPLY);
+		}
 
 		return $this;
 	}
@@ -317,6 +337,10 @@ class Component
 	public function setStorage(\Debb\ManagementBundle\Entity\Storage $storage = null)
 	{
 		$this->storage = $storage;
+		if($this->storage != null)
+		{
+			$this->setType(self::TYPE_STORAGE);
+		}
 
 		return $this;
 	}

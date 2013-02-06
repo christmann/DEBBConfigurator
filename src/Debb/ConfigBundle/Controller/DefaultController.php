@@ -76,9 +76,11 @@ class DefaultController extends Controller
 	 * Import a depth DEBBComponents.xml
 	 * 
 	 * @param \SimpleXMLElement $xml the xml level from import
+	 * @param \Debb\ConfigBundle\Entity\Node $node the node to add the components
+	 * @param \Debb\ConfigBundle\Entity\NodeGroup $nodeGroup the node group to add the nodes
 	 * @return boolean true
 	 */
-	public function importDebbComponentsComponent(\SimpleXMLElement &$xml, &$nodeGroupNodes = array(), &$nodeComponents = array())
+	public function importDebbComponentsComponent(\SimpleXMLElement & $xml, \Debb\ConfigBundle\Entity\Node & $node = null, \Debb\ConfigBundle\Entity\NodeGroup & $nodeGroup = null)
 	{
 		$em = $this->getEntityManager();
 
@@ -102,7 +104,44 @@ class DefaultController extends Controller
 				{
 					if (in_array(strtolower($type), array('computebox2', 'computebox1', 'node', 'nodegroup')))
 					{
-						$this->importDebbComponentsComponent($obj);
+						if (in_array(strtolower($type), array('node', 'nodegroup')))
+						{
+							$class = '\\Debb\\ConfigBundle\\Entity\\' . $type;
+							if (class_exists($class))
+							{
+								$entry = new $class();
+								foreach ((array) $obj as $key => $value)
+								{
+									$cmd = 'set' . $key;
+									if (method_exists($entry, $cmd))
+									{
+										$entry->$cmd($value);
+									}
+								}
+								$em->persist($entry);
+								if (in_array(strtolower($type), array('node')))
+								{
+									$this->importDebbComponentsComponent($obj, $entry, $nodeGroup);
+								}
+								else
+								{
+									$this->importDebbComponentsComponent($obj, $node, $entry);
+								}
+								if($nodeGroup != null)
+								{
+									$nodeToNodeGroup = new \Debb\ManagementBundle\Entity\NodeToNodegroup();
+									$nodeToNodeGroup->setField($nodeGroup->getFreeNode());
+									$nodeToNodeGroup->setNode($entry);
+									$nodeToNodeGroup->setNodeGroup($nodeGroup);
+									$em->persist($nodeToNodeGroup);
+									$nodeGroup->addNode($nodeToNodeGroup);
+								}
+							}
+						}
+						else
+						{
+							$this->importDebbComponentsComponent($obj);
+						}
 					}
 					else
 					{
@@ -126,12 +165,17 @@ class DefaultController extends Controller
 									}
 								}
 
-								$entity = new \Debb\ManagementBundle\Entity\Component();
-								$cmd = 'set' . $typeO;
-								$entity->$cmd($entry);
-								$entity->setType($type);
-								$em->persist($entry);
-								$em->persist($entity);
+								if($node != null)
+								{
+									$entity = new \Debb\ManagementBundle\Entity\Component();
+									$cmd = 'set' . $typeO;
+									$entity->$cmd($entry);
+									$entity->setType(constant('\Debb\ManagementBundle\Entity\Component::' . $type));
+									$entity->setAmount(1);
+									$em->persist($entry);
+									$em->persist($entity);
+									$node->addComponent($entity);
+								}
 							}
 						}
 					}
