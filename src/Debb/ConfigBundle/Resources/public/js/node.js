@@ -22,7 +22,7 @@ $(function()
 			id++;
 			var type = $(this).parents('.component:first').find('input[id$="_type"]').attr('value'),
 				selectBox = $(this).parents('.component:first').find('[id$="_amount"]');
-			if(parseInt(selectBox.val()) < 1 || (type != TYPE_PROCESSOR && type != TYPE_POWER_SUPPLY))
+			if(parseInt(selectBox.val()) < 1 || (type != TYPE_PROCESSOR && type != TYPE_POWER_SUPPLY && type != TYPE_MAINBOARD))
 			{
 				var prototype = $('.componentBox').attr('data-prototype'),
 					newForm = prototype.replace(/__name__/g, id),
@@ -83,6 +83,18 @@ $(function()
 			if(selectBox.find('option:selected').next().length > 0)
 			{
 				selectBox.val(parseInt(selectBox.val()) + 1);
+			}
+			else if(selectBox.find('option:last').is(':selected'))
+			{
+				var component = $(this).parents('.component');
+				component.find('.addComponent').click();
+				var newComponent = component.next('.component');
+				component.find('select[id!=""]:not([id$="_amount"])').each(function()
+				{
+					var cache = $(this).attr('id').split('_');
+					cache = cache[cache.length - 1];
+					newComponent.find('select[id$="_' + cache + '"]').val($(this).val());
+				});
 			}
 			e.preventDefault();
 		});

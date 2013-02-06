@@ -30,7 +30,7 @@ class ComponentType extends AbstractType
 	public function getAmountChoices()
 	{
 		$res = array();
-		for($x = 0; $x < 50; $x++)
+		for($x = 0; $x < 100; $x++)
 		{
 			$res[$x] = $x;
 		}
