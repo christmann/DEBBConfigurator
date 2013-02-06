@@ -26,7 +26,7 @@ class NodeType extends AbstractType
 				'by_reference' => false,
 				'required' => false,
 			))
-            ->add('image', 'plupload', array('required' => false))
+            ->add('image', null, array('required' => false))
             ->add('vrmlFile', null, array('required' => false))
             ->add('stlFile', null, array('required' => false))
         ;

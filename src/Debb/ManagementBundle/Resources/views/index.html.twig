@@ -2,6 +2,13 @@
 {% extends "::base.html.twig" %}
 {% block title %}{{ localdev_admin_name(true) }}{% endblock %}
 
+{% block javascripts %}
+	{{ parent() }}
+	{% javascripts '@DebbManagementBundle/Resources/public/js/global.js' %}
+		<script src="{{ asset_url }}" type="text/javascript"></script>
+	{% endjavascripts %}
+{% endblock %}
+
 {% block content %}
 	{% block index_table %}
 		<table class="table table-striped table-condensed">
@@ -29,16 +36,16 @@
 											{% block tbuttons_base %}
 												{% spaceless %}
 													<a href="{{ path(localdev_admin_route("_form"), {"id":item.id}) }}" class="btn">
-														<i class="icon-edit"></i>
+														<span rel="tooltip" data-original-title="{{ 'edit' | trans() }}"><i class="icon-edit"></i></span>
 													</a>
 													{% if route_exists(localdev_admin_route("_asxml")) %}
 														<a target="_blank" href="{{ path(localdev_admin_route("_asxml"), {"id": item.id}) }}" class="btn">
-															<i class="icon-file"></i>
+															<span rel="tooltip" data-original-title="{{ 'download.%what%.file' | trans({'%what%': 'DEBBComponents.xml'}) }}"><i class="icon-file"></i></span>
 														</a>
 													{% endif %}
 													<a class="btn btn-danger" data-toggle="modal"
 													   href="#delete{{ item.id }}">
-														<i class="icon-remove icon-white"></i>
+														<span rel="tooltip" data-original-title="{{ 'delete' | trans() }}"><i class="icon-remove icon-white"></i></span>
 													</a>
 												{% endspaceless %}
 											{% endblock %}

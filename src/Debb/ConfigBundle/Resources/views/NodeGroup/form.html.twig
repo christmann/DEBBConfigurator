@@ -52,10 +52,6 @@
 							{% if first %}{% set first = false %}{% else %}<br />{% endif %}
 							<span rel="tooltip" data-original-title="{{ 'Model' | trans }}">{{ node.model }}</span>
 						{% endif %}
-						{% if node.mainboard is not null %}
-							{% if first %}{% set first = false %}{% else %}<br />{% endif %}
-							<span rel="tooltip" data-original-title="{{ 'Mainboard' | trans }}">{{ node.mainboard }}</span>
-						{% endif %}
 						<br />{% for component in node.components if component.active is not null %}
 							{% set transThis = 'component.' ~ component.type %}
 							{% if first %}{% set first = false %}{% else %}<br />{% endif %}

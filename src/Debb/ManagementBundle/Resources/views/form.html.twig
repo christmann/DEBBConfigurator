@@ -4,7 +4,10 @@
 
 {% block javascripts %}
 	{{ parent() }}
-	{% javascripts '@DebbManagementBundle/Resources/public/js/form.js' %}
+	{% javascripts
+						'@DebbManagementBundle/Resources/public/js/form.js'
+						'@DebbManagementBundle/Resources/public/js/global.js'
+	%}
 		<script src="{{ asset_url }}" type="text/javascript"></script>
 	{% endjavascripts %}
 {% endblock %}

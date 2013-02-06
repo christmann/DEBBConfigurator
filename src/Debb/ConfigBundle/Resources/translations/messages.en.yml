@@ -10,7 +10,8 @@ delete.%what%: delete %what%
 select.%what%: select %what%
 save.%what%: save %what%
 edit.%what%: edit %what%
-chose.%person%.%what%: chose %person% %what%
+choose.%person%.%what%: choose %person% %what%
+download.%what%.file: download %what%
 node: node
 node.group: node group
 overview: Overview

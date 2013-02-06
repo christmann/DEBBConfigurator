@@ -34,6 +34,7 @@ class DefaultController extends Controller
 	{
 		$class = $this->container->getParameter('cim.plupload.entity');
 		$file = new $class();
+		$result = array();
 		if ($request->getMethod() == 'POST')
 		{
 			$em = $this->getEntityManager();
@@ -41,9 +42,19 @@ class DefaultController extends Controller
 
 			$em->persist($file);
 			$em->flush();
+
+			/* @var \Avalanche\Bundle\ImagineBundle\Imagine\CachePathResolver $cachePath */
+			$cachePath = $this->get('imagine.cache.path.resolver');
+
+			$result = array(
+				'name' => $file->getName(),
+				'path' => $file->getFullPath(),
+				'thumb' => $cachePath->getBrowserPath($file->getFullPath(), 'admin_thumb'),
+				'is_image' => $file->isImage()
+			);
 		}
 
-		return $this->jsonResponse(array('success' => ($request->getMethod() == 'POST'), 'fileId' => $file->getId()));
+		return $this->jsonResponse(array('success' => ($request->getMethod() == 'POST'), 'fileId' => $file->getId()) + $result);
 	}
 
 }

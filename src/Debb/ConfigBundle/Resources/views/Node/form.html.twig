@@ -20,6 +20,24 @@
 	{% endjavascripts %}
 	<script type="text/javascript">
 		$(function() {
+			$("#upload_image").uploadify({
+				height          : 20,
+				swf             : '{{ asset('bundles/debbconfig/swf/uploadify.swf') }}',
+				uploader        : '{{ path('debb_config_default_upload') }}',
+				width           : 160,
+				multi           : false,
+				fileTypeExts    : '*.jpg; *.png; *.jpeg; *.gif; *.bmp',
+				buttonText	    : '{{ 'upload image file' | trans | e }}',
+				onUploadSuccess : function(file, data, response)
+				{
+					var obj = jQuery.parseJSON(data);
+					if(obj.is_image == true)
+					{
+						$('#debb_configbundle_nodetype_image').val(obj.fileId);
+						$('.node_image').css('background-image', "url('" + obj.thumb + "')");
+					}
+				}
+			});
 			$("#upload_vrml").uploadify({
 				height          : 15,
 				swf             : '{{ asset('bundles/debbconfig/swf/uploadify.swf') }}',
@@ -28,7 +46,6 @@
 				multi           : false,
 				fileTypeExts    : '*.vrml',
 				buttonText	    : 'VRML',
-				buttonClass     : 'some-class',
 				onUploadSuccess : function(file, data, response)
 				{
 					var obj = jQuery.parseJSON(data);
@@ -58,8 +75,12 @@
 {% block content %}
 	<div class="row-fluid" style="position: relative; min-height: 320px;">
 		<div class="span3" style="position: relative;">
-			<div class="node_img">
-				{{ form_widget(form.image) }}
+			<div class="row node_image" style="{% if form.image.vars.data is not null %}background-image: url('{{ form.image.vars.data.fullPath|apply_filter('admin_thumb') }}');{% endif %}">
+			</div>
+			<div class="row-fluid" style="text-align: center; margin-left: 29px;">
+				<input type="file" name="upload_image" id="upload_image" />
+				<input type="hidden" name="debb_configbundle_nodetype[image]" id="debb_configbundle_nodetype_image"
+					   value="{% if form.vrmlFile.vars.data is not null %}{{ form.vrmlFile.vars.data.id }}{% endif %}" />
 			</div>
 		</div>
 			<div class="uploadVrl">
@@ -144,10 +165,10 @@
 							<div class="component">
 								{{ form_widget(component) }}
 								<div class="componentExtras">
-									<div class="addComponent">
+									<div class="addComponent" rel="tooltip" data-original-title="{{ 'add' | trans() }}">
 										<i class="icon-plus"></i>
 									</div>
-									<div class="delComponent">
+									<div class="delComponent" rel="tooltip" data-original-title="{{ 'delete' | trans() }}">
 										<i class="icon-remove"></i>
 									</div>
 								</div>
@@ -161,10 +182,10 @@
 							<div class="component">
 								{{ form_widget(component) }}
 								<div class="componentExtras">
-									<div class="addComponent">
+									<div class="addComponent" rel="tooltip" data-original-title="{{ 'add' | trans() }}">
 										<i class="icon-plus"></i>
 									</div>
-									<div class="delComponent">
+									<div class="delComponent" rel="tooltip" data-original-title="{{ 'delete' | trans() }}">
 										<i class="icon-remove"></i>
 									</div>
 								</div>

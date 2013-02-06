@@ -1,0 +1,4 @@
+$(function()
+{
+	$('[rel="tooltip"]').tooltip();
+});
