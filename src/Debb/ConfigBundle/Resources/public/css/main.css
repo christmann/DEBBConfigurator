@@ -853,3 +853,9 @@ div[class*="noBreakAfterThis"] {
 	width: 222px;
 	margin-left: 0px;
 }
+
+.importexport {
+	bottom: 7px;
+	position: absolute;
+	right: 11px;
+}

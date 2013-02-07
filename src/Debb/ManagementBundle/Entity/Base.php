@@ -145,7 +145,43 @@ class Base
 	 */
 	public function getName()
 	{
-		return $this->getProduct() . ' - ' . $this->getModel();
+		$res = array();
+		if($this->getManufacturer() != null)
+		{
+			$res[] = $this->getManufacturer();
+		}
+		if($this->getProduct() != null)
+		{
+			$res[] = $this->getProduct();
+		}
+		if($this->getModel() != null)
+		{
+			$res[] = $this->getModel();
+		}
+		if(in_array(get_class($this), array('Debb\ManagementBundle\Entity\Memory', 'Debb\ManagementBundle\Entity\Storage')))
+		{
+			if($this->getCapacity() != null)
+			{
+				$res[] = '(' . $this->getCapacity() . ' MB)';
+			}
+		}
+		return implode(' ', $res);
+	}
+
+	/**
+	 * Get the component id - if to short use the unique id
+	 * 
+	 * @return string the component id
+	 */
+	public function getComponentId()
+	{
+		$name = preg_replace('#[^\d\w]#', '', $this->getName());
+		while(strlen($name) < 5)
+		{
+			$name .= substr(sha1($this->getId()), strlen($name), 5 - strlen($name));
+			$name = preg_replace('#[^\d\w]#', '', $name);
+		}
+		return $name . '_' . $this->getId();
 	}
 
 	/**
@@ -155,11 +191,9 @@ class Base
 	 */
 	public function getDebbXmlArray()
 	{
-		$array = array();
-		if ($this->getModel() != null && $this->getProduct() != null)
-		{
-			$array['ComponentId'] = $this->getProduct() . '_' . $this->getModel();
-		}
+		$array = array(
+			'ComponentId' => $this->getComponentId()
+		);
 		if ($this->getManufacturer() != null)
 		{
 			$array['Manufacturer'] = $this->getManufacturer();

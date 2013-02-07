@@ -46,10 +46,6 @@ class Node extends Dimensions
 	 * 
 	 * @return string the name of this node
 	 */
-	public function __toString()
-	{
-		return '[' . $this->getId() . '] ' . $this->getProduct();
-	}
 
 	/**
 	 * Constructor

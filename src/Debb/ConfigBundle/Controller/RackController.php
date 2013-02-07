@@ -64,20 +64,14 @@ class RackController extends CRUDController
 	}
 
 	/**
-	 * Download entity as xml file
-	 *
-	 * @Route("/xml/{id}.xml", requirements={"id"="\d+"});
+	 * Return entity as DEBBComponents.xml string
 	 *
 	 * @param int                                       $id       item id
 	 *
-	 * @return \Symfony\Component\HttpFoundation\Response
+	 * @return string the DEBBComponents.xml string
 	 */
 	public function asXmlAction($id)
 	{
-		$response = new \Symfony\Component\HttpFoundation\Response();
-		$response->headers->set('Content-Type', 'text/xml');
-		header('Content-Type: text/xml');
-
 		$item = $this->getEntity($id);
 
 		$xml = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><DEBBComponents />');
@@ -86,28 +80,21 @@ class RackController extends CRUDController
 		$rack = $item->getDebbXmlArray();
 		$rack = $rack['Rack'];
 		\Debb\ManagementBundle\Entity\Base::array_to_xml($rack, $xmlComputeBoxOne);
-		echo str_replace('<DEBBComponents>', '<xsd_1:DEBBComponents xmlns:xsd_1="http://www.coolemall.eu/DEBBComponent"
+
+		return str_replace('<DEBBComponents>', '<xsd_1:DEBBComponents xmlns:xsd_1="http://www.coolemall.eu/DEBBComponent"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.coolemall.eu/DEBBComponent DEBBComponents.xsd "><Name>CoolEmAll</Name><Description>Generated DEBBComponent File</Description>', str_replace('</DEBBComponents>', '</xsd_1:DEBBComponents>', $xml->asXML()));
-
-		return $response;
 	}
 
 	/**
-	 * Download entity as plm xml file
-	 *
-	 * @Route("/plmxml/{id}.xml", requirements={"id"="\d+"});
+	 * Return entity as plm xml string
 	 *
 	 * @param int $id item id
 	 *
-	 * @return \Symfony\Component\HttpFoundation\Response
+	 * @return string the plm xml string
 	 */
 	public function asPlmXmlAction($id)
 	{
-		$response = new \Symfony\Component\HttpFoundation\Response();
-		$response->headers->set('Content-Type', 'text/xml');
-		header('Content-Type: text/xml');
-
 		$item = $this->getEntity($id);
 
 		$xml = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><PLMXML xmlns:PLMXML="http://www.plmxml.org/Schemas/PLMXMLSchema"
@@ -121,50 +108,32 @@ class RackController extends CRUDController
 		$instanceGraph->addAttribute('rootRefs', 'inst' . sprintf('%02d', $item->getId()) . '_1');
 
 		$rackInstance = $this->addPlmXmlProductInstance(
-			$instanceGraph,
-			'inst' . sprintf('%02d', $item->getId()) . '_1',
-			'DefRack' . sprintf('%02d', $item->getId()),
-			null,
-			$item->getHostname()
+			$instanceGraph, 'inst' . sprintf('%02d', $item->getId()) . '_1', 'DefRack' . sprintf('%02d', $item->getId()), null, $item->getHostname()
 		);
+		$rackInstance = $rackInstance[0];
 
 		$nodeGroupsForThatRack = array();
 
-		foreach($item->getNodeGroups() as $nodeGroup)
+		foreach ($item->getNodeGroups() as $nodeGroup)
 		{
-			if($nodeGroup->getNodeGroup() != null)
+			if ($nodeGroup->getNodeGroup() != null)
 			{
-				$id = $item->getId() + $nodeGroup->getId() + rand(10,99);
+				$id = $item->getId() . $nodeGroup->getId();
 				$nodeGroupsForThatRack[] = 'id' . sprintf('%04d', $id);
 
 				$productRevisionView = $this->addPlmXmlProductRevisionView(
-					$instanceGraph,
-					'id' . sprintf('%04d', $id),
-					'DefNodeGroup' . sprintf('%04d', $id),
-					array(),
-					'assembly',
-					'VRML',
-					'.\objects\file.wrl',
-					$nodeGroup->getNodeGroup()->getProduct() . '_' . $nodeGroup->getNodeGroup()->getModel(),
-					'NodeGroup'
+					$instanceGraph, 'id' . sprintf('%04d', $id), 'DefNodeGroup' . sprintf('%04d', $id), array(), 'assembly', 'VRML', '.\objects\file.wrl', $nodeGroup->getNodeGroup()->getComponentId(), 'NodeGroup'
 				);
 
 				$nodesForThatNodeGroup = array();
-				foreach($nodeGroup->getNodeGroup()->getNodes() as $node)
+				foreach ($nodeGroup->getNodeGroup()->getNodes() as $node)
 				{
-					if($node->getNode() != null)
+					if ($node->getNode() != null)
 					{
-						$id = $id + $node->getId() + rand(10,99);
-						$nodesForThatNodeGroup[] = 'id' . sprintf('%04d', $id);
-
-						$this->addPlmXmlProductInstance(
-							$instanceGraph,
-							'id' . sprintf('%04d', $id),
-							'DefNode' . sprintf('%04d', $id),
-							array(),
-							$node->getNode()->getHostname(),
-							null // position
+						$partReference = $this->addPlmXmlProductInstance(
+							$instanceGraph, 'id' . sprintf('%04d', $id) . '_2', 'DefNode' . sprintf('%04d', $id), 'id' . sprintf('%04d', $id), $node->getNode()->getHostname(), null // position
 						);
+						$nodesForThatNodeGroup[] = $partReference[1];
 					}
 				}
 
@@ -174,9 +143,7 @@ class RackController extends CRUDController
 
 		$rackInstance->addAttribute('partRef', implode(' ', $nodeGroupsForThatRack));
 
-		echo $xml->asXML();
-
-		return $response;
+		return $xml->asXML();
 	}
 
 	/**
@@ -188,7 +155,7 @@ class RackController extends CRUDController
 	 * @param null|string optional $partRef the part reference of this product instance
 	 * @param null|string optional $hostname the hostname of this product instance
 	 * @param null|string optional $transform the position of this product instance
-	 * @return \SimpleXMLElement the SimpleXMLElement product instance
+	 * @return array the SimpleXMLElement product instance (0) and the generated id (1)
 	 */
 	public function addPlmXmlProductInstance(\SimpleXMLElement &$xml, $id, $name = null, $partRef = null, $hostname = null, $transform = null)
 	{
@@ -209,7 +176,7 @@ class RackController extends CRUDController
 		$productInstance->addAttribute('id', $id); // example: inst71_01_7
 		if ($name != null)
 		{
-			$productInstance->addAttribute('name', $name); // example: Node7
+			$productInstance->addAttribute('name', $name . '_' . $iId); // example: Node7
 		}
 		if ($partRef != null)
 		{
@@ -235,7 +202,7 @@ class RackController extends CRUDController
 			}
 		}
 
-		return $productInstance;
+		return array(0 => $productInstance, 1 => $id);
 	}
 
 	/**
@@ -332,6 +299,46 @@ class RackController extends CRUDController
 	public function convertIdToRevId($id)
 	{
 		return str_replace('id', 'id10', $id);
+	}
+
+	/**
+	 * Download a zip archive with all xml files
+	 * 
+	 * @Route("/download/{id}.zip", defaults={"id"=0}, requirements={"id"="\d+|"});
+	 * @param type $id the id of rack to generate plm xml and DEBBComponents.xml
+	 * @throws error 404
+	 */
+	public function exportAsArchiveAction($id)
+	{
+		$fileName = tempnam(sys_get_temp_dir(), 'zip');
+
+		$zip = new \ZipArchive;
+		$res = $zip->open($fileName, \ZipArchive::CREATE);
+		if ($res == true)
+		{
+			$zip->addFromString('DEBBComponents.xml', $this->asXmlAction($id));
+			$zip->addFromString('PLMXML.xml', $this->asPlmXmlAction($id));
+			$zip->addEmptyDir('img');
+			foreach($this->getEntities('DebbConfigBundle:Node') as $node)
+			{
+				if($node->getImage() != null)
+				{
+					$zip->addFile($node->getImage()->getFullPath(), 'img/' . $node->getComponentId() . '.' . $node->getImage()->getExtension());
+				}
+			}
+			$zip->close();
+			header('Content-Disposition: attachment; filename=' . date('Y-m-d-H-i-s') . '.zip');
+			header('Content-type: application/zip');
+			if(readfile($fileName))
+			{
+				unlink($fileName);
+			}
+		}
+		else
+		{
+			throw $this->createNotFoundException($this->get('translator')->trans('could not create zip archive'));
+		}
+		exit(0);
 	}
 
 }

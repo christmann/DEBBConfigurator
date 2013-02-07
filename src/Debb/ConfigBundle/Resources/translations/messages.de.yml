@@ -55,3 +55,9 @@ Description: Beschreibung
 Socket: Sockel
 Connections: Verbindungen
 Component: Komponente
+Maxpower: maximale Leistung
+Maxclockspeed: Maximale Taktrate
+Maxcoolingcapacity: Maximale Kühlleistung
+Maxairthroughput: Maximaler Luftdurchsatz
+Maxwaterthroughput: Maximaler Wasserdurchsatz
+Totaloutputpower: Gesamt-Ausgangsleistung
