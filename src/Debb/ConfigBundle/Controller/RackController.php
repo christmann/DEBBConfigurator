@@ -70,7 +70,7 @@ class RackController extends CRUDController
 	 *
 	 * @return string the DEBBComponents.xml string
 	 */
-	public function asXmlAction($id)
+	public function asXmlAction($id, $pretty=false)
 	{
 		$item = $this->getEntity($id);
 
@@ -81,9 +81,23 @@ class RackController extends CRUDController
 		$rack = $rack['Rack'];
 		\Debb\ManagementBundle\Entity\Base::array_to_xml($rack, $xmlComputeBoxOne);
 
-		return str_replace('<DEBBComponents>', '<xsd_1:DEBBComponents xmlns:xsd_1="http://www.coolemall.eu/DEBBComponent"
+		if($pretty)
+		{
+			$dom = dom_import_simplexml($xml)->ownerDocument;
+			$dom->formatOutput = true;
+			$dom->preserveWhiteSpace = true;
+			$xmlStr = $dom->saveXML();
+		}
+		else
+		{
+			$xmlStr = $xml->asXML();
+		}
+
+		$str = str_replace('<DEBBComponents>', '<xsd_1:DEBBComponents xmlns:xsd_1="http://www.coolemall.eu/DEBBComponent"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.coolemall.eu/DEBBComponent DEBBComponents.xsd "><Name>CoolEmAll</Name><Description>Generated DEBBComponent File</Description>', str_replace('</DEBBComponents>', '</xsd_1:DEBBComponents>', $xml->asXML()));
+	xsi:schemaLocation="http://www.coolemall.eu/DEBBComponent DEBBComponents.xsd "><Name>CoolEmAll</Name><Description>Generated DEBBComponent File</Description>', str_replace('</DEBBComponents>', '</xsd_1:DEBBComponents>', $xmlStr));
+	
+		return $str;
 	}
 
 	/**
@@ -93,7 +107,7 @@ class RackController extends CRUDController
 	 *
 	 * @return string the plm xml string
 	 */
-	public function asPlmXmlAction($id)
+	public function asPlmXmlAction($id, $pretty=false)
 	{
 		$item = $this->getEntity($id);
 
@@ -143,7 +157,17 @@ class RackController extends CRUDController
 
 		$rackInstance->addAttribute('partRef', implode(' ', $nodeGroupsForThatRack));
 
-		return $xml->asXML();
+		if($pretty)
+		{
+			$dom = dom_import_simplexml($xml)->ownerDocument;
+			$dom->formatOutput = true;
+			$dom->preserveWhiteSpace = true;
+			return $dom->saveXML();
+		}
+		else
+		{
+			return $xml->asXML();
+		}
 	}
 
 	/**
@@ -316,8 +340,8 @@ class RackController extends CRUDController
 		$res = $zip->open($fileName, \ZipArchive::CREATE);
 		if ($res == true)
 		{
-			$zip->addFromString('DEBBComponents.xml', $this->asXmlAction($id));
-			$zip->addFromString('PLMXML.xml', $this->asPlmXmlAction($id));
+			$zip->addFromString('DEBBComponents.xml', $this->asXmlAction($id, true));
+			$zip->addFromString('PLMXML.xml', $this->asPlmXmlAction($id, true));
 			$zip->addEmptyDir('img');
 			foreach($this->getEntities('DebbConfigBundle:Node') as $node)
 			{
