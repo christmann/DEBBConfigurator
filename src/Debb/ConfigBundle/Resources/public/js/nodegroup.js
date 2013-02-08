@@ -43,7 +43,7 @@ $(function()
 		$('.adopt').on('click', function(e)
 		{
 			var field = $(this).attr('field');
-			$('#debb_configbundle_nodegrouptype_nodes_' + field + '_node').val($('#node-chooser').val());
+			$('#debb_configbundle_nodegrouptype_nodes_' + field + '_node').val($('#node-chooser').val() > 0 ? $('#node-chooser').val() : '');
 			$('#debb_configbundle_nodegrouptype_nodes_' + field + '_node').parents('.node').removeClass('nodeSelected');
 			$('.adopt').removeAttr('field');
 			$('#node-chooser').val(0);
@@ -62,7 +62,7 @@ function updateNodes()
 	{
 		var node = $(this).parents('.node'),
 			nodeId = $(node).find('[id$="_node"]').val();
-		$(this).html($('#node-chooser [value="' + nodeId + '"]').html());
+		$(this).html($('#node-chooser [value="' + (nodeId == null ? '0' : nodeId) + '"]').html());
 	});
 }
 
