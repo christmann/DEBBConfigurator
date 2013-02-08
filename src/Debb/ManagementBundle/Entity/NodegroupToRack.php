@@ -17,6 +17,7 @@ class NodegroupToRack extends Connector
 	 * @var NodeGroup
 	 *
 	 * @ORM\ManyToOne(targetEntity="Debb\ConfigBundle\Entity\NodeGroup")
+	 * @ORM\JoinColumn(name="nodegroup_id", referencedColumnName="id", onDelete="cascade")
 	 */
 	private $nodegroup;
 
@@ -24,6 +25,7 @@ class NodegroupToRack extends Connector
 	 * @var NodeGroup
 	 *
 	 * @ORM\ManyToOne(targetEntity="Debb\ConfigBundle\Entity\Rack")
+	 * @ORM\JoinColumn(name="rack_id", referencedColumnName="id", onDelete="cascade")
 	 */
 	private $rack;
 

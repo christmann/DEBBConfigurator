@@ -99,6 +99,7 @@ class Component
 	 * @var Debb\ManagementBundle\Entity\Processor
 	 * 
 	 * @ORM\ManyToOne(targetEntity="Processor")
+	 * @ORM\JoinColumn(name="processor_id", referencedColumnName="id", onDelete="cascade")
 	 */
 	private $processor;
 
@@ -106,6 +107,7 @@ class Component
 	 * @var Debb\ManagementBundle\Entity\Mainboard
 	 * 
 	 * @ORM\ManyToOne(targetEntity="Mainboard")
+	 * @ORM\JoinColumn(name="mainboard_id", referencedColumnName="id", onDelete="cascade")
 	 */
 	private $mainboard;
 
@@ -113,6 +115,7 @@ class Component
 	 * @var Debb\ManagementBundle\Entity\CoolingDevice
 	 * 
 	 * @ORM\ManyToOne(targetEntity="CoolingDevice")
+	 * @ORM\JoinColumn(name="coolingdevice_id", referencedColumnName="id", onDelete="cascade")
 	 */
 	private $coolingDevice;
 
@@ -120,6 +123,7 @@ class Component
 	 * @var Debb\ManagementBundle\Entity\Memory
 	 * 
 	 * @ORM\ManyToOne(targetEntity="Memory")
+	 * @ORM\JoinColumn(name="memory_id", referencedColumnName="id", onDelete="cascade")
 	 */
 	private $memory;
 
@@ -127,6 +131,7 @@ class Component
 	 * @var Debb\ManagementBundle\Entity\PowerSupply
 	 * 
 	 * @ORM\ManyToOne(targetEntity="PowerSupply")
+	 * @ORM\JoinColumn(name="powersupply_id", referencedColumnName="id", onDelete="cascade")
 	 */
 	private $powersupply;
 
@@ -134,6 +139,7 @@ class Component
 	 * @var Debb\ManagementBundle\Entity\Storage
 	 * 
 	 * @ORM\ManyToOne(targetEntity="Storage")
+	 * @ORM\JoinColumn(name="storage_id", referencedColumnName="id", onDelete="cascade")
 	 */
 	private $storage;
 

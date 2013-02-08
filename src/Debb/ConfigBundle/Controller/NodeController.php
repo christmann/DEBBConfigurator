@@ -62,6 +62,7 @@ class NodeController extends CRUDController
 				{
 					$component = new Component();
 					$component->setType($key);
+					$component->setAmount(0);
 					$item->addComponent($component);
 				}
 			}
