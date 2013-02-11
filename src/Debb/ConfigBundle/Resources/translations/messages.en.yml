@@ -30,7 +30,8 @@ SizeX: width [m]
 SizeY: height [m]
 SizeZ: depth [m]
 adopt: Adopt
-your: yours
+your: your
+yours: your
 free rack units: Free Rack Units
 selected rack unit: Selected Rack Unit
 none: none
