@@ -26,9 +26,9 @@ Storage: HDD
 Amount: Anzahl
 delete.last.entry: Sicher, dass Sie den letzten Eintrag dieser Art löschen wollen?
 only.one.of.this: Sie können maximal nur eine Auswahl dieses Typs haben!
-SizeX: Breite [mm]
-SizeY: Höhe [mm]
-SizeZ: Tiefe [mm]
+SizeX: Breite [m]
+SizeY: Höhe [m]
+SizeZ: Tiefe [m]
 adopt: Auswählen
 your: deine
 free rack units: freie HE's
@@ -55,9 +55,14 @@ Description: Beschreibung
 Socket: Sockel
 Connections: Verbindungen
 Component: Komponente
-Maxpower: maximale Leistung
-Maxclockspeed: Maximale Taktrate
+Maxpower: maximale Leistung [Watt]
+Maxclockspeed: Maximale Taktrate [MHz]
 Maxcoolingcapacity: Maximale Kühlleistung
 Maxairthroughput: Maximaler Luftdurchsatz
 Maxwaterthroughput: Maximaler Wasserdurchsatz
-Totaloutputpower: Gesamt-Ausgangsleistung
+Totaloutputpower: Gesamt-Ausgangsleistung [Watt]
+Capacity: Kapazität [MByte]
+processors: Prozessoren
+mainboards: Mainboards
+memory: Speicher
+Efficiency: Typische Effizienz [%]

@@ -7,32 +7,32 @@ define.%what%: Define %what%
 equip.%what%: Equip %what%
 add.%what%: add %what%
 delete.%what%: delete %what%
-select.%what%: select %what%
+select.%what%: Select %what%
 save.%what%: save %what%
 edit.%what%: edit %what%
 choose.%person%.%what%: choose %person% %what%
 download.%what%.file: download %what%
 node: node
-node.group: node group
+node.group: Node Group
 overview: Overview
-rack: rack
+rack: Rack
 management: Management
 Processor: Processor
 Mainboard: Mainboard
-Coolingdevice: Cooling device
+Coolingdevice: Cooling Device
 Memory: Memory
-Powersupply: power supplies
+Powersupply: Power Supplies
 Storage: HDDs
 Amount: Amount
 delete.last.entry: Sure? You want to delete the last entry of this kind!
 only.one.of.this: You can have a maximum of only a selection of this type!
-SizeX: width [mm]
-SizeY: height [mm]
-SizeZ: depth [mm]
+SizeX: width [m]
+SizeY: height [m]
+SizeZ: depth [m]
 adopt: Adopt
 your: yours
-free rack units: free rack units
-selected rack unit: selected rack unit
+free rack units: Free Rack Units
+selected rack unit: Selected Rack Unit
 none: none
 component.0: unknown
 component.1: Mainboard
@@ -52,12 +52,19 @@ Cores: Cores
 Maxfrequency: Max frequency [MHz]
 Image: Image
 Description: Description
-Socket: Socket
+Socket: Socket Type
 Connections: Connections
 Component: Component
-Maxpower: Maximum power
-Maxclockspeed: Maximum clock speed
+Maxpower: Maximum Power Usage [Watt]
+Maxclockspeed: Maximum Clock Speed [MHz]
 Maxcoolingcapacity: Maximum cooling capacity
 Maxairthroughput: Max air throughput
 Maxwaterthroughput: Max water throughput
-Totaloutputpower: Total output power
+Totaloutputpower: Total Output Power [Watt]
+Capacity: Capacity [MByte]
+processors: Processors
+mainboards: Mainboards
+memory: Memory
+power supply: Power Supply
+Efficiency: Typical Efficiency [%]
+power supplies: Power Supplies
