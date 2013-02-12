@@ -23,7 +23,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				{% for item in items %}
+				{% for item in items|dSort %}
 					{% block tbody %}
 						<tr>
 							{% block trow %}

@@ -36,6 +36,16 @@ class Extension extends \Twig_Extension
 	}
 
 	/**
+	 * {@inheritdoc}
+	 */
+    public function getFilters()
+    {
+		return array(
+			'dSort' => new \Twig_Filter_Method($this, 'dSort'),
+		);
+    }
+
+	/**
 	 * Check if a route exists
 	 * 
 	 * @param string $route the route to check
@@ -54,6 +64,39 @@ class Extension extends \Twig_Extension
 			}
 		}
 		return $exists;
+	}
+
+	/**
+	 * Sort a array collection or a object array (the objects should have getId() and __toString())
+	 * 
+	 * @param array $array the doctrine array collection (or array with objects which contains getId() and __toString()) to sort
+	 * @param boolean $reverse should we sort reverse? (false = ABCDEF... / true = ZYXWVU...)
+	 * @return array the sorted and maybe reversed array with objects
+	 */
+	public function dSort($array = array(), $reverse=false)
+	{
+		$sortThis = array();
+		foreach($array as $arr)
+		{
+			$sortThis[$arr->getId()] = $arr->__toString(); 
+		}
+		asort($sortThis);
+		$newArray = array();
+		foreach($sortThis as $id => $name)
+		{
+			foreach($array as $obj)
+			{
+				if($id == $obj->getId())
+				{
+					$newArray[] = $obj;
+				}
+			}
+		}
+		if($reverse)
+		{
+			$newArray = array_reverse($newArray);
+		}
+		return $newArray;
 	}
 
 	/**

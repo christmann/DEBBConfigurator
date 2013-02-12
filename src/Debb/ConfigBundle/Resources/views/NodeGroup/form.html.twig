@@ -37,7 +37,7 @@
 			<h5>{{ 'select.%what%' | trans({'%what%': 'node' | trans}) }}:</h5>
 			<select id="node-chooser" size="16">
 				<option value="0" selected="selected">&nbsp;</option>
-				{% for node in nodes %}
+				{% for node in nodes|dSort %}
 					{% set sText %}
 						{% set first = true %}
 						{% if node.manufacturer is not null %}
