@@ -1,6 +1,6 @@
 debb_config.node.plural: node
 debb_config.node.singular: node
-debb_config.nodegroup.plural: node groups
-debb_config.nodegroup.singular: node group
-debb_config.rack.plural: racks
-debb_config.rack.singular: rack
+debb_config.nodegroup.plural: Node Groups
+debb_config.nodegroup.singular: Node Group
+debb_config.rack.plural: Racks
+debb_config.rack.singular: Rack
