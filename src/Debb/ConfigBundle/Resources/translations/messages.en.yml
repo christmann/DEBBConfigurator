@@ -42,6 +42,7 @@ component.3: Cooler
 component.4: Memory
 component.5: power supplies
 component.6: HDDs
+empty: Empty
 
 # form fields which not defined above
 Product: Product

@@ -42,6 +42,7 @@ component.3: Kühler
 component.4: Speicher
 component.5: Netzteil
 component.6: HDD
+empty: leer
 
 # form fields which not defined above
 Product: Produkt

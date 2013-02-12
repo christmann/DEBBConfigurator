@@ -19,6 +19,7 @@ $(function()
 				$('#selectedNodeGroup').val(0);
 				$('#selectedNodeGroup').attr('disabled', 'disabled');
 				$('#selectedNodeGroup').change();
+				$('#emptyval').hide();
 				updateRack();
 			}
 		});
@@ -40,6 +41,7 @@ $(function()
 			$('#selectedNodeGroup').attr('field', field);
 			$('#selectedNodeGroup').removeAttr('disabled');
 			$('#selectedNodeGroup').change();
+			$('#emptyval').show();
 			updateRack();
 			e.preventDefault();
 		});
