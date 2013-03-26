@@ -21,7 +21,13 @@
 		"knplabs/knp-menu-bundle": "dev-master",
 		"localdev/admin-bundle": "dev-master",
 		"avalanche123/imagine-bundle": "dev-master",
-        "willdurand/expose-translation-bundle": "dev-master"
+        "willdurand/expose-translation-bundle": "dev-master",
+        "phpunit/phpunit": "3.7.*",
+        "behat/behat": "*",
+        "behat/symfony2-extension": "*",
+        "behat/mink-extension": "*",
+        "behat/mink-browserkit-driver": "*",
+        "behat/mink-selenium2-driver":  "*"
 	},
 	"scripts": {
 		"post-install-cmd": [
