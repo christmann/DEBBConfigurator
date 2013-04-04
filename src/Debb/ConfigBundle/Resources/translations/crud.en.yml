@@ -4,3 +4,5 @@ debb_config.nodegroup.plural: Node Groups
 debb_config.nodegroup.singular: Node Group
 debb_config.rack.plural: Racks
 debb_config.rack.singular: Rack
+debb_config.room.plural: Rooms
+debb_config.room.singular: Room

@@ -209,9 +209,16 @@ table tr td
 {
 	background-image: url('../img/zwei-icon.png');
 }
+
 #config-menu > ul:not(.menu_level_1) li a.first.three
 {
 	background-image: url('../img/drei-icon.png');
+	border-bottom-width: 0px;
+}
+
+#config-menu > ul:not(.menu_level_1) li a.first.four
+{
+	background-image: url('../img/vier-icon.png');
 	border-bottom: 1px solid #666;
 }
 

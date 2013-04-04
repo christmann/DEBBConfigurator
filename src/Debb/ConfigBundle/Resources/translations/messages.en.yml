@@ -29,6 +29,10 @@ only.one.of.this: You can have a maximum of only a selection of this type!
 SizeX: width [m]
 SizeY: height [m]
 SizeZ: depth [m]
+SpaceTop: gap top [m]
+SpaceLeft: gap left [m]
+SpaceRight: gap right [m]
+SpaceBottom: gap bottom [m]
 adopt: Adopt
 your: your
 yours: your

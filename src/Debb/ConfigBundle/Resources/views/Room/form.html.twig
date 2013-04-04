@@ -1,0 +1,156 @@
+{% extends "DebbManagementBundle::form.html.twig" %}
+{% form_theme form "DebbManagementBundle::form_theme.html.twig" %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{% javascripts '@DebbConfigBundle/Resources/public/js/room.js' %}
+		<script src="{{ asset_url }}" type="text/javascript"></script>
+	{% endjavascripts %}
+{% endblock %}
+
+{% block content %}
+	<style type="text/css">
+		#content {
+			padding: 0 0 0 0 !important;
+		}
+	</style>
+	<div class="rackTop">&nbsp;</div>
+	<div class="rack">
+		{% set formNodeGroups = form.nodegroups | reverse %}
+		{% if formNodeGroups[0].vars.value.field == 0 %}
+			{% set formNodeGroups = formNodeGroups | reverse %}
+		{% endif %}
+		{% for nodeGroup in formNodeGroups %}
+			<div class="nodegroup">
+				{{ form_widget(nodeGroup, {attr: {'style': 'display: none'}}) }}
+				<span id="{{ nodeGroup.vars.id }}_title">{{ nodeGroup.vars.value.nodegroup }}</span>
+			</div>
+		{% endfor %}
+	</div>
+
+	<div class="extraContent">
+		<div class="row-fluid">
+			<div class="span2" style="text-align: right; width: 12.53%;">
+				{{ 'Manufacturer' | trans }}:
+			</div>
+			<div class="span4">
+				{{ form_widget(form.manufacturer) }}
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span2" style="text-align: right; width: 12.53%;">
+				{{ 'Product' | trans }}:
+			</div>
+			<div class="span4">
+				{{ form_widget(form.product) }}
+			</div>
+			<div class="span2" style="text-align: right; width: 12.53%;">
+				{{ 'Model' | trans }}:
+			</div>
+			<div class="span4">
+				{{ form_widget(form.model) }}
+			</div>
+		</div>
+	</div>
+
+	<div class="rackConfigArea">
+		<div class="nodegroup-selector">
+			<h5>{{ 'node.group' | trans }}:</h5>
+		</div>
+
+		<div class="rackConfig">
+			<select id="selectedNodeGroup" disabled="disabled" style="margin-right: 15px">
+				<option value="" disabled="disabled" selected="selected">- {{ 'choose.%person%.%what%' | trans({'%person%': 'your' | trans, '%what%': 'node.group' | trans}) }} -</option>
+				<option id="emptyval" value="0" style="display: none;">--- {{ 'empty' | trans }} ---</option>
+				{% for nodegroup in nodegroups|dSort %}
+						<option value="{{ nodegroup.id }}">{{ nodegroup }}</option>
+				{% endfor %}
+			</select>
+			<strong>{{ 'free rack units' | trans }}:</strong> <span id="freeUnits" style="margin-right: 15px;">0</span>
+			<strong>{{ 'selected rack unit' | trans }}:</strong> <span id="selectedUnit" style="margin-right: 15px;">{{ 'none' | trans }}</span>
+
+		<div class="rackNodeInfo">
+			{% for nodegroup in nodegroups %}
+				<div class="nodegroup_infos_{{ nodegroup.id }}" style="display: none;">
+					<div class="row">
+						<div class="span1" style="text-align: right; width: 89px; font-weight: bold;">
+							{{ 'Manufacturer' | trans }}:
+						</div>
+						<div class="span4">
+							{{ nodegroup.manufacturer }}
+						</div>
+					</div>
+					<div class="row">
+						<div class="span1" style="text-align: right; width: 89px; font-weight: bold;">
+							{{ 'Product' | trans }}:
+						</div>
+						<div class="span4">
+							{{ nodegroup.product }}
+						</div>
+					</div>
+					<div class="row">
+						<div class="span1" style="text-align: right; width: 89px; font-weight: bold;">
+							{{ 'Model' | trans }}:
+						</div>
+						<div class="span4">
+							{{ nodegroup.model }}
+						</div>
+					</div>
+					<br /><table class="table table-striped" style="background-color: #fff;">
+						<thead>
+							<tr>
+								<th class="span1">{{ 'count' | trans }}</th>
+								<th>{{ 'node' | trans }}</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% set displayedNodes = [] %}
+							{% for node in nodegroup.nodes if node.node is not null %}
+								{% if node.node.id not in displayedNodes %}
+									{% set displayedNodes = displayedNodes | merge([node.node.id]) %}
+									<tr>
+										<td>
+											{% set count = 0 %}
+											{% for nodeY in nodegroup.nodes if nodeY.node is not null %}
+												{% if nodeY.node.id == node.node.id %}
+													{% set count = count + 1 %}
+												{% endif %}
+											{% endfor %}
+											{{ count }}
+										</td>
+										<td>
+											{% set first = true %}
+											{% if node.node.manufacturer is not null %}
+												{% if first %}{% set first = false %}{% else %}<br />{% endif %}
+												<span rel="tooltip" data-original-title="{{ 'Manufacturer' | trans }}">{{ node.node.manufacturer }}</span>
+											{% endif %}
+											{% if node.node.product is not null %}
+												{% if first %}{% set first = false %}{% else %}<br />{% endif %}
+												<span rel="tooltip" data-original-title="{{ 'Product' | trans }}">{{ node.node.product }}</span>
+											{% endif %}
+											{% if node.node.model is not null %}
+												{% if first %}{% set first = false %}{% else %}<br />{% endif %}
+												<span rel="tooltip" data-original-title="{{ 'Model' | trans }}">{{ node.node.model }}</span>
+											{% endif %}
+											<br />{% for component in node.node.components if component.active is not null %}
+												{% set transThis = 'component.' ~ component.type %}
+												{% if first %}{% set first = false %}{% else %}<br />{% endif %}
+												{{ component.amount }} x <span rel="tooltip" data-original-title="{{ transThis | trans }}">{{ component.active }}</span>
+											{% endfor %}
+										</td>
+									</tr>
+								{% endif %}
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			{% endfor %}
+		</div>
+
+		<a href="#" class="selectNodeGroup blue-button adopt eAdopt" style="margin-right: 15px;"><i class="icon-ok icon-white" style="margin-right: 5px;"></i>{{ 'adopt' | trans }}</a>
+		</div>
+	</div>
+
+	{{ form_widget(form._token) }}
+	<div class="clear"></div>
+{% endblock %}

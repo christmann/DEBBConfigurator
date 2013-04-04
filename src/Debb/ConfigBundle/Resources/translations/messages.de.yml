@@ -29,6 +29,10 @@ only.one.of.this: Sie können maximal nur eine Auswahl dieses Typs haben!
 SizeX: Breite [m]
 SizeY: Höhe [m]
 SizeZ: Tiefe [m]
+SpaceTop: Abstand oben [m]
+SpaceLeft: Abstand links [m]
+SpaceRight: Abstand rechts [m]
+SpaceBottom: Abstand unten [m]
 adopt: Auswählen
 your: dein
 yours: deine

@@ -62,6 +62,11 @@ class MenuBuilder
 			'attributes' => array('class' => 'three first')
 		));
 
+		$menu->addChild($this->translateIt('room'), array(
+			'route' => 'debb_config_room_index',
+			'attributes' => array('class' => 'four first')
+		));
+
 		return $menu;
 	}
 
