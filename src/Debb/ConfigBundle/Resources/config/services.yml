@@ -21,3 +21,8 @@ services:
             - "@service_container"
         tags:
             - { name: twig.extension }
+
+    swiftmailer.command.spool_send:
+        class: Symfony\Bundle\SwiftmailerBundle\Command\SendEmailCommand
+        calls:
+            - [ setContainer, ["@service_container"] ]

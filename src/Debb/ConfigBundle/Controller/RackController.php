@@ -60,7 +60,7 @@ class RackController extends CRUDController
 				'form' => $form->createView(),
 				'item' => $item,
 				'nodegroups' => $nodegroups
-			));
+		));
 	}
 
 	/**
@@ -70,7 +70,7 @@ class RackController extends CRUDController
 	 *
 	 * @return string the DEBBComponents.xml string
 	 */
-	public function asXmlAction($id, $pretty=false)
+	public function asXmlAction($id, $pretty = false)
 	{
 		$item = $this->getEntity($id);
 
@@ -81,7 +81,7 @@ class RackController extends CRUDController
 		$rack = $rack['Rack'];
 		\Debb\ManagementBundle\Entity\Base::array_to_xml($rack, $xmlComputeBoxOne);
 
-		if($pretty)
+		if ($pretty)
 		{
 			$dom = dom_import_simplexml($xml)->ownerDocument;
 			$dom->formatOutput = true;
@@ -96,7 +96,7 @@ class RackController extends CRUDController
 		$str = str_replace('<DEBBComponents>', '<xsd_1:DEBBComponents xmlns:xsd_1="http://www.coolemall.eu/DEBBComponent"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.coolemall.eu/DEBBComponent DEBBComponents.xsd "><Name>CoolEmAll</Name><Description>Generated DEBBComponent File</Description>', str_replace('</DEBBComponents>', '</xsd_1:DEBBComponents>', $xmlStr));
-	
+
 		return $str;
 	}
 
@@ -107,7 +107,7 @@ class RackController extends CRUDController
 	 *
 	 * @return string the plm xml string
 	 */
-	public function asPlmXmlAction($id, $pretty=false)
+	public function asPlmXmlAction($id, $pretty = false)
 	{
 		$item = $this->getEntity($id);
 
@@ -157,7 +157,7 @@ class RackController extends CRUDController
 
 		$rackInstance->addAttribute('partRef', implode(' ', $nodeGroupsForThatRack));
 
-		if($pretty)
+		if ($pretty)
 		{
 			$dom = dom_import_simplexml($xml)->ownerDocument;
 			$dom->formatOutput = true;
@@ -340,12 +340,16 @@ class RackController extends CRUDController
 		$res = $zip->open($fileName, \ZipArchive::CREATE);
 		if ($res == true)
 		{
-			$zip->addFromString('DEBBComponents.xml', $this->asXmlAction($id, true));
-			$zip->addFromString('PLMXML.xml', $this->asPlmXmlAction($id, true));
+			$debbComponentsXml = $this->asXmlAction($id, true);
+			$zip->addFromString('DEBBComponents.xml', $debbComponentsXml);
+			$this->valide($debbComponentsXml, file_get_contents('../utils/DEBBComponents.xsd'), 'DEBBComponents');
+			$plmXml = $this->asPlmXmlAction($id, true);
+			$zip->addFromString('PLMXML.xml', $plmXml);
+			$this->valide($plmXml, file_get_contents('../utils/PLMXMLSchema.xsd'), 'PLMXML');
 			$zip->addEmptyDir('img');
-			foreach($this->getEntities('DebbConfigBundle:Node') as $node)
+			foreach ($this->getEntities('DebbConfigBundle:Node') as $node)
 			{
-				if($node->getImage() != null)
+				if ($node->getImage() != null)
 				{
 					$zip->addFile($node->getImage()->getFullPath(), 'img/' . $node->getComponentId() . '.' . $node->getImage()->getExtension());
 				}
@@ -353,7 +357,7 @@ class RackController extends CRUDController
 			$zip->close();
 			header('Content-Disposition: attachment; filename=' . date('Y-m-d-H-i-s') . '.zip');
 			header('Content-type: application/zip');
-			if(readfile($fileName))
+			if (readfile($fileName))
 			{
 				unlink($fileName);
 			}
@@ -363,6 +367,69 @@ class RackController extends CRUDController
 			throw $this->createNotFoundException($this->get('translator')->trans('could not create zip archive'));
 		}
 		exit(0);
+	}
+
+	/**
+	 * Validate a xml string with a xsd string
+	 * 
+	 * @param string $xml the xml string
+	 * @param string $xsd the xsd string
+	 * @param string|null $sendTitle the document title for error-mailing
+	 * @param string|null $sendTo the email address for error-mailing
+	 */
+	public function valide($xml, $xsd, $sendTitle = null, $sendTo = null)
+	{
+		libxml_use_internal_errors(true);
+
+		$doc = new \DOMDocument();
+		$doc->loadXml($xml);
+
+		if (!@$doc->schemaValidateSource($xsd))
+		{
+			$mailTxt = "Sehr geehrte Damen und Herren,\n\nbei der Generierung Ihres ". $sendTitle. "-Dokuments sind folgende Fehler aufgetreten.";
+			$errors = libxml_get_errors();
+			foreach ($errors as $error)
+			{
+				/* @var $error \LibXMLError */
+				$mailTxt .= "\n\n["
+					. ($error->level == LIBXML_ERR_WARNING ? 'Warnung' : $error->level == LIBXML_ERR_ERROR ? 'Fehler' : $error->level == LIBXML_ERR_FATAL ? 'Schwerwiegend' : '')
+					. "]\n[".$error->code."] " . trim($error->message) . "\nZeile: " . $error->line ."\nXML: ".$this->stringGetLine($xml, $error->line)
+					. "\nXSD: " . $this->stringGetLine($xsd, $error->line);
+			}
+			libxml_clear_errors();
+			$mailTxt .= "\n\nMit freundlichen Grüßen\nIhr DEBB Configurator";
+
+			$msg = \Swift_Message::newInstance()
+				->setSubject('DEBBConfigurator Generierungsfehler')
+				->setFrom('bup@christmann.info')
+				->setTo('bup@christmann.info')
+				->setBody($mailTxt)
+				->attach(\Swift_Attachment::newInstance($xml, $sendTitle.'.xml'))
+				->attach(\Swift_Attachment::newInstance($xsd, $sendTitle.'.xsd'))
+			;
+			/* @var $mailer \Swift_Mailer */
+			$mailer = $this->get('mailer');
+			$mailer->send($msg);
+			$this->get('swiftmailer.command.spool_send')->run(new \Symfony\Component\Console\Input\ArgvInput(array()), new \Symfony\Component\Console\Output\ConsoleOutput());
+
+			return false;
+		}
+
+		return true;
+	}
+
+	public function stringGetLine($str, $line)
+	{
+		$cache = explode("\n", $str);
+		if($line < 0)
+		{
+			$line = 0;
+		}
+		else if($line > count($cache))
+		{
+			$line = count($cache);
+		}
+		return trim($cache[$line - 1]);
 	}
 
 }
