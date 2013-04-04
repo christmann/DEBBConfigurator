@@ -44,13 +44,22 @@
 				uploader        : '{{ path('debb_config_default_upload') }}',
 				width           : 80,
 				multi           : false,
-				fileTypeExts    : '*.vrml',
+				fileTypeExts    : '*.wrl',
 				buttonText	    : 'VRML',
 				onUploadSuccess : function(file, data, response)
 				{
 					var obj = jQuery.parseJSON(data);
 					$('#debb_configbundle_nodetype_vrmlFile').val(obj.fileId);
 					$('#vrmlFileName').html(file.name);
+					{# if(typeof(obj.dimension) != 'undefined')
+					{
+						$('#sizex').html(obj.dimension.sizex);
+						$('#debb_configbundle_nodetype_sizeX').val(obj.dimension.sizex);
+						$('#sizey').html(obj.dimension.sizey);
+						$('#debb_configbundle_nodetype_sizeY').val(obj.dimension.sizey);
+						$('#sizez').html(obj.dimension.sizez);
+						$('#debb_configbundle_nodetype_sizeZ').val(obj.dimension.sizez);
+					} #}
 				}
 			});
 			$("#upload_stl").uploadify({
@@ -84,14 +93,21 @@
 			</div>
 		</div>
 			<div class="uploadVrl">
-				<div class="row">
+				{# <div class="row">
 					<div class="span5" style="text-align: right; font-weight: bold;">
 						{{ 'Dimensions' | trans }}:
 					</div>
 					<div class="span7" style="text-align: left;">
-						X mm x X mm x X mm
+						{% spaceless %}
+							<span id="sizex">{{ form.sizeX.vars.data }}</span> mm
+							<input type="hidden" name="debb_configbundle_nodetype[sizeX]" id="debb_configbundle_nodetype_sizeX" value="{{ form.sizeX.vars.data }}" />
+							x <span id="sizey">{{ form.sizeY.vars.data }}</span> mm
+							<input type="hidden" name="debb_configbundle_nodetype[sizeY]" id="debb_configbundle_nodetype_sizeY" value="{{ form.sizeY.vars.data }}" />
+							x <span id="sizez">{{ form.sizeZ.vars.data }}</span> mm
+							<input type="hidden" name="debb_configbundle_nodetype[sizeZ]" id="debb_configbundle_nodetype_sizeZ" value="{{ form.sizeZ.vars.data }}" />
+						{% endspaceless %}
 					</div>
-				</div>
+				</div> #}
 				<div class="row">
 					<div class="span5" style="text-align: right; font-weight: bold;">
 						{{ '3D model' | trans }}:

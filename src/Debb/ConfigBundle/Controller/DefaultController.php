@@ -34,6 +34,7 @@ class DefaultController extends Controller
 	public function uploadAction(Request $request)
 	{
 		$class = $this->container->getParameter('cim.plupload.entity');
+		/* @var $file \Debb\ManagementBundle\Entity\File */
 		$file = new $class();
 		$result = array();
 		if ($request->getMethod() == 'POST')
@@ -53,6 +54,19 @@ class DefaultController extends Controller
 				'thumb' => $cachePath->getBrowserPath($file->getFullPath(), 'admin_thumb'),
 				'is_image' => $file->isImage()
 			);
+
+			if(in_array($file->getExtension(), array('wrl')))
+			{
+				$content = file_get_contents('./'.$file->getFullPath());
+				preg_match_all('#translation ([0-9.-]+) ([0-9.-]+) ([0-9.-]+)#i', $content, $m);
+				if(count($m) == 4)
+				{
+					if(count($m[0]) >= 1)
+					{
+						$result['dimension'] = array('sizex' => $m[1][0], 'sizey' => $m[2][0], 'sizez' => $m[3][0]);
+					}
+				}
+			}
 		}
 
 		return $this->jsonResponse(array('success' => ($request->getMethod() == 'POST'), 'fileId' => $file->getId()) + $result);

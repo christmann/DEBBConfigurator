@@ -95,7 +95,7 @@ class Dimensions extends \Debb\ManagementBundle\Entity\Base
 	 */
 	public function getSizeX()
 	{
-		return $this->sizeX;
+		return (float) $this->sizeX;
 	}
 
 	/**
@@ -118,7 +118,7 @@ class Dimensions extends \Debb\ManagementBundle\Entity\Base
 	 */
 	public function getSizeY()
 	{
-		return $this->sizeY;
+		return (float) $this->sizeY;
 	}
 
 	/**
@@ -141,7 +141,7 @@ class Dimensions extends \Debb\ManagementBundle\Entity\Base
 	 */
 	public function getSizeZ()
 	{
-		return $this->sizeZ;
+		return (float) $this->sizeZ;
 	}
 
 	/**
@@ -164,7 +164,7 @@ class Dimensions extends \Debb\ManagementBundle\Entity\Base
 	 */
 	public function getSpaceLeft()
 	{
-		return $this->spaceLeft;
+		return (float) $this->spaceLeft;
 	}
 
 	/**
@@ -187,7 +187,7 @@ class Dimensions extends \Debb\ManagementBundle\Entity\Base
 	 */
 	public function getSpaceRight()
 	{
-		return $this->spaceRight;
+		return (float) $this->spaceRight;
 	}
 
 	/**
@@ -210,7 +210,7 @@ class Dimensions extends \Debb\ManagementBundle\Entity\Base
 	 */
 	public function getSpaceTop()
 	{
-		return $this->spaceTop;
+		return (float) $this->spaceTop;
 	}
 
 	/**
@@ -233,7 +233,7 @@ class Dimensions extends \Debb\ManagementBundle\Entity\Base
 	 */
 	public function getSpaceBottom()
 	{
-		return $this->spaceBottom;
+		return (float) $this->spaceBottom;
 	}
 
 	/**
@@ -256,7 +256,7 @@ class Dimensions extends \Debb\ManagementBundle\Entity\Base
 	 */
 	public function getSpaceFront()
 	{
-		return $this->spaceFront;
+		return (float) $this->spaceFront;
 	}
 
 	/**
@@ -279,7 +279,7 @@ class Dimensions extends \Debb\ManagementBundle\Entity\Base
 	 */
 	public function getSpaceBehind()
 	{
-		return $this->spaceBehind;
+		return (float) $this->spaceBehind;
 	}
 
 	/**
@@ -291,12 +291,15 @@ class Dimensions extends \Debb\ManagementBundle\Entity\Base
 	{
 		if ($incSpace)
 		{
-			return
-				($this->getSizeX() + $this->getSpaceLeft() + $this->getSpaceRight())
-				* ($this->getSizeY() + $this->getSpaceTop() + $this->getSpaceBottom())
-				* ($this->getSizeZ() + $this->getSpaceFront() + $this->getSpaceBehind());
+			$ret = ($this->getSizeX() + $this->getSpaceLeft() + $this->getSpaceRight())
+					* ($this->getSizeY() + $this->getSpaceTop() + $this->getSpaceBottom())
+					* ($this->getSizeZ() + $this->getSpaceFront() + $this->getSpaceBehind());
 		}
-		return $this->getSizeX() * $this->getSizeY() * $this->getSizeZ();
+		else
+		{
+			$ret = $this->getSizeX() * $this->getSizeY() * $this->getSizeZ();
+		}
+		return (float) $ret;
 	}
 
 }
