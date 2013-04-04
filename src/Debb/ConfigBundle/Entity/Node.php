@@ -3,6 +3,7 @@
 namespace Debb\ConfigBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use \Debb\ManagementBundle\Entity\Component;
 
 /**
  * Node
@@ -138,11 +139,32 @@ class Node extends Dimensions
 	public function getDebbXmlArray()
 	{
 		$array['Node'] = parent::getDebbXmlArray();
+		$rest = array(); // Processor's after - MaxPower, CoolingDevice, PowerSupply, Sensor, Storage, SecondaryComponent, Baseboard -
+		$firstAllowedWasInserted = false;
 		foreach ($this->getComponents() as $component)
 		{
-			if ($component->getAmount() >= 1 && $component->getType() != \Debb\ManagementBundle\Entity\Component::TYPE_NOTHING)
+			if ($component->getAmount() >= 1 && $component->getType() != Component::TYPE_NOTHING)
 			{
-				$array['Node'][] = $component->getDebbXmlArray();
+				if(!in_array($component->getType(), array(Component::TYPE_COOLING_DEVICE, Component::TYPE_POWER_SUPPLY, Component::TYPE_STORAGE)) && !$firstAllowedWasInserted)
+				{
+					$rest[] = $component->getDebbXmlArray();
+				}
+				else
+				{
+					$firstAllowedWasInserted = true;
+					$array['Node'][] = $component->getDebbXmlArray();
+				}
+			}
+		}
+		if(count($rest) > 0 && count(array_filter($array['Node'], function($x) { return gettype($x) == 'array'; } )) < 1)
+		{
+			$array['Node'][] = array(array('Baseboard' => array()));
+		}
+		if(count($rest) > 0)
+		{
+			foreach($rest as $componentXml)
+			{
+				$array['Node'][] = $componentXml;
 			}
 		}
 		return $array;
