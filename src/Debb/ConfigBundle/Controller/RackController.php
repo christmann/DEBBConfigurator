@@ -386,31 +386,34 @@ class RackController extends CRUDController
 
 		if (!@$doc->schemaValidateSource($xsd))
 		{
-			$mailTxt = "Sehr geehrte Damen und Herren,\n\nbei der Generierung Ihres ". $sendTitle. "-Dokuments sind folgende Fehler aufgetreten.";
-			$errors = libxml_get_errors();
-			foreach ($errors as $error)
+			if($sendTitle != null && $sendTo != null)
 			{
-				/* @var $error \LibXMLError */
-				$mailTxt .= "\n\n["
-					. ($error->level == LIBXML_ERR_WARNING ? 'Warnung' : $error->level == LIBXML_ERR_ERROR ? 'Fehler' : $error->level == LIBXML_ERR_FATAL ? 'Schwerwiegend' : '')
-					. "]\n[".$error->code."] " . trim($error->message) . "\nZeile: " . $error->line ."\nXML: ".$this->stringGetLine($xml, $error->line)
-					. "\nXSD: " . $this->stringGetLine($xsd, $error->line);
-			}
-			libxml_clear_errors();
-			$mailTxt .= "\n\nMit freundlichen Grüßen\nIhr DEBB Configurator";
+				$mailTxt = "Sehr geehrte Damen und Herren,\n\nbei der Generierung Ihres ". $sendTitle. "-Dokuments sind folgende Fehler aufgetreten.";
+				$errors = libxml_get_errors();
+				foreach ($errors as $error)
+				{
+					/* @var $error \LibXMLError */
+					$mailTxt .= "\n\n["
+						. ($error->level == LIBXML_ERR_WARNING ? 'Warnung' : $error->level == LIBXML_ERR_ERROR ? 'Fehler' : $error->level == LIBXML_ERR_FATAL ? 'Schwerwiegend' : '')
+						. "]\n[".$error->code."] " . trim($error->message) . "\nZeile: " . $error->line ."\nXML: ".$this->stringGetLine($xml, $error->line)
+						. "\nXSD: " . $this->stringGetLine($xsd, $error->line);
+				}
+				libxml_clear_errors();
+				$mailTxt .= "\n\nMit freundlichen Grüßen\nIhr DEBB Configurator";
 
-			$msg = \Swift_Message::newInstance()
-				->setSubject('DEBBConfigurator Generierungsfehler')
-				->setFrom('bup@christmann.info')
-				->setTo('bup@christmann.info')
-				->setBody($mailTxt)
-				->attach(\Swift_Attachment::newInstance($xml, $sendTitle.'.xml'))
-				->attach(\Swift_Attachment::newInstance($xsd, $sendTitle.'.xsd'))
-			;
-			/* @var $mailer \Swift_Mailer */
-			$mailer = $this->get('mailer');
-			$mailer->send($msg);
-			$this->get('swiftmailer.command.spool_send')->run(new \Symfony\Component\Console\Input\ArgvInput(array()), new \Symfony\Component\Console\Output\ConsoleOutput());
+				$msg = \Swift_Message::newInstance()
+					->setSubject('DEBBConfigurator Generierungsfehler')
+					->setFrom('debb@christmann.info')
+					->setTo($sendTo)
+					->setBody($mailTxt)
+					->attach(\Swift_Attachment::newInstance($xml, $sendTitle.'.xml'))
+					->attach(\Swift_Attachment::newInstance($xsd, $sendTitle.'.xsd'))
+				;
+				/* @var $mailer \Swift_Mailer */
+				$mailer = $this->get('mailer');
+				$mailer->send($msg);
+				$this->get('swiftmailer.command.spool_send')->run(new \Symfony\Component\Console\Input\ArgvInput(array()), new \Symfony\Component\Console\Output\ConsoleOutput());
+			}
 
 			return false;
 		}
