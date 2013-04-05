@@ -47,6 +47,7 @@ component.4: Memory
 component.5: power supplies
 component.6: HDDs
 empty: Empty
+import.%name%: Import %name%
 
 # form fields which not defined above
 Product: Product
@@ -74,3 +75,4 @@ memory: Memory
 power supply: Power Supply
 Efficiency: Typical Efficiency [%]
 power supplies: Power Supplies
+Debbcomponentsxml: DEBBComponents.xml

@@ -1,0 +1,15 @@
+{% set ownaction = path('debb_config_default_importdebbcomponentsxml') %}
+{% set ownbackhref = ownaction %}
+{% set ownsavetext = 'import.%name%' | trans({' %name%': '', '%name% ': ''}) %}
+{% extends "DebbManagementBundle::form.html.twig" %}
+{% form_theme form "DebbManagementBundle::form_theme.html.twig" %}
+
+{% block title %}{{ 'import.%name%' | trans({"%name%": 'DEBBComponents'}) }}{% endblock %}
+
+{% block content %}
+	<div class="row-fluid">
+		<div class="span12" style="text-align: center;">
+			{{ form_widget(form) }}
+		</div>
+	</div>
+{% endblock %}

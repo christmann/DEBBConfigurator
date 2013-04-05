@@ -3,6 +3,7 @@
 namespace Debb\ConfigBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use \Localdev\FrameworkExtraBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use \Symfony\Component\HttpFoundation\Response;
@@ -72,22 +73,57 @@ class DefaultController extends Controller
 		return $this->jsonResponse(array('success' => ($request->getMethod() == 'POST'), 'fileId' => $file->getId()) + $result);
 	}
 
-	/**
-	 * Imports a specific file from DEBBComponents format to sql database
-	 * 
-	 * @Route("/import/DEBBComponents.xml")
-	 */
-	public function importDebbComponentsXmlAction()
-	{
-		$xmlString = file_get_contents('../utils/DEBBComponents.xml');
-		$xmlString = preg_replace('#\<[/]{0,1}[a-zA-Z0-9_:]{0,9}ComputeBox[0-9]\>#i', '', $xmlString);
-		$xml = new \SimpleXMLElement($xmlString);
+    /**
+     * Imports a specific file from DEBBComponents format to sql database
+     *
+     * @Route("/import");
+     * @Template()
+     *
+     * @param Request                                   $request  Request object
+     *
+     * @return Twig render
+     */
+    public function importDebbComponentsXmlAction(Request $request)
+    {
+        $form = $this->createForm(new \Debb\ConfigBundle\Form\ImportDebbComponentsXmlType());
+        if ($request->getMethod() == 'POST')
+        {
+            $form->bind($request);
 
-		$this->importDebbComponentsComponent($xml);
-		$this->stackNodeComponents();
+            if ($form->isValid())
+            {
+				/* @var $file \Symfony\Component\HttpFoundation\File\UploadedFile */
+				$file = $form['debbcomponentsxml']->getData();
+				if($file->isValid())
+				{
+					if($file->getMimeType() == 'text/xml' || $file->getMimeType() == 'application/xml')
+					{
+						if($file->isReadable())
+						{
+							$xmlString = preg_replace('#\<[/]{0,1}[a-zA-Z0-9_:]{0,9}ComputeBox[0-9]\>#i', '', file_get_contents($file->getRealPath()));
+							$xml = new \SimpleXMLElement($xmlString);
 
-		return new Response();
-	}
+							$this->importDebbComponentsComponent($xml);
+							$this->stackNodeComponents();
+							$this->addSuccessMsg('localdev_admin.messages.saved');
+						}
+						else
+						{
+							$this->addErrorMsg('localdev_admin.messages.cantread');
+						}
+					}
+					else
+					{
+						$this->addErrorMsg('localdev_admin.messages.wrongfile');
+					}
+				}
+            }
+        }
+
+        return array(
+            'form' => $form->createView()
+        );
+    }
 
 	/**
 	 * Import a depth DEBBComponents.xml
@@ -135,7 +171,15 @@ class DefaultController extends Controller
 										$entry->$cmd($value);
 									}
 								}
-								$em->persist($entry);
+								$eEntry = $em->getRepository('DebbConfigBundle:'.$type)->findBy(array('manufacturer' => $entry->getManufacturer(), 'product' => $entry->getProduct(), 'model' => $entry->getModel()));
+								if(count($eEntry) > 0)
+								{
+									$entry = $eEntry[0];
+								}
+								else
+								{
+									$em->persist($entry);
+								}
 								if (in_array(strtolower($type), array('node')))
 								{
 									$this->importDebbComponentsComponent($obj, $entry, $nodeGroup);
@@ -182,6 +226,11 @@ class DefaultController extends Controller
 									}
 								}
 
+								$eEntry = $em->getRepository('DebbManagementBundle:'.$typeO)->findBy(array('manufacturer' => $entry->getManufacturer(), 'product' => $entry->getProduct(), 'model' => $entry->getModel()));
+								if(count($eEntry) > 0)
+								{
+									$entry = $eEntry[0];
+								}
 								if($node != null)
 								{
 									$entity = new \Debb\ManagementBundle\Entity\Component();
@@ -189,10 +238,11 @@ class DefaultController extends Controller
 									$entity->$cmd($entry);
 									$entity->setType(constant('\Debb\ManagementBundle\Entity\Component::' . $type));
 									$entity->setAmount(1);
-									$em->persist($entry);
 									$em->persist($entity);
+									$em->persist($entry);
 									$node->addComponent($entity);
 								}
+								$em->persist($entry);
 							}
 						}
 					}
