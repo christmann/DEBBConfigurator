@@ -283,6 +283,36 @@ class Dimensions extends \Debb\ManagementBundle\Entity\Base
 	}
 
 	/**
+	 * Get complete x size with space
+	 * 
+	 * @return float complete x size with space
+	 */
+	public function getFullX()
+	{
+		return $this->getSizeX() + $this->getSpaceLeft() + $this->getSpaceRight();
+	}
+
+	/**
+	 * Get complete y size with space
+	 * 
+	 * @return float complete y size with space
+	 */
+	public function getFullY()
+	{
+		return $this->getSizeY() + $this->getSpaceTop() + $this->getSpaceBottom();
+	}
+
+	/**
+	 * Get complete z size with space
+	 * 
+	 * @return float complete z size with space
+	 */
+	public function getFullZ()
+	{
+		return $this->getSizeZ() + $this->getSpaceFront() + $this->getSpaceBehind();
+	}
+
+	/**
 	 * Get volume
 	 * 
 	 * @return float volume

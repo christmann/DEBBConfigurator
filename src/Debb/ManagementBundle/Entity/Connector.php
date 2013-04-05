@@ -23,7 +23,7 @@ class Connector
     /**
      * @var integer
      *
-     * @ORM\Column(name="field", type="integer")
+     * @ORM\Column(name="field", type="integer", nullable=true)
      */
     private $field;
 

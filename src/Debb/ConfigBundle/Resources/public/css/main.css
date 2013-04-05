@@ -865,3 +865,9 @@ div[class*="noBreakAfterThis"] {
 	width: 222px;
 	margin-left: 0px;
 }
+
+.rackG {
+	border: 1px solid #777;
+	position: absolute;
+	background-color: #FFF;
+}

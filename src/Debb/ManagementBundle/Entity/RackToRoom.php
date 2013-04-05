@@ -30,6 +30,20 @@ class RackToRoom extends Connector
 	private $room;
 
 	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="posx", type="integer")
+	 */
+	private $posX;
+
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="posy", type="integer")
+	 */
+	private $posY;
+
+	/**
 	 * Set rack
 	 *
 	 * @param \Debb\ConfigBundle\Entity\Rack $rack
@@ -73,6 +87,52 @@ class RackToRoom extends Connector
 	public function getRoom()
 	{
 		return $this->room;
+	}
+
+	/**
+	 * Set posX
+	 *
+	 * @param integer $posX
+	 * @return RackToRoom
+	 */
+	public function setPosX($posX)
+	{
+		$this->posX = $posX;
+
+		return $this;
+	}
+
+	/**
+	 * Get posX
+	 *
+	 * @return integer 
+	 */
+	public function getPosX()
+	{
+		return $this->posX;
+	}
+
+	/**
+	 * Set posY
+	 *
+	 * @param integer $posY
+	 * @return RackToRoom
+	 */
+	public function setPosY($posY)
+	{
+		$this->posY = $posY;
+
+		return $this;
+	}
+
+	/**
+	 * Get posY
+	 *
+	 * @return integer 
+	 */
+	public function getPosY()
+	{
+		return $this->posY;
 	}
 
 }

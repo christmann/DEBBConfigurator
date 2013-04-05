@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity
  */
-class Rack extends \Debb\ManagementBundle\Entity\Base
+class Rack extends Dimensions
 {
 
 	/**

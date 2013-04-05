@@ -11,7 +11,8 @@ class RackToRoomType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('field')
+            ->add('posx')
+			->add('posy')
             ->add('rack')
             ->add('room')
         ;
