@@ -222,6 +222,11 @@ table tr td
 	border-bottom: 1px solid #666;
 }
 
+#config-menu > ul:not(.menu_level_1) li a.first:last
+{
+	border-bottom: 1px solid #666;
+}
+
 #config-menu > ul:not(.menu_level_1) ul
 {
 	list-style-type: none;

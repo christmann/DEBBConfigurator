@@ -67,6 +67,10 @@ class MenuBuilder
 			'attributes' => array('class' => 'four first')
 		));
 
+		$menu->addChild(
+			$this->translateIt('import.%name%', array('%name%' => '')), array('route' => 'debb_config_default_importdebbcomponentsxml',
+			'attributes' => array('class' => 'first', 'style' => 'margin-top: 15px;', 'noextra' => true)));
+
 		return $menu;
 	}
 
