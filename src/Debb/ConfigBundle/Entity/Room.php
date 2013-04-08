@@ -34,7 +34,26 @@ class Room extends Dimensions
 	 */
 	public function addRack(\Debb\ManagementBundle\Entity\RackToRoom $racks)
 	{
+		$racks->setRoom($this);
 		$this->racks[] = $racks;
+
+		return $this;
+	}
+
+	/**
+	 * Set racks
+	 *
+	 * @param \Debb\ManagementBundle\Entity\RackToRoom[] $racks
+	 * @return Room
+	 */
+	public function setRacks($racks)
+	{
+		$this->racks = $racks;
+
+		foreach ($this->racks as $rack)
+		{
+			$rack->setRoom($this);
+		}
 
 		return $this;
 	}

@@ -45,8 +45,40 @@ $(function()
 			updateRack();
 			e.preventDefault();
 		});
-		updateRack();
+		$(document).on('change', '.updateRackSize', function()
+		{
+			var rack = $('.rack'),
+				nodeGroup = $('.nodegroup'),
+				nodeGroupSize = $(this).val();
+			if(nodeGroup.length < nodeGroupSize)
+			{
+				var counter = nodeGroup.length < 1 ? -1 : getExactId($(nodeGroup[nodeGroup.length - 1]).find('div[id!=""]').attr('id'));
+				for(var id = parseInt(counter) + 1; id < nodeGroupSize; id++)
+				{
+					var prototype = rack.attr('data-prototype'),
+						newForm = prototype.replace(/__name__/g, id),
+						newFormLi = $('<div />').addClass('nodegroup').append($(newForm).children('div').css('display', 'none'));
+					newFormLi.append($('<span />').attr('id', 'debb_configbundle_racktype_nodegroups_' + id + '_title'));
+					rack.append(newFormLi);
+				}
+			}
+			else if(nodeGroup.length > nodeGroupSize)
+			{
+				var i = 0;
+				nodeGroup.each(function()
+				{
+					i++;
+					if(i > nodeGroupSize)
+					{
+						$(this).remove();
+					}
+				});
+			}
+			updateRack();
+		});
 		$('#selectedNodeGroup').change();
+		$('.updateRackSize').change();
+		updateRack();
 		$('[class^="nodegroup_infos_"] [rel="tooltip"]').tooltip();
 	});
 
@@ -87,6 +119,15 @@ function updateRack()
 	{
 		var value = $(this).prev('div[id!=""]').find('select[id$="_nodegroup"]').val();
 		$(this).html(value > 0 ? $('#selectedNodeGroup option[value="' + value + '"]').html() : '');
+	});
+
+	// update field ids
+	var nodeGroups = $('.nodegroup'),
+		x = 0;
+	nodeGroups.each(function()
+	{
+		x++;
+		$(this).find('input[id$="_field"]').val(nodeGroups.length - x);
 	});
 }
 

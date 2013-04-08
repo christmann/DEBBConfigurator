@@ -23,7 +23,7 @@
 		<script src="{{ asset_url }}" type="text/javascript"></script>
 	{% endjavascripts %}
 	<script type="text/javascript">
-		var roomId = {{ form.vars.data.id }};
+		var roomId = {{ form.vars.data.id | default(0) }};
 	</script>
 {% endblock %}
 

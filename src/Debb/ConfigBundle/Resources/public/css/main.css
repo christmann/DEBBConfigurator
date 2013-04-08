@@ -346,7 +346,6 @@ table tr td
 
 .extraContent {
 	float: right;
-	height: 93px;
 	margin-right: 20px;
 	padding-right: 0;
 	line-height: 30px;
@@ -356,13 +355,13 @@ table tr td
 }
 
 .rackConfigArea {
+	color: #555555;
 	width: 680px;
 	position: relative;
 	top: 0px;
 	left: 6px;
-	float: left;
 	z-index: 9;
-	min-height: 388px;
+	min-height: 257px;
 }
 
 /***************************************/

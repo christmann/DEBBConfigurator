@@ -44,11 +44,10 @@ function setStyleOfRack(newRack)
 		var prototype = $('#rackContainer').attr('data-prototype'),
 			newForm = prototype.replace(/__name__/g, id),
 			newFormLi = $('<div class="rackGform" style="display: none;"></div>').append($(newForm).children('div'));
-		newFormLi.find('#debb_configbundle_roomtype_racks_' + id + '_room').val(roomId);
 		newFormLi.find('#debb_configbundle_roomtype_racks_' + id + '_rack').val(newRack.attr('rackId'));
 		newRack.append(newFormLi);
 
-		newRack.appendTo('#rackContainer').draggable(rackDragOpt).droppable(rackDropOpt);;
+		newRack.appendTo('#rackContainer').draggable(rackDragOpt).droppable(rackDropOpt);
 	}
 	newRack.css('width', (parseInt(newRack.attr('rackX')) < 1 ? 100 : parseInt(newRack.attr('rackX'))) + 'px');
 	newRack.css('height', (parseInt(newRack.attr('rackY')) < 1 ? 100 : parseInt(newRack.attr('rackY'))) + 'px');

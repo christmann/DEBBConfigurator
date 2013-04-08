@@ -25,6 +25,13 @@ class Rack extends Dimensions
 	private $nodeGroups;
 
 	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="nodegroupsize", type="integer", nullable=true)
+	 */
+	private $nodeGroupSize;
+
+	/**
 	 * Constructor
 	 */
 	public function __construct()
@@ -107,6 +114,29 @@ class Rack extends Dimensions
 			}
 		}
 		return $res;
+	}
+
+	/**
+	 * Set nodeGroupSize
+	 *
+	 * @param integer $nodeGroupSize
+	 * @return Rack
+	 */
+	public function setNodeGroupSize($nodeGroupSize)
+	{
+		$this->nodeGroupSize = $nodeGroupSize;
+
+		return $this;
+	}
+
+	/**
+	 * Get nodeGroupSize
+	 *
+	 * @return integer 
+	 */
+	public function getNodeGroupSize()
+	{
+		return (int) $this->nodeGroupSize;
 	}
 
 	/**
