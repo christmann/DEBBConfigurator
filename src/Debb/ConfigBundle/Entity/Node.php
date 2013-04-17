@@ -43,6 +43,13 @@ class Node extends Dimensions
 	private $stlFile;
 
 	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="type", type="integer", nullable=true)
+	 */
+	private $type;
+
+	/**
 	 * Returns the name of this node for the table view or selections
 	 * 
 	 * @return string the name of this node
@@ -216,4 +223,33 @@ class Node extends Dimensions
 		return $this->stlFile;
 	}
 
+	/**
+	 * Set type
+	 *
+	 * @param int $type
+	 */
+	public function setType($type)
+	{
+		$this->type = $type;
+	}
+
+	/**
+	 * Get type
+	 *
+	 * @return int
+	 */
+	public function getType()
+	{
+		return $this->type;
+	}
+
+	/**
+	 * Get all types
+	 *
+	 * @return array
+	 */
+	public static function getTypes()
+	{
+		return array(0 => 'COMexpress Typ 2', 1 => 'COMexpress Typ 6', 2 => 'Apalis');
+	}
 }

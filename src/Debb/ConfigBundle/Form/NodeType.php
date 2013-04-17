@@ -2,6 +2,7 @@
 
 namespace Debb\ConfigBundle\Form;
 
+use Debb\ConfigBundle\Entity\Node;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -33,6 +34,7 @@ class NodeType extends AbstractType
             ->add('image', null, array('required' => false))
             ->add('vrmlFile', null, array('required' => false))
             ->add('stlFile', null, array('required' => false))
+			->add('type', 'choice', array('choices' => Node::getTypes(), 'required' => true, 'empty_value' => false))
         ;
     }
 
