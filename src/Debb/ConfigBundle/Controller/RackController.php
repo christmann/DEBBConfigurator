@@ -32,6 +32,18 @@ class RackController extends CRUDController
 		$item = $this->getEntity($id);
 		$nodegroups = $this->getEntities('DebbConfigBundle:NodeGroup');
 
+//		if ($request->getMethod() != 'POST' && count($item->getNodeGroups()) < 1)
+//		{
+//			while (count($item->getNodeGroups()) < $item->getNodeGroupSize())
+//			{
+//				/* create required node groups */
+//				$nodeGroup = new NodegroupToRack();
+//				$nodeGroup->setField($item->getFreeNodeGroup());
+//				$item->addNodeGroup($nodeGroup);
+//			}
+//
+//			$this->getManager()->persist($item);
+//		}
 
 		$form = $this->createForm($this->getFormType($item), $item);
 		if ($request->getMethod() == 'POST')
