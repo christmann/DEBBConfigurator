@@ -2,6 +2,8 @@
 
 namespace Debb\ConfigBundle\Entity;
 
+use Debb\ManagementBundle\Entity\NodeDraft;
+use Debb\ManagementBundle\Entity\NodeToNodegroup;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -14,9 +16,18 @@ class NodeGroup extends Dimensions
 {
 
 	/**
+	 * @var NodeToNodegroup
+	 *
 	 * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\NodeToNodegroup", cascade={"persist"}, mappedBy="nodeGroup", orphanRemoval=true)
 	 */
 	private $nodes;
+
+	/**
+	 * @var NodeDraft
+	 *
+	 * @ORM\ManyToOne(targetEntity="Debb\ManagementBundle\Entity\NodeDraft")
+	 */
+	private $draft;
 
 	/**
 	 * Constructor
@@ -50,8 +61,7 @@ class NodeGroup extends Dimensions
 	{
 		$this->nodes = $nodes;
 
-		foreach ($this->nodes as $node)
-		{
+		foreach ($this->nodes as $node) {
 			$node->setNodeGroup($this);
 		}
 
@@ -71,7 +81,7 @@ class NodeGroup extends Dimensions
 	/**
 	 * Get nodes
 	 *
-	 * @return \Doctrine\Common\Collections\Collection 
+	 * @return \Doctrine\Common\Collections\Collection
 	 */
 	public function getNodes()
 	{
@@ -84,15 +94,13 @@ class NodeGroup extends Dimensions
 	public function sortNodes()
 	{
 		$ordered = new \Doctrine\Common\Collections\ArrayCollection();
-		for ($i = $this->nodes->count() - 1; $i >= 0; $i--)
-		{
+		for ($i = $this->nodes->count() - 1; $i >= 0; $i--) {
 			$ordered->add($this->nodes[$i]);
 		}
 		$this->nodes = $ordered;
 
 		$x = 0;
-		foreach ($this->nodes as $node)
-		{
+		foreach ($this->nodes as $node) {
 			$node->setField($x);
 			$x++;
 		}
@@ -100,23 +108,20 @@ class NodeGroup extends Dimensions
 
 	/**
 	 * Get the next free field in node array
-	 * 
+	 *
 	 * @return int the next free field in node array
 	 */
 	public function getFreeNode()
 	{
 		$ids = array();
-		foreach ($this->getNodes() as $node)
-		{
+		foreach ($this->getNodes() as $node) {
 			$ids[] = $node->getField();
 		}
 		ksort($ids);
 
 		$res = 0;
-		foreach ($ids as $id)
-		{
-			if ($id == $res)
-			{
+		foreach ($ids as $id) {
+			if ($id == $res) {
 				$res++;
 			}
 		}
@@ -125,20 +130,41 @@ class NodeGroup extends Dimensions
 
 	/**
 	 * Returns a array for later converting
-	 * 
+	 *
 	 * @return array the array for later converting
 	 */
 	public function getDebbXmlArray()
 	{
 		$array['NodeGroup'] = parent::getDebbXmlArray();
-		foreach ($this->getNodes() as $node)
-		{
-			if ($node->getNode() != null)
-			{
+		foreach ($this->getNodes() as $node) {
+			if ($node->getNode() != null) {
 				$array['NodeGroup'][] = $node->getNode()->getDebbXmlArray();
 			}
 		}
 		return $array;
 	}
 
+
+	/**
+	 * Set draft
+	 *
+	 * @param \Debb\ManagementBundle\Entity\NodeDraft $draft
+	 * @return NodeGroup
+	 */
+	public function setDraft(\Debb\ManagementBundle\Entity\NodeDraft $draft = null)
+	{
+		$this->draft = $draft;
+
+		return $this;
+	}
+
+	/**
+	 * Get draft
+	 *
+	 * @return \Debb\ManagementBundle\Entity\NodeDraft
+	 */
+	public function getDraft()
+	{
+		return $this->draft;
+	}
 }

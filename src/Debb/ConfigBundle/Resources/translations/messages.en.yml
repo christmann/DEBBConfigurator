@@ -76,3 +76,7 @@ power supply: Power Supply
 Efficiency: Typical Efficiency [%]
 power supplies: Power Supplies
 Debbcomponentsxml: DEBBComponents.xml
+Slotsx: Slot count horizontal [number]
+Slotsy: Slot count vertical [number]
+Hesize: HE [number]
+Draft: Draft
