@@ -14,40 +14,77 @@ $(function()
 			{
 				$('#debb_configbundle_racktype_nodegroups_' + fieldId).parent().removeClass('nodegroup-checked');
 				$('#selectedNodeGroup').removeAttr('field');
-				var value = $('#selectedNodeGroup').val();
+				var value = parseInt($('#selectedNodeGroup').val());
 
-                // get HE size
+                // get HE and rack size
                 var size = parseInt($('#selectedNodeGroup').find(':selected').attr('size'));
+                var rackSize = parseInt($('#debb_configbundle_racktype_nodeGroupSize').val());
 
-                // Check size
-                var enoughSpace = true,
-                    i = parseInt(fieldId)
-                    max = parseInt(fieldId) + size;
+                var enoughSpace = true;
+                var startSlot = fieldId;
 
-
-                for (y = 0; y < max; y++)
+                // Check rack size
+                if (value > 0 && size <= rackSize && size != 1)
                 {
-                    var obj = $('#debb_configbundle_racktype_nodegroups_' + i + '_nodegroup');
-                    console.log(obj);
-                    if (obj != 'undefined')
+                    var up = parseInt(fieldId);
+                    var freeSlots = 1;
+                    enoughSpace = false;
+
+                    // Free slots up
+                    for (i=up-1; i >= 0; i--)
                     {
-                        if (obj.val() != '')
+                        var obj = $('#debb_configbundle_racktype_nodegroups_' + i + '_nodegroup');
+                        // empty object??
+                        if (obj != 'undefined' && obj.val() == '')
                         {
-                            enoughSpace  = false;
+                            startSlot = i;
+                            freeSlots++;
+
+                            if (freeSlots >= size)
+                            {
+                                enoughSpace = true;
+                                break;
+                            }
+                        }
+                        else
+                        {
                             break;
                         }
                     }
-                    else
+
+                    // Free slots down
+                    if (!enoughSpace)
                     {
-                        enoughSpace  = false;
-                        break;
+                        for (i=up+1; i <= rackSize; i++)
+                        {
+                            var obj = $('#debb_configbundle_racktype_nodegroups_' + i + '_nodegroup');
+
+                            // empty object??
+                            if (obj != 'undefined' && obj.val() == '')
+                            {
+                                freeSlots++;
+
+                                if (freeSlots >= size)
+                                {
+                                    enoughSpace = true;
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
                     }
-                    i++;
+                }
+                else if (size > rackSize)
+                {
+                    enoughSpace = false;
                 }
 
                 if (enoughSpace)
                 {
-                    $('#debb_configbundle_racktype_nodegroups_' + fieldId + '_nodegroup').val(value > 0 ? value : '');
+                    $('#debb_configbundle_racktype_nodegroups_' + startSlot + '_nodegroup').val(value > 0 ? value : '');
                     $('.nodegroup_infos_' + value).hide();
                     $('#selectedNodeGroup').val(0);
                     $('#selectedNodeGroup').attr('disabled', 'disabled');
@@ -59,6 +96,7 @@ $(function()
                 {
                     alert('Not enough space..');
                 }
+
 			}
 		});
 		$(document).on('click', '.nodegroup', function(e)
