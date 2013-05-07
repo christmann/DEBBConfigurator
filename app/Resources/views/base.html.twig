@@ -55,7 +55,7 @@
 				{% block form_header %}{% endblock %}
 				<div id="content">
 					{% block flashes %}
-						{% for key, flash in app.session.getFlashes() %}
+						{% for key, flash in app.session.flashbag %}
 							<div class="{{ key }}">
 								{% if flash | trans({}, 'crud') != flash %}
 									{{ flash | trans({}, 'crud') }}
