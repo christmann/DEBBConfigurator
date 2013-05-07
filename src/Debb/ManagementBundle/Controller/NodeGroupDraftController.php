@@ -7,8 +7,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Localdev\AdminBundle\Controller\CRUDController;
 
 /**
- * @Route("/{_locale}/management/nodedraft", requirements={"_locale" = "en|de"}, defaults={"_locale" = "en"})
+ * @Route("/{_locale}/management/nodegroupdraft", requirements={"_locale" = "en|de"}, defaults={"_locale" = "en"})
  */
-class NodeDraftController extends CRUDController
+class NodeGroupDraftController extends CRUDController
 {
 }
