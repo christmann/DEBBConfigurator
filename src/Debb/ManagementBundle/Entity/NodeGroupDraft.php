@@ -5,12 +5,12 @@ namespace Debb\ManagementBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * NodeDraft
+ * NodeGroupDraft
  *
  * @ORM\Table()
  * @ORM\Entity
  */
-class NodeDraft extends Base
+class NodeGroupDraft extends Base
 {
     /**
      * @var Image
@@ -44,7 +44,7 @@ class NodeDraft extends Base
      * Set image
      *
      * @param string $image
-     * @return NodeDraft
+     * @return NodeGroupDraft
      */
     public function setImage($image)
     {
@@ -67,7 +67,7 @@ class NodeDraft extends Base
      * Set slotsX
      *
      * @param integer $slotsX
-     * @return NodeDraft
+     * @return NodeGroupDraft
      */
     public function setSlotsX($slotsX)
     {
@@ -90,7 +90,7 @@ class NodeDraft extends Base
      * Set slotsY
      *
      * @param integer $slotsY
-     * @return NodeDraft
+     * @return NodeGroupDraft
      */
     public function setSlotsY($slotsY)
     {
@@ -113,7 +113,7 @@ class NodeDraft extends Base
      * Set heSize
      *
      * @param integer $heSize
-     * @return NodeDraft
+     * @return NodeGroupDraft
      */
     public function setHeSize($heSize)
     {

@@ -7,10 +7,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Class NodeDraftType
+ * Class NodeGroupDraftType
  * @package Debb\ManagementBundle\Form
  */
-class NodeDraftType extends AbstractType
+class NodeGroupDraftType extends AbstractType
 {
 	/**
 	 * @param FormBuilderInterface $builder
@@ -35,7 +35,7 @@ class NodeDraftType extends AbstractType
 	public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Debb\ManagementBundle\Entity\NodeDraft'
+            'data_class' => 'Debb\ManagementBundle\Entity\NodeGroupDraft'
         ));
     }
 
@@ -57,6 +57,6 @@ class NodeDraftType extends AbstractType
 	 */
 	public function getName()
     {
-        return 'debb_managementbundle_nodedrafttype';
+        return 'debb_managementbundle_nodegroupdrafttype';
     }
 }
