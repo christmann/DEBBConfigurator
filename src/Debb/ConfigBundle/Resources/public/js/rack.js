@@ -9,18 +9,56 @@ $(function()
 		{
 			e.preventDefault();
 			var fieldId = $('#selectedNodeGroup').attr('field');
+
 			if(fieldId != null)
 			{
 				$('#debb_configbundle_racktype_nodegroups_' + fieldId).parent().removeClass('nodegroup-checked');
 				$('#selectedNodeGroup').removeAttr('field');
 				var value = $('#selectedNodeGroup').val();
-				$('#debb_configbundle_racktype_nodegroups_' + fieldId + '_nodegroup').val(value > 0 ? value : '');
-				$('.nodegroup_infos_' + value).hide();
-				$('#selectedNodeGroup').val(0);
-				$('#selectedNodeGroup').attr('disabled', 'disabled');
-				$('#selectedNodeGroup').change();
-				$('#emptyval').hide();
-				updateRack();
+
+                // get HE size
+                var size = parseInt($('#selectedNodeGroup').find(':selected').attr('size'));
+
+                // Check size
+                var enoughSpace = true,
+                    i = parseInt(fieldId)
+                    max = parseInt(fieldId) + size;
+
+
+                for (y = 0; y < max; y++)
+                {
+                    var obj = $('#debb_configbundle_racktype_nodegroups_' + i + '_nodegroup');
+                    console.log(obj);
+                    if (obj != 'undefined')
+                    {
+                        if (obj.val() != '')
+                        {
+                            enoughSpace  = false;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        enoughSpace  = false;
+                        break;
+                    }
+                    i++;
+                }
+
+                if (enoughSpace)
+                {
+                    $('#debb_configbundle_racktype_nodegroups_' + fieldId + '_nodegroup').val(value > 0 ? value : '');
+                    $('.nodegroup_infos_' + value).hide();
+                    $('#selectedNodeGroup').val(0);
+                    $('#selectedNodeGroup').attr('disabled', 'disabled');
+                    $('#selectedNodeGroup').change();
+                    $('#emptyval').hide();
+                    updateRack();
+                }
+                else
+                {
+                    alert('Not enough space..');
+                }
 			}
 		});
 		$(document).on('click', '.nodegroup', function(e)
@@ -84,6 +122,7 @@ $(function()
 
 function updateRack()
 {
+    console.log('Updateing...');
 	// free units
 	var freeUnits = 0;
 	$('[id$="_nodegroup"]').each(function()
