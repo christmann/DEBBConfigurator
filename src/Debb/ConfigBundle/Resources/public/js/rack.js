@@ -34,8 +34,9 @@ $(function()
                     for (i=up-1; i >= 0; i--)
                     {
                         var obj = $('#debb_configbundle_racktype_nodegroups_' + i + '_nodegroup');
+
                         // empty object??
-                        if (obj != 'undefined' && obj.val() == '')
+                        if (obj != 'undefined' && obj.val() == '' && obj.parent().parent().parent().css('display') != 'none')
                         {
                             startSlot = i;
                             freeSlots++;
@@ -85,6 +86,7 @@ $(function()
                 if (enoughSpace)
                 {
                     $('#debb_configbundle_racktype_nodegroups_' + startSlot + '_nodegroup').val(value > 0 ? value : '');
+                    $('#debb_configbundle_racktype_nodegroups_' + startSlot + '_title').attr('size', size);
                     $('.nodegroup_infos_' + value).hide();
                     $('#selectedNodeGroup').val(0);
                     $('#selectedNodeGroup').attr('disabled', 'disabled');
@@ -190,6 +192,32 @@ function updateRack()
 	{
 		$('#selectedUnit').html(Translator.get('none'));
 	}
+
+    // Change sizes...
+    $('.nodegroup').show();
+    $('.nodegroup').css('height', '10px');
+
+    // Modify sizes
+    $('.nodegroup').each(function()
+    {
+        var num = $(this).children('div').attr('id').split('_');
+        num = parseInt(num[num.length-1]);
+        var group = this;
+        if ($(this).find('select[id$="_nodegroup"]').val() != '')
+        {
+            var size = parseInt($(this).children('span').attr('size'));
+            var hei = $(this).height() * size;
+            $(this).css('height', hei + 'px');
+            if (size > 1)
+            {
+                var end = size + num;
+                for (i = num + 1; i < end; i++)
+                {
+                    $('#debb_configbundle_racktype_nodegroups_' + i + '_title').parent().hide();
+                }
+            }
+        }
+    });
 
 	// names of node groups in rack
 	$('[id^="debb_configbundle_racktype_nodegroups_"][id$="_title"]').each(function()
