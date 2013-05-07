@@ -1,15 +1,29 @@
 {% extends "DebbManagementBundle::form.html.twig" %}
-{% form_theme form "DebbManagementBundle::form_theme.html.twig" %}
+{#% form_theme form "DebbManagementBundle::form_theme.html.twig" %#}
+{% form_theme form _self %}
+
+{% block _debb_configbundle_nodegrouptype_draft_widget %}
+	<select {% if required %}required="required" {% endif %}name="{{ full_name }}" id="{{ id }}">
+		{% for var in choices %}
+			<option value="{{ var.value }}" slotsx="{{ var.data.slotsX | default(0) }}"
+					slotsy="{{ var.data.slotsY | default(0) }}"{% if value == var.value %} selected="selected"{% endif %}
+					image="{% if var.data.image is not null %}{{ asset(var.data.image.getFullPath) }}{% endif %}">{{ var.label }}</option>
+		{% endfor %}
+	</select>
+{% endblock %}
 
 {% block javascripts %}
 	{{ parent() }}
+	<script type="text/javascript">var nodeGroupId = {{ form.vars.data.id }};</script>
 	{% javascripts '@DebbConfigBundle/Resources/public/js/nodegroup.js' %}
-		<script src="{{ asset_url }}" type="text/javascript"></script>
+	<script src="{{ asset_url }}" type="text/javascript"></script>
 	{% endjavascripts %}
 {% endblock %}
 
 {% block content %}
-	<div id="sirius">
+	<div id="nodegroup"
+		 data-protoype="{{ ('<div class="node"><span class="nodeTitle">&nbsp;</span>' ~ form_widget(form.nodes.vars.prototype, {attr: {'style': 'display: none'} })
+		 ~ '<a href="#" class="selectNode">' ~  ('select.%what%' | trans({'%what%': 'node' | trans})) ~ '</a></div>') | e }}">
 		{% set formNodes = form.nodes | reverse %}
 		{% if formNodes[0].vars.value.field == 0 %}
 			{% set formNodes = formNodes | reverse %}
@@ -17,13 +31,13 @@
 		{% for node in formNodes %}
 			<div class="node">
 				<span class="nodeTitle">&nbsp;</span>
-				{{ form_widget(node, {attr: {'style': 'display: none'}}) }}
+				{{ form_widget(node, {attr: {'style': 'display: none' }}) }}
 				<a href="#" class="selectNode">{{ 'select.%what%' | trans({'%what%': 'node' | trans}) }}</a>
 			</div>
 		{% endfor %}
 	</div>
 
-	<div id="sirius-configarea">
+	<div id="nodegroup-configarea">
 		<div id="grouptitle-box">
 			<h5>{{ 'Manufacturer' | trans }}:</h5>
 			{{ form_widget(form.manufacturer) }}
@@ -41,32 +55,38 @@
 				<option value="0" selected="selected">&nbsp;</option>
 				{% for node in nodes|dSort %}
 					{% set sText %}
-						{% set first = true %}
-						{% if node.manufacturer is not null %}
-							{% if first %}{% set first = false %}{% else %}<br />{% endif %}
-							<span rel="tooltip" data-original-title="{{ 'Manufacturer' | trans }}">{{ node.manufacturer }}</span>
-						{% endif %}
-						{% if node.product is not null %}
-							{% if first %}{% set first = false %}{% else %}<br />{% endif %}
-							<span rel="tooltip" data-original-title="{{ 'Product' | trans }}">{{ node.product }}</span>
-						{% endif %}
-						{% if node.model is not null %}
-							{% if first %}{% set first = false %}{% else %}<br />{% endif %}
-							<span rel="tooltip" data-original-title="{{ 'Model' | trans }}">{{ node.model }}</span>
-						{% endif %}
-						<br />{% for component in node.components if component.active is not null %}
-							{% set transThis = 'component.' ~ component.type %}
-							{% if first %}{% set first = false %}{% else %}<br />{% endif %}
-							{{ component.amount }} x <span rel="tooltip" data-original-title="{{ transThis | trans }}">{{ component.active }}</span>
-						{% endfor %}
+					{% set first = true %}
+					{% if node.manufacturer is not null %}
+						{% if first %}{% set first = false %}{% else %}<br/>{% endif %}
+						<span rel="tooltip"
+							  data-original-title="{{ 'Manufacturer' | trans }}">{{ node.manufacturer }}</span>
+					{% endif %}
+					{% if node.product is not null %}
+						{% if first %}{% set first = false %}{% else %}<br/>{% endif %}
+						<span rel="tooltip" data-original-title="{{ 'Product' | trans }}">{{ node.product }}</span>
+					{% endif %}
+					{% if node.model is not null %}
+						{% if first %}{% set first = false %}{% else %}<br/>{% endif %}
+						<span rel="tooltip" data-original-title="{{ 'Model' | trans }}">{{ node.model }}</span>
+					{% endif %}
+					<br/>{% for component in node.components if component.active is not null %}
+					{% set transThis = 'component.' ~ component.type %}
+					{% if first %}{% set first = false %}{% else %}<br/>{% endif %}
+					{{ component.amount }} x <span rel="tooltip"
+												   data-original-title="{{ transThis | trans }}">{{ component.active }}</span>
+				{% endfor %}
 					{% endset %}
 					<option value="{{ node.id }}"
-							{% if node.image is not null %}img="{{ node.image.getFullPath | apply_filter('node_thumb') }}"{% endif %} text="{{ sText | e }}">
-							{{ node }}</option>
+							{% if node.image is not null %}img="{{ node.image.getFullPath | apply_filter('node_thumb') }}"{% endif %}
+							text="{{ sText | e }}">
+						{{ node }}</option>
 				{% endfor %}
 			</select>
+
 			<div id="node-pic">&nbsp;</div>
-			<a href="#" class="blue-button adopt" style="display: none;"><i class="icon-ok icon-white" style="margin-right: 5px;"></i>{{ 'adopt' | trans }}</a>
+			<a href="#" class="blue-button adopt" style="display: none;"><i class="icon-ok icon-white"
+																			style="margin-right: 5px;"></i>{{ 'adopt' | trans }}
+			</a>
 		</div>
 		<div class="clear"></div>
 	</div>
