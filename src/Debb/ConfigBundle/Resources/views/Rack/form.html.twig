@@ -123,7 +123,7 @@
 					<option value="" disabled="disabled" selected="selected">- {{ 'choose.%person%.%what%' | trans({'%person%': 'your' | trans, '%what%': 'node.group' | trans}) }} -</option>
 					<option id="emptyval" value="0" style="display: none;">--- {{ 'empty' | trans }} ---</option>
 					{% for nodegroup in nodegroups|dSort %}
-							<option value="{{ nodegroup.id }}">{{ nodegroup }}</option>
+							<option value="{{ nodegroup.id }}" size="{{ nodegroup.draft.heSize }}">{{ nodegroup }}</option>
 					{% endfor %}
 				</select>
 				<strong>{{ 'free rack units' | trans }}:</strong> <span id="freeUnits" style="margin-right: 15px;">0</span>
