@@ -14,7 +14,7 @@
 
 {% block javascripts %}
 	{{ parent() }}
-	<script type="text/javascript">var nodeGroupId = {{ form.vars.data.id }};</script>
+	<script type="text/javascript">var nodeGroupId = {{ form.vars.data.id | default(0) }};</script>
 	{% javascripts '@DebbConfigBundle/Resources/public/js/nodegroup.js' %}
 	<script src="{{ asset_url }}" type="text/javascript"></script>
 	{% endjavascripts %}
@@ -25,16 +25,18 @@
 		 data-protoype="{{ ('<div class="node"><span class="nodeTitle">&nbsp;</span>' ~ form_widget(form.nodes.vars.prototype, {attr: {'style': 'display: none'} })
 		 ~ '<a href="#" class="selectNode">' ~  ('select.%what%' | trans({'%what%': 'node' | trans})) ~ '</a></div>') | e }}">
 		{% set formNodes = form.nodes | reverse %}
-		{% if formNodes[0].vars.value.field == 0 %}
-			{% set formNodes = formNodes | reverse %}
+		{% if formNodes | length > 0 %}
+			{% if formNodes[0].vars.value.field == 0 %}
+				{% set formNodes = formNodes | reverse %}
+			{% endif %}
+			{% for node in formNodes %}
+				<div class="node">
+					<span class="nodeTitle">&nbsp;</span>
+					{{ form_widget(node, {attr: {'style': 'display: none' }}) }}
+					<a href="#" class="selectNode">{{ 'select.%what%' | trans({'%what%': 'node' | trans}) }}</a>
+				</div>
+			{% endfor %}
 		{% endif %}
-		{% for node in formNodes %}
-			<div class="node">
-				<span class="nodeTitle">&nbsp;</span>
-				{{ form_widget(node, {attr: {'style': 'display: none' }}) }}
-				<a href="#" class="selectNode">{{ 'select.%what%' | trans({'%what%': 'node' | trans}) }}</a>
-			</div>
-		{% endfor %}
 	</div>
 
 	<div id="nodegroup-configarea">

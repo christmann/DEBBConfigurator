@@ -46,7 +46,7 @@ class MenuBuilder
 		$management->addChild($this->translateIt('Memory'), array('route' => 'debb_management_memory_index'));
 		$management->addChild($this->translateIt('Powersupply'), array('route' => 'debb_management_powersupply_index'));
 		$management->addChild($this->translateIt('Storage'), array('route' => 'debb_management_storage_index'));
-		$management->addChild($this->translateIt('nodegroup'), array('route' => 'debb_management_nodegroupdraft_index'));
+		$management->addChild($this->translateIt('Chassis'), array('route' => 'debb_management_nodegroupdraft_index'));
 
 		$menu->addChild($this->translateIt('node'), array(
 			'route' => 'debb_config_node_index',
