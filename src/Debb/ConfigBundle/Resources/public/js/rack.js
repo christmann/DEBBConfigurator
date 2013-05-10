@@ -233,6 +233,7 @@ function updateRack()
 		x++;
 		$(this).find('input[id$="_field"]').val(nodeGroups.length - x);
 	});
+	$('.nodegroup:hidden').each(function(){ $(this).find('input[id$="_field"]').val(-1); });
 }
 
 function getExactId(str)
