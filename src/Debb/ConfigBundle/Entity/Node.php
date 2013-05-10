@@ -146,13 +146,20 @@ class Node extends Dimensions
 	public function getDebbXmlArray()
 	{
 		$array['Node'] = parent::getDebbXmlArray();
+		$array['Node']['MaxPower'] = 1.0;
+		$array['Node']['Type'] = 'Node';
+		$array['Node']['Transform'] = 'Transform';
+		$array['Node']['Reference'] = array('Type' => 'VRML', 'Location' => './object/' . ($this->getVrmlFile() != null ? $this->getVrmlFile()->getName() : $this->getName()) . '.wrl');
+		$array['Node']['Heatsink'] = array();
+		$array['Node']['Connector'] = array('ConnectorType' => 'x', 'Label' => 'y');
+		$array['Node']['Baseboard'] = array();
 		$rest = array(); // Processor's after - MaxPower, CoolingDevice, PowerSupply, Sensor, Storage, SecondaryComponent, Baseboard -
 		$firstAllowedWasInserted = false;
 		foreach ($this->getComponents() as $component)
 		{
-			if ($component->getAmount() >= 1 && $component->getType() != Component::TYPE_NOTHING)
+			if ($component->getAmount() >= 1 && $component->getType() != Component::TYPE_NOTHING && $component->getType() != Component::TYPE_COOLING_DEVICE && $component->getType() != Component::TYPE_MAINBOARD)
 			{
-				if(!in_array($component->getType(), array(Component::TYPE_COOLING_DEVICE, Component::TYPE_POWER_SUPPLY, Component::TYPE_STORAGE)) && !$firstAllowedWasInserted)
+				if(!in_array($component->getType(), array(Component::TYPE_PROCESSOR, Component::TYPE_MEMORY)) && !$firstAllowedWasInserted)
 				{
 					$rest[] = $component->getDebbXmlArray();
 				}
