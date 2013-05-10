@@ -162,7 +162,6 @@ $(function()
 
 function updateRack()
 {
-    console.log('Updateing...');
 	// free units
 	var freeUnits = 0;
 	$('[id$="_nodegroup"]').each(function()
@@ -227,7 +226,7 @@ function updateRack()
 	});
 
 	// update field ids
-	var nodeGroups = $('.nodegroup'),
+	var nodeGroups = $('.nodegroup:visible'),
 		x = 0;
 	nodeGroups.each(function()
 	{
