@@ -1,2 +1,31 @@
 {% extends "DebbManagementBundle::form.html.twig" %}
 {% form_theme form "DebbManagementBundle::form_theme.html.twig" %}
+{% import _self as nodegroupdraft %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{% javascripts '@DebbManagementBundle/Resources/public/js/nodegroupdraft.js' %}
+		<script src="{{ asset_url }}" type="text/javascript"></script>
+	{% endjavascripts %}
+{% endblock %}
+
+{% block form %}
+	{{ parent() }}
+	<div class="row-fluid">
+		{% set itemtypspecification = item.typspecification %}
+		{% if itemtypspecification | keys.0 == 0 %}
+			{% set itemtypspecification = itemtypspecification | reverse %}
+		{% endif %}
+		<div id="nodegroup" data-prototype="{{ nodegroupdraft.typspec(nodetypspecs) | e }}">{% for key, value in itemtypspecification %}{{ nodegroupdraft.typspec(nodetypspecs, value, key) }}{% endfor %}</div>
+	</div>
+{% endblock %}
+
+{% macro typspec(nodetypspecs, selectedValue, name) %}
+	<div class="node">
+		<select name="typspec[{{ name | default('__name__') }}]" id="debb_managementbundle_nodegroupdrafttype_typspec_{{ name | default('__name__') }}">
+			{% for key, value in nodetypspecs|default({}) %}
+				<option value="{{ key }}"{% if selectedValue is defined and selectedValue is not null and selectedValue == key %} selected="selected"{% endif %}>{{ value | trans }}</option>
+			{% endfor %}
+		</select>
+	</div>
+{% endmacro %}

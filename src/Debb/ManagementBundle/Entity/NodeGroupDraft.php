@@ -40,7 +40,16 @@ class NodeGroupDraft extends Base
      */
     private $heSize;
 
-    /**
+	/**
+	 * Field specification - typ
+	 *
+	 * @var array
+	 *
+	 * @ORM\Column(name="typspecification", type="array", nullable=true)
+	 */
+	private $typspecification;
+
+	/**
      * Set image
      *
      * @param string $image
@@ -130,5 +139,36 @@ class NodeGroupDraft extends Base
     public function getHeSize()
     {
         return $this->heSize;
+    }
+
+    /**
+     * Set typspecification
+     *
+     * @param array $typspecification
+     * @return NodeGroupDraft
+     */
+    public function setTypspecification($typspecification)
+    {
+        $this->typspecification = $typspecification;
+    
+        return $this;
+    }
+
+    /**
+     * Get typspecification
+     *
+     * @return array 
+     */
+    public function getTypspecification()
+    {
+		if(is_array($this->typspecification))
+		{
+			reset($this->typspecification);
+			if(key($this->typspecification) != 0)
+			{
+				ksort($this->typspecification);
+			}
+		}
+        return $this->typspecification;
     }
 }
