@@ -50,6 +50,13 @@ class NodeGroupDraft extends Base
 	private $typspecification;
 
 	/**
+	 * @var boolean
+	 *
+	 * @ORM\Column(name="frontview", type="boolean", nullable=true)
+	 */
+	private $frontview;
+
+	/**
      * Set image
      *
      * @param string $image
@@ -170,5 +177,32 @@ class NodeGroupDraft extends Base
 			}
 		}
         return $this->typspecification;
+    }
+
+    /**
+     * Set frontview
+     *
+     * @param boolean $frontview
+     * @return NodeGroupDraft
+     */
+    public function setFrontView($frontview)
+    {
+        $this->frontview = $frontview;
+		if($this->isFrontView())
+		{
+			$this->setHeSize($this->getSlotsY());
+		}
+    
+        return $this;
+    }
+
+    /**
+     * Is frontview?
+     *
+     * @return boolean
+     */
+    public function isFrontView()
+    {
+        return $this->frontview != null && $this->frontview == 1;
     }
 }

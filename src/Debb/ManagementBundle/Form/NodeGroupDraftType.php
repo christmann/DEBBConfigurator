@@ -24,7 +24,8 @@ class NodeGroupDraftType extends AbstractType
             ->add('model')
 			->add('slotsX', 'choice', array('choices' => $this->getSlotsAmount(), 'empty_value' => false, 'attr' => array('style' => 'width: 223px;', 'class' => 'noBreakAfterThis')))
 			->add('slotsY', 'choice', array('choices' => $this->getSlotsAmount(), 'empty_value' => false, 'attr' => array('style' => 'width: 223px;')))
-            ->add('heSize', 'choice', array('choices' => $this->getSlotsAmount(), 'empty_value' => false, 'attr' => array('style' => 'width: 223px;')))
+            ->add('heSize', 'choice', array('choices' => $this->getSlotsAmount(), 'empty_value' => false, 'attr' => array('style' => 'width: 223px;', 'class' => 'noBreakAfterThis')))
+			->add('frontView', 'choice', array('choices' => array(0 => 'No', 1 => 'Yes'), 'empty_value' => false, 'attr' => array('style' => 'width: 223px;')))
             ->add('image', 'plupload')
         ;
     }
