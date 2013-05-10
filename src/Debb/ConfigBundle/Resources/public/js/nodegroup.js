@@ -51,6 +51,7 @@ $(function () {
 					$('#' + id + '_nodeGroup').val(nodeGroupId);
 				}
 			}
+			updateNodes();
 		}
 	});
 	$('.adopt').on('click', function (e) {
@@ -75,6 +76,13 @@ function updateNodes() {
 			nodeId = $(node).find('[id$="_node"]').val();
 		$(this).html($('#node-chooser [value="' + (nodeId == null ? '0' : nodeId) + '"]').html());
 	});
+	var nodes = $('.node'),
+		y = 0;
+	for(var x = nodes.length - 1; x >= 0; x--)
+	{
+		$(nodes[x]).find('input[id$="_field"]').val(y);
+		y++;
+	}
 }
 
 function getExactId(str) {

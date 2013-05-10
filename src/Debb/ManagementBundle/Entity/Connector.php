@@ -39,7 +39,11 @@ class Connector
     }
 
     /**
-     * Set field (x = 0, y = 0 - first field = 0, next field (x = 0, y = 10) = 1, next/third field (x = 10, y = 0) = 2, ...
+     * Set field (x = 0, y = 0 - first field = 0, next field (x = 10, y = 0) = 1, next/third field (x = 0, y = 10) = 2, ...
+	 *
+	 * 6 7 8
+	 * 3 4 5
+	 * 0 1 2
      *
      * @param integer $field
      * @return Connector
