@@ -50,6 +50,8 @@
 			{{ form_widget(form.model) }}
 		</div>
 	</div>
+	{{ form_widget(form.sizeX, {attr: {'style': 'display: none;'}}) }}
+	{{ form_widget(form.sizeY, {attr: {'style': 'display: none;'}}) }}
 
 	<div>
 		<ul class="hoz">
@@ -66,7 +68,7 @@
 		Y = $('#test123').offset().top - $('#test123').offsetParent().offset().top - parseInt($('#rackContainer').css("border-top-width"))
 	#}
 
-	<div id="rackContainer" style="position: relative; height: 700px; width: 900px; border: 2px solid #000;" data-prototype="{{ form_row(form.racks.vars.prototype) | escape }}">
+	<div id="rackContainer" style="position: relative; height: {% if form.vars.data.sizeY|default(0) < 1 %}700{% else %}{{ form.vars.data.sizeY }}{% endif %}px; width: {% if form.vars.data.sizeX|default(0) < 1 %}900{% else %}{{ form.vars.data.sizeX }}{% endif %}px; border: 2px solid #000;" data-prototype="{{ form_row(form.racks.vars.prototype) | escape }}">
 		{% for rack in form.racks %}
 			<div class="rackG" posx="{{ rack.vars.data.posx }}" posy="{{ rack.vars.data.posy }}"
 				 rackId="{{ rack.vars.data.id }}" rackX="{{ rack.vars.data.rack.fullz }}" rackY="{{ rack.vars.data.rack.fully }}">{{ rack.vars.data.rack }}

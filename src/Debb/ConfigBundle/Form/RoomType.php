@@ -14,6 +14,8 @@ class RoomType extends AbstractType
             ->add('manufacturer', null, array('required' => false))
             ->add('product', null, array('required' => false))
             ->add('model', null, array('required' => false))
+			->add('sizeX', null, array('required' => false))
+			->add('sizeY', null, array('required' => false))
             ->add('racks', 'collection', array(
 				'type' => new \Debb\ManagementBundle\Form\RackToRoomType(),
 				'allow_add' => true,

@@ -67,7 +67,12 @@ $(function()
 {
 	$('.draftRack').on('click', setStyleOfRack);
 	// dynamic size for our room
-	$('#rackContainer').resizable().droppable({tolerance: 'fit'});
+	$('#rackContainer').resizable({
+		stop: function( event, ui ) {
+			$('#debb_configbundle_roomtype_sizeX').val(ui.helper.width());
+			$('#debb_configbundle_roomtype_sizeY').val(ui.helper.height());
+		}
+	}).droppable({tolerance: 'fit'});
 	// a single rack which we could move in our room
 	$('.rackG').draggable(rackDragOpt).droppable(rackDropOpt);
 	$('.rackG').each(setStyleOfRack);
