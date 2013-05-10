@@ -96,7 +96,7 @@ $(function()
                 }
                 else
                 {
-                    alert('Not enough space..');
+                    alert(Translator.get('nospace'));
                 }
 
 			}
