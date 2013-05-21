@@ -141,12 +141,18 @@ class Processor extends Base
 	public function getDebbXmlArray()
 	{
 		$array = parent::getDebbXmlArray();
-		$array['MaxPower'] = $this->getMaxPower() != null ? $this->getMaxPower() : 0;
-		$array['MaxClockSpeed'] = $this->getMaxClockSpeed() != null ? $this->getMaxClockSpeed() : 0;
-		$array['Cores'] = $this->getCores() != null ? $this->getCores() : 0;
-		$array['PState'] = array('State' => 0, 'Frequency' => 0, 'Voltage' => 0, 'PowerUsageMin' => 0, 'PowerUsageMax' => 0);
-		$array['CState'] = array('State' => 0, 'PowerUsage' => 0.0);
-		$array['TDP'] = 0.0;
+		if($this->getMaxPower() != null)
+		{
+			$array['MaxPower'] = $this->getMaxPower();
+		}
+		if($this->getMaxClockSpeed() != null)
+		{
+			$array['MaxClockSpeed'] = $this->getMaxClockSpeed();
+		}
+		if($this->getCores() != null)
+		{
+			$array['Cores'] = $this->getCores();
+		}
 		return $array;
 	}
 

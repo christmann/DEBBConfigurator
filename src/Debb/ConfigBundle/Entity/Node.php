@@ -146,14 +146,8 @@ class Node extends Dimensions
 	public function getDebbXmlArray()
 	{
 		$array['Node'] = parent::getDebbXmlArray();
-		$array['Node']['MaxPower'] = 1.0;
-		$array['Node']['Type'] = 'Node';
-		$array['Node']['Transform'] = 'Transform';
-		$array['Node']['Reference'] = array('Type' => 'VRML', 'Location' => './object/' . ($this->getVrmlFile() != null ? $this->getVrmlFile()->getName() : $this->getName()) . '.wrl');
-		$array['Node']['Heatsink'] = array();
-		$array['Node']['Connector'] = array('ConnectorType' => 'x', 'Label' => 'y');
 		$array['Node']['Baseboard'] = array();
-		$rest = array(); // Processor's after - MaxPower, CoolingDevice, PowerSupply, Sensor, Storage, SecondaryComponent, Baseboard -
+		$rest = array();
 		$firstAllowedWasInserted = false;
 		foreach ($this->getComponents() as $component)
 		{

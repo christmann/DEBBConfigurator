@@ -110,9 +110,13 @@ class NodeController extends CRUDController
 		$xml = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><Node />');
 		$node = $item->getDebbXmlArray();
 		\Debb\ManagementBundle\Entity\Base::array_to_xml($node, $xml);
-		echo str_replace('<Node>',  '<xsd_1:Node xmlns:xsd_1="http://www.coolemall.eu/DEBBComponent" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.coolemall.eu/DEBBComponent DEBBComponents.xsd " >',
+		$debbxml = str_replace('<Node>',  '<xsd_1:Node xmlns:xsd_1="http://www.coolemall.eu/DEBBComponent" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.coolemall.eu/DEBBComponent DEBBComponents.xsd " >',
 			 str_replace('</Node>', '</xsd_1:Node>', $xml->children()->asXML()));
 
+		$room = new \Debb\ConfigBundle\Controller\RoomController();
+		$room->setContainer($this->getContainer());
+		$room->valide($debbxml, file_get_contents('../utils/DEBBComponents.xsd'));
+		echo $debbxml;
 		return $response;
 	}
 
