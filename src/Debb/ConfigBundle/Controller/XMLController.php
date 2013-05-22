@@ -57,6 +57,13 @@ abstract class XMLController extends CRUDController
 		{
 			$info = $info[$this->debbType];
 		}
+		else
+		{
+			foreach($info as $key => $val)
+			{
+				$info = $val;
+			}
+		}
 		\Debb\ManagementBundle\Entity\Base::array_to_xml($info, $xml);
 
 		if ($pretty)

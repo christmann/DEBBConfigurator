@@ -131,13 +131,6 @@ class Room extends Dimensions
 	public function getDebbXmlArray()
 	{
 		$array['Room'] = parent::getDebbXmlArray();
-		foreach ($this->getRacks() as $rack)
-		{
-			if ($rack->getRack() != null)
-			{
-				$array['Room'][] = $rack->getRack()->getDebbXmlArray();
-			}
-		}
 		return $array;
 	}
 

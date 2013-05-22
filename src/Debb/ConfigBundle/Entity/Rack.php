@@ -147,13 +147,6 @@ class Rack extends Dimensions
 	public function getDebbXmlArray()
 	{
 		$array['Rack'] = parent::getDebbXmlArray();
-		foreach ($this->getNodeGroups() as $nodegroup)
-		{
-			if ($nodegroup->getNodegroup() != null)
-			{
-				$array['Rack'][] = $nodegroup->getNodegroup()->getDebbXmlArray();
-			}
-		}
 		return $array;
 	}
 

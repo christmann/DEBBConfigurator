@@ -15,7 +15,7 @@ class RoomController extends XMLController
 	/**
 	 * @var string type of debbcomponent
 	 */
-	public $debbType = 'Room'; // type not possible!
+	public $debbType = 'ComputeBox2'; // type not possible!
 
 	/**
 	 * Creates a new entity
