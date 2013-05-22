@@ -208,7 +208,7 @@ abstract class XMLController extends CRUDController
 		$exId = implode('_', $isId);
 		$id = $exId . '_' . $iId;
 
-		while (count($xml->xpath('//ProductInstance[@id="' . $id . '"]/@id')) > 0)
+		while (count($xml->xpath('*[@id="' . $id . '"]/@id')) > 0)
 		{
 			$iId++;
 			$id = $exId . '_' . $iId;
