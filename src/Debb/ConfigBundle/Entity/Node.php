@@ -146,6 +146,14 @@ class Node extends Dimensions
 	public function getDebbXmlArray()
 	{
 		$array['Node'] = parent::getDebbXmlArray();
+		if($this->getStlFile() != null)
+		{
+			$array['Node'][] = array('Reference' => array('Type' => 'STL', 'Location' => './object/' . $this->getStlFile()->getName() . '.stl'));
+		}
+		if($this->getVrmlFile() != null)
+		{
+			$array['Node'][] = array('Reference' => array('Type' => 'VRML', 'Location' => './object/' . $this->getVrmlFile()->getName() . '.wrl'));
+		}
 		$array['Node']['Baseboard'] = array();
 		$rest = array();
 		$firstAllowedWasInserted = false;
