@@ -44,7 +44,7 @@ function setStyleOfRack(newRack)
 
 		var prototype = $('#rackContainer').attr('data-prototype'),
 			newForm = prototype.replace(/__name__/g, id),
-			newFormLi = $('<div class="rackGform" style="display: none;"></div>').append($(newForm).children('div'));
+			newFormLi = $('<div class="rackGform" style="display: none;"></div>').append($(newForm).children('div')).before(' - <a href="#" class="removeRack"><i class="icon-trash"></i></a>');
 		newFormLi.find('#debb_configbundle_roomtype_racks_' + id + '_rack').val(newRack.attr('rackId'));
 		newRack.append(newFormLi);
 
@@ -74,6 +74,11 @@ $(function()
 			$('#debb_configbundle_roomtype_sizeY').val(ui.helper.height());
 		}
 	}).droppable({tolerance: 'fit'});
+	$(document).on('click', '.removeRack', function(e)
+	{
+		e.preventDefault();
+		$(this).parent('.rackG').remove();
+	});
 	// a single rack which we could move in our room
 	$('.rackG').draggable(rackDragOpt).droppable(rackDropOpt);
 	$('.rackG').each(setStyleOfRack);

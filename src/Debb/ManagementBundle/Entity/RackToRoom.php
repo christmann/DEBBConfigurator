@@ -97,6 +97,10 @@ class RackToRoom extends Connector
 	 */
 	public function setPosX($posX)
 	{
+		if($posX < 0)
+		{
+			$posX = 0;
+		}
 		$this->posX = $posX;
 
 		return $this;
@@ -120,6 +124,10 @@ class RackToRoom extends Connector
 	 */
 	public function setPosY($posY)
 	{
+		if($posY < 0)
+		{
+			$posY = 0;
+		}
 		$this->posY = $posY;
 
 		return $this;
