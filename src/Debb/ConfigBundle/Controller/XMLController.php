@@ -6,6 +6,7 @@ use Debb\ConfigBundle\Entity\Node;
 use Debb\ConfigBundle\Entity\NodeGroup;
 use Debb\ConfigBundle\Entity\Rack;
 use Debb\ConfigBundle\Entity\Room;
+use Debb\ManagementBundle\Entity\NodegroupToRack;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
@@ -138,14 +139,31 @@ abstract class XMLController extends CRUDController
 					$instanceGraph, 'id' . sprintf('%04d', $id), 'DefNodeGroup' . sprintf('%04d', $id), array(), 'assembly', 'VRML', '.\objects\file.wrl', $nodeGroup->getNodeGroup()->getComponentId(), 'NodeGroup'
 				);
 
+				/* @var $nodeGroup NodegroupToRack */
+				$draft = $nodeGroup->getNodegroup()->getDraft();
+
 				$nodesForThatNodeGroup = array();
+				$i = 1;
+				$x = $nodeGroup->getNodegroup()->getSpaceLeft();
+				$y = $nodeGroup->getNodegroup()->getSpaceBottom();
 				foreach ($nodeGroup->getNodeGroup()->getNodes() as $node)
 				{
 					if ($node->getNode() != null)
 					{
 						$partReference = $this->addPlmXmlProductInstance(
-							$instanceGraph, 'id' . sprintf('%04d', $id) . '_2', 'DefNode' . sprintf('%04d', $id), 'id' . sprintf('%04d', $id), $node->getNode()->getHostname(), null // position
+							$instanceGraph, 'id' . sprintf('%04d', $id) . '_2', 'DefNode' . sprintf('%04d', $id), 'id' . sprintf('%04d', $id), $node->getNode()->getHostname(), '0 1 0 0 -1 0 0 0 0 0 1 0 '.$x.' '.$y.' 0.005 1' // position
 						);
+						if($i == $draft->getSlotsY())
+						{
+							$x += $node->getNode()->getSizeX();
+							$i = 1;
+							$y = 0;
+						}
+						else
+						{
+							$y = $i * $node->getNode()->getSizeY();
+							$i++;
+						}
 						$nodesForThatNodeGroup[] = $partReference[1];
 					}
 				}
@@ -220,7 +238,7 @@ abstract class XMLController extends CRUDController
 
 			if ($transform != null)
 			{
-				$transform = $productInstance->addChild('Transform', ''); // example: 0 1 0 0 -1 0 0 0 0 0 1 0 0.175 0.744 0.005 1
+				$transform = $productInstance->addChild('Transform', $transform); // example: 0 1 0 0 -1 0 0 0 0 0 1 0 0.175 0.744 0.005 1
 				$transform->addAttribute('id', $this->convertIdToTransId($id)); // example: id71_01_07
 			}
 		}
