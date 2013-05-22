@@ -148,11 +148,11 @@ class Node extends Dimensions
 		$array['Node'] = parent::getDebbXmlArray();
 		if($this->getStlFile() != null)
 		{
-			$array['Node'][] = array('Reference' => array('Type' => 'STL', 'Location' => './object/' . $this->getStlFile()->getName() . '.stl'));
+			$array['Node'][] = array('Reference' => array('Type' => 'STL', 'Location' => './object/' . $this->getStlFile()->getName()));
 		}
 		if($this->getVrmlFile() != null)
 		{
-			$array['Node'][] = array('Reference' => array('Type' => 'VRML', 'Location' => './object/' . $this->getVrmlFile()->getName() . '.wrl'));
+			$array['Node'][] = array('Reference' => array('Type' => 'VRML', 'Location' => './object/' . $this->getVrmlFile()->getName()));
 		}
 		$array['Node']['Baseboard'] = array();
 		$rest = array();

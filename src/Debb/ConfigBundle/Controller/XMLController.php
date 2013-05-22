@@ -406,11 +406,12 @@ abstract class XMLController extends CRUDController
 
 			/* loop every array (which we need!) and generate files */
 			$zip->addEmptyDir('img');
+			$zip->addEmptyDir('objects');
 			foreach($nodes as $node)
 			{
 				if($node instanceof Node)
 				{
-					/* @var $item Node */
+					/* @var $node Node */
 					$controller = new NodeController();
 					$controller->setContainer($this->getContainer());
 					$zip->addFromString('Node_'.$node->getComponentId().'.xml', $controller->getDebbXml($node->getId(), true));
@@ -418,13 +419,21 @@ abstract class XMLController extends CRUDController
 					{
 						$zip->addFile($node->getImage()->getFullPath(), 'img/' . $node->getComponentId() . '.' . $node->getImage()->getExtension());
 					}
+					if ($node->getStlFile() != null)
+					{
+						$zip->addFile($node->getStlFile()->getFullPath(), 'objects/' . $node->getStlFile()->getName());
+					}
+					if ($node->getVrmlFile() != null)
+					{
+						$zip->addFile($node->getVrmlFile()->getFullPath(), 'objects/' . $node->getVrmlFile()->getName());
+					}
 				}
 			}
 			foreach($nodeGroups as $nodeGroup)
 			{
 				if($nodeGroup instanceof NodeGroup)
 				{
-					/* @var $item NodeGroup */
+					/* @var $nodeGroup NodeGroup */
 					$controller = new NodeGroupController();
 					$controller->setContainer($this->getContainer());
 					$zip->addFromString('NodeGroup_'.$nodeGroup->getComponentId().'.xml', $controller->getDebbXml($nodeGroup->getId(), true));
