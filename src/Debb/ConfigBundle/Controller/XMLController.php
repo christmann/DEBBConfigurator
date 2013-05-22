@@ -92,7 +92,7 @@ abstract class XMLController extends CRUDController
 
 		$room = new \Debb\ConfigBundle\Controller\RoomController();
 		$room->setContainer($this->getContainer());
-		$room->valide($xmlStr, file_get_contents('../utils/DEBBComponents.xsd'));
+		$room->valide($xmlStr, file_get_contents('../utils/DEBBComponents.xsd'), 'DEBBComponents');
 
 		return $xmlStr;
 	}
