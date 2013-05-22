@@ -18,6 +18,11 @@ class NodeGroupController extends XMLController
 	public $debbType = 'NodeGroup';
 
 	/**
+	 * @var string debb entity repository
+	 */
+	public $debbEntity = 'DebbConfigBundle:NodeGroup';
+
+	/**
 	 * Creates a new entity
 	 *
 	 * @Route("/form/{id}", defaults={"id"=0}, requirements={"id"="\d+|"});
