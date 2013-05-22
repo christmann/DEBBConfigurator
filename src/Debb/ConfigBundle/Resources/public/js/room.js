@@ -5,6 +5,7 @@ var rackDragOpt = {
 	snapMode: 'outer',
 	stack: '.rackG',
 	revert: 'invalid',
+	grid: [ 20, 20 ],
 	stop: function(event, ui) {
 		$(this).draggable('option', 'revert', 'invalid');
 		var id = getExactId(ui.helper.find('.rackGform').find('div[id!=""]').attr('id'));
