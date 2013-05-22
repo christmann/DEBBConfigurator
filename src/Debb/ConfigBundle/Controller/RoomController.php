@@ -4,15 +4,18 @@ namespace Debb\ConfigBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Localdev\AdminBundle\Controller\CRUDController;
 use Symfony\Component\HttpFoundation\Request;
 use Debb\ManagementBundle\Entity\RackToRoom;
 
 /**
  * @Route("/{_locale}/room", requirements={"_locale" = "en|de"}, defaults={"_locale" = "en"})
  */
-class RoomController extends CRUDController
+class RoomController extends XMLController
 {
+	/**
+	 * @var string type of debbcomponent
+	 */
+	public $debbType = 'Room'; // type not possible!
 
 	/**
 	 * Creates a new entity
@@ -47,43 +50,6 @@ class RoomController extends CRUDController
 				'item' => $item,
 				'racks' => $racks
 		));
-	}
-
-	/**
-	 * Return entity as DEBBComponents.xml string
-	 *
-	 * @param int                                       $id       item id
-	 *
-	 * @return string the DEBBComponents.xml string
-	 */
-	public function asXmlAction($id, $pretty = false)
-	{
-		$item = $this->getEntity($id);
-
-		$xml = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><DEBBComponents />');
-		$xmlComputeBoxTwo = $xml->addChild('ComputeBox2');
-		$xmlComputeBoxOne = $xmlComputeBoxTwo->addChild('ComputeBox1');
-		$rack = $item->getDebbXmlArray();
-		$rack = $rack['Rack'];
-		\Debb\ManagementBundle\Entity\Base::array_to_xml($rack, $xmlComputeBoxOne);
-
-		if ($pretty)
-		{
-			$dom = dom_import_simplexml($xml)->ownerDocument;
-			$dom->formatOutput = true;
-			$dom->preserveWhiteSpace = true;
-			$xmlStr = $dom->saveXML();
-		}
-		else
-		{
-			$xmlStr = $xml->asXML();
-		}
-
-		$str = str_replace('<DEBBComponents>', '<xsd_1:DEBBComponents xmlns:xsd_1="http://www.coolemall.eu/DEBBComponent"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.coolemall.eu/DEBBComponent DEBBComponents.xsd "><Name>CoolEmAll</Name><Description>Generated DEBBComponent File</Description>', str_replace('</DEBBComponents>', '</xsd_1:DEBBComponents>', $xmlStr));
-
-		return $str;
 	}
 
 	/**
