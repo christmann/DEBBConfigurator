@@ -108,10 +108,12 @@ abstract class XMLController extends CRUDController
 	{
 		$item = $this->getEntity($id);
 
-		$xml = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><PLMXML xmlns:PLMXML="http://www.plmxml.org/Schemas/PLMXMLSchema"
-	xmlns:vis="PLMXMLTcVisSchema" schemaVersion="1" date="' . date('Y-m-d') . '" time="' . date('H:i:s') . '"
-	author="Generator" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		$xml = new \SimpleXMLElement('<?xml version="1.0" encoding="utf-8"?>
+<PLMXML xmlns="http://www.plmxml.org/Schemas/PLMXMLSchema"
+	xmlns:vis="PLMXMLTcVisSchema" schemaVersion="6" date="' . date('Y-m-d') . '" time="' . date('H:i:s') . '"
+	author="'.'{USERNAME}'.'" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.plmxml.org/Schemas/PLMXMLSchema PLMXMLSchema.xsd" />');
+
 		$productDef = $xml->addChild('ProductDef');
 		$productDef->addAttribute('id', 'id1');
 		$instanceGraph = $productDef->addChild('InstanceGraph');
@@ -440,9 +442,9 @@ abstract class XMLController extends CRUDController
 				}
 			}
 
-//			$plmXml = $this->asPlmXmlAction($id, true);
-//			$zip->addFromString('PLMXML.xml', $plmXml);
-//			$this->valide($plmXml, file_get_contents('../utils/PLMXMLSchema.xsd'), 'PLMXML');
+			$plmXml = $this->asPlmXmlAction($id, true);
+			$zip->addFromString('PLMXML_'.$item->getComponentId().'.xml', $plmXml);
+			$this->valide($plmXml, file_get_contents('../utils/PLMXMLSchema.xsd'), 'PLMXML');
 
 			$zip->close();
 			header('Content-Disposition: attachment; filename=' . date('Y-m-d-H-i-s') . '.zip');
