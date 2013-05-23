@@ -49,6 +49,10 @@ component.5: Netzteil
 component.6: HDD
 empty: leer
 import.%name%: %name% importieren
+Yes: Ja
+No: Nein
+Front: Vorne
+Top: Oben
 
 # form fields which not defined above
 Product: Produkt
@@ -79,7 +83,7 @@ Slotsx: Slots Horizontal [Anzahl]
 Slotsy: Slots Vertikal [Anzahl]
 Hesize: HE [Anzahl]
 Draft: Entwurf
-Frontview: Front-Ansicht
+View:: Ansicht:
 nospace: Nicht genügend Platz..
 Ziparchive: ZIP Archiv
 Scale: Maßstab
