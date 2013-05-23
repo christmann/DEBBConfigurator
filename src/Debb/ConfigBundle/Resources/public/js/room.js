@@ -5,7 +5,7 @@ var rackDragOpt = {
 	snapMode: 'outer',
 	stack: '.rackG',
 	revert: 'invalid',
-	grid: [ 20, 20 ],
+	grid: [ 10, 10 ],
 	stop: function(event, ui) {
 		$(this).draggable('option', 'revert', 'invalid');
 		var id = getExactId(ui.helper.find('.rackGform').find('div[id!=""]').attr('id'));
@@ -50,8 +50,8 @@ function setStyleOfRack(newRack)
 
 		newRack.appendTo('#rackContainer').draggable(rackDragOpt).droppable(rackDropOpt);
 	}
-	newRack.css('width', (parseInt(newRack.attr('rackX')) < 1 ? 100 : parseInt(newRack.attr('rackX'))) + 'px');
-	newRack.css('height', (parseInt(newRack.attr('rackY')) < 1 ? 100 : parseInt(newRack.attr('rackY'))) + 'px');
+	newRack.css('width', (parseInt(newRack.attr('rackX')) < 1 ? 98 : parseInt(newRack.attr('rackX'))) + 'px');
+	newRack.css('height', (parseInt(newRack.attr('rackY')) < 1 ? 98 : parseInt(newRack.attr('rackY'))) + 'px');
 	if(typeof newRack.attr('posx') != 'undefined')
 	{
 		newRack.css('left', (parseInt(newRack.attr('posx')) < 0 ? 0 : parseInt(newRack.attr('posx'))) + 'px');
@@ -69,6 +69,7 @@ $(function()
 	$('.draftRack').on('click', setStyleOfRack);
 	// dynamic size for our room
 	$('#rackContainer').resizable({
+		grid: 10,
 		stop: function( event, ui ) {
 			$('#debb_configbundle_roomtype_sizeX').val(ui.helper.width());
 			$('#debb_configbundle_roomtype_sizeY').val(ui.helper.height());
