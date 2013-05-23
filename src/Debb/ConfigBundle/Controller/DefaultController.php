@@ -29,7 +29,7 @@ class DefaultController extends Controller
 	 * Uploads a file
 	 *
 	 * @Route("/upload")
-	 * @param $request Symfony\Component\HttpFoundation\Request the request (should be POST)
+	 * @param $request \Symfony\Component\HttpFoundation\Request the request (should be POST)
 	 * @return json response with results
 	 */
 	public function uploadAction(Request $request)
@@ -40,7 +40,7 @@ class DefaultController extends Controller
 		$result = array();
 		if ($request->getMethod() == 'POST')
 		{
-			$em = $this->getEntityManager();
+			$em = $this->getManager();
 			$file->setFile($request->files->get('Filedata'));
 
 			$em->persist($file);

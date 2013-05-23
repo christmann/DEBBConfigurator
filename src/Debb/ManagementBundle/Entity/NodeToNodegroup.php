@@ -16,7 +16,7 @@ class NodeToNodegroup extends Connector
 	/**
 	 * @var Node
 	 *
-	 * @ORM\ManyToOne(targetEntity="Debb\ConfigBundle\Entity\Node")
+	 * @ORM\ManyToOne(targetEntity="Debb\ConfigBundle\Entity\Node", inversedBy="nodes")
 	 * @ORM\JoinColumn(name="node_id", referencedColumnName="id", onDelete="cascade")
 	 */
 	private $node;
