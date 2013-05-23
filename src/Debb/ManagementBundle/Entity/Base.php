@@ -50,6 +50,13 @@ class Base
 	private $hostname;
 
 	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="componentid", type="string", length=255, nullable=true)
+	 */
+	private $componentId;
+
+	/**
 	 * Get id
 	 *
 	 * @return integer 
@@ -169,19 +176,33 @@ class Base
 	}
 
 	/**
+	 * Sets the component id
+	 *
+	 * @param string $componentId
+	 */
+	public function setComponentId($componentId)
+	{
+		$this->componentId = $componentId;
+	}
+
+	/**
 	 * Get the component id - if to short use the unique id
 	 * 
 	 * @return string the component id
 	 */
 	public function getComponentId()
 	{
-		$name = preg_replace('#[^\d\w]#', '', $this->getName());
-		while(strlen($name) < 5)
+		if($this->componentId == null)
 		{
-			$name .= substr(sha1($this->getId()), strlen($name), 5 - strlen($name));
-			$name = preg_replace('#[^\d\w]#', '', $name);
+			$name = preg_replace('#[^\d\w]#', '', $this->getName());
+			while(strlen($name) < 5)
+			{
+				$name .= substr(sha1($this->getId()), strlen($name), 5 - strlen($name));
+				$name = preg_replace('#[^\d\w]#', '', $name);
+			}
+			$this->setComponentId($name . '_' . $this->getId());
 		}
-		return $name . '_' . $this->getId();
+		return $this->componentId;
 	}
 
 	/**

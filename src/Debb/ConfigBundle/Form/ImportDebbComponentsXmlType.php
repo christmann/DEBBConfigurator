@@ -11,7 +11,7 @@ class ImportDebbComponentsXmlType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('debbcomponentsxml', 'file')
+            ->add('ziparchive', 'file')
         ;
     }
 

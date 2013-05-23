@@ -2,11 +2,15 @@
 
 namespace Debb\ConfigBundle\Controller;
 
+use Debb\ConfigBundle\Entity\Node;
+use Debb\ConfigBundle\Entity\NodeGroup;
+use Debb\ManagementBundle\Entity\File;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use \Localdev\FrameworkExtraBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use \Symfony\Component\HttpFoundation\Response;
+use \Debb\ManagementBundle\Entity\Component;
 
 /**
  * @Route("/{_locale}", requirements={"_locale" = "en|de"}, defaults={"_locale" = "en"})
@@ -93,18 +97,37 @@ class DefaultController extends Controller
             if ($form->isValid())
             {
 				/* @var $file \Symfony\Component\HttpFoundation\File\UploadedFile */
-				$file = $form['debbcomponentsxml']->getData();
+				$file = $form['ziparchive']->getData();
 				if($file->isValid())
 				{
-					if($file->getMimeType() == 'text/xml' || $file->getMimeType() == 'application/xml')
+					if($file->getMimeType() == 'application/zip' || $file->getMimeType() == 'application/octet-stream')
 					{
 						if($file->isReadable())
 						{
-							$xmlString = preg_replace('#\<[/]{0,1}[a-zA-Z0-9_:]{0,9}ComputeBox[0-9]\>#i', '', file_get_contents($file->getRealPath()));
-							$xml = new \SimpleXMLElement($xmlString);
+							/* Temp directory creation */
+							$dir = sys_get_temp_dir() . DIRECTORY_SEPARATOR . rand(11111, 99999) . 'debb';
+							mkdir($dir);
 
-							$this->importDebbComponentsComponent($xml);
-							$this->stackNodeComponents();
+							/* Open the uploaded zip archive */
+							$zip = new \ZipArchive;
+							$res = $zip->open($file->getRealPath());
+							if ($res === TRUE)
+							{
+								/* Extract $zip to $dir */
+								$zip->extractTo($dir);
+								$zip->close();
+								/* Remove $file / $zip */
+								unlink($file->getRealPath());
+								unset($file);
+								unset($zip);
+								/* Import each xml file */
+								foreach (glob($dir . DIRECTORY_SEPARATOR . '*.xml') as $file)
+								{
+									$this->importDebbComponentsComponent(new \SimpleXMLElement(file_get_contents($file)), $file);
+								}
+							}
+
+							self::rmfdir($dir);
 							$this->addSuccessMsg('localdev_admin.messages.saved');
 						}
 						else
@@ -126,6 +149,25 @@ class DefaultController extends Controller
     }
 
 	/**
+	 * Removes a directory incl. all files and directories
+	 *
+	 * @param $dir the directory to remove recursive
+	 * @author http://us3.php.net/manual/en/function.rmdir.php#98622
+	 */
+	static function rmfdir($dir) {
+		if (is_dir($dir)) {
+			$objects = scandir($dir);
+			foreach ($objects as $object) {
+				if ($object != '.' && $object != '..') {
+					if (filetype($dir.DIRECTORY_SEPARATOR.$object) == 'dir') self::rmfdir($dir.DIRECTORY_SEPARATOR.$object); else unlink($dir.DIRECTORY_SEPARATOR.$object);
+				}
+			}
+			reset($objects);
+			rmdir($dir);
+		}
+	}
+
+	/**
 	 * Import a depth DEBBComponents.xml
 	 * 
 	 * @param \SimpleXMLElement $xml the xml level from import
@@ -133,121 +175,137 @@ class DefaultController extends Controller
 	 * @param \Debb\ConfigBundle\Entity\NodeGroup $nodeGroup the node group to add the nodes
 	 * @return boolean true
 	 */
-	public function importDebbComponentsComponent(\SimpleXMLElement & $xml, \Debb\ConfigBundle\Entity\Node & $node = null, \Debb\ConfigBundle\Entity\NodeGroup & $nodeGroup = null)
+	public function importDebbComponentsComponent(\SimpleXMLElement & $xml, $filename = null)
 	{
-		$em = $this->getEntityManager();
+		$em = $this->getManager();
 
-		foreach ($xml as $type => $obj)
+		if(strtolower($xml->getName()) == 'node')
 		{
-			if (in_array(strtolower($type), array('computebox2', 'computebox1')))
+			// Node
+			$node = $em->getRepository('DebbConfigBundle:Node')->findBy(array('componentId' => $xml->ComponentId));
+			if(count($node) > 0)
 			{
-				continue;
+				$node = $node[0];
+			}
+			else
+			{
+				$node = new Node();
 			}
 
-			if (!empty($obj))
+			foreach($xml as $key => $val)
 			{
-				if (is_array($obj))
+				/* @var $key string the name - something like ComponentId, Manufacturer, Product, Baseboard, Processor, Memory */
+				/* @var $val \SimpleXMLElement */
+
+				if (defined('\Debb\ManagementBundle\Entity\Component::TYPE_' . strtoupper($key)))
 				{
-					foreach ($obj as $kKey => $uObj)
+					$class = '\\Debb\\ManagementBundle\\Entity\\' . $key;
+					if (class_exists($class))
 					{
-						$this->importDebbComponentsComponent(array($type => $uObj));
+						$entry = new $class();
+						foreach ((array) $val as $kkey => $vval)
+						{
+							$cmd = 'set' . $kkey;
+							if (method_exists($entry, $cmd))
+							{
+								$entry->$cmd($vval);
+							}
+						}
+
+						$eEntry = $em->getRepository('DebbManagementBundle:'.$key)->findBy(array('componentId' => $entry->getComponentId()));
+						if(count($eEntry) > 0)
+						{
+							$entry = $eEntry[0];
+						}
+						if($node != null)
+						{
+							/* @var $nodeComp Component */
+							$counted = false;
+							foreach($node->getComponents() as $nodeComp)
+							{
+								if($nodeComp->getActive()->getComponentId() == $entry->getComponentId())
+								{
+									$nodeComp->setAmount($nodeComp->getAmount() + 1);
+									$counted = true;
+								}
+							}
+							if(!$counted)
+							{
+								$entity = new \Debb\ManagementBundle\Entity\Component();
+								$cmd = 'set' . $key;
+								$entity->$cmd($entry);
+								$entity->setType(constant('\Debb\ManagementBundle\Entity\Component::TYPE_' . strtoupper($key)));
+								$entity->setAmount(1);
+								$em->persist($entity);
+								$em->persist($entry);
+								$node->addComponent($entity);
+							}
+						}
+						$em->persist($entry);
 					}
 				}
 				else
 				{
-					if (in_array(strtolower($type), array('computebox2', 'computebox1', 'node', 'nodegroup')))
+					$cmd = 'set' . $key;
+					if (method_exists($node, $cmd))
 					{
-						if (in_array(strtolower($type), array('node', 'nodegroup')))
-						{
-							$class = '\\Debb\\ConfigBundle\\Entity\\' . $type;
-							if (class_exists($class))
-							{
-								$entry = new $class();
-								foreach ((array) $obj as $key => $value)
-								{
-									$cmd = 'set' . $key;
-									if (method_exists($entry, $cmd))
-									{
-										$entry->$cmd($value);
-									}
-								}
-								$eEntry = $em->getRepository('DebbConfigBundle:'.$type)->findBy(array('manufacturer' => $entry->getManufacturer(), 'product' => $entry->getProduct(), 'model' => $entry->getModel()));
-								if(count($eEntry) > 0)
-								{
-									$entry = $eEntry[0];
-								}
-								else
-								{
-									$em->persist($entry);
-								}
-								if (in_array(strtolower($type), array('node')))
-								{
-									$this->importDebbComponentsComponent($obj, $entry, $nodeGroup);
-								}
-								else
-								{
-									$this->importDebbComponentsComponent($obj, $node, $entry);
-								}
-								if($nodeGroup != null)
-								{
-									$nodeToNodeGroup = new \Debb\ManagementBundle\Entity\NodeToNodegroup();
-									$nodeToNodeGroup->setField($nodeGroup->getFreeNode());
-									$nodeToNodeGroup->setNode($entry);
-									$nodeToNodeGroup->setNodeGroup($nodeGroup);
-									$em->persist($nodeToNodeGroup);
-									$nodeGroup->addNode($nodeToNodeGroup);
-								}
-							}
-						}
-						else
-						{
-							$this->importDebbComponentsComponent($obj);
-						}
-					}
-					else
-					{
-						preg_match_all('#([A-Z][a-z]+)#', $type, $m);
-						$typeO = $type;
-						$type = 'TYPE_' . strtoupper(implode('_', $m[1]));
-
-						/* check if entry could be a component */
-						if (defined('\Debb\ManagementBundle\Entity\Component::' . $type))
-						{
-							$class = '\\Debb\\ManagementBundle\\Entity\\' . $typeO;
-							if (class_exists($class))
-							{
-								$entry = new $class();
-								foreach ((array) $obj as $key => $value)
-								{
-									$cmd = 'set' . $key;
-									if (method_exists($entry, $cmd))
-									{
-										$entry->$cmd($value);
-									}
-								}
-
-								$eEntry = $em->getRepository('DebbManagementBundle:'.$typeO)->findBy(array('manufacturer' => $entry->getManufacturer(), 'product' => $entry->getProduct(), 'model' => $entry->getModel()));
-								if(count($eEntry) > 0)
-								{
-									$entry = $eEntry[0];
-								}
-								if($node != null)
-								{
-									$entity = new \Debb\ManagementBundle\Entity\Component();
-									$cmd = 'set' . $typeO;
-									$entity->$cmd($entry);
-									$entity->setType(constant('\Debb\ManagementBundle\Entity\Component::' . $type));
-									$entity->setAmount(1);
-									$em->persist($entity);
-									$em->persist($entry);
-									$node->addComponent($entity);
-								}
-								$em->persist($entry);
-							}
-						}
+						$node->$cmd((string) $val);
 					}
 				}
 			}
+			/* Try to get image and object files */
+			if($filename != null)
+			{
+				/* Search images */
+				foreach(array('Image' => array('jpeg', 'jpg', 'bmp', 'png', 'gif'), 'VrmlFile' => array('wrl'), 'StlFile' => array('stl')) as $setter => $ext)
+				{
+					foreach (glob(dirname($filename) . DIRECTORY_SEPARATOR . '*' . DIRECTORY_SEPARATOR . substr(basename($filename, '.xml'), 5) . '.{'.implode(',', $ext).'}', GLOB_BRACE) as $file)
+					{
+						$fileClass = new File();
+						$fileSymfonyClass = new \Symfony\Component\HttpFoundation\File\UploadedFile($file, basename($file));
+						$fileClass->setMimeType($fileSymfonyClass->getMimeType());
+						$fileClass->setName($fileSymfonyClass->getClientOriginalName());
+						$fileClass->setPath(uniqid() . '.' . $fileSymfonyClass->guessExtension());
+						$fileClass->setSize($fileSymfonyClass->getSize());
+						copy($file, $fileClass->getFullPath());
+						$cmd = 'set' . $setter;
+						$node->$cmd($fileClass);
+						$em->persist($fileClass);
+					}
+				}
+			}
+			$em->persist($node);
+		}
+		else if(strtolower($xml->getName()) == 'nodegroup')
+		{
+			// NodeGroup
+			$nodeGroup = $em->getRepository('DebbConfigBundle:NodeGroup')->findBy(array('componentId' => $xml->ComponentId));
+			if(count($nodeGroup) > 0)
+			{
+				$nodeGroup = $nodeGroup[0];
+			}
+			else
+			{
+				$nodeGroup = new NodeGroup();
+			}
+
+			foreach($xml as $key => $val)
+			{
+				/* @var $key string the name - something like ComponentId, Manufacturer, Product */
+				/* @var $val \SimpleXMLElement */
+
+				$cmd = 'set' . $key;
+				if (method_exists($nodeGroup, $cmd))
+				{
+					$nodeGroup->$cmd((string) $val);
+				}
+			}
+			$em->persist($nodeGroup);
+		}
+		else if(strtolower($xml->getName()) == 'plmxml')
+		{
+			// PLMXML
+			// No import needed
 		}
 
 		$em->flush();
@@ -261,7 +319,7 @@ class DefaultController extends Controller
 	 */
 	public function stackNodeComponents()
 	{
-		$em = $this->getEntityManager();
+		$em = $this->getManager();
 		$doctrine = $this->getDoctrine();
 		$repository = $doctrine->getRepository('DebbConfigBundle:Node');
 		foreach($repository->findAll() as $node)
