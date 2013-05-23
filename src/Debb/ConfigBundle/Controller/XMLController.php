@@ -7,6 +7,7 @@ use Debb\ConfigBundle\Entity\NodeGroup;
 use Debb\ConfigBundle\Entity\Rack;
 use Debb\ConfigBundle\Entity\Room;
 use Debb\ManagementBundle\Entity\NodegroupToRack;
+use Debb\ManagementBundle\Entity\RackToRoom;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
@@ -121,58 +122,76 @@ abstract class XMLController extends CRUDController
 		$instanceGraph->addAttribute('id', 'id2');
 		$instanceGraph->addAttribute('rootRefs', 'inst' . sprintf('%02d', $item->getId()) . '_1');
 
-		$rackInstance = $this->addPlmXmlProductInstance(
-			$instanceGraph, 'inst' . sprintf('%02d', $item->getId()) . '_1', 'DefRack' . sprintf('%02d', $item->getId()), null, $item->getHostname()
-		);
-		$rackInstance = $rackInstance[0];
-
-		$nodeGroupsForThatRack = array();
-
-		foreach ($item->getNodeGroups() as $nodeGroup)
+		if($item instanceof Room)
 		{
-			if ($nodeGroup->getNodeGroup() != null)
-			{
-				$id = $item->getId() . $nodeGroup->getId();
-				$nodeGroupsForThatRack[] = 'id' . sprintf('%04d', $id);
-
-				$productRevisionView = $this->addPlmXmlProductRevisionView(
-					$instanceGraph, 'id' . sprintf('%04d', $id), 'DefNodeGroup' . sprintf('%04d', $id), array(), 'assembly', 'VRML', '.\objects\file.wrl', $nodeGroup->getNodeGroup()->getComponentId(), 'NodeGroup'
-				);
-
-				/* @var $nodeGroup NodegroupToRack */
-				$draft = $nodeGroup->getNodegroup()->getDraft();
-
-				$nodesForThatNodeGroup = array();
-				$i = 1;
-				$x = $nodeGroup->getNodegroup()->getSpaceLeft();
-				$y = $nodeGroup->getNodegroup()->getSpaceBottom();
-				foreach ($nodeGroup->getNodeGroup()->getNodes() as $node)
-				{
-					if ($node->getNode() != null)
-					{
-						$partReference = $this->addPlmXmlProductInstance(
-							$instanceGraph, 'id' . sprintf('%04d', $id) . '_2', 'DefNode' . sprintf('%04d', $id), 'id' . sprintf('%04d', $id), $node->getNode()->getHostname(), '0 1 0 0 -1 0 0 0 0 0 1 0 '.$x.' '.$y.' 0.005 1' // position
-						);
-						if($i == $draft->getSlotsY())
-						{
-							$x += $node->getNode()->getSizeX();
-							$i = 1;
-							$y = 0;
-						}
-						else
-						{
-							$y = $i * $node->getNode()->getSizeY();
-							$i++;
-						}
-						$nodesForThatNodeGroup[] = $partReference[1];
-					}
-				}
-
-				$productRevisionView->addAttribute('partRef', implode(' ', $nodesForThatNodeGroup));
-			}
+			$items = $item->getRacks();
+		}
+		else
+		{
+			$items = array($item);
 		}
 
-		$rackInstance->addAttribute('partRef', implode(' ', $nodeGroupsForThatRack));
+		foreach($items as $item)
+		{
+			if($item instanceof RackToRoom)
+			{
+				$item = $item->getRack();
+			}
+
+			$rackInstance = $this->addPlmXmlProductInstance(
+				$instanceGraph, 'inst' . sprintf('%02d', $item->getId()) . '_1', 'DefRack' . sprintf('%02d', $item->getId()), null, $item->getHostname()
+			);
+
+			$rackInstance = $rackInstance[0];
+
+			$nodeGroupsForThatRack = array();
+
+			foreach ($item->getNodeGroups() as $nodeGroup)
+			{
+				if ($nodeGroup->getNodeGroup() != null)
+				{
+					$id = $item->getId() . $nodeGroup->getId();
+					$nodeGroupsForThatRack[] = 'id' . sprintf('%04d', $id);
+
+					$productRevisionView = $this->addPlmXmlProductRevisionView(
+						$instanceGraph, 'id' . sprintf('%04d', $id), 'DefNodeGroup' . sprintf('%04d', $id), array(), 'assembly', 'VRML', '.\objects\file.wrl', $nodeGroup->getNodeGroup()->getComponentId(), 'NodeGroup'
+					);
+
+					/* @var $nodeGroup NodegroupToRack */
+					$draft = $nodeGroup->getNodegroup()->getDraft();
+
+					$nodesForThatNodeGroup = array();
+					$i = 1;
+					$x = $nodeGroup->getNodegroup()->getSpaceLeft();
+					$y = $nodeGroup->getNodegroup()->getSpaceBottom();
+					foreach ($nodeGroup->getNodeGroup()->getNodes() as $node)
+					{
+						if ($node->getNode() != null)
+						{
+							$partReference = $this->addPlmXmlProductInstance(
+								$instanceGraph, 'id' . sprintf('%04d', $id) . '_2', 'DefNode' . sprintf('%04d', $id), 'id' . sprintf('%04d', $id), $node->getNode()->getHostname(), '0 1 0 0 -1 0 0 0 0 0 1 0 '.$x.' '.$y.' 0.005 1' // position
+							);
+							if($i == $draft->getSlotsY())
+							{
+								$x += $node->getNode()->getSizeX();
+								$i = 1;
+								$y = 0;
+							}
+							else
+							{
+								$y = $i * $node->getNode()->getSizeY();
+								$i++;
+							}
+							$nodesForThatNodeGroup[] = $partReference[1];
+						}
+					}
+
+					$productRevisionView->addAttribute('partRef', implode(' ', $nodesForThatNodeGroup));
+				}
+			}
+
+			$rackInstance->addAttribute('partRef', implode(' ', $nodeGroupsForThatRack));
+		}
 
 		if ($pretty)
 		{
