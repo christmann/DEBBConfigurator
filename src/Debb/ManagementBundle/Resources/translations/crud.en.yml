@@ -10,6 +10,6 @@ debb_management.powersupply.plural: Power Supply
 debb_management.powersupply.singular: Power Supply
 debb_management.storage.plural: HDDs
 debb_management.storage.singular: HDD
-debb_management.nodegroupdraft.plural: Nodegroup
-debb_management.nodegroupdraft.singular: Nodegroup
+debb_management.nodegroupdraft.plural: Chassis
+debb_management.nodegroupdraft.singular: Chassis
 localdev_admin.actions.create: create %name%

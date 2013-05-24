@@ -3,6 +3,7 @@
 namespace Debb\ManagementBundle\Twig;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Form\FormView;
 
 /**
  * {@inheritdoc}
@@ -32,6 +33,7 @@ class Extension extends \Twig_Extension
 	{
 		return array(
 			'route_exists' => new \Twig_Function_Method($this, 'routeExists'),
+			'renderState' => new \Twig_Function_Method($this, 'renderState'),
 		);
 	}
 
@@ -64,6 +66,30 @@ class Extension extends \Twig_Extension
 			}
 		}
 		return $exists;
+	}
+
+	/**
+	 * Set the field rendered state
+	 *
+	 * @param FormView $field the field to set the state from
+	 * @param bool $state true if the field should be rendered or false if not
+	 * @param bool $returnField true if we should return the $field or false = null
+	 *
+	 * @return FormView|bool the form field or the render state
+	 */
+	public function renderState(FormView $field, $state, $returnField = false)
+	{
+		$field->setRendered($state);
+		if($state == false && $field->parent != null)
+		{
+			$field->parent->setRendered($state);
+		}
+		foreach($field->children as $child)
+		{
+			/* @var $child \Symfony\Component\Form\FormView */
+			$this->renderState($child, $state);
+		}
+		return $returnField ? $field : $field->isRendered();
 	}
 
 	/**
