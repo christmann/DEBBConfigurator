@@ -10,7 +10,7 @@ var rackDragOpt = {
 		$(this).draggable('option', 'revert', 'invalid');
 		var id = getExactId(ui.helper.find('.rackGform').find('div[id!=""]').attr('id'));
 		ui.helper.find('#debb_configbundle_roomtype_racks_' + id + '_posx').val(ui.position.left);
-		ui.helper.find('#debb_configbundle_roomtype_racks_' + id + '_posy').val(parseInt(ui.helper.css('bottom')));
+		ui.helper.find('#debb_configbundle_roomtype_racks_' + id + '_posy').val(parseFloat(ui.helper.css('bottom')));
 	}
 },
 	rackDropOpt = {
@@ -50,16 +50,16 @@ function setStyleOfRack(newRack)
 
 		newRack.appendTo('#rackContainer').draggable(rackDragOpt).droppable(rackDropOpt);
 	}
-	newRack.css('width', (parseInt(newRack.attr('rackX')) < 1 ? 99 : parseInt(newRack.attr('rackX')) * 100 - 1) + 'px');
-	newRack.css('height', (parseInt(newRack.attr('rackY')) < 1 ? 99 : parseInt(newRack.attr('rackY')) * 100 - 1) + 'px');
+	newRack.css('width', (parseFloat(newRack.attr('rackX')) < 1 ? 99 : parseFloat(newRack.attr('rackX')) * 100 - 1) + 'px');
+	newRack.css('height', (parseFloat(newRack.attr('rackY')) < 1 ? 99 : parseFloat(newRack.attr('rackY')) * 100 - 1) + 'px');
 	if(typeof newRack.attr('posx') != 'undefined')
 	{
-		newRack.css('left', (parseInt(newRack.attr('posx')) < 0 ? 0 : parseInt(newRack.attr('posx'))) + 'px');
+		newRack.css('left', (parseFloat(newRack.attr('posx')) < 0 ? 0 : parseFloat(newRack.attr('posx'))) + 'px');
 		newRack.removeAttr('posx');
 	}
 	if(typeof newRack.attr('posy') != 'undefined')
 	{
-		newRack.css('bottom', (parseInt(newRack.attr('posy')) < 0 ? $('#rackContainer').height() - newRack.outerHeight() : parseInt(newRack.attr('posy'))) + 'px');
+		newRack.css('bottom', (parseFloat(newRack.attr('posy')) < 0 ? $('#rackContainer').height() - newRack.outerHeight() : parseFloat(newRack.attr('posy'))) + 'px');
 		newRack.removeAttr('posy');
 	}
 }
