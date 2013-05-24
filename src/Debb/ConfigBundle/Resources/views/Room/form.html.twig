@@ -18,12 +18,23 @@
 	{{ parent() }}
 	{% javascripts
 		'@DebbConfigBundle/Resources/public/js/jquery-ui.min.js'
+		'@DebbConfigBundle/Resources/public/js/zui53.js'
 		'@DebbConfigBundle/Resources/public/js/room.js'
 	%}
 		<script src="{{ asset_url }}" type="text/javascript"></script>
 	{% endjavascripts %}
 	<script type="text/javascript">
 		var roomId = {{ form.vars.data.id | default(0) }};
+	</script>
+	<script>
+		function initZUI() {
+			console.log(ZUI53);
+			var zui = new ZUI53.Viewport( document.getElementById('rackZoomContainer') );
+			zui.addSurface( new ZUI53.Surfaces.CSS( document.getElementById('rackContainer') ) );
+			var pan_tool = new ZUI53.Tools.Pan(zui);
+			zui.toolset.add( pan_tool );
+			pan_tool.attach()
+		}
 	</script>
 {% endblock %}
 
@@ -62,7 +73,8 @@
 	</div>
 	<div class="clear"></div>
 
-	<div id="rackContainer" style="position: relative; height: {% if form.vars.data.sizeY|default(0) < 1 %}700{% else %}{{ form.vars.data.sizeY }}{% endif %}px; width: {% if form.vars.data.sizeX|default(0) < 1 %}900{% else %}{{ form.vars.data.sizeX }}{% endif %}px; border: 2px solid #000; background: url('{{ asset('bundles/debbconfig/img/room-grid.png') }}') repeat scroll 1px 1px transparent;" data-prototype="{{ form_row(form.racks.vars.prototype) | escape }}">
+	<div id="RackZoomContainer" style="position: relative; height: {% if form.vars.data.sizeY|default(0) < 1 %}700{% else %}{{ form.vars.data.sizeY }}{% endif %}px; width: {% if form.vars.data.sizeX|default(0) < 1 %}900{% else %}{{ form.vars.data.sizeX }}{% endif %}px; border: 2px solid #000; background: url('{{ asset('bundles/debbconfig/img/room-grid.png') }}') repeat scroll 1px 1px transparent;" data-prototype="{{ form_row(form.racks.vars.prototype) | escape }}">
+		<div id="rackContainer" style="position: relative; height: {% if form.vars.data.sizeY|default(0) < 1 %}700{% else %}{{ form.vars.data.sizeY }}{% endif %}px; width: {% if form.vars.data.sizeX|default(0) < 1 %}900{% else %}{{ form.vars.data.sizeX }}{% endif %}px;">
 		{% for rack in form.racks %}
 			<div class="rackG" posx="{{ rack.vars.data.posx }}" posy="{{ rack.vars.data.posy }}"
 				 rackId="{{ rack.vars.data.id }}" rackX="{{ rack.vars.data.rack.fullz }}" rackY="{{ rack.vars.data.rack.fully }}">{{ rack.vars.data.rack }} - <a href="#" class="removeRack"><i class="icon-trash"></i></a>
@@ -72,9 +84,11 @@
 			</div>
 		{% endfor %}
 	</div>
+	</div>
 	<div class="clear"></div>
 	<div style="height: 20px; width: 98px; border: 1px solid #777; text-align: center; vertical-align: middle; margin-top: 5px;">{{ 'Scale' | trans }} 1m</div>
 
 	{{ form_widget(form._token) }}
 	<div class="clear"></div>
+	<script type="text/javascript">initZUI();</script>
 {% endblock %}
