@@ -46,7 +46,7 @@ class NodeGroupDraftType extends AbstractType
 	public function getSlotsAmount()
 	{
 		$res = array();
-		for($x = 1; $x < 10; $x++)
+		for($x = 1; $x < 11; $x++)
 		{
 			$res[$x] = $x;
 		}
