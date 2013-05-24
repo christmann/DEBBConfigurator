@@ -50,8 +50,8 @@ function setStyleOfRack(newRack)
 
 		newRack.appendTo('#rackContainer').draggable(rackDragOpt).droppable(rackDropOpt);
 	}
-	newRack.css('width', (parseInt(newRack.attr('rackX')) < 1 ? 98 : parseInt(newRack.attr('rackX'))) + 'px');
-	newRack.css('height', (parseInt(newRack.attr('rackY')) < 1 ? 98 : parseInt(newRack.attr('rackY'))) + 'px');
+	newRack.css('width', (parseFloat(newRack.attr('rackX')) <= 0 ? 99 : parseFloat(newRack.attr('rackX')) * 100 - 1) + 'px');
+	newRack.css('height', (parseFloat(newRack.attr('rackY')) <= 0 ? 99 : parseFloat(newRack.attr('rackY')) * 100 - 1) + 'px');
 	if(typeof newRack.attr('posx') != 'undefined')
 	{
 		newRack.css('left', (parseInt(newRack.attr('posx')) < 0 ? 0 : parseInt(newRack.attr('posx'))) + 'px');

@@ -16,7 +16,9 @@
 		{% if itemtypspecification | keys|default({0: -1}).0 == 0 %}
 			{% set itemtypspecification = itemtypspecification | reverse %}
 		{% endif %}
-		<div id="nodegroup" data-prototype="{{ nodegroupdraft.typspec(nodetypspecs) | e }}">{% for key, value in itemtypspecification %}{{ nodegroupdraft.typspec(nodetypspecs, value, key) }}{% endfor %}</div>
+		{{ form_widget(form.spaceLeft) }}
+		<div id="nodegroup" style="margin-left: 0px;"
+			 data-prototype="{{ nodegroupdraft.typspec(nodetypspecs) | e }}">{% for key, value in itemtypspecification %}{{ nodegroupdraft.typspec(nodetypspecs, value, key) }}{% endfor %}</div>
 		<div class="clear"></div>
 	</div>
 {% endblock %}

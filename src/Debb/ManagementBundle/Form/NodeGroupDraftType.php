@@ -25,8 +25,14 @@ class NodeGroupDraftType extends AbstractType
 			->add('slotsX', 'choice', array('choices' => $this->getSlotsAmount(), 'empty_value' => false, 'attr' => array('style' => 'width: 223px;', 'class' => 'noBreakAfterThis')))
 			->add('slotsY', 'choice', array('choices' => $this->getSlotsAmount(), 'empty_value' => false, 'attr' => array('style' => 'width: 223px;')))
             ->add('heSize', 'choice', array('choices' => $this->getSlotsAmount(), 'empty_value' => false, 'attr' => array('style' => 'width: 223px;', 'class' => 'noBreakAfterThis')))
-			->add('frontView', 'choice', array('choices' => array(0 => 'No', 1 => 'Yes'), 'empty_value' => false, 'attr' => array('style' => 'width: 223px;')))
+			->add('frontView', 'choice', array('choices' => array(0 => 'Top', 1 => 'Front'), 'empty_value' => false, 'attr' => array('style' => 'width: 223px;'), 'label' => 'View:'))
             ->add('image', 'plupload')
+            ->add('spaceLeft', null, array('required' => false))
+            ->add('spaceTop', null, array('required' => false))
+            ->add('spaceRight', null, array('required' => false))
+            ->add('spaceBottom', null, array('required' => false))
+            ->add('spaceFront', null, array('required' => false))
+            ->add('spaceBehind', null, array('required' => false))
         ;
     }
 
@@ -46,7 +52,7 @@ class NodeGroupDraftType extends AbstractType
 	public function getSlotsAmount()
 	{
 		$res = array();
-		for($x = 1; $x < 10; $x++)
+		for($x = 1; $x < 11; $x++)
 		{
 			$res[$x] = $x;
 		}
