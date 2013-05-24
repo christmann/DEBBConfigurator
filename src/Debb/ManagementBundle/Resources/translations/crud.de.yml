@@ -10,6 +10,6 @@ debb_management.powersupply.plural: Stromversorgungen
 debb_management.powersupply.singular: Stromversorgung
 debb_management.storage.plural: HDDs
 debb_management.storage.singular: HDD
-debb_management.nodegroupdraft.plural: Knotengruppe
-debb_management.nodegroupdraft.singular: Knotengruppe
+debb_management.nodegroupdraft.plural: Gehäuse
+debb_management.nodegroupdraft.singular: Gehäuse
 localdev_admin.actions.create: %name% erstellen
