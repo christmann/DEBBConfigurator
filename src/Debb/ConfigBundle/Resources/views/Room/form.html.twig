@@ -62,7 +62,7 @@
 	</div>
 	<div class="clear"></div>
 
-	<div id="rackContainer" style="position: relative; height: {% if form.vars.data.sizeY|default(0) < 1 %}700{% else %}{{ form.vars.data.sizeY }}{% endif %}px; width: {% if form.vars.data.sizeX|default(0) < 1 %}900{% else %}{{ form.vars.data.sizeX }}{% endif %}px; border: 2px solid #000; background: url('{{ asset('bundles/debbconfig/img/room-grid.png') }}') repeat scroll 0 0 transparent;" data-prototype="{{ form_row(form.racks.vars.prototype) | escape }}">
+	<div id="rackContainer" style="position: relative; height: {% if form.vars.data.sizeY|default(0) < 1 %}700{% else %}{{ form.vars.data.sizeY }}{% endif %}px; width: {% if form.vars.data.sizeX|default(0) < 1 %}900{% else %}{{ form.vars.data.sizeX }}{% endif %}px; border: 2px solid #000; background: url('{{ asset('bundles/debbconfig/img/room-grid.png') }}') repeat scroll 1px 1px transparent;" data-prototype="{{ form_row(form.racks.vars.prototype) | escape }}">
 		{% for rack in form.racks %}
 			<div class="rackG" posx="{{ rack.vars.data.posx }}" posy="{{ rack.vars.data.posy }}"
 				 rackId="{{ rack.vars.data.id }}" rackX="{{ rack.vars.data.rack.fullz }}" rackY="{{ rack.vars.data.rack.fully }}">{{ rack.vars.data.rack }} - <a href="#" class="removeRack"><i class="icon-trash"></i></a>
