@@ -10,13 +10,22 @@
 {% endblock %}
 
 {% block form %}
+	{{ renderState(form.spaceLeft, true) }}
+	{{ renderState(form.spaceTop, true) }}
+	{{ renderState(form.spaceRight, true) }}
+	{{ renderState(form.spaceBottom, true) }}
+	{{ renderState(form.spaceFront, true) }}
+	{{ renderState(form.spaceBehind, true) }}
 	{{ parent() }}
 	<div class="row-fluid">
 		{% set itemtypspecification = item.typspecification %}
 		{% if itemtypspecification | keys|default({0: -1}).0 == 0 %}
 			{% set itemtypspecification = itemtypspecification | reverse %}
 		{% endif %}
-		<div id="nodegroup" data-prototype="{{ nodegroupdraft.typspec(nodetypspecs) | e }}">{% for key, value in itemtypspecification %}{{ nodegroupdraft.typspec(nodetypspecs, value, key) }}{% endfor %}</div>
+		{{ renderState(form.spaceLeft, false) }}
+		!{{ form_widget(form.spaceLeft) }}!
+		<div id="nodegroup" style="margin-left: 0px;"
+			 data-prototype="{{ nodegroupdraft.typspec(nodetypspecs) | e }}">{% for key, value in itemtypspecification %}{{ nodegroupdraft.typspec(nodetypspecs, value, key) }}{% endfor %}</div>
 		<div class="clear"></div>
 	</div>
 {% endblock %}
