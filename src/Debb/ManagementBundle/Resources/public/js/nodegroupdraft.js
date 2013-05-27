@@ -1,3 +1,5 @@
+var currentNode = null;
+
 $(function () {
 	$('#debb_managementbundle_nodegroupdrafttype_slotsX, #debb_managementbundle_nodegroupdrafttype_slotsY').change(function () {
 		var slotsX = $('#debb_managementbundle_nodegroupdrafttype_slotsX'),
@@ -35,7 +37,25 @@ $(function () {
 			$('#debb_managementbundle_nodegroupdrafttype_heSize').val($(this).val());
 		}
 	});
-	$(document).on('keyup', '[refto!=""]', function()
+	$(document).on('click', '.node', function(e)
+	{
+		e.preventDefault();
+		if(currentNode == null || $(this)[0] != currentNode[0])
+		{
+			if(currentNode != null)
+			{
+				/* remove old selection */
+				currentNode.removeClass('nodeSelected');
+			}
+			/* change selection */
+			currentNode = $(this);
+			$('#nodetypeselect').find('select').attr('refto', currentNode.find('select').attr('id')).val(currentNode.find('select').val());
+			currentNode.addClass('nodeSelected');
+			$('#nodetypeselect').slideDown('slow');
+		}
+	});
+	/* works with input fields and select fields at the moment */
+	$(document).on('keyup change', '[refto!=""]', function()
 	{
 		$('#' + $(this).attr('refto')).val($(this).val());
 	});
