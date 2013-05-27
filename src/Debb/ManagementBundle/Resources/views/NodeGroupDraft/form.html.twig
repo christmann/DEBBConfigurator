@@ -16,7 +16,6 @@
 		{% if itemtypspecification | keys|default({0: -1}).0 == 0 %}
 			{% set itemtypspecification = itemtypspecification | reverse %}
 		{% endif %}
-		{{ form_widget(form.spaceLeft) }}
 		<div id="nodegroup" style="margin-left: 0px;"
 			 data-prototype="{{ nodegroupdraft.typspec(nodetypspecs) | e }}">{% for key, value in itemtypspecification %}{{ nodegroupdraft.typspec(nodetypspecs, value, key) }}{% endfor %}</div>
 		<div class="clear"></div>
@@ -24,8 +23,8 @@
 {% endblock %}
 
 {% macro typspec(nodetypspecs, selectedValue, name) %}
-	<div class="node">
-		<select name="typspec[{{ name | default('__name__') }}]" id="debb_managementbundle_nodegroupdrafttype_typspec_{{ name | default('__name__') }}">
+	<div class="node" style="height: 50px; width: 50px; padding: 10px;">
+		<select name="typspec[{{ name | default('__name__') }}]" id="debb_managementbundle_nodegroupdrafttype_typspec_{{ name | default('__name__') }}" style="display: none;">
 			{% for key, value in nodetypspecs|default({}) %}
 				<option value="{{ key }}"{% if selectedValue is defined and selectedValue is not null and selectedValue == key %} selected="selected"{% endif %}>{{ value | trans }}</option>
 			{% endfor %}
