@@ -35,6 +35,10 @@ $(function () {
 			$('#debb_managementbundle_nodegroupdrafttype_heSize').val($(this).val());
 		}
 	});
+	$(document).on('keyup', '[refto!=""]', function()
+	{
+		$('#' + $(this).attr('refto')).val($(this).val());
+	});
 	updateNodes();
 });
 
@@ -50,6 +54,7 @@ function updateNodegroupSize(slotsX, slotsY)
 	}
 	$('#nodegroup').width(parseInt(slotsX.val()) * 71);
 	$('#nodegroup').height(parseInt(slotsY.val()) * 71);
+	$('.nodegroupSpaceInfo').css('margin-top', parseInt(parseInt($('#nodegroup').height()) * 0.49));
 }
 
 function addNode(x)
