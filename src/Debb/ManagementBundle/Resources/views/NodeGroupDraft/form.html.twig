@@ -30,19 +30,19 @@
 			{% set itemtypspecification = itemtypspecification | reverse %}
 		{% endif %}
 		<div class="nodegroupSpaceTop" style="text-align: center;">
-			<input id="randinput1" type="number" style="width: {{ spaceInfoWidth }}px;" value="{{ form.spaceTop.vars.data }}" refto="debb_managementbundle_nodegroupdrafttype_spaceTop" /> [m]
+			<input id="randinput1" type="number" style="width: {{ spaceInfoWidth }}px;" required="required" value="{{ form.spaceTop.vars.data | default(0) }}" refto="debb_managementbundle_nodegroupdrafttype_spaceTop" /> [m]
 		</div>
 		<div class="nodegroupSpaceInfo" style="position: relative; float: left;">
-			<input id="randinput2" type="number" style="width: {{ spaceInfoWidth }}px;" value="{{ form.spaceLeft.vars.data }}" refto="debb_managementbundle_nodegroupdrafttype_spaceLeft" /> [m]
+			<input id="randinput2" type="number" style="width: {{ spaceInfoWidth }}px;" required="required" value="{{ form.spaceLeft.vars.data | default(0) }}" refto="debb_managementbundle_nodegroupdrafttype_spaceLeft" /> [m]
 		</div>
 		<div id="nodegroup" style="margin: 10px; padding: 0px; border-left: 1px solid #777; border-top: 1px solid #777;"
 			 data-prototype="{{ nodegroupdraft.typspec(nodetypspecs) | e }}">{% for key, value in itemtypspecification %}{{ nodegroupdraft.typspec(nodetypspecs, value, key, true) }}{% endfor %}</div>
 		<div class="nodegroupSpaceInfo" style="position: relative; float: right;">
-			<input id="randinput3" type="number" style="width: {{ spaceInfoWidth }}px;" value="{{ form.spaceRight.vars.data }}" refto="debb_managementbundle_nodegroupdrafttype_spaceRight" /> [m]
+			<input id="randinput3" type="number" style="width: {{ spaceInfoWidth }}px;" required="required" value="{{ form.spaceRight.vars.data | default(0) }}" refto="debb_managementbundle_nodegroupdrafttype_spaceRight" /> [m]
 		</div>
 		<div class="clear"></div>
 		<div class="nodegroupSpaceBottom" style="text-align: center;">
-			<input id="randinput4" type="number" style="width: {{ spaceInfoWidth }}px;" value="{{ form.spaceBottom.vars.data }}" refto="debb_managementbundle_nodegroupdrafttype_spaceBottom" /> [m]
+			<input id="randinput4" type="number" style="width: {{ spaceInfoWidth }}px;" required="required" value="{{ form.spaceBottom.vars.data | default(0) }}" refto="debb_managementbundle_nodegroupdrafttype_spaceBottom" /> [m]
 		</div>
 	</div>
 {% endblock %}
