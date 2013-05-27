@@ -59,7 +59,7 @@ function addNode(x)
 }
 
 function updateNodes() {
-	var nodes = $('.node'),
+	var nodes = $('#nodegroup .node'),
 		y = 0;
 	for(var x = nodes.length - 1; x >= 0; x--)
 	{
