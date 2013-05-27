@@ -29,9 +29,6 @@
 		{% if itemtypspecification | keys|default({0: -1}).0 == 0 %}
 			{% set itemtypspecification = itemtypspecification | reverse %}
 		{% endif %}
-		<div id="nodetypeselect" style="border-bottom: 1px solid #888; margin-left: -5px; margin-right: -5px; margin-bottom: 10px; padding-left: 10px; display: none;">
-			{{ 'Node type' | trans }}: {{ nodegroupdraft.typspec(nodetypspecs, null, null, false) }}
-		</div>
 		<div class="nodegroupSpaceTop" style="text-align: center;">
 			<input id="randinput1" type="number" style="width: {{ spaceInfoWidth }}px;" required="required" value="{{ form.spaceTop.vars.data | default(0) }}" refto="debb_managementbundle_nodegroupdrafttype_spaceTop" /> [m]
 		</div>
@@ -52,7 +49,7 @@
 
 {% macro typspec(nodetypspecs, selectedValue, name, nodeContainer) %}
 	{% if nodeContainer is null or nodeContainer == true %}<div class="node" style="height: 50px; width: 50px; padding: 10px; margin: 0px;">{% endif %}
-		<select name="typspec[{{ name | default('__name__') }}]" id="debb_managementbundle_nodegroupdrafttype_typspec_{{ name | default('__name__') }}" style="{% if nodeContainer is null or nodeContainer == true %}display: none;{% endif %}">
+		<select name="typspec[{{ name | default('__name__') }}]" id="debb_managementbundle_nodegroupdrafttype_typspec_{{ name | default('__name__') }}" style="margin-left: -7px; width: 63px;">
 			{% for key, value in nodetypspecs|default({}) %}
 				<option value="{{ key }}"{% if selectedValue is defined and selectedValue is not null and selectedValue == key %} selected="selected"{% endif %}>{{ value | trans }}</option>
 			{% endfor %}
