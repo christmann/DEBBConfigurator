@@ -23,7 +23,7 @@
 
 {% block form %}
 	{{ parent() }}
-	<div class="row-fluid">
+	<div class="row-fluid" style="border: 1px solid #888; padding: 10px 5px 0;">
 		{% set spaceInfoWidth = 55 %}
 		{% set itemtypspecification = item.typspecification %}
 		{% if itemtypspecification | keys|default({0: -1}).0 == 0 %}
