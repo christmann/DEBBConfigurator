@@ -2,33 +2,61 @@
 {% form_theme form "DebbManagementBundle::form_theme.html.twig" %}
 {% import _self as nodegroupdraft %}
 
+{% block stylesheets %}
+	{{ parent() }}
+	{% stylesheets filter='cssrewrite'
+	'bundles/debbconfig/css/jquery-ui.min.css'
+	%}
+	<link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
+	{% endstylesheets %}
+{% endblock %}
+
 {% block javascripts %}
 	{{ parent() }}
-	{% javascripts '@DebbManagementBundle/Resources/public/js/nodegroupdraft.js' %}
+	{% javascripts
+					'@DebbConfigBundle/Resources/public/js/jquery-ui.min.js'
+					'@DebbManagementBundle/Resources/public/js/nodegroupdraft.js'
+	%}
 		<script src="{{ asset_url }}" type="text/javascript"></script>
 	{% endjavascripts %}
 {% endblock %}
 
 {% block form %}
 	{{ parent() }}
-	<div class="row-fluid">
+	<div class="row-fluid" style="border: 1px solid #888; padding: 10px 5px 0; background-color: #E3E3E3;">
+		{% set spaceInfoWidth = 75 %}
 		{% set itemtypspecification = item.typspecification %}
 		{% if itemtypspecification | keys|default({0: -1}).0 == 0 %}
 			{% set itemtypspecification = itemtypspecification | reverse %}
 		{% endif %}
-		{{ form_widget(form.spaceLeft) }}
-		<div id="nodegroup" style="margin-left: 0px;"
-			 data-prototype="{{ nodegroupdraft.typspec(nodetypspecs) | e }}">{% for key, value in itemtypspecification %}{{ nodegroupdraft.typspec(nodetypspecs, value, key) }}{% endfor %}</div>
+		<div class="nodegroupSpaceTop" style="text-align: center;">
+			{{ 'SpaceTop' | trans }}<br />
+			<input id="randinput1" type="number" style="width: {{ spaceInfoWidth }}px;" required="required" value="{{ form.spaceTop.vars.data | default(0) }}" refto="debb_managementbundle_nodegroupdrafttype_spaceTop" />
+		</div>
+		<div class="nodegroupSpaceInfo" style="position: relative; float: left; text-align: center;">
+			{{ 'SpaceLeft' | trans }}<br />
+			<input id="randinput2" type="number" style="width: {{ spaceInfoWidth }}px;" required="required" value="{{ form.spaceLeft.vars.data | default(0) }}" refto="debb_managementbundle_nodegroupdrafttype_spaceLeft" />
+		</div>
+		<div id="nodegroup" style="margin: 10px; padding: 0px; border-left: 1px solid #777; border-top: 1px solid #777;"
+			 data-prototype="{{ nodegroupdraft.typspec(nodetypspecs) | e }}">{% for key, value in itemtypspecification %}{{ nodegroupdraft.typspec(nodetypspecs, value, key, true) }}{% endfor %}</div>
+		<div class="nodegroupSpaceInfo" style="position: relative; float: right; text-align: center;">
+			{{ 'SpaceRight' | trans }}<br />
+			<input id="randinput3" type="number" style="width: {{ spaceInfoWidth }}px;" required="required" value="{{ form.spaceRight.vars.data | default(0) }}" refto="debb_managementbundle_nodegroupdrafttype_spaceRight" />
+		</div>
 		<div class="clear"></div>
+		<div class="nodegroupSpaceBottom" style="text-align: center;">
+			{{ 'SpaceBottom' | trans }}<br />
+			<input id="randinput4" type="number" style="width: {{ spaceInfoWidth }}px;" required="required" value="{{ form.spaceBottom.vars.data | default(0) }}" refto="debb_managementbundle_nodegroupdrafttype_spaceBottom" />
+		</div>
 	</div>
 {% endblock %}
 
-{% macro typspec(nodetypspecs, selectedValue, name) %}
-	<div class="node">
-		<select name="typspec[{{ name | default('__name__') }}]" id="debb_managementbundle_nodegroupdrafttype_typspec_{{ name | default('__name__') }}">
+{% macro typspec(nodetypspecs, selectedValue, name, nodeContainer) %}
+	{% if nodeContainer is null or nodeContainer == true %}<div class="node" style="height: 50px; width: 50px; padding: 10px; margin: 0px;">{% endif %}
+		<select name="typspec[{{ name | default('__name__') }}]" id="debb_managementbundle_nodegroupdrafttype_typspec_{{ name | default('__name__') }}" style="margin-left: -7px; width: 63px;">
 			{% for key, value in nodetypspecs|default({}) %}
 				<option value="{{ key }}"{% if selectedValue is defined and selectedValue is not null and selectedValue == key %} selected="selected"{% endif %}>{{ value | trans }}</option>
 			{% endfor %}
 		</select>
-	</div>
+	{% if nodeContainer is null or nodeContainer == true %}</div>{% endif %}
 {% endmacro %}

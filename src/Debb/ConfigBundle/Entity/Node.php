@@ -259,6 +259,6 @@ class Node extends Dimensions
 	 */
 	public static function getTypes()
 	{
-		return array(0 => 'COMexpress Typ 2', 1 => 'COMexpress Typ 6', 2 => 'Apalis');
+		return array(0 => 'CXP2', 1 => 'CXP6', 2 => 'Apls');
 	}
 }
