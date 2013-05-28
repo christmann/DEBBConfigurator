@@ -728,8 +728,18 @@ label {
 	font-size: 25px;
 }
 
-#content h5, #content .row-fluid .span2 {
+#content h5, #content .row-fluid .span2, #content .row-fluid .span3 {
 	color: #555;
+}
+
+#rackSize {
+	border-left: 1px solid #888888;
+	border-right: 1px solid #888888;
+	border-top: 1px solid #888888;
+	padding-left: 5px;
+	text-align: center;
+	width: 146px;
+	background-color: #dddddd;
 }
 
 .eAdopt {

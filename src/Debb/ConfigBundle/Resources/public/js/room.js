@@ -73,6 +73,10 @@ $(function()
 		stop: function( event, ui ) {
 			$('#debb_configbundle_roomtype_sizeX').val(ui.helper.width());
 			$('#debb_configbundle_roomtype_sizeY').val(ui.helper.height());
+		},
+		resize: function ( event, ui ) {
+			$('#rackSizeX').html((parseInt(ui.size.width) / 100).toFixed(2));
+			$('#rackSizeY').html((parseInt(ui.size.height) / 100).toFixed(2));
 		}
 	}).droppable({tolerance: 'fit'});
 	$(document).on('click', '.removeRack', function(e)

@@ -16,99 +16,23 @@ class Processor extends Base
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="cores", type="integer", nullable=true)
-	 */
-	private $cores;
-
-	/**
-	 * @var integer
-	 *
-	 * @ORM\Column(name="max_frequency", type="integer", nullable=true)
-	 */
-	private $maxFrequency;
-
-	/**
-	 * @var decimal
-	 *
-	 * @ORM\Column(name="max_power", type="decimal", nullable=true)
-	 */
-	private $maxPower;
-
-	/**
-	 * @var integer
-	 *
 	 * @ORM\Column(name="max_clock_speed", type="integer", nullable=true)
 	 */
 	private $maxClockSpeed;
 
 	/**
-	 * Set cores
+	 * @var integer
 	 *
-	 * @param integer $cores
-	 * @return Processor
+	 * @ORM\Column(name="cores", type="integer", nullable=true)
 	 */
-	public function setCores($cores)
-	{
-		$this->cores = $cores;
-
-		return $this;
-	}
+	private $cores;
 
 	/**
-	 * Get cores
+	 * @var decimal
 	 *
-	 * @return integer 
+	 * @ORM\Column(name="tdp", type="decimal", nullable=true)
 	 */
-	public function getCores()
-	{
-		return $this->cores;
-	}
-
-	/**
-	 * Set maxFrequency
-	 *
-	 * @param integer $maxFrequency
-	 * @return Processor
-	 */
-	public function setMaxFrequency($maxFrequency)
-	{
-		$this->maxFrequency = $maxFrequency;
-
-		return $this;
-	}
-
-	/**
-	 * Get maxFrequency
-	 *
-	 * @return integer 
-	 */
-	public function getMaxFrequency()
-	{
-		return $this->maxFrequency;
-	}
-
-	/**
-	 * Set maxPower
-	 *
-	 * @param \double $maxPower
-	 * @return Processor
-	 */
-	public function setMaxPower($maxPower)
-	{
-		$this->maxPower = $maxPower;
-
-		return $this;
-	}
-
-	/**
-	 * Get maxPower
-	 *
-	 * @return decimal 
-	 */
-	public function getMaxPower()
-	{
-		return $this->maxPower;
-	}
+	private $tdp;
 
 	/**
 	 * Set maxClockSpeed
@@ -126,11 +50,57 @@ class Processor extends Base
 	/**
 	 * Get maxClockSpeed
 	 *
-	 * @return decimal 
+	 * @return decimal
 	 */
 	public function getMaxClockSpeed()
 	{
 		return $this->maxClockSpeed;
+	}
+
+	/**
+	 * Set cores
+	 *
+	 * @param integer $cores
+	 * @return Processor
+	 */
+	public function setCores($cores)
+	{
+		$this->cores = $cores;
+
+		return $this;
+	}
+
+	/**
+	 * Get cores
+	 *
+	 * @return integer
+	 */
+	public function getCores()
+	{
+		return $this->cores;
+	}
+
+	/**
+	 * Set TDP
+	 *
+	 * @param \double $tdp
+	 * @return Processor
+	 */
+	public function setTDP($tdp)
+	{
+		$this->tdp = $tdp;
+
+		return $this;
+	}
+
+	/**
+	 * Get TDP
+	 *
+	 * @return decimal
+	 */
+	public function getTDP()
+	{
+		return $this->tdp;
 	}
 
 	/**
@@ -141,10 +111,6 @@ class Processor extends Base
 	public function getDebbXmlArray()
 	{
 		$array = parent::getDebbXmlArray();
-		if($this->getMaxPower() != null)
-		{
-			$array['MaxPower'] = $this->getMaxPower();
-		}
 		if($this->getMaxClockSpeed() != null)
 		{
 			$array['MaxClockSpeed'] = $this->getMaxClockSpeed();
@@ -152,6 +118,10 @@ class Processor extends Base
 		if($this->getCores() != null)
 		{
 			$array['Cores'] = $this->getCores();
+		}
+		if($this->getTDP() != null)
+		{
+			$array['TDP'] = $this->getTDP();
 		}
 		return $array;
 	}

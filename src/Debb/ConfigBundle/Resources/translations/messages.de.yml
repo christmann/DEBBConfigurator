@@ -53,6 +53,8 @@ Yes: Ja
 No: Nein
 Front: Vorne
 Top: Oben
+Tdp: TDP
+RackSize: Rack Größe [RU]
 
 # form fields which not defined above
 Product: Produkt

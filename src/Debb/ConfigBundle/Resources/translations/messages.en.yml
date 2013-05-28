@@ -49,6 +49,8 @@ component.5: power supplies
 component.6: HDDs
 empty: Empty
 import.%name%: Import %name%
+Tdp: TDP
+RackSize: Rack Size [RU]
 
 # form fields which not defined above
 Product: Product

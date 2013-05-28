@@ -14,10 +14,9 @@ class ProcessorType extends AbstractType
             ->add('manufacturer', 'text')
             ->add('product', 'text', array('attr' => array('class' => 'noBreakAfterThis')))
             ->add('model', 'text')
-            ->add('cores', 'text', array('attr' => array('class' => 'noBreakAfterThis')))
-            ->add('maxFrequency', 'text')
-            ->add('MaxPower', 'text', array('attr' => array('class' => 'noBreakAfterThis')))
-            ->add('MaxClockSpeed', 'text')
+			->add('MaxClockSpeed', 'text')
+			->add('cores', 'text', array('attr' => array('class' => 'noBreakAfterThis')))
+            ->add('tdp', 'text')
         ;
     }
 
