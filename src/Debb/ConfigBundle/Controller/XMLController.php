@@ -171,16 +171,19 @@ abstract class XMLController extends CRUDController
 							$partReference = $this->addPlmXmlProductInstance(
 								$instanceGraph, 'id' . sprintf('%04d', $id) . '_2', 'DefNode' . sprintf('%04d', $id), 'id' . sprintf('%04d', $id), $node->getNode()->getHostname(), '0 1 0 0 -1 0 0 0 0 0 1 0 '.$x.' '.$y.' 0.005 1' // position
 							);
-							if($i == $draft->getSlotsY())
+							if($draft != null)
 							{
-								$x += $node->getNode()->getSizeX();
-								$i = 1;
-								$y = 0;
-							}
-							else
-							{
-								$y = $i * $node->getNode()->getSizeY();
-								$i++;
+								if($i == $draft->getSlotsY())
+								{
+									$x += $node->getNode()->getSizeX();
+									$i = 1;
+									$y = 0;
+								}
+								else
+								{
+									$y = $i * $node->getNode()->getSizeY();
+									$i++;
+								}
 							}
 							$nodesForThatNodeGroup[] = $partReference[1];
 						}

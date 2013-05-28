@@ -53,7 +53,7 @@ Yes: Ja
 No: Nein
 Front: Vorne
 Top: Oben
-Tdp: TDP
+Tdp: TDP [Watt]
 RackSize: Rack Größe [RU]
 
 # form fields which not defined above
@@ -72,8 +72,8 @@ Component: Komponente
 Maxpower: maximale Leistung [Watt]
 Maxclockspeed: Maximale Taktrate [MHz]
 Maxcoolingcapacity: Maximale Kühlleistung
-Maxairthroughput: Maximaler Luftdurchsatz
-Maxwaterthroughput: Maximaler Wasserdurchsatz
+Maxairthroughput: Maximaler Luftdurchsatz m³/h
+Maxwaterthroughput: Maximaler Wasserdurchsatz l/h
 Totaloutputpower: Gesamt-Ausgangsleistung [Watt]
 Capacity: Kapazität [MByte]
 processors: Prozessoren
@@ -83,7 +83,7 @@ Efficiency: Typische Effizienz [%]
 Debbcomponentsxml: DEBBComponents.xml
 Slotsx: Slots Horizontal [Anzahl]
 Slotsy: Slots Vertikal [Anzahl]
-Hesize: HE [Anzahl]
+Hesize: Höhe [RU]
 Draft: Entwurf
 View:: Ansicht:
 nospace: Nicht genügend Platz..

@@ -49,7 +49,7 @@ component.5: power supplies
 component.6: HDDs
 empty: Empty
 import.%name%: Import %name%
-Tdp: TDP
+Tdp: TDP [Watt]
 RackSize: Rack Size [RU]
 
 # form fields which not defined above
@@ -68,8 +68,8 @@ Component: Component
 Maxpower: Maximum Power Usage [Watt]
 Maxclockspeed: Maximum Clock Speed [MHz]
 Maxcoolingcapacity: Maximum cooling capacity
-Maxairthroughput: Max air throughput
-Maxwaterthroughput: Max water throughput
+Maxairthroughput: Max air throughput m³/h
+Maxwaterthroughput: Max water throughput l/h
 Totaloutputpower: Total Output Power [Watt]
 Capacity: Capacity [MByte]
 processors: Processors
@@ -81,7 +81,7 @@ power supplies: Power Supplies
 Debbcomponentsxml: DEBBComponents.xml
 Slotsx: Slot count horizontal [number]
 Slotsy: Slot count vertical [number]
-Hesize: HE [number]
+Hesize: Height [RU]
 Draft: Draft
 nospace: Not enough space..
 Ziparchive: ZIP Archive
