@@ -102,7 +102,7 @@ $(function()
 	});
 
 function updateComponents() {
-	$('.component').find('input, select, label').hide();
+	$('.component').find('input, select, label, .amountExtras').hide();
 	$('.component').each(function()
 	{
 		var id = getExactId($(this).find('div:first').attr('id')),
@@ -111,35 +111,35 @@ function updateComponents() {
 
 		if(type != TYPE_NOTHING && amount > 0)
 		{
-			$('#debb_configbundle_nodetype_components_' + id + '_amount').parent().find('input, select, label').show();
+			$('#debb_configbundle_nodetype_components_' + id + '_amount').parent().find('input, select, label, .amountExtras').show();
 		}
 		if(type == TYPE_MAINBOARD)
 		{
-			$('#debb_configbundle_nodetype_components_' + id + '_mainboard').parent().find('input, select, label').show();
+			$('#debb_configbundle_nodetype_components_' + id + '_mainboard').parent().find('input, select, label, .amountExtras').show();
 		}
 		else if(type == TYPE_PROCESSOR)
 		{
-			$('#debb_configbundle_nodetype_components_' + id + '_processor').parent().find('input, select, label').show();
+			$('#debb_configbundle_nodetype_components_' + id + '_processor').parent().find('input, select, label, .amountExtras').show();
 		}
 		else if(type == TYPE_COOLING_DEVICE)
 		{
-			$('#debb_configbundle_nodetype_components_' + id + '_coolingDevice').parent().find('input, select, label').show();
+			$('#debb_configbundle_nodetype_components_' + id + '_coolingDevice').parent().find('input, select, label, .amountExtras').show();
 		}
 		else if(type == TYPE_MEMORY)
 		{
-			$('#debb_configbundle_nodetype_components_' + id + '_memory').parent().find('input, select, label').show();
+			$('#debb_configbundle_nodetype_components_' + id + '_memory').parent().find('input, select, label, .amountExtras').show();
 		}
 		else if(type == TYPE_POWER_SUPPLY)
 		{
-			$('#debb_configbundle_nodetype_components_' + id + '_powersupply').parent().find('input, select, label').show();
+			$('#debb_configbundle_nodetype_components_' + id + '_powersupply').parent().find('input, select, label, .amountExtras').show();
 		}
 		else if(type == TYPE_STORAGE)
 		{
-			$('#debb_configbundle_nodetype_components_' + id + '_storage').parent().find('input, select, label').show();
+			$('#debb_configbundle_nodetype_components_' + id + '_storage').parent().find('input, select, label, .amountExtras').show();
 		}
 		if(amount < 1)
 		{
-			$('#debb_configbundle_nodetype_components_' + id).find('select').hide();
+			$('#debb_configbundle_nodetype_components_' + id).find('select, .amountExtras').hide();
 		}
 	});
 	$('.component select[id$="_amount"]').each(function()
@@ -159,6 +159,10 @@ function updateComponents() {
 		if($(this).parent().find('.amountExtras').length < 1)
 		{
 			$(this).parent().append('<div class="amountExtras"><a href="#" class="addAmount"><i class="icon-plus"></i></a> <a href="#" class="delAmount"><i class="icon-minus"></i></a></div>');
+		}
+		if($(this).val() < 1)
+		{
+			$(this).parent().find('.amountExtras').hide();
 		}
 	});
 };

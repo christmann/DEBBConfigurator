@@ -1,10 +1,7 @@
 var rackDragOpt = {
 	containment: '#rackContainer',
 	scroll: true,
-	snap: '.rackG',
-	snapMode: 'outer',
 	stack: '.rackG',
-	revert: 'invalid',
 	grid: [ 10, 10 ],
 	stop: function(event, ui) {
 		$(this).draggable('option', 'revert', 'invalid');
@@ -13,13 +10,7 @@ var rackDragOpt = {
 		ui.helper.find('#debb_configbundle_roomtype_racks_' + id + '_posy').val(parseInt(ui.helper.css('bottom')));
 	}
 },
-	rackDropOpt = {
-	greedy: true,
-	tolerance: 'touch',
-	drop: function(event, ui){
-		ui.draggable.draggable('option', 'revert', true);
-	}
-};
+	rackDropOpt = {};
 
 function setStyleOfRack(newRack)
 {

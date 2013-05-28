@@ -3,10 +3,9 @@
 
 {% block stylesheets %}
 	{% stylesheets filter='cssrewrite'
-		'bundles/debbconfig/css/jquery-ui.min.css'
-		'bundles/cimplupload/js/plupload/jquery.ui.plupload/css/jquery.ui.plupload.css'
+	'bundles/debbconfig/css/uploadify.css'
 	%}
-		<link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
+	<link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
 	{% endstylesheets %}
 	{{ parent() }}
 {% endblock %}
@@ -14,70 +13,68 @@
 {% block javascripts %}
 	{{ parent() }}
 	{% javascripts
-					'@DebbConfigBundle/Resources/public/js/jquery-ui.min.js'
-					'@DebbConfigBundle/Resources/public/js/node.js'
-					'@CIMPluploadBundle/Resources/public/js/plupload/plupload.full.js'
-					'@CIMPluploadBundle/Resources/public/js/plupload/jquery.ui.plupload/jquery.ui.plupload.js'
+	'@DebbConfigBundle/Resources/public/js/node.js'
+	'@DebbConfigBundle/Resources/public/js/jquery.uploadify.min.js'
 	%}
-		<script src="{{ asset_url }}" type="text/javascript"></script>
+	<script src="{{ asset_url }}" type="text/javascript"></script>
 	{% endjavascripts %}
 	<script type="text/javascript">
 		$(function() {
-			$("#upload_image").plupload({
-				runtimes            : 'gears,html5,flash,silverlight,browserplus',
-				flash_swf_url       : '{{ asset('bundles/cimplupload/js/plupload/plupload.flash.swf') }}',
-				silverlight_xap_url : '{{ asset('bundles/cimplupload/js/plupload/plupload.silverlight.xap') }}',
-				url                 : '{{ path('debb_config_default_upload') }}',
-				filters             : [{title : "{{ 'images' | e }}", extensions : "jpg,gif,png,bmp,jpeg"}],
-				init                : {
-					FileUploaded    : function(uploader, file, info)
+			$("#upload_image").uploadify({
+				height          : 20,
+				swf             : '{{ asset('bundles/debbconfig/swf/uploadify.swf') }}',
+				uploader        : '{{ path('debb_config_default_upload') }}',
+				width           : 160,
+				multi           : false,
+				fileTypeExts    : '*.jpg; *.png; *.jpeg; *.gif; *.bmp',
+				buttonText	    : '{{ 'upload image file' | trans | e }}',
+				onUploadSuccess : function(file, data, response)
+				{
+					var obj = jQuery.parseJSON(data);
+					if(obj.is_image == true)
 					{
-						var obj = jQuery.parseJSON(info.response);
-						if(obj.is_image == true)
-						{
-							$('#debb_configbundle_nodetype_image').val(obj.fileId);
-							$('.node_image').css('background-image', "url('" + obj.thumb + "')");
-						}
+						$('#debb_configbundle_nodetype_image').val(obj.fileId);
+						$('.node_image').css('background-image', "url('" + obj.thumb + "')");
 					}
 				}
 			});
-			$("#upload_vrml").plupload({
-				runtimes            : 'gears,html5,flash,silverlight,browserplus',
-				flash_swf_url       : '{{ asset('bundles/cimplupload/js/plupload/plupload.flash.swf') }}',
-				silverlight_xap_url : '{{ asset('bundles/cimplupload/js/plupload/plupload.silverlight.xap') }}',
-				url                 : '{{ path('debb_config_default_upload') }}',
-				filters             : [{title : "{{ 'vrml' | e }}", extensions : "wrl"}],
-				init                : {
-					FileUploaded    : function(uploader, file, info)
+			$("#upload_vrml").uploadify({
+				height          : 15,
+				swf             : '{{ asset('bundles/debbconfig/swf/uploadify.swf') }}',
+				uploader        : '{{ path('debb_config_default_upload') }}',
+				width           : 80,
+				multi           : false,
+				fileTypeExts    : '*.wrl',
+				buttonText	    : 'VRML',
+				onUploadSuccess : function(file, data, response)
+				{
+					var obj = jQuery.parseJSON(data);
+					$('#debb_configbundle_nodetype_vrmlFile').val(obj.fileId);
+					$('#vrmlFileName').html(file.name);
+					{# if(typeof(obj.dimension) != 'undefined')
 					{
-						var obj = jQuery.parseJSON(info.response);
-						$('#debb_configbundle_nodetype_vrmlFile').val(obj.fileId);
-						$('#vrmlFileName').html(file.name);
-						{# if(typeof(obj.dimension) != 'undefined')
-						{
-							$('#sizex').html(obj.dimension.sizex);
-							$('#debb_configbundle_nodetype_sizeX').val(obj.dimension.sizex);
-							$('#sizey').html(obj.dimension.sizey);
-							$('#debb_configbundle_nodetype_sizeY').val(obj.dimension.sizey);
-							$('#sizez').html(obj.dimension.sizez);
-							$('#debb_configbundle_nodetype_sizeZ').val(obj.dimension.sizez);
-						} #}
-					}
+						$('#sizex').html(obj.dimension.sizex);
+						$('#debb_configbundle_nodetype_sizeX').val(obj.dimension.sizex);
+						$('#sizey').html(obj.dimension.sizey);
+						$('#debb_configbundle_nodetype_sizeY').val(obj.dimension.sizey);
+						$('#sizez').html(obj.dimension.sizez);
+						$('#debb_configbundle_nodetype_sizeZ').val(obj.dimension.sizez);
+					} #}
 				}
 			});
-			$("#upload_stl").plupload({
-				runtimes            : 'gears,html5,flash,silverlight,browserplus',
-				flash_swf_url       : '{{ asset('bundles/cimplupload/js/plupload/plupload.flash.swf') }}',
-				silverlight_xap_url : '{{ asset('bundles/cimplupload/js/plupload/plupload.silverlight.xap') }}',
-				url                 : '{{ path('debb_config_default_upload') }}',
-				filters             : [{title : "{{ 'stl' | e }}", extensions : "stl"}],
-				init                : {
-					FileUploaded    : function(uploader, file, info)
-					{
-						var obj = jQuery.parseJSON(info.response);
-						$('#debb_configbundle_nodetype_stlFile').val(obj.fileId);
-						$('#stlFileName').html(file.name);
-					}
+			$("#upload_stl").uploadify({
+				height          : 15,
+				swf             : '{{ asset('bundles/debbconfig/swf/uploadify.swf') }}',
+				uploader        : '{{ path('debb_config_default_upload') }}',
+				width           : 80,
+				multi           : false,
+				fileTypeExts    : '*.stl',
+				buttonText	    : 'STL',
+				onUploadSuccess : function(file, data, response)
+				{
+					var obj = jQuery.parseJSON(data);
+					$('#debb_configbundle_nodetype_stlFile').val(obj.fileId);
+					$('#stlFileName').html(file.name);
 				}
 			});
 		});
