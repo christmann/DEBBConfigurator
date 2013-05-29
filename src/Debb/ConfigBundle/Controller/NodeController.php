@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Debb\ManagementBundle\Entity\Component;
 
 /**
+ * @author Patrick Bußmann <patrick.bussmann@christmann.info>
  * @Route("/{_locale}/node", requirements={"_locale" = "en|de"}, defaults={"_locale" = "en"})
  */
 class NodeController extends XMLController

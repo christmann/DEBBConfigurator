@@ -6,11 +6,22 @@ use Knp\Menu\FactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 
+/**
+ * Class MenuBuilder
+ * @package Debb\ConfigBundle\Menu
+ * @author Patrick Bußmann <patrick.bussmann@christmann.info>
+ */
 class MenuBuilder
 {
 
-	private $factory;
-	private $translator;
+    /**
+     * @var \Knp\Menu\FactoryInterface
+     */
+    private $factory;
+    /**
+     * @var \Symfony\Bundle\FrameworkBundle\Translation\Translator
+     */
+    private $translator;
 
 	/**
 	 * Our menu builder with translator and factoryinterface

@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Debb\ManagementBundle\Entity\NodeToNodegroup;
 
 /**
+ * @author Patrick Bußmann <patrick.bussmann@christmann.info>
  * @Route("/{_locale}/nodegroup", requirements={"_locale" = "en|de"}, defaults={"_locale" = "en"})
  */
 class NodeGroupController extends XMLController

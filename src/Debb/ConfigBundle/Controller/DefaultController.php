@@ -13,6 +13,7 @@ use \Symfony\Component\HttpFoundation\Response;
 use \Debb\ManagementBundle\Entity\Component;
 
 /**
+ * @author Patrick Bußmann <patrick.bussmann@christmann.info>
  * @Route("/{_locale}", requirements={"_locale" = "en|de"}, defaults={"_locale" = "en"})
  */
 class DefaultController extends Controller

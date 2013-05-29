@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Localdev\AdminBundle\Controller\CRUDController;
 
 /**
+ * @author Patrick Bußmann <patrick.bussmann@christmann.info>
  * @Route("/{_locale}/management/mainboard", requirements={"_locale" = "en|de"}, defaults={"_locale" = "en"})
  */
 class MainboardController extends CRUDController
@@ -17,12 +18,10 @@ class MainboardController extends CRUDController
 	 * @Route("/get/image/{id}")
 	 * @return \Symfony\Component\HttpFoundation\Response
 	 */
-    public function getImageAction()
+    public function getImageAction($id)
     {
 		$mainboard = $this->getEntity($id);
 
-		return $this->jsonResponse(array(
-//			'path' => $mainboard->getFile
-		));
+		return $this->jsonResponse(array());
     }
 }

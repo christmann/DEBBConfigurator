@@ -17,7 +17,6 @@ use Localdev\AdminBundle\Controller\CRUDController;
 
 /**
  * Contains default actions for xml generation of DEBBComponents or PLMXML
- *
  * @author Patrick Bußmann <patrick.bussmann@christmann.info>
  */
 abstract class XMLController extends CRUDController

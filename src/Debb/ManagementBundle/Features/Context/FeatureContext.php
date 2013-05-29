@@ -19,10 +19,15 @@ require_once 'PHPUnit/Framework/Assert/Functions.php';
 class FeatureContext extends BehatContext //MinkContext if you want to test web implements KernelAwareInterface
 {
 
-	private
-		$kernel;
-	private
-		$parameters;
+    /**
+     * @var
+     */
+    private $kernel;
+
+    /**
+     * @var array
+     */
+    private $parameters;
 
 	/**
 	 * Initializes context with parameters from behat.yml.

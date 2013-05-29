@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Debb\ManagementBundle\Entity\RackToRoom;
 
 /**
+ * @author Patrick Bußmann <patrick.bussmann@christmann.info>
  * @Route("/{_locale}/room", requirements={"_locale" = "en|de"}, defaults={"_locale" = "en"})
  */
 class RoomController extends XMLController
@@ -109,6 +110,13 @@ class RoomController extends XMLController
 		return true;
 	}
 
+	/**
+	 * Gets specific line
+	 *
+	 * @param $str
+	 * @param $line
+	 * @return string
+	 */
 	public function stringGetLine($str, $line)
 	{
 		$cache = explode("\n", $str);

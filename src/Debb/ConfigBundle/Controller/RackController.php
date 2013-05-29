@@ -9,6 +9,7 @@ use Debb\ManagementBundle\Entity\NodeToNodegroup;
 use Debb\ManagementBundle\Entity\NodegroupToRack;
 
 /**
+ * @author Patrick Bußmann <patrick.bussmann@christmann.info>
  * @Route("/{_locale}/rack", requirements={"_locale" = "en|de"}, defaults={"_locale" = "en"})
  */
 class RackController extends XMLController
@@ -124,7 +125,14 @@ class RackController extends XMLController
 		return true;
 	}
 
-	public function stringGetLine($str, $line)
+    /**
+     * Gets specific line
+     *
+     * @param $str
+     * @param $line
+     * @return string
+     */
+    public function stringGetLine($str, $line)
 	{
 		$cache = explode("\n", $str);
 		if($line < 0)

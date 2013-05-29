@@ -66,7 +66,8 @@ class Node extends Dimensions
 	/**
 	 * Add components
 	 *
-	 * @param \Debb\ManagementBundle\Entity\Component $components
+	 * @param \Debb\ManagementBundle\Entity\Component $component
+	 * @internal param \Debb\ManagementBundle\Entity\Component $components
 	 * @return Node
 	 */
 	public function addComponent(\Debb\ManagementBundle\Entity\Component $component)

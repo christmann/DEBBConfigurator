@@ -9,8 +9,17 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 use Debb\ManagementBundle\Form\ComponentType;
 
+/**
+ * Class NodeType
+ * @package Debb\ConfigBundle\Form
+ * @author Patrick Bußmann <patrick.bussmann@christmann.info>
+ */
 class NodeType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -38,6 +47,9 @@ class NodeType extends AbstractType
         ;
     }
 
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
@@ -45,6 +57,9 @@ class NodeType extends AbstractType
         ));
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'debb_configbundle_nodetype';

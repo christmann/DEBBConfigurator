@@ -6,6 +6,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * {@inheritdoc}
+ * @author Patrick Bußmann <patrick.bussmann@christmann.info>
  */
 class Extension extends \Twig_Extension
 {

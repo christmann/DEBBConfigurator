@@ -6,9 +6,18 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+/**
+ * Class ComponentType
+ * @package Debb\ManagementBundle\Form
+ * @author Patrick Bußmann <patrick.bussmann@christmann.info>
+ */
 class ComponentType extends AbstractType
 {
-	public function buildForm(FormBuilderInterface $builder, array $options)
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder
 			->add('type', null, array('required' => true))
@@ -37,14 +46,20 @@ class ComponentType extends AbstractType
 		return $res;
 	}
 
-	public function setDefaultOptions(OptionsResolverInterface $resolver)
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
 	{
 		$resolver->setDefaults(array(
 			'data_class' => 'Debb\ManagementBundle\Entity\Component'
 		));
 	}
 
-	public function getName()
+    /**
+     * @return string
+     */
+    public function getName()
 	{
 		return 'debb_managementbundle_componenttype';
 	}

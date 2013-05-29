@@ -9,6 +9,7 @@ use \Debb\ConfigBundle\Entity\Node;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @author Patrick Bußmann <patrick.bussmann@christmann.info>
  * @Route("/{_locale}/management/nodegroupdraft", requirements={"_locale" = "en|de"}, defaults={"_locale" = "en"})
  */
 class NodeGroupDraftController extends CRUDController

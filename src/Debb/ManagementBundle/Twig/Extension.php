@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormView;
 
 /**
  * {@inheritdoc}
+ * @author Patrick Bußmann <patrick.bussmann@christmann.info>
  */
 class Extension extends \Twig_Extension
 {
