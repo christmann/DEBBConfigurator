@@ -6,8 +6,8 @@ debb_management.coolingdevice.plural: Kühler
 debb_management.coolingdevice.singular: Kühler
 debb_management.memory.plural: Speicher
 debb_management.memory.singular: Speicher
-debb_management.powersupply.plural: Stromversorgungen
-debb_management.powersupply.singular: Stromversorgung
+debb_management.powersupply.plural: Netzteile
+debb_management.powersupply.singular: Netzteil
 debb_management.storage.plural: HDDs
 debb_management.storage.singular: HDD
 debb_management.nodegroupdraft.plural: Gehäuse

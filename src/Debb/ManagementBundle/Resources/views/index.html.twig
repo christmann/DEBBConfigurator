@@ -36,7 +36,7 @@
 											{% block tbuttons_base %}
 												{% spaceless %}
 													<a href="{{ path(localdev_admin_route("_form"), {"id":item.id}) }}" class="btn">
-														<span rel="tooltip" data-original-title="{{ 'edit' | trans() }}"><i class="icon-edit"></i></span>
+														<span rel="tooltip" data-original-title="{{ 'edit' | trans }}"><i class="icon-edit"></i></span>
 													</a>
 													{% if exportasxml is defined and route_exists(localdev_admin_route("_asxml")) %}
 														<a target="_blank" href="{{ path(localdev_admin_route("_asxml"), {"id": item.id}) }}" class="btn">
@@ -50,7 +50,7 @@
 													{% endif %}
 													<a class="btn btn-danger" data-toggle="modal"
 													   href="#delete{{ item.id }}">
-														<span rel="tooltip" data-original-title="{{ 'delete' | trans() }}"><i class="icon-remove icon-white"></i></span>
+														<span rel="tooltip" data-original-title="{{ 'delete' | trans }}"><i class="icon-remove icon-white"></i></span>
 													</a>
 												{% endspaceless %}
 											{% endblock %}

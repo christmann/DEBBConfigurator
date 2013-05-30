@@ -18,23 +18,12 @@
 	{{ parent() }}
 	{% javascripts
 		'@DebbConfigBundle/Resources/public/js/jquery-ui.min.js'
-		'@DebbConfigBundle/Resources/public/js/zui53.js'
 		'@DebbConfigBundle/Resources/public/js/room.js'
 	%}
 		<script src="{{ asset_url }}" type="text/javascript"></script>
 	{% endjavascripts %}
 	<script type="text/javascript">
 		var roomId = {{ form.vars.data.id | default(0) }};
-	</script>
-	<script>
-		function initZUI() {
-			console.log(ZUI53);
-			var zui = new ZUI53.Viewport( document.getElementById('rackZoomContainer') );
-			zui.addSurface( new ZUI53.Surfaces.CSS( document.getElementById('rackContainer') ) );
-			var pan_tool = new ZUI53.Tools.Pan(zui);
-			zui.toolset.add( pan_tool );
-			pan_tool.attach()
-		}
 	</script>
 {% endblock %}
 
@@ -87,9 +76,8 @@
 		{% endfor %}
 	</div>
 	<div class="clear"></div>
-	<div style="height: 20px; width: 98px; border: 1px solid #777; text-align: center; vertical-align: middle; margin-top: 5px; margin-left: 3px;"><i class="icon-arrow-left"></i> Scale 1m <i class="icon-arrow-right"></i></div>
+	<div style="height: 20px; width: 98px; border: 1px solid #777; text-align: center; vertical-align: middle; margin-top: 5px; margin-left: 3px;"><i class="icon-arrow-left"></i> {{ 'Scale' | trans }} 1m <i class="icon-arrow-right"></i></div>
 
 	{{ form_widget(form._token) }}
 	<div class="clear"></div>
-	<script type="text/javascript">initZUI();</script>
 {% endblock %}

@@ -10,6 +10,11 @@ delete.%what%: delete %what%
 select.%what%: Select %what%
 save.%what%: save %what%
 edit.%what%: edit %what%
+edit: Edit
+delete: Delete
+add: Add
+select: Select
+save: Save
 choose.%person%.%what%: choose %person% %what%
 download.%what%.file: download %what%
 node: node
@@ -51,6 +56,7 @@ empty: Empty
 import.%name%: Import %name%
 Tdp: TDP [Watt]
 RackSize: Rack Size [RU]
+upload image file: Upload image
 
 # form fields which not defined above
 Product: Product
@@ -85,7 +91,7 @@ Hesize: Height [RU]
 Draft: Draft
 nospace: Not enough space..
 Ziparchive: ZIP Archive
-archive: Archiv
+archive: Archivedi
 Scale: Scale
 Node type: Node type
 

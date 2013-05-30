@@ -10,6 +10,11 @@ delete.%what%: %what% löschen
 select.%what%: %what% auswählen
 save.%what%: %what% speichern
 edit.%what%: %what% bearbeiten
+edit: Bearbeiten
+delete: Löschen
+add: Hinzufügen
+select: Auswählen
+save: Speichern
 choose.%person%.%what%: Wähle %person% %what%
 download.%what%.file: %what% herunterladen
 node: Knoten
@@ -24,7 +29,7 @@ Memory: Speicher
 Powersupply: Netzteil
 Storage: HDD
 Amount: Anzahl
-Chassis: Gestell
+Chassis: Gehäuse
 delete.last.entry: Sicher, dass Sie den letzten Eintrag dieser Art löschen wollen?
 only.one.of.this: Sie können maximal nur eine Auswahl dieses Typs haben!
 SizeX: Breite [m]
@@ -55,6 +60,7 @@ Front: Vorne
 Top: Oben
 Tdp: TDP [Watt]
 RackSize: Rack Größe [RU]
+upload image file: Bild hochladen
 
 # form fields which not defined above
 Product: Produkt
