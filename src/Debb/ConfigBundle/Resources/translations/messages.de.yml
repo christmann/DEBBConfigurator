@@ -88,5 +88,11 @@ Draft: Entwurf
 View:: Ansicht:
 nospace: Nicht genügend Platz..
 Ziparchive: ZIP Archiv
+archive: Archiv
 Scale: Maßstab
 Node type: Knotentyp
+
+# help
+help:
+  zip: |
+    Sie sollten ein Zip Archiv mit der oben genannten Struktur hochladen.
