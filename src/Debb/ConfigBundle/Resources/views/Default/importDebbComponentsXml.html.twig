@@ -26,11 +26,6 @@
 {% endblock %}
 
 {% block content %}
-	<div class="row-fluid">
-		<div class="span12" style="text-align: center;">
-			{{ form_widget(form) }}
-		</div>
-	</div>
     <div class="row-fluid">
         <div class="accordion">
             <h3>{{ 'Zip Structure' | trans }}</h3>
@@ -51,6 +46,11 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Node_Example_2.stl<br /><br /><br />
                 {{ 'help.zip' | trans | nl2br | raw }}
             </div>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span12" style="text-align: center;">
+            {{ form_widget(form) }}
         </div>
     </div>
 {% endblock %}

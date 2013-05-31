@@ -740,6 +740,30 @@ label {
 	text-align: center;
 	width: 146px;
 	background-color: #dddddd;
+    position: relative;
+}
+
+#rackScale {
+    height: 20px;
+    width: 98px;
+    border: 1px solid #777;
+    text-align: center;
+    vertical-align: middle;
+    margin-top: 5px;
+    margin-left: 3px;
+    position: relative;
+}
+
+#rackScale .icon-arrow-left {
+    position: absolute;
+    left: 0;
+    top: 2px;
+}
+
+#rackScale .icon-arrow-right {
+    position: absolute;
+    right: 0;
+    top: 2px;
 }
 
 .eAdopt {

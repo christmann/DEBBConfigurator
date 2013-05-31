@@ -57,6 +57,7 @@ import.%name%: Import %name%
 Tdp: TDP [Watt]
 RackSize: Rack Size [RU]
 upload image file: Upload image
+size: Size
 
 # form fields which not defined above
 Product: Product
@@ -74,8 +75,8 @@ Component: Component
 Maxpower: Maximum Power Usage [Watt]
 Maxclockspeed: Maximum Clock Speed [MHz]
 Maxcoolingcapacity: Maximum cooling capacity
-Maxairthroughput: Max air throughput m³/h
-Maxwaterthroughput: Max water throughput l/h
+Maxairthroughput: Max air throughput [m³/h]
+Maxwaterthroughput: Max water throughput [l/h]
 Totaloutputpower: Total Output Power [Watt]
 Capacity: Capacity [MByte]
 processors: Processors

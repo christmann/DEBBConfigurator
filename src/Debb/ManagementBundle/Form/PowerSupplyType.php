@@ -23,8 +23,7 @@ class PowerSupplyType extends AbstractType
             ->add('manufacturer')
             ->add('product', null, array('attr' => array('class' => 'noBreakAfterThis')))
             ->add('model')
-            ->add('maxPower', null, array('attr' => array('class' => 'noBreakAfterThis')))
-            ->add('efficiency', 'text')
+            ->add('efficiency', 'text', array('attr' => array('class' => 'noBreakAfterThis')))
             ->add('totalOutputPower')
         ;
     }

@@ -54,6 +54,7 @@
 	{{ form_widget(form.sizeY, {attr: {'style': 'display: none;'}}) }}
 
 	<div>
+        {{ 'add.%what%' | trans({'%what%': 'rack' | trans}) }}:
 		<ul class="hoz">
 			{% for rack in racks %}
 				<li class="hoz ui-state-default" style="float: left;"><div class="draftRack" rackId="{{ rack.id }}" rackX="{{ rack.fullz }}" rackY="{{ rack.fully }}">{{ rack }}</div></li>
@@ -64,7 +65,7 @@
 
 	{% if form.vars.data.sizeX|default(0) < 1 %}{% set rackSizeX = 900 %}{% else %}{% set rackSizeX = form.vars.data.sizeX %}{% endif %}
 	{% if form.vars.data.sizeY|default(0) < 1 %}{% set rackSizeY = 700 %}{% else %}{% set rackSizeY = form.vars.data.sizeY %}{% endif %}
-	<div id="rackSize"><span id="rackSizeX">{{ (rackSizeX / 100.0) | number_format(2, '.', '') }}</span>m x <span id="rackSizeY">{{ (rackSizeY / 100.0) | number_format(2, '.', '') }}</span>m</div>
+	<div id="rackSize">{{ 'size' | trans }}: <span id="rackSizeX">{{ (rackSizeX / 100.0) | number_format(2, '.', '') }}</span>m x <span id="rackSizeY">{{ (rackSizeY / 100.0) | number_format(2, '.', '') }}</span>m</div>
 	<div id="rackContainer" style="position: relative; width: {{ rackSizeX }}px; height: {{ rackSizeY }}px; border: 2px solid #000; background: url('{{ asset('bundles/debbconfig/img/room-grid.png') }}') repeat scroll 1px 1px transparent;" data-prototype="{{ form_row(form.racks.vars.prototype) | escape }}">
 		{% for rack in form.racks %}
 			<div class="rackG" posx="{{ rack.vars.data.posx }}" posy="{{ rack.vars.data.posy }}"
@@ -76,7 +77,7 @@
 		{% endfor %}
 	</div>
 	<div class="clear"></div>
-	<div style="height: 20px; width: 98px; border: 1px solid #777; text-align: center; vertical-align: middle; margin-top: 5px; margin-left: 3px;"><i class="icon-arrow-left"></i> {{ 'Scale' | trans }} 1m <i class="icon-arrow-right"></i></div>
+	<div id="rackScale"><i class="icon-arrow-left"></i> {{ 'Scale' | trans }} 1m <i class="icon-arrow-right"></i></div>
 
 	{{ form_widget(form._token) }}
 	<div class="clear"></div>

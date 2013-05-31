@@ -55,6 +55,26 @@ function setStyleOfRack(newRack)
 	}
 }
 
+function setMinimalRoomSize()
+{
+    var minX = 10;
+        minY = 10;
+    $('.rackG').each(function()
+    {
+        var thisX = $(this).position().left + $(this).width() + parseInt($(this).css('borderLeftWidth')),
+            thisY = $(this).position().top + $(this).height() + parseInt($(this).css('borderTopWidth'));
+        if(thisX > minX)
+        {
+            minX = thisX;
+        }
+        if(thisY > minY)
+        {
+            minY = thisY;
+        }
+    });
+	$('#rackContainer').resizable('option', 'minHeight', minY).resizable('option', 'minWidth', minX);
+}
+
 $(function()
 {
 	$('.draftRack').on('click', setStyleOfRack);
@@ -68,7 +88,10 @@ $(function()
 		resize: function ( event, ui ) {
 			$('#rackSizeX').html((parseInt(ui.size.width) / 100).toFixed(2));
 			$('#rackSizeY').html((parseInt(ui.size.height) / 100).toFixed(2));
-		}
+		},
+        start: function ( event, ui ) {
+            setMinimalRoomSize();
+        }
 	}).droppable({tolerance: 'fit'});
 	$(document).on('click', '.removeRack', function(e)
 	{
@@ -78,4 +101,5 @@ $(function()
 	// a single rack which we could move in our room
 	$('.rackG').draggable(rackDragOpt).droppable(rackDropOpt);
 	$('.rackG').each(setStyleOfRack);
+    $('.rackG').each(function() { $(this).css('top', ($(this).offset().top - $(this).offsetParent().offset().top - 2)); });
 });

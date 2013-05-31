@@ -60,6 +60,7 @@ Front: Vorne
 Top: Oben
 Tdp: TDP [Watt]
 RackSize: Rack Größe [RU]
+size: Größe
 upload image file: Bild hochladen
 
 # form fields which not defined above
@@ -78,8 +79,8 @@ Component: Komponente
 Maxpower: maximale Leistung [Watt]
 Maxclockspeed: Maximale Taktrate [MHz]
 Maxcoolingcapacity: Maximale Kühlleistung
-Maxairthroughput: Maximaler Luftdurchsatz m³/h
-Maxwaterthroughput: Maximaler Wasserdurchsatz l/h
+Maxairthroughput: Maximaler Luftdurchsatz [m³/h]
+Maxwaterthroughput: Maximaler Wasserdurchsatz [l/h]
 Totaloutputpower: Gesamt-Ausgangsleistung [Watt]
 Capacity: Kapazität [MByte]
 processors: Prozessoren

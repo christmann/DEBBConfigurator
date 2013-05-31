@@ -16,13 +16,6 @@ class PowerSupply extends Base
 	/**
 	 * @var float
 	 *
-	 * @ORM\Column(name="MaxPower", type="float", nullable=true)
-	 */
-	private $maxPower;
-
-	/**
-	 * @var float
-	 *
 	 * @ORM\Column(name="TotalOutputPower", type="decimal", nullable=true)
 	 */
 	private $totalOutputPower;
@@ -33,29 +26,6 @@ class PowerSupply extends Base
 	 * @ORM\Column(name="Efficiency", type="integer", nullable=true)
 	 */
 	private $efficiency;
-
-	/**
-	 * Set maxPower
-	 *
-	 * @param float $maxPower
-	 * @return PowerSupply
-	 */
-	public function setMaxPower($maxPower)
-	{
-		$this->maxPower = $maxPower;
-
-		return $this;
-	}
-
-	/**
-	 * Get maxPower
-	 *
-	 * @return float 
-	 */
-	public function getMaxPower()
-	{
-		return $this->maxPower;
-	}
 
 	/**
 	 * Set totalOutputPower
@@ -111,10 +81,6 @@ class PowerSupply extends Base
 	public function getDebbXmlArray()
 	{
 		$array = parent::getDebbXmlArray();
-		if ($this->getMaxPower() != null)
-		{
-			$array['MaxPower'] = $this->getMaxPower();
-		}
 		if ($this->getTotalOutputPower() != null)
 		{
 			$array['TotalOutputPower'] = $this->getTotalOutputPower();
