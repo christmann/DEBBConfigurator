@@ -21,22 +21,6 @@ $(function () {
 		}
 		updateNodes();
 	}).change();
-	$('#debb_managementbundle_nodegroupdrafttype_frontView').change(function()
-	{
-		var obj = $('#debb_managementbundle_nodegroupdrafttype_heSize');
-		obj.prop('disabled', parseInt($(this).val()) == 1);
-		if(parseInt($(this).val()) == 1)
-		{
-			obj.val($('#debb_managementbundle_nodegroupdrafttype_slotsY').val());
-		}
-	}).change();
-	$('#debb_managementbundle_nodegroupdrafttype_slotsY').change(function()
-	{
-		if(parseInt($('#debb_managementbundle_nodegroupdrafttype_frontView').val()) == 1)
-		{
-			$('#debb_managementbundle_nodegroupdrafttype_heSize').val($(this).val());
-		}
-	});
 	/* works with input fields and select fields at the moment */
 	$(document).on('keyup change', '[refto!=""]', function()
 	{
