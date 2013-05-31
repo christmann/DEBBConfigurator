@@ -101,5 +101,5 @@ $(function()
 	// a single rack which we could move in our room
 	$('.rackG').draggable(rackDragOpt).droppable(rackDropOpt);
 	$('.rackG').each(setStyleOfRack);
-    $('.rackG').each(function() { $(this).css('top', ($(this).offset().top - $(this).offsetParent().offset().top - 2)); });
+    $('.rackG').each(function() { $(this).css('top', $(this).position().top + parseInt($(this).css('borderTopWidth'))); });
 });

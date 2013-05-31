@@ -101,7 +101,7 @@ class RackToRoom extends Connector
 		{
 			$posX = 0;
 		}
-		$this->posX = $posX;
+		$this->posX = round($posX / 10) * 10;
 
 		return $this;
 	}
@@ -128,7 +128,7 @@ class RackToRoom extends Connector
 		{
 			$posY = 0;
 		}
-		$this->posY = $posY;
+		$this->posY = round($posY / 10) * 10;
 
 		return $this;
 	}
