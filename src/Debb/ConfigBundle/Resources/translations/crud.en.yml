@@ -1,7 +1,7 @@
 debb_config.node.plural: node
 debb_config.node.singular: node
-debb_config.nodegroup.plural: Node Groups
-debb_config.nodegroup.singular: Node Group
+debb_config.nodegroup.plural: Node groups
+debb_config.nodegroup.singular: Node group
 debb_config.rack.plural: Racks
 debb_config.rack.singular: Rack
 debb_config.room.plural: Rooms

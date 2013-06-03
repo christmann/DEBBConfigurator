@@ -1,15 +1,15 @@
 debb_management.processor.plural: Processors
-debb_management.processor.singular: Processor
+debb_management.processor.singular: processor
 debb_management.mainboard.plural: Mainboards
-debb_management.mainboard.singular: Mainboard
-debb_management.coolingdevice.plural: Cooling Device
-debb_management.coolingdevice.singular: Cooling Device
-debb_management.memory.plural: Memory
-debb_management.memory.singular: Memory
-debb_management.powersupply.plural: Power Supply
-debb_management.powersupply.singular: Power Supply
+debb_management.mainboard.singular: mainboard
+debb_management.coolingdevice.plural: Cooling devices
+debb_management.coolingdevice.singular: cooling device
+debb_management.memory.plural: Memories
+debb_management.memory.singular: memory
+debb_management.powersupply.plural: Power supplies
+debb_management.powersupply.singular: power supply
 debb_management.storage.plural: HDDs
 debb_management.storage.singular: HDD
 debb_management.nodegroupdraft.plural: Chassis
-debb_management.nodegroupdraft.singular: Chassis
+debb_management.nodegroupdraft.singular: chassi
 localdev_admin.actions.create: create %name%

@@ -88,8 +88,8 @@ mainboards: Mainboards
 memory: Speicher
 Efficiency: Typische Effizienz [%]
 Debbcomponentsxml: DEBBComponents.xml
-Slotsx: Slots Horizontal [Anzahl]
-Slotsy: Slots Vertikal [Anzahl]
+Slotsx: Slots Horizontal
+Slotsy: Slots Vertikal
 Hesize: Höhe [RU]
 Draft: Entwurf
 View:: Ansicht:

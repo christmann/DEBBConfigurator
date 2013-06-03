@@ -3,6 +3,7 @@
 namespace Debb\ManagementBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Base entity for manufacturer, product and model
@@ -31,7 +32,10 @@ class Base
 	/**
 	 * @var string
 	 *
+	 *                                                         important(!)
 	 * @ORM\Column(name="product", type="string", length=255, nullable=true)
+	 *
+	 * @Assert\NotNull()
 	 */
 	private $product;
 

@@ -51,13 +51,13 @@ class MenuBuilder
 			'linkAttributes' => array('onclick' => '$(this).next().toggle(); return false;'),
 			'attributes' => array('class' => 'zero first current')
 		));
-		$management->addChild($this->translateIt('Processor'), array('route' => 'debb_management_processor_index'));
-		$management->addChild($this->translateIt('Mainboard'), array('route' => 'debb_management_mainboard_index'));
-		$management->addChild($this->translateIt('Coolingdevice'), array('route' => 'debb_management_coolingdevice_index'));
-		$management->addChild($this->translateIt('Memory'), array('route' => 'debb_management_memory_index'));
-		$management->addChild($this->translateIt('Powersupply'), array('route' => 'debb_management_powersupply_index'));
-		$management->addChild($this->translateIt('Storage'), array('route' => 'debb_management_storage_index'));
-		$management->addChild($this->translateIt('Chassis'), array('route' => 'debb_management_nodegroupdraft_index'));
+		$management->addChild($this->translateIt('debb_management.processor.plural', array(), 'crud'), array('route' => 'debb_management_processor_index'));
+		$management->addChild($this->translateIt('debb_management.mainboard.plural', array(), 'crud'), array('route' => 'debb_management_mainboard_index'));
+		$management->addChild($this->translateIt('debb_management.coolingdevice.plural', array(), 'crud'), array('route' => 'debb_management_coolingdevice_index'));
+		$management->addChild($this->translateIt('debb_management.memory.plural', array(), 'crud'), array('route' => 'debb_management_memory_index'));
+		$management->addChild($this->translateIt('debb_management.powersupply.plural', array(), 'crud'), array('route' => 'debb_management_powersupply_index'));
+		$management->addChild($this->translateIt('debb_management.storage.plural', array(), 'crud'), array('route' => 'debb_management_storage_index'));
+		$management->addChild($this->translateIt('debb_management.nodegroupdraft.plural', array(), 'crud'), array('route' => 'debb_management_nodegroupdraft_index'));
 
 		$menu->addChild($this->translateIt('node'), array(
 			'route' => 'debb_config_node_index',
@@ -94,7 +94,7 @@ class MenuBuilder
 	 * @param boolean $complete should we translate the whole $options?
 	 * @return string the translated result
 	 */
-	private function translateIt($path, $options = array(), $complete = true)
+	private function translateIt($path, $options = array(), $domain = 'messages', $complete = true)
 	{
 		if ($complete && count($options) > 0)
 		{
@@ -105,7 +105,7 @@ class MenuBuilder
 			}
 			$options = $optionsNew;
 		}
-		return $this->translator->trans($path, $options);
+		return $this->translator->trans($path, $options, $domain);
 	}
 
 }

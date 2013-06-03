@@ -52,7 +52,7 @@
 {% endblock %}
 
 {% macro typspec(nodetypspecs, selectedValue, name, nodeContainer) %}
-	{% if nodeContainer is null or nodeContainer == true %}<div class="node" style="height: 50px; width: 50px; padding: 10px; margin: 0px;">{% endif %}
+	{% if nodeContainer is null or nodeContainer == true %}<div class="node" style="height: 31px; width: 50px; padding: 10px; margin: 0px;">{% endif %}
 		<select name="typspec[{{ name | default('__name__') }}]" id="debb_managementbundle_nodegroupdrafttype_typspec_{{ name | default('__name__') }}" style="margin-left: -7px; width: 63px;">
 			{% for key, value in nodetypspecs|default({}) %}
 				<option value="{{ key }}"{% if selectedValue is defined and selectedValue is not null and selectedValue == key %} selected="selected"{% endif %}>{{ value | trans }}</option>

@@ -24,38 +24,38 @@ rack: Rack
 management: Management
 Processor: Processor
 Mainboard: Mainboard
-Coolingdevice: Cooling Device
+Coolingdevice: Cooling device
 Memory: Memory
-Powersupply: Power Supplies
-Storage: HDDs
+Powersupply: Power supply
+Storage: HDD
 Amount: Amount
 Chassis: Chassis
 delete.last.entry: Sure? You want to delete the last entry of this kind!
 only.one.of.this: You can have a maximum of only a selection of this type!
-SizeX: width [m]
-SizeY: height [m]
-SizeZ: depth [m]
-SpaceTop: gap top [m]
-SpaceLeft: gap left [m]
-SpaceRight: gap right [m]
-SpaceBottom: gap bottom [m]
+SizeX: Width [m]
+SizeY: Height [m]
+SizeZ: Depth [m]
+SpaceTop: Gap top [m]
+SpaceLeft: Gap left [m]
+SpaceRight: Gap right [m]
+SpaceBottom: Gap bottom [m]
 adopt: Adopt
 your: your
 yours: your
 free rack units: Free Rack Units
 selected rack unit: Selected Rack Unit
 none: none
-component.0: unknown
+component.0: Unknown
 component.1: Mainboard
 component.2: Processor
 component.3: Cooler
 component.4: Memory
-component.5: power supplies
-component.6: HDDs
+component.5: Power supply
+component.6: HDD
 empty: Empty
 import.%name%: Import %name%
 Tdp: TDP [Watt]
-RackSize: Rack Size [RU]
+RackSize: Rack size [RU]
 upload image file: Upload image
 size: Size
 
@@ -69,30 +69,30 @@ Cores: Cores
 Maxfrequency: Max frequency [MHz]
 Image: Image
 Description: Description
-Socket: Socket Type
+Socket: Socket type
 Connections: Connections
 Component: Component
-Maxpower: Maximum Power Usage [Watt]
-Maxclockspeed: Maximum Clock Speed [MHz]
+Maxpower: Maximum power usage [Watt]
+Maxclockspeed: Maximum clock speed [MHz]
 Maxcoolingcapacity: Maximum cooling capacity
 Maxairthroughput: Max air throughput [m³/h]
 Maxwaterthroughput: Max water throughput [l/h]
-Totaloutputpower: Total Output Power [Watt]
+Totaloutputpower: Total output power [Watt]
 Capacity: Capacity [MByte]
 processors: Processors
 mainboards: Mainboards
 memory: Memory
-power supply: Power Supply
-Efficiency: Typical Efficiency [%]
-power supplies: Power Supplies
+power supply: Power supply
+Efficiency: Typical efficiency [%]
+power supplies: Power supplies
 Debbcomponentsxml: DEBBComponents.xml
-Slotsx: Slot count horizontal [number]
-Slotsy: Slot count vertical [number]
+Slotsx: Slot count horizontal
+Slotsy: Slot count vertical
 Hesize: Height [RU]
 Draft: Draft
 nospace: Not enough space..
-Ziparchive: ZIP Archive
-archive: Archivedi
+Ziparchive: ZIP archive
+archive: Archive
 Scale: Scale
 Node type: Node type
 

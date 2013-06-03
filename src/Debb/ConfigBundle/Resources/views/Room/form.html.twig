@@ -11,6 +11,7 @@
 	<style>
 		ul.hoz { list-style-type: none; margin: 0; padding: 0; margin-bottom: 10px; }
 		li.hoz { margin: 5px; padding: 5px; width: 150px; }
+        .eDraftRack { float: left; cursor: pointer; }
 	</style>
 {% endblock %}
 
@@ -57,7 +58,7 @@
         {{ 'add.%what%' | trans({'%what%': 'rack' | trans}) }}:
 		<ul class="hoz">
 			{% for rack in racks %}
-				<li class="hoz ui-state-default" style="float: left;"><div class="draftRack" rackId="{{ rack.id }}" rackX="{{ rack.fullz }}" rackY="{{ rack.fully }}">{{ rack }}</div></li>
+				<li class="hoz ui-state-default eDraftRack" style="margin-left: 0px; margin-right: 10px;"><div class="draftRack" rackId="{{ rack.id }}" rackX="{{ rack.fullz }}" rackY="{{ rack.fully }}">{{ rack }}</div></li>
 			{% endfor %}
 		</ul>
 	</div>
