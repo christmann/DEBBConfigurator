@@ -40,7 +40,7 @@ class NodeType extends AbstractType
 				'by_reference' => false,
 				'required' => false,
 			))
-            ->add('image', 'hidden', array('required' => false))
+            ->add('image', 'plupload', array('required' => false))
             ->add('vrmlFile', 'hidden', array('required' => false))
             ->add('stlFile', 'hidden', array('required' => false))
 			->add('type', 'choice', array('choices' => Node::getTypes(), 'required' => true, 'empty_value' => false))
