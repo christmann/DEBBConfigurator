@@ -42,41 +42,42 @@
 	{% endif %}
 
 	<div class="clear"></div>
+</div>
 
-	<div id="config-menu">
-		{% block menu %}
-			{{ knp_menu_render('main') }}
-		{% endblock %}
-	</div>
+<div class="container">
+    <div class="row-fluid">
+        <div class="span3" style="margin-left: -15px;">
+            <div id="config-menu">
+                {% block menu %}
+                    {{ knp_menu_render('main') }}
+                {% endblock %}
+            </div>
+        </div>
+        <div class="span9" style="margin-left: -53px;">
+            {% block form_header %}{% endblock %}
+            <div id="content">
+                {% block flashes %}
+                    {% for key, flashes in app.session.flashbag %}
+                        <div class="{{ key }}">
+                            {% for flash in flashes %}
+                                {% if flash | trans({}, 'crud') != flash %}
+                                    {{ flash | trans({}, 'crud') }}
+                                {% else %}
+                                    {{ flash | trans({}) }}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                {% endblock %}
+                {% block body %}{% block content %}{% endblock %}{% endblock %}
+                <div class="buttonbar pull-right">
+                    {% block buttonbar %}{% endblock %}
+                </div>
+            </div>
 
-	<div style="float: left;">
-		{% block form_header %}{% endblock %}
-		<div id="content">
-			{% block flashes %}
-				{% for key, flashes in app.session.flashbag %}
-					<div class="{{ key }}">
-						{% for flash in flashes %}
-							{% if flash | trans({}, 'crud') != flash %}
-								{{ flash | trans({}, 'crud') }}
-							{% else %}
-								{{ flash | trans({}) }}
-							{% endif %}
-						{% endfor %}
-					</div>
-				{% endfor %}
-			{% endblock %}
-			{% block body %}{% block content %}{% endblock %}{% endblock %}
-		</div>
-
-		<div class="buttonbar pull-right">
-			{# Example Button: <button class="button">Test</button> --- extra class: buttonBlue / buttonWhite#}
-			{% block buttonbar %}{% endblock %}
-		</div>
-		{% block form_footer %}{% endblock %}
-	</div>
-
-	<div class="clear"></div>
-
+            {% block form_footer %}{% endblock %}
+        </div>
+    </div>
 </div>
 </body>
 </html>

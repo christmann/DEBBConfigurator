@@ -52,6 +52,7 @@ $(function () {
 			$('#nodegroup').css('background-image', 'url("' + obj.attr('image') + '")');
 			$('#nodegroup').width(parseInt(obj.attr('slotsx')) * 141);
 			$('#nodegroup').height(parseInt(obj.attr('slotsy')) * 89);
+			$('#content').width(parseInt($('#nodegroup').width()) + 559);
 			var nodes = parseInt(obj.attr('slotsx')) * parseInt(obj.attr('slotsy')),
 				nodeArr = $('#nodegroup').find('.node');
 			if (nodeArr.length > nodes) {
@@ -77,6 +78,7 @@ $(function () {
 		$('#node-chooser').val(0);
 		$('#node-chooser').change();
 		$('.adopt').hide();
+        $('#node-chooser option').prop('disabled', false).css('color', '#555');
 		updateNodes();
 		e.preventDefault();
 	});

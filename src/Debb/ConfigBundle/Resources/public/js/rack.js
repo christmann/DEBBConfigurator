@@ -166,7 +166,7 @@ function updateRack()
 	var freeUnits = 0;
 	$('[id$="_nodegroup"]').each(function()
 	{
-		if($(this).val() == null && $(this).val() < 1)
+		if($(this).val() == null || $(this).val() < 1 || $(this).val() == '')
 		{
 			freeUnits++;
 			if($(this).parents('.nodegroup:first').hasClass('nodegroup-selected'))
