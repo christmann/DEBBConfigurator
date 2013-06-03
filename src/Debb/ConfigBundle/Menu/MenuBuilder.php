@@ -59,22 +59,22 @@ class MenuBuilder
 		$management->addChild($this->translateIt('debb_management.storage.plural', array(), 'crud'), array('route' => 'debb_management_storage_index'));
 		$management->addChild($this->translateIt('debb_management.nodegroupdraft.plural', array(), 'crud'), array('route' => 'debb_management_nodegroupdraft_index'));
 
-		$menu->addChild($this->translateIt('node'), array(
+		$menu->addChild($this->translateIt('debb_config.node.plural', array(), 'crud'), array(
 			'route' => 'debb_config_node_index',
 			'attributes' => array('class' => 'one first')
 		));
 
-		$menu->addChild($this->translateIt('node.group'), array(
+		$menu->addChild($this->translateIt('debb_config.nodegroup.plural', array(), 'crud'), array(
 			'route' => 'debb_config_nodegroup_index',
 			'attributes' => array('class' => 'two first')
 		));
 
-		$menu->addChild($this->translateIt('rack'), array(
+		$menu->addChild($this->translateIt('debb_config.rack.plural', array(), 'crud'), array(
 			'route' => 'debb_config_rack_index',
 			'attributes' => array('class' => 'three first')
 		));
 
-		$menu->addChild($this->translateIt('room'), array(
+		$menu->addChild($this->translateIt('debb_config.room.plural', array(), 'crud'), array(
 			'route' => 'debb_config_room_index',
 			'attributes' => array('class' => 'four first')
 		));

@@ -97,50 +97,40 @@ class DefaultController extends Controller
 
             if ($form->isValid())
             {
-				/* @var $file \Symfony\Component\HttpFoundation\File\UploadedFile */
-				$file = $form['ziparchive']->getData();
-				if($file->isValid())
-				{
-					if($file->getMimeType() == 'application/zip' || $file->getMimeType() == 'application/octet-stream')
-					{
-						if($file->isReadable())
-						{
-							/* Temp directory creation */
-							$dir = sys_get_temp_dir() . DIRECTORY_SEPARATOR . rand(11111, 99999) . 'debb';
-							mkdir($dir);
+                /* @var $file \Debb\ManagementBundle\Entity\File */
+                $file = $form['ziparchive']->getData();
+                if($file->getMimeType() == 'application/zip' || $file->getMimeType() == 'application/octet-stream')
+                {
+                    /* Temp directory creation */
+                    $dir = sys_get_temp_dir() . DIRECTORY_SEPARATOR . rand(11111, 99999) . 'debb';
+                    mkdir($dir);
 
-							/* Open the uploaded zip archive */
-							$zip = new \ZipArchive;
-							$res = $zip->open($file->getRealPath());
-							if ($res === TRUE)
-							{
-								/* Extract $zip to $dir */
-								$zip->extractTo($dir);
-								$zip->close();
-								/* Remove $file / $zip */
-								unlink($file->getRealPath());
-								unset($file);
-								unset($zip);
-								/* Import each xml file */
-								foreach (glob($dir . DIRECTORY_SEPARATOR . '*.xml') as $file)
-								{
-									$this->importDebbComponentsComponent(new \SimpleXMLElement(file_get_contents($file)), $file);
-								}
-							}
+                    /* Open the uploaded zip archive */
+                    $zip = new \ZipArchive;
+                    $res = $zip->open($file->getFullPath());
+                    if ($res === TRUE)
+                    {
+                        /* Extract $zip to $dir */
+                        $zip->extractTo($dir);
+                        $zip->close();
+                        /* Remove $file / $zip */
+                        unlink($file->getRealPath());
+                        unset($file);
+                        unset($zip);
+                        /* Import each xml file */
+                        foreach (glob($dir . DIRECTORY_SEPARATOR . '*.xml') as $file)
+                        {
+                            $this->importDebbComponentsComponent(new \SimpleXMLElement(file_get_contents($file)), $file);
+                        }
+                    }
 
-							self::rmfdir($dir);
-							$this->addSuccessMsg('localdev_admin.messages.saved');
-						}
-						else
-						{
-							$this->addErrorMsg('localdev_admin.messages.cantread');
-						}
-					}
-					else
-					{
-						$this->addErrorMsg('localdev_admin.messages.wrongfile');
-					}
-				}
+                    self::rmfdir($dir);
+                    $this->addSuccessMsg('localdev_admin.messages.saved');
+                }
+                else
+                {
+                    $this->addErrorMsg('localdev_admin.messages.wrongfile');
+                }
             }
         }
 

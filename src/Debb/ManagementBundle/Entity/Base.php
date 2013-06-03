@@ -32,10 +32,7 @@ class Base
 	/**
 	 * @var string
 	 *
-	 *                                                         important(!)
 	 * @ORM\Column(name="product", type="string", length=255, nullable=true)
-	 *
-	 * @Assert\NotNull()
 	 */
 	private $product;
 
@@ -282,5 +279,13 @@ class Base
 	{
 		return $this->hostname;
 	}
+
+    /**
+     * @Assert\True(message = "You have to fill in one of these fields: Manufacturer, Product or Model")
+     */
+    public function isThisCorrect()
+    {
+        return !empty($this->manufacturer) || !empty($this->product) || !empty($this->model);
+    }
 
 }

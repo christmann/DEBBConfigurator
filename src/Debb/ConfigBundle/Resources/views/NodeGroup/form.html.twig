@@ -42,14 +42,10 @@
 
 	<div id="nodegroup-configarea">
 		<div id="grouptitle-box">
-			<h5 style="font-weight: normal;">{{ 'Manufacturer' | trans }}</h5>
-			{{ form_widget(form.manufacturer) }}
-			<h5 style="font-weight: normal;">{{ 'Product' | trans }}</h5>
-			{{ form_widget(form.product) }}
-			<h5 style="font-weight: normal;">{{ 'Model' | trans }}</h5>
-			{{ form_widget(form.model) }}
-			<h5 style="font-weight: normal;">{{ 'Draft' | trans }}</h5>
-			{{ form_widget(form.draft) }}
+            {{ form_row(form.manufacturer) }}
+            {{ form_row(form.product) }}
+            {{ form_row(form.model) }}
+            {{ form_row(form.draft) }}
 			<div class="clear"></div>
 		</div>
 		<div id="node-select-box">

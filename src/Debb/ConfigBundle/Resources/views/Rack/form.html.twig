@@ -116,15 +116,15 @@
 												{% set first = true %}
 												{% if node.node.manufacturer is not null %}
 													{% if first %}{% set first = false %}{% else %}<br />{% endif %}
-													<span rel="tooltip" data-original-title="{{ 'Manufacturer' | trans }}">{{ node.node.manufacturer }}</span>
+													<span rel="tooltip" data-original-title="{{ 'Manufacturer' | trans }}" style="font-weight: bold;">{{ node.node.manufacturer }}</span>
 												{% endif %}
 												{% if node.node.product is not null %}
 													{% if first %}{% set first = false %}{% else %}<br />{% endif %}
-													<span rel="tooltip" data-original-title="{{ 'Product' | trans }}">{{ node.node.product }}</span>
+													<span rel="tooltip" data-original-title="{{ 'Product' | trans }}" style="font-weight: bold;">{{ node.node.product }}</span>
 												{% endif %}
 												{% if node.node.model is not null %}
 													{% if first %}{% set first = false %}{% else %}<br />{% endif %}
-													<span rel="tooltip" data-original-title="{{ 'Model' | trans }}">{{ node.node.model }}</span>
+													<span rel="tooltip" data-original-title="{{ 'Model' | trans }}" style="font-weight: bold;">{{ node.node.model }}</span>
 												{% endif %}
 												<br />{% for component in node.node.components if component.active is not null %}
 													{% set transThis = 'component.' ~ component.type %}
