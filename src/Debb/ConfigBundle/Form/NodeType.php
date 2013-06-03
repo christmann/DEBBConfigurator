@@ -23,16 +23,16 @@ class NodeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('product', null, array('required' => false))
-            ->add('manufacturer', null, array('required' => false))
-            ->add('model', null, array('required' => false))
-            ->add('sizeX', null, array('required' => false))
-            ->add('sizeY', null, array('required' => false))
-            ->add('sizeZ', null, array('required' => false))
-            ->add('spaceTop', null, array('required' => false))
-            ->add('spaceLeft', null, array('required' => false))
-            ->add('spaceBottom', null, array('required' => false))
-            ->add('spaceRight', null, array('required' => false))
+            ->add('manufacturer')
+            ->add('product', null, array('attr' => array('class' => 'noBreakAfterThis')))
+            ->add('model')
+            ->add('sizeX', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis'), 'label' => 'SizeX'))
+            ->add('sizeY', null, array('required' => false, 'label' => 'SizeY'))
+            ->add('sizeZ', null, array('required' => false, 'label' => 'SizeZ'))
+            ->add('spaceTop', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis'), 'label' => 'SpaceTop'))
+            ->add('spaceBottom', null, array('required' => false, 'label' => 'SpaceBottom'))
+            ->add('spaceLeft', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis'), 'label' => 'SpaceLeft'))
+            ->add('spaceRight', null, array('required' => false, 'label' => 'SpaceRight'))
             ->add('components', 'collection', array(
 				'type' => new ComponentType(),
 				'allow_add' => true,
@@ -40,9 +40,9 @@ class NodeType extends AbstractType
 				'by_reference' => false,
 				'required' => false,
 			))
-            ->add('image', null, array('required' => false))
-            ->add('vrmlFile', null, array('required' => false))
-            ->add('stlFile', null, array('required' => false))
+            ->add('image', 'hidden', array('required' => false))
+            ->add('vrmlFile', 'hidden', array('required' => false))
+            ->add('stlFile', 'hidden', array('required' => false))
 			->add('type', 'choice', array('choices' => Node::getTypes(), 'required' => true, 'empty_value' => false))
         ;
     }

@@ -42,18 +42,18 @@
 
 	<div id="nodegroup-configarea">
 		<div id="grouptitle-box">
-			<h5>{{ 'Manufacturer' | trans }}:</h5>
+			<h5 style="font-weight: normal;">{{ 'Manufacturer' | trans }}</h5>
 			{{ form_widget(form.manufacturer) }}
-			<h5>{{ 'Product' | trans }}:</h5>
+			<h5 style="font-weight: normal;">{{ 'Product' | trans }}</h5>
 			{{ form_widget(form.product) }}
-			<h5>{{ 'Model' | trans }}:</h5>
+			<h5 style="font-weight: normal;">{{ 'Model' | trans }}</h5>
 			{{ form_widget(form.model) }}
-			<h5>{{ 'Draft' | trans }}:</h5>
+			<h5 style="font-weight: normal;">{{ 'Draft' | trans }}</h5>
 			{{ form_widget(form.draft) }}
 			<div class="clear"></div>
 		</div>
 		<div id="node-select-box">
-			<h5>{{ 'select.%what%' | trans({'%what%': 'node' | trans}) }}:</h5>
+			<h5 style="font-weight: normal;">{{ 'select.%what%' | trans({'%what%': 'node' | trans}) }}</h5>
 			<select id="node-chooser" size="16">
 				<option value="0" selected="selected">&nbsp;</option>
 				{% for node in nodes|dSort %}
@@ -61,16 +61,15 @@
 					{% set first = true %}
 					{% if node.manufacturer is not null %}
 						{% if first %}{% set first = false %}{% else %}<br/>{% endif %}
-						<span rel="tooltip"
-							  data-original-title="{{ 'Manufacturer' | trans }}">{{ node.manufacturer }}</span>
+						<span rel="tooltip" style="font-weight: bold;" data-original-title="{{ 'Manufacturer' | trans }}">{{ node.manufacturer }}</span>
 					{% endif %}
 					{% if node.product is not null %}
 						{% if first %}{% set first = false %}{% else %}<br/>{% endif %}
-						<span rel="tooltip" data-original-title="{{ 'Product' | trans }}">{{ node.product }}</span>
+						<span rel="tooltip" style="font-weight: bold;" data-original-title="{{ 'Product' | trans }}">{{ node.product }}</span>
 					{% endif %}
 					{% if node.model is not null %}
 						{% if first %}{% set first = false %}{% else %}<br/>{% endif %}
-						<span rel="tooltip" data-original-title="{{ 'Model' | trans }}">{{ node.model }}</span>
+						<span rel="tooltip" style="font-weight: bold;" data-original-title="{{ 'Model' | trans }}">{{ node.model }}</span>
 					{% endif %}
 					<br/>{% for component in node.components if component.active is not null %}
 					{% set transThis = 'component.' ~ component.type %}
