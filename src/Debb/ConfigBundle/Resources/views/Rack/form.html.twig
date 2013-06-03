@@ -32,86 +32,20 @@
 	</div>
 
 	<div class="extraContent">
-		<div class="row-fluid">
-			<div class="span2" style="text-align: right; width: 12.53%;">
-				{{ 'Manufacturer' | trans }}:
-			</div>
-			<div class="span4">
-				{{ form_widget(form.manufacturer) }}
-			</div>
-		</div>
-		<div class="row-fluid">
-			<div class="span2" style="text-align: right; width: 12.53%;">
-				{{ 'Product' | trans }}:
-			</div>
-			<div class="span4">
-				{{ form_widget(form.product) }}
-			</div>
-			<div class="span2" style="text-align: right; width: 12.53%;">
-				{{ 'Model' | trans }}:
-			</div>
-			<div class="span4">
-				{{ form_widget(form.model) }}
-			</div>
-		</div>
-		<div class="row-fluid">
-			<div class="span2" style="text-align: right; width: 12.53%;">
-				{{ 'SizeX' | trans }}:
-			</div>
-			<div class="span4">
-				{{ form_widget(form.sizeX) }}
-			</div>
-			<div class="span2" style="text-align: right; width: 12.53%;">
-				{{ 'SizeY' | trans }}:
-			</div>
-			<div class="span4">
-				{{ form_widget(form.sizeY) }}
-			</div>
-		</div>
-		<div class="row-fluid">
-			<div class="span2" style="text-align: right; width: 12.53%;">
-				{{ 'SizeZ' | trans }}:
-			</div>
-			<div class="span4">
-				{{ form_widget(form.sizeZ) }}
-			</div>
-		</div>
-		<div class="row-fluid">
-			<div class="span2" style="text-align: right; width: 12.53%;">
-				{{ 'SpaceTop' | trans }}:
-			</div>
-			<div class="span4">
-				{{ form_widget(form.spaceTop) }}
-			</div>
-			<div class="span2" style="text-align: right; width: 12.53%;">
-				{{ 'SpaceLeft' | trans }}:
-			</div>
-			<div class="span4">
-				{{ form_widget(form.spaceLeft) }}
-			</div>
-		</div>
-		<div class="row-fluid">
-			<div class="span2" style="text-align: right; margin-left: -13px;">
-				{{ 'SpaceBottom' | trans }}:
-			</div>
-			<div class="span4">
-				{{ form_widget(form.spaceBottom) }}
-			</div>
-			<div class="span2" style="text-align: right; margin-left: 2px;">
-				{{ 'SpaceRight' | trans }}:
-			</div>
-			<div class="span4">
-				{{ form_widget(form.spaceRight) }}
-			</div>
-		</div>
-		<div class="row-fluid">
-			<div class="span2" style="text-align: right; margin-left: -14px;">
-				{{ 'RackSize' | trans }}:
-			</div>
-			<div class="span4">
-				{{ form_widget(form.nodeGroupSize) }}
-			</div>
-		</div>
+		<div style="margin-left: 13px; color: #555;">
+            {{ form_row(form.manufacturer) }}
+            {{ form_row(form.product) }}
+            {{ form_row(form.model) }}
+            {{ form_row(form.sizeX) }}
+            {{ form_row(form.sizeY) }}
+            {{ form_row(form.sizeZ) }}
+            {{ form_row(form.spaceTop) }}
+            {{ form_row(form.spaceBottom) }}
+            {{ form_row(form.spaceLeft) }}
+            {{ form_row(form.spaceRight) }}
+            {{ form_row(form.nodeGroupSize) }}
+        </div>
+        <div class="clear"></div>
 
 		<div class="rackConfigArea">
 			<div class="nodegroup-selector">
