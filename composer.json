@@ -29,7 +29,8 @@
         "behat/symfony2-extension": "*",
         "behat/mink-extension": "*",
         "behat/mink-browserkit-driver": "*",
-        "behat/mink-selenium2-driver":  "*"
+        "behat/mink-selenium2-driver":  "*",
+        "christmann/pluploadbundle": "dev-Symfony2.2"
 	},
 	"scripts": {
 		"post-install-cmd": [
@@ -58,6 +59,10 @@
 		{
 			"type": "composer",
 			"url": "http://satis.localdev.de"
-		}
+		},
+        {
+            "type": "vcs",
+            "url": "git://192.168.10.69/bundles/PluploadBundle.git"
+        }
 	]
 }
