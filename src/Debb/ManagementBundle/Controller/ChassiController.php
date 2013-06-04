@@ -63,8 +63,7 @@ class ChassiController extends CRUDController
     {
         $item = $this->getEntity($id);
         $itemNew = clone $item;
-        var_dump($item->getId(), $itemNew->getId());
-        die();
-        return $this->redirect($this->generateUrl('debb_management_chassi_form'));
+        $this->persistEntity($itemNew);
+        return $this->redirect($this->generateUrl('debb_management_chassi_form', array('id' => $itemNew->getId())));
     }
 }

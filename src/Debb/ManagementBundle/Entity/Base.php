@@ -291,11 +291,10 @@ class Base
     /**
      * Duplicate this entity
      */
-    function __clone()
+    public function __clone()
     {
-        $newObject = clone $this;
-        $newObject->set
-        return $newObject;
+        $this->id = null;
+        return $this;
     }
 
 }
