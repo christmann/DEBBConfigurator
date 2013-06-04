@@ -45,7 +45,7 @@ class Node extends Dimensions
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="type", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Debb\ManagementBundle\Entity\NodeType", cascade={"all"})
 	 */
 	private $type;
 
@@ -234,32 +234,35 @@ class Node extends Dimensions
 	}
 
 	/**
-	 * Set type
-	 *
-	 * @param int $type
-	 */
-	public function setType($type)
-	{
-		$this->type = $type;
-	}
-
-	/**
-	 * Get type
-	 *
-	 * @return int
-	 */
-	public function getType()
-	{
-		return $this->type;
-	}
-
-	/**
 	 * Get all types
 	 *
 	 * @return array
 	 */
-	public static function getTypes()
-	{
-		return array(0 => 'CXP2', 1 => 'CXP6', 2 => 'Apls');
-	}
+//	public static function getTypes()
+//	{
+//		return array(0 => 'CXP2', 1 => 'CXP6', 2 => 'Apls');
+//	}
+
+    /**
+     * Set type
+     *
+     * @param \Debb\ManagementBundle\Entity\NodeType $type
+     * @return Node
+     */
+    public function setType(\Debb\ManagementBundle\Entity\NodeType $type = null)
+    {
+        $this->type = $type;
+    
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return \Debb\ManagementBundle\Entity\NodeType 
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
 }

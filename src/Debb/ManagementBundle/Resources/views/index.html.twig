@@ -50,7 +50,7 @@
 													{% endif %}
                                                     {% if route_exists(localdev_admin_route("_duplicate")) %}
                                                         <a href="{{ path(localdev_admin_route("_duplicate"), {"id": item.id}) }}" class="btn">
-                                                            <span rel="tooltip" data-original-title="{{ 'duplicate' | trans }}"><i class="icon-copy"></i></span>
+                                                            <span rel="tooltip" data-original-title="{{ 'duplicate' | trans }}"><i class="icon-plus-sign"></i></span>
                                                         </a>
                                                     {% endif %}
 													<a class="btn btn-danger" data-toggle="modal"
