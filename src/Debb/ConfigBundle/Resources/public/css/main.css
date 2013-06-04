@@ -266,6 +266,17 @@ table tr td
 	overflow: hidden;
 }
 
+#config-menu a
+{
+	color: #000;
+	font-size: 15px;
+}
+
+#config-menu a:hover
+{
+	text-decoration: none;
+}
+
 /***************************************/
 /********** Rack Content ***************/
 /***************************************/

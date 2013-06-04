@@ -49,4 +49,22 @@ class ChassiController extends CRUDController
 			'nodetypspecs' => Node::getTypes()
 		));
 	}
+
+    /**
+     * Duplicate entity
+     *
+     * @Route("/duplicate/{id}", requirements={"id"="\d+"});
+     *
+     * @param int $id item id
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function duplicateAction($id)
+    {
+        $item = $this->getEntity($id);
+        $itemNew = clone $item;
+        var_dump($item->getId(), $itemNew->getId());
+        die();
+        return $this->redirect($this->generateUrl('debb_management_chassi_form'));
+    }
 }

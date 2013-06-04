@@ -10,11 +10,15 @@
 	{% block stylesheets %}
 		{% stylesheets filter='cssrewrite'
 		'bundles/debbconfig/css/bootstrap.min.css'
-		'bundles/debbconfig/css/bootstrap-responsive.min.css'
+        'bundles/debbconfig/css/font-awesome.min.css'
+        'bundles/debbconfig/css/bootstrap-responsive.min.css'
 		'bundles/debbconfig/css/main.css' %}
 		<link href="{{ asset_url }}" type="text/css" rel="stylesheet"/>
 		{% endstylesheets %}
 	{% endblock %}
+    <!--[if IE 7]>
+    <link rel="stylesheet" href="{{ asset('bundles/debbconfig/css/font-awesome-ie7.min.css') }}">
+    <![endif]-->
 	{% block javascripts %}
 		{% javascripts
 		'@DebbConfigBundle/Resources/public/js/jquery.min.js'
