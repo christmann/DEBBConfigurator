@@ -288,4 +288,13 @@ class Base
         return !empty($this->manufacturer) || !empty($this->product) || !empty($this->model);
     }
 
+    /**
+     * Duplicate this entity
+     */
+    public function __clone()
+    {
+        $this->id = null;
+        return $this;
+    }
+
 }

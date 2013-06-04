@@ -48,6 +48,11 @@
 															<span rel="tooltip" data-original-title="{{ 'download.%what%.file' | trans({'%what%': 'archive' | trans}) }}"><i class="icon-file"></i></span>
 														</a>
 													{% endif %}
+                                                    {% if route_exists(localdev_admin_route("_duplicate")) %}
+                                                        <a href="{{ path(localdev_admin_route("_duplicate"), {"id": item.id}) }}" class="btn">
+                                                            <span rel="tooltip" data-original-title="{{ 'duplicate' | trans }}"><i class="icon-copy"></i></span>
+                                                        </a>
+                                                    {% endif %}
 													<a class="btn btn-danger" data-toggle="modal"
 													   href="#delete{{ item.id }}">
 														<span rel="tooltip" data-original-title="{{ 'delete' | trans }}"><i class="icon-remove icon-white"></i></span>
