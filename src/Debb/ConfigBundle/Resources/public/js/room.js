@@ -42,7 +42,7 @@ function setStyleOfRack(newRack)
 		newRack.appendTo('#rackContainer').draggable(rackDragOpt).droppable(rackDropOpt);
 	}
 	newRack.css('width', (parseFloat(newRack.attr('rackX')) <= 0 ? 99 : parseFloat(newRack.attr('rackX')) * 100 - 1) + 'px');
-	newRack.css('height', (parseFloat(newRack.attr('rackY')) <= 0 ? 99 : parseFloat(newRack.attr('rackY')) * 100 - 1) + 'px');
+	newRack.css('height', (parseFloat(newRack.attr('rackZ')) <= 0 ? 99 : parseFloat(newRack.attr('rackZ')) * 100 - 1) + 'px');
 	if(typeof newRack.attr('posx') != 'undefined')
 	{
 		newRack.css('left', (parseInt(newRack.attr('posx')) < 0 ? 0 : parseInt(newRack.attr('posx'))) + 'px');
@@ -88,6 +88,8 @@ $(function()
 		resize: function ( event, ui ) {
 			$('#rackSizeX').html((parseInt(ui.size.width) / 100).toFixed(2));
 			$('#rackSizeY').html((parseInt(ui.size.height) / 100).toFixed(2));
+            $('#content').width(parseInt(ui.size.width) + 21);
+            ui.helper.css('background-position', '1px ' + parseInt(parseInt(ui.size.height) + 1) + 'px');
 		},
         start: function ( event, ui ) {
             setMinimalRoomSize();

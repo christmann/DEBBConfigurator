@@ -18,6 +18,7 @@ body
 #content
 {
 	width:      921px;
+	min-width:  921px;
 	margin-top: 19px;
 	padding:    28px 22px 28px 22px;
 	color:      #555555;
@@ -974,4 +975,9 @@ div[class*="noBreakAfterThis"]
 	border:           1px solid #777777;
 	position:         absolute;
 	background-color: #ffffff;
+}
+
+.removeRack
+{
+	color: #555;
 }
