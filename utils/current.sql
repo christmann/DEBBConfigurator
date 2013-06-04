@@ -326,10 +326,10 @@ INSERT INTO `nodegroup` (`id`, `manufacturer`, `product`, `model`, `hostname`, `
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `chassi`
+-- Tabellenstruktur für Tabelle `chassis`
 --
 
-CREATE TABLE IF NOT EXISTS `chassi` (
+CREATE TABLE IF NOT EXISTS `chassis` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `image_id` int(11) DEFAULT NULL,
   `manufacturer` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -674,12 +674,12 @@ ALTER TABLE `node`
 -- Constraints der Tabelle `nodegroup`
 --
 ALTER TABLE `nodegroup`
-  ADD CONSTRAINT `FK_B47114EFE2F3C5D1` FOREIGN KEY (`draft_id`) REFERENCES `chassi` (`id`);
+  ADD CONSTRAINT `FK_B47114EFE2F3C5D1` FOREIGN KEY (`draft_id`) REFERENCES `chassis` (`id`);
 
 --
--- Constraints der Tabelle `chassi`
+-- Constraints der Tabelle `chassis`
 --
-ALTER TABLE `chassi`
+ALTER TABLE `chassis`
   ADD CONSTRAINT `FK_27D8408D3DA5256D` FOREIGN KEY (`image_id`) REFERENCES `file` (`id`);
 
 --

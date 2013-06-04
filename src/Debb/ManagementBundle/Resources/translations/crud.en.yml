@@ -10,6 +10,6 @@ debb_management.powersupply.plural: Power supplies
 debb_management.powersupply.singular: power supply
 debb_management.storage.plural: HDDs
 debb_management.storage.singular: HDD
-debb_management.chassi.plural: Chassis
-debb_management.chassi.singular: chassi
+debb_management.chassis.plural: Chassis
+debb_management.chassis.singular: chassis
 localdev_admin.actions.create: create %name%

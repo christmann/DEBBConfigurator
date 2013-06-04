@@ -1,9 +1,9 @@
 var currentNode = null;
 
 $(function () {
-	$('#debb_managementbundle_chassitype_slotsX, #debb_managementbundle_chassitype_slotsY').change(function () {
-		var slotsX = $('#debb_managementbundle_chassitype_slotsX'),
-			slotsY = $('#debb_managementbundle_chassitype_slotsY');
+	$('#debb_managementbundle_chassistype_slotsX, #debb_managementbundle_chassistype_slotsY').change(function () {
+		var slotsX = $('#debb_managementbundle_chassistype_slotsX'),
+			slotsY = $('#debb_managementbundle_chassistype_slotsY');
 		updateNodegroupSize(slotsX, slotsY);
 		$('#nodegroup').width(parseInt(slotsX.val()) * 71);
 		$('#nodegroup').height(parseInt(slotsY.val()) * 52);
@@ -33,11 +33,11 @@ function updateNodegroupSize(slotsX, slotsY)
 {
 	if(typeof(slotsX) == 'undefined')
 	{
-		var slotsX = $('#debb_managementbundle_chassitype_slotsX');
+		var slotsX = $('#debb_managementbundle_chassistype_slotsX');
 	}
 	if(typeof(slotsY) == 'undefined')
 	{
-		var slotsY = $('#debb_managementbundle_chassitype_slotsY');
+		var slotsY = $('#debb_managementbundle_chassistype_slotsY');
 	}
 	$('#nodegroup').width(parseInt(slotsX.val()) * 71);
 	$('#nodegroup').height(parseInt(slotsY.val()) * 48);
@@ -46,7 +46,7 @@ function updateNodegroupSize(slotsX, slotsY)
 
 function addNode(x)
 {
-	var id = getFreeId('debb_managementbundle_chassitype_typspec_', typeof(x) == 'undefined' ? $('#nodegroup .node').length : x);
+	var id = getFreeId('debb_managementbundle_chassistype_typspec_', typeof(x) == 'undefined' ? $('#nodegroup .node').length : x);
 	$('#nodegroup').append($('#nodegroup').attr('data-prototype').replace(/__name__/g, getExactId(id)));
 }
 
@@ -55,7 +55,7 @@ function updateNodes() {
 		y = 0;
 	for(var x = nodes.length - 1; x >= 0; x--)
 	{
-		$(nodes[x]).find('select').attr('id', 'debb_managementbundle_chassitype_typspec_' + y).attr('name', 'typspec[' + y + ']');
+		$(nodes[x]).find('select').attr('id', 'debb_managementbundle_chassistype_typspec_' + y).attr('name', 'typspec[' + y + ']');
 		y++;
 	}
 }

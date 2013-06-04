@@ -57,7 +57,7 @@ class MenuBuilder
 		$management->addChild($this->translateIt('debb_management.memory.plural', array(), 'crud'), array('route' => 'debb_management_memory_index'));
 		$management->addChild($this->translateIt('debb_management.powersupply.plural', array(), 'crud'), array('route' => 'debb_management_powersupply_index'));
 		$management->addChild($this->translateIt('debb_management.storage.plural', array(), 'crud'), array('route' => 'debb_management_storage_index'));
-		$management->addChild($this->translateIt('debb_management.chassi.plural', array(), 'crud'), array('route' => 'debb_management_chassi_index'));
+		$management->addChild($this->translateIt('debb_management.chassis.plural', array(), 'crud'), array('route' => 'debb_management_chassis_index'));
 
 		$menu->addChild($this->translateIt('debb_config.node.plural', array(), 'crud'), array(
 			'route' => 'debb_config_node_index',

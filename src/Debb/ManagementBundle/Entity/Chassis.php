@@ -7,17 +7,17 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Chassi
+ * Chassis
  *
- * @ORM\Table(name="chassi")
+ * @ORM\Table(name="chassis")
  * @ORM\Entity
  */
-class Chassi extends Dimensions
+class Chassis extends Dimensions
 {
     /**
      * @var Image
      *
-     * @ORM\ManyToOne(targetEntity="Debb\ManagementBundle\Entity\File", cascade={"all"})
+     * @ORM\ManyToOne(targetEntity="Debb\ManagementBundle\Entity\File", cascade={"persist"})
      */
     private $image;
 
@@ -62,7 +62,7 @@ class Chassi extends Dimensions
      * Set image
      *
      * @param string $image
-     * @return Chassi
+     * @return Chassis
      */
     public function setImage($image)
     {
@@ -85,7 +85,7 @@ class Chassi extends Dimensions
      * Set slotsX
      *
      * @param integer $slotsX
-     * @return Chassi
+     * @return Chassis
      */
     public function setSlotsX($slotsX)
     {
@@ -108,7 +108,7 @@ class Chassi extends Dimensions
      * Set slotsY
      *
      * @param integer $slotsY
-     * @return Chassi
+     * @return Chassis
      */
     public function setSlotsY($slotsY)
     {
@@ -131,7 +131,7 @@ class Chassi extends Dimensions
      * Set heSize
      *
      * @param integer $heSize
-     * @return Chassi
+     * @return Chassis
      */
     public function setHeSize($heSize)
     {
@@ -154,7 +154,7 @@ class Chassi extends Dimensions
      * Set typspecification
      *
      * @param array $typspecification
-     * @return Chassi
+     * @return Chassis
      */
     public function setTypspecification($typspecification)
     {
@@ -185,7 +185,7 @@ class Chassi extends Dimensions
      * Set frontview
      *
      * @param boolean $frontview
-     * @return Chassi
+     * @return Chassis
      */
     public function setFrontView($frontview)
     {

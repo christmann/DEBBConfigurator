@@ -10,6 +10,6 @@ debb_management.powersupply.plural: Netzteile
 debb_management.powersupply.singular: Netzteil
 debb_management.storage.plural: HDDs
 debb_management.storage.singular: HDD
-debb_management.chassi.plural: Gehäuse
-debb_management.chassi.singular: Gehäuse
+debb_management.chassis.plural: Gehäuse
+debb_management.chassis.singular: Gehäuse
 localdev_admin.actions.create: %name% erstellen

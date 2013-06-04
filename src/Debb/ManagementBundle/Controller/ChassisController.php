@@ -10,14 +10,14 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @author Patrick Bußmann <patrick.bussmann@christmann.info>
- * @Route("/{_locale}/management/chassi", requirements={"_locale" = "en|de"}, defaults={"_locale" = "en"})
+ * @Route("/{_locale}/management/chassis", requirements={"_locale" = "en|de"}, defaults={"_locale" = "en"})
  */
-class ChassiController extends CRUDController
+class ChassisController extends CRUDController
 {
 	/**
 	 * Creates a new entity
 	 *
-	 * @Route("/form/{id}", defaults={"id"=0}, requirements={"id"="\d+|"});
+	 * @Route("/form/{id}-{duplicated}", defaults={"id"=0, "duplicated"=0}, requirements={"id"="\d+|", "duplicated"="0|1|"});
 	 * @Template()
 	 *
 	 * @param Request                                   $request  Request object
@@ -25,12 +25,12 @@ class ChassiController extends CRUDController
 	 *
 	 * @return array
 	 */
-	public function formAction(Request $request, $id = 0)
+	public function formAction(Request $request, $id = 0, $duplicated = 0)
 	{
-		/* @var $item \Debb\ManagementBundle\Entity\Chassi */
+		/* @var $item \Debb\ManagementBundle\Entity\Chassis */
 		$item = $this->getEntity($id);
 
-		$form = $this->createForm($this->getFormType($item), $item);
+		$form = $this->createForm($this->getFormType($item), $item, array('attr' => array('duplicated' => $duplicated)));
 		if ($request->getMethod() == 'POST')
 		{
 			$form->bind($request);
@@ -46,7 +46,8 @@ class ChassiController extends CRUDController
 		return $this->render($this->resolveTemplate(__METHOD__), array(
 			'form' => $form->createView(),
 			'item' => $item,
-			'nodetypspecs' => Node::getTypes()
+			'nodetypspecs' => Node::getTypes(),
+            'duplicated' => $duplicated
 		));
 	}
 
@@ -64,6 +65,6 @@ class ChassiController extends CRUDController
         $item = $this->getEntity($id);
         $itemNew = clone $item;
         $this->persistEntity($itemNew);
-        return $this->redirect($this->generateUrl('debb_management_chassi_form', array('id' => $itemNew->getId())));
+        return $this->redirect($this->generateUrl('debb_management_chassis_form', array('id' => $itemNew->getId(), 'duplicated' => 1)));
     }
 }

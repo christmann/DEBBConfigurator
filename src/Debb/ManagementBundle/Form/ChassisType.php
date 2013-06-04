@@ -5,14 +5,14 @@ namespace Debb\ManagementBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Debb\ManagementBundle\Entity\Chassi;
+use Debb\ManagementBundle\Entity\Chassis;
 
 /**
- * Class ChassiType
+ * Class ChassisType
  * @package Debb\ManagementBundle\Form
  * @author Patrick Bußmann <patrick.bussmann@christmann.info>
  */
-class ChassiType extends AbstractType
+class ChassisType extends AbstractType
 {
 	/**
 	 * @param FormBuilderInterface $builder
@@ -20,7 +20,11 @@ class ChassiType extends AbstractType
 	 */
 	public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $isNew = !array_key_exists('data', $options) || !($options['data'] instanceof Chassi) || $options['data']->getId() == null;
+        $isNew = !array_key_exists('data', $options) || !($options['data'] instanceof Chassis) || $options['data']->getId() == null;
+        if(!$isNew && array_key_exists('attr', $options) && array_key_exists('duplicated', $options['attr']) && $options['attr']['duplicated'] != $isNew)
+        {
+            $isNew = (bool) $options['attr']['duplicated'];
+        }
         $builder
             ->add('manufacturer')
             ->add('product', null, array('attr' => array('class' => 'noBreakAfterThis')))
@@ -45,7 +49,7 @@ class ChassiType extends AbstractType
 	public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Debb\ManagementBundle\Entity\Chassi'
+            'data_class' => 'Debb\ManagementBundle\Entity\Chassis'
         ));
     }
 
@@ -67,6 +71,6 @@ class ChassiType extends AbstractType
 	 */
 	public function getName()
     {
-        return 'debb_managementbundle_chassitype';
+        return 'debb_managementbundle_chassistype';
     }
 }
