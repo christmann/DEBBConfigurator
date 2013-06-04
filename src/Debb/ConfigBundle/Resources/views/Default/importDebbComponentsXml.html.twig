@@ -30,7 +30,8 @@
         <div class="accordion">
             <h3>{{ 'Zip Structure' | trans }}</h3>
             <div>
-                {{ 'Ziparchive' | trans }}<br >
+                {{ 'help.zip' | trans | nl2br | raw }}<br />
+                {{ 'Ziparchive' | trans }}<br />
                 &nbsp;|&nbsp;&nbsp;&nbsp;Node_Example_1.xml<br />
                 &nbsp;|&nbsp;&nbsp;&nbsp;Node_Example_2.xml<br />
                 &nbsp;|&nbsp;&nbsp;&nbsp;NodeGroup_Example_1.xml<br />
@@ -42,9 +43,9 @@
                 &nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Node_Example_2.jpeg<br />
                 &nbsp;|<br />
                 &nbsp;\---objects<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Node_Example_1.stl<br />
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Node_Example_1.wrl<br />
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Node_Example_2.stl<br /><br /><br />
-                {{ 'help.zip' | trans | nl2br | raw }}
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Node_Example_2.stl
             </div>
         </div>
     </div>

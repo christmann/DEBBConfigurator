@@ -162,36 +162,6 @@ $(function()
 
 function updateRack()
 {
-	// free units
-	var freeUnits = 0;
-	$('[id$="_nodegroup"]').each(function()
-	{
-		if($(this).val() == null || $(this).val() < 1 || $(this).val() == '')
-		{
-			freeUnits++;
-			if($(this).parents('.nodegroup:first').hasClass('nodegroup-selected'))
-			{
-				$(this).parents('.nodegroup:first').removeClass('nodegroup-selected');
-			}
-		}
-		else if(!$(this).parents('.nodegroup:first').hasClass('nodegroup-selected'))
-		{
-			$(this).parents('.nodegroup:first').addClass('nodegroup-selected');
-		}
-	});
-	$('#freeUnits').html(freeUnits);
-
-	// selected unit
-	var selectedFieldId = $('#selectedNodeGroup').attr('field');
-	if(selectedFieldId != null)
-	{
-		$('#selectedUnit').html(parseInt($('#debb_configbundle_racktype_nodegroups_' + selectedFieldId + '_field').val()) + 1);
-	}
-	else
-	{
-		$('#selectedUnit').html(Translator.get('none'));
-	}
-
     // Change sizes...
     $('.nodegroup').show();
     $('.nodegroup').css('height', '10px');
@@ -217,6 +187,36 @@ function updateRack()
             }
         }
     });
+
+	// free units
+	var freeUnits = 0;
+	$('[id$="_nodegroup"]').each(function()
+	{
+		if(($(this).val() == null || $(this).val() < 1 || $(this).val() == '') && $(this).parents('.nodegroup').is(':visible'))
+		{
+		    freeUnits++;
+			if($(this).parents('.nodegroup:first').hasClass('nodegroup-selected'))
+			{
+				$(this).parents('.nodegroup:first').removeClass('nodegroup-selected');
+			}
+		}
+		else if(!$(this).parents('.nodegroup:first').hasClass('nodegroup-selected'))
+		{
+			$(this).parents('.nodegroup:first').addClass('nodegroup-selected');
+		}
+	});
+	$('#freeUnits').html(freeUnits);
+
+	// selected unit
+	var selectedFieldId = $('#selectedNodeGroup').attr('field');
+	if(selectedFieldId != null)
+	{
+		$('#selectedUnit').html(parseInt($('#debb_configbundle_racktype_nodegroups_' + selectedFieldId + '_field').val()) + 1);
+	}
+	else
+	{
+		$('#selectedUnit').html(Translator.get('none'));
+	}
 
 	// names of node groups in rack
 	$('[id^="debb_configbundle_racktype_nodegroups_"][id$="_title"]').each(function()

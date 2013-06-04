@@ -190,10 +190,6 @@ class NodeGroupDraft extends Dimensions
     public function setFrontView($frontview)
     {
         $this->frontview = $frontview;
-		if($this->isFrontView())
-		{
-			$this->setHeSize($this->getSlotsY());
-		}
     
         return $this;
     }
