@@ -8,7 +8,7 @@ use \Debb\ManagementBundle\Entity\Component;
 /**
  * Node
  *
- * @ORM\Table()
+ * @ORM\Table(name="node")
  * @ORM\Entity
  */
 class Node extends Dimensions

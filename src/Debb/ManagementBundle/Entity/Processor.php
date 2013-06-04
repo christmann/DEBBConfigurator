@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Processor
  *
- * @ORM\Table()
+ * @ORM\Table(name="processor")
  * @ORM\Entity()
  */
 class Processor extends Base

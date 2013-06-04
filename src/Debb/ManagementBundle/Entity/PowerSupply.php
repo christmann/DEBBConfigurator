@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * PowerSupply
  *
- * @ORM\Table()
+ * @ORM\Table(name="powersupply")
  * @ORM\Entity
  */
 class PowerSupply extends Base

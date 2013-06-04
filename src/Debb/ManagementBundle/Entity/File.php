@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * File
  *
- * @ORM\Table()
+ * @ORM\Table(name="file")
  * @ORM\Entity
  */
 class File extends \CIM\PluploadBundle\Entity\File

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Room
  *
- * @ORM\Table()
+ * @ORM\Table(name="room")
  * @ORM\Entity
  */
 class Room extends Dimensions

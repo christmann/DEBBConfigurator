@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * NodeGroupDraft
  *
- * @ORM\Table()
+ * @ORM\Table(name="nodegroupdraft")
  * @ORM\Entity
  */
 class NodeGroupDraft extends Dimensions

@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * RackToRoom
  *
- * @ORM\Table()
+ * @ORM\Table(name="racktoroom")
  * @ORM\Entity
  */
 class RackToRoom extends Connector

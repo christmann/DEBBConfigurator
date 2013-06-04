@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Mainboard
  *
- * @ORM\Table()
+ * @ORM\Table(name="mainboard")
  * @ORM\Entity()
  */
 class Mainboard extends Base

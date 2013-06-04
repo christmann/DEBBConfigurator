@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * NodeGroup
  *
- * @ORM\Table()
+ * @ORM\Table(name="nodegroup")
  * @ORM\Entity
  */
 class NodeGroup extends Dimensions

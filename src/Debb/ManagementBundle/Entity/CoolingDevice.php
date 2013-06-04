@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * CoolingDevice
  *
- * @ORM\Table()
+ * @ORM\Table(name="coolingdevice")
  * @ORM\Entity
  */
 class CoolingDevice extends Base

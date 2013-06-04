@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * NodegroupToRack
  *
- * @ORM\Table()
+ * @ORM\Table(name="nodegrouptorack")
  * @ORM\Entity
  */
 class NodegroupToRack extends Connector

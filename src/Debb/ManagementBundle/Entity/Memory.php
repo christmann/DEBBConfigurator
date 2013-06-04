@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Memory
  *
- * @ORM\Table()
+ * @ORM\Table(name="memory")
  * @ORM\Entity
  */
 class Memory extends Base

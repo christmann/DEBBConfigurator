@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Box
  *
- * @ORM\Table()
+ * @ORM\Table(name="box")
  * @ORM\Entity
  */
 class Box extends \Debb\ConfigBundle\Entity\Dimensions

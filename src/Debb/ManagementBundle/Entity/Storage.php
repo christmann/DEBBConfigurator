@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Storage
  *
- * @ORM\Table()
+ * @ORM\Table(name="storage")
  * @ORM\Entity
  */
 class Storage extends Base

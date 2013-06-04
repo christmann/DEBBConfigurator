@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Rack
  *
- * @ORM\Table()
+ * @ORM\Table(name="rack")
  * @ORM\Entity
  */
 class Rack extends Dimensions
