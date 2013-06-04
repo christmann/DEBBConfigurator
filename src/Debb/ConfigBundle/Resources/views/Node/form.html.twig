@@ -1,66 +1,13 @@
 {% extends "DebbManagementBundle::form.html.twig" %}
 {% form_theme form "DebbManagementBundle::form_theme.html.twig" %}
 
-{% block stylesheets %}
-	{% stylesheets filter='cssrewrite'
-	'bundles/debbconfig/css/uploadify.css'
-	%}
-	<link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
-	{% endstylesheets %}
-	{{ parent() }}
-{% endblock %}
-
 {% block javascripts %}
 	{{ parent() }}
 	{% javascripts
-	'@DebbConfigBundle/Resources/public/js/node.js'
-	'@DebbConfigBundle/Resources/public/js/jquery.uploadify.min.js'
+        '@DebbConfigBundle/Resources/public/js/node.js'
 	%}
 	<script src="{{ asset_url }}" type="text/javascript"></script>
 	{% endjavascripts %}
-	<script type="text/javascript">
-		$(function() {
-			$("#upload_vrml").uploadify({
-				height          : 15,
-				swf             : '{{ asset('bundles/debbconfig/swf/uploadify.swf') }}',
-				uploader        : '{{ path('debb_config_default_upload') }}',
-				width           : 80,
-				multi           : false,
-				fileTypeExts    : '*.wrl',
-				buttonText	    : 'VRML',
-				onUploadSuccess : function(file, data, response)
-				{
-					var obj = jQuery.parseJSON(data);
-					$('#debb_configbundle_nodetype_vrmlFile').val(obj.fileId);
-					$('#vrmlFileName').html(file.name);
-					{# if(typeof(obj.dimension) != 'undefined')
-					{
-						$('#sizex').html(obj.dimension.sizex);
-						$('#debb_configbundle_nodetype_sizeX').val(obj.dimension.sizex);
-						$('#sizey').html(obj.dimension.sizey);
-						$('#debb_configbundle_nodetype_sizeY').val(obj.dimension.sizey);
-						$('#sizez').html(obj.dimension.sizez);
-						$('#debb_configbundle_nodetype_sizeZ').val(obj.dimension.sizez);
-					} #}
-				}
-			});
-			$("#upload_stl").uploadify({
-				height          : 15,
-				swf             : '{{ asset('bundles/debbconfig/swf/uploadify.swf') }}',
-				uploader        : '{{ path('debb_config_default_upload') }}',
-				width           : 80,
-				multi           : false,
-				fileTypeExts    : '*.stl',
-				buttonText	    : 'STL',
-				onUploadSuccess : function(file, data, response)
-				{
-					var obj = jQuery.parseJSON(data);
-					$('#debb_configbundle_nodetype_stlFile').val(obj.fileId);
-					$('#stlFileName').html(file.name);
-				}
-			});
-		});
-	</script>
 {% endblock %}
 
 {% block topForm %}
@@ -127,27 +74,14 @@
                     {% endspaceless %}
                 </div>
             </div> #}
-            <div class="row">
-                <div class="span5" style="text-align: right; font-weight: bold;">
-                    {{ '3D model' | trans }}:
-                </div>
-                <div class="span4" style="text-align: left;">
-                    <input type="file" name="upload_vrml" id="upload_vrml" />
-                    {{ form_widget(form.vrmlFile) }}
-                </div>
-                <div class="span3" style="text-align: left;" id="vrmlFileName">
-                    {% if form.vrmlFile.vars.data is not null %}{{ form.vrmlFile.vars.data.name }}{% endif %}
-                </div>
+            <div class="row-fluid" style="font-weight: bold; padding-left: 5px;">
+                {{ '3D model' | trans }}
             </div>
-            <div class="row">
-                <div class="span5">&nbsp;</div>
-                <div class="span4" style="text-align: left;">
-                    <input type="file" name="upload_stl" id="upload_stl" />
-                    {{ form_widget(form.stlFile) }}
-                </div>
-                <div class="span3" style="text-align: left;" id="stlFileName">
-                    {% if form.stlFile.vars.data is not null %}{{ form.stlFile.vars.data.name }}{% endif %}
-                </div>
+            <div class="row-fluid">
+                {{ form_widget(form.vrmlFile) }}
+            </div>
+            <div class="row-fluid">
+                {{ form_widget(form.stlFile) }}
             </div>
         </div>
 		<div class="span9" style="border-left: 1px solid #DFDFDF; padding-left: 5px;">
