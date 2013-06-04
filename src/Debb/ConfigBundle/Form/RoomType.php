@@ -20,9 +20,8 @@ class RoomType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('manufacturer', null, array('required' => false))
-            ->add('product', null, array('required' => false))
-            ->add('model', null, array('required' => false))
+            ->add('building', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis')))
+            ->add('name', null, array('required' => false))
 			->add('sizeX', null, array('required' => false))
 			->add('sizeY', null, array('required' => false))
             ->add('racks', 'collection', array(

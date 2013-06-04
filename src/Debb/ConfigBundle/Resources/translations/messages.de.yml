@@ -62,6 +62,7 @@ Tdp: TDP [Watt]
 RackSize: Rack Größe [RU]
 size: Größe
 upload image file: Bild hochladen
+Add rack: Rack hinzufügen
 
 # form fields which not defined above
 Product: Produkt

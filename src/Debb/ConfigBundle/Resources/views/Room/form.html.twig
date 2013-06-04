@@ -31,31 +31,25 @@
 {% block content %}
 	<div class="row-fluid">
 		<div class="span2" style="text-align: right; width: 12.53%;">
-			{{ 'Manufacturer' | trans }}:
+			{{ 'Building' | trans }}:
 		</div>
 		<div class="span4">
-			{{ form_widget(form.manufacturer) }}
+			{{ form_widget(form.building) }}
 		</div>
 	</div>
 	<div class="row-fluid">
 		<div class="span2" style="text-align: right; width: 12.53%;">
-			{{ 'Product' | trans }}:
+			{{ 'Name' | trans }}:
 		</div>
 		<div class="span4">
-			{{ form_widget(form.product) }}
-		</div>
-		<div class="span2" style="text-align: right; width: 12.53%;">
-			{{ 'Model' | trans }}:
-		</div>
-		<div class="span4">
-			{{ form_widget(form.model) }}
+			{{ form_widget(form.name) }}
 		</div>
 	</div>
 	{{ form_widget(form.sizeX, {attr: {'style': 'display: none;'}}) }}
 	{{ form_widget(form.sizeY, {attr: {'style': 'display: none;'}}) }}
 
 	<div>
-        {{ 'add.%what%' | trans({'%what%': 'rack' | trans}) }}:
+        {{ 'Add rack' | trans }}:
 		<ul class="hoz">
 			{% for rack in racks %}
 				<li class="hoz ui-state-default eDraftRack" style="margin-left: 0px; margin-right: 10px;"><div class="draftRack" rackId="{{ rack.id }}" rackX="{{ rack.fullz }}" rackY="{{ rack.fully }}">{{ rack }}</div></li>

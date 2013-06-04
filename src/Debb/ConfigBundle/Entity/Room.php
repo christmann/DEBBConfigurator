@@ -18,6 +18,20 @@ class Room extends Dimensions
 	 */
 	private $racks;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="building", type="string", length=255, nullable=true)
+     */
+    private $building;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     */
+    private $name;
+
 	/**
 	 * Constructor
 	 */
@@ -134,4 +148,68 @@ class Room extends Dimensions
 		return $array;
 	}
 
+    /**
+     * Set building
+     *
+     * @param string $building
+     * @return Room
+     */
+    public function setBuilding($building)
+    {
+        $this->building = $building;
+        $this->setProductByNameAndBuilding();
+    
+        return $this;
+    }
+
+    /**
+     * Get building
+     *
+     * @return string 
+     */
+    public function getBuilding()
+    {
+        return $this->building;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Room
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+        $this->setProductByNameAndBuilding();
+    
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Sets the product to the name and the building
+     */
+    public function setProductByNameAndBuilding()
+    {
+        $name = array();
+        if($this->getBuilding() != null)
+        {
+            $name[] = $this->getBuilding();
+        }
+        if($this->getName() != null)
+        {
+            $name[] = $this->getName();
+        }
+        $this->setProduct(implode(' - ', $name));
+    }
 }
