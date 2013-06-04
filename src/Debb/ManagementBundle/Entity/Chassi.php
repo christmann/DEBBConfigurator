@@ -7,12 +7,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * NodeGroupDraft
+ * Chassi
  *
- * @ORM\Table(name="nodegroupdraft")
+ * @ORM\Table(name="chassi")
  * @ORM\Entity
  */
-class NodeGroupDraft extends Dimensions
+class Chassi extends Dimensions
 {
     /**
      * @var Image
@@ -62,7 +62,7 @@ class NodeGroupDraft extends Dimensions
      * Set image
      *
      * @param string $image
-     * @return NodeGroupDraft
+     * @return Chassi
      */
     public function setImage($image)
     {
@@ -85,7 +85,7 @@ class NodeGroupDraft extends Dimensions
      * Set slotsX
      *
      * @param integer $slotsX
-     * @return NodeGroupDraft
+     * @return Chassi
      */
     public function setSlotsX($slotsX)
     {
@@ -108,7 +108,7 @@ class NodeGroupDraft extends Dimensions
      * Set slotsY
      *
      * @param integer $slotsY
-     * @return NodeGroupDraft
+     * @return Chassi
      */
     public function setSlotsY($slotsY)
     {
@@ -131,7 +131,7 @@ class NodeGroupDraft extends Dimensions
      * Set heSize
      *
      * @param integer $heSize
-     * @return NodeGroupDraft
+     * @return Chassi
      */
     public function setHeSize($heSize)
     {
@@ -154,7 +154,7 @@ class NodeGroupDraft extends Dimensions
      * Set typspecification
      *
      * @param array $typspecification
-     * @return NodeGroupDraft
+     * @return Chassi
      */
     public function setTypspecification($typspecification)
     {
@@ -185,7 +185,7 @@ class NodeGroupDraft extends Dimensions
      * Set frontview
      *
      * @param boolean $frontview
-     * @return NodeGroupDraft
+     * @return Chassi
      */
     public function setFrontView($frontview)
     {

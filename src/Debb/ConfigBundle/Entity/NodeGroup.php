@@ -2,7 +2,7 @@
 
 namespace Debb\ConfigBundle\Entity;
 
-use Debb\ManagementBundle\Entity\NodeGroupDraft;
+use Debb\ManagementBundle\Entity\Chassi;
 use Debb\ManagementBundle\Entity\NodeToNodegroup;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -23,9 +23,9 @@ class NodeGroup extends Dimensions
 	private $nodes;
 
 	/**
-	 * @var NodeGroupDraft
+	 * @var Chassi
 	 *
-	 * @ORM\ManyToOne(targetEntity="Debb\ManagementBundle\Entity\NodeGroupDraft")
+	 * @ORM\ManyToOne(targetEntity="Debb\ManagementBundle\Entity\Chassi")
 	 */
 	private $draft;
 
@@ -143,10 +143,10 @@ class NodeGroup extends Dimensions
 	/**
 	 * Set draft
 	 *
-	 * @param \Debb\ManagementBundle\Entity\NodeGroupDraft $draft
+	 * @param \Debb\ManagementBundle\Entity\Chassi $draft
 	 * @return NodeGroup
 	 */
-	public function setDraft(\Debb\ManagementBundle\Entity\NodeGroupDraft $draft = null)
+	public function setDraft(\Debb\ManagementBundle\Entity\Chassi $draft = null)
 	{
 		$this->draft = $draft;
 
@@ -156,7 +156,7 @@ class NodeGroup extends Dimensions
 	/**
 	 * Get draft
 	 *
-	 * @return \Debb\ManagementBundle\Entity\NodeGroupDraft
+	 * @return \Debb\ManagementBundle\Entity\Chassi
 	 */
 	public function getDraft()
 	{

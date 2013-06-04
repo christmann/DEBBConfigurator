@@ -10,9 +10,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @author Patrick Bußmann <patrick.bussmann@christmann.info>
- * @Route("/{_locale}/management/nodegroupdraft", requirements={"_locale" = "en|de"}, defaults={"_locale" = "en"})
+ * @Route("/{_locale}/management/chassi", requirements={"_locale" = "en|de"}, defaults={"_locale" = "en"})
  */
-class NodeGroupDraftController extends CRUDController
+class ChassiController extends CRUDController
 {
 	/**
 	 * Creates a new entity
@@ -27,7 +27,7 @@ class NodeGroupDraftController extends CRUDController
 	 */
 	public function formAction(Request $request, $id = 0)
 	{
-		/* @var $item \Debb\ManagementBundle\Entity\NodeGroupDraft */
+		/* @var $item \Debb\ManagementBundle\Entity\Chassi */
 		$item = $this->getEntity($id);
 
 		$form = $this->createForm($this->getFormType($item), $item);

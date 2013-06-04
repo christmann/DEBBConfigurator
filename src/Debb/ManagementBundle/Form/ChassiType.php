@@ -5,14 +5,14 @@ namespace Debb\ManagementBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Debb\ManagementBundle\Entity\NodeGroupDraft;
+use Debb\ManagementBundle\Entity\Chassi;
 
 /**
- * Class NodeGroupDraftType
+ * Class ChassiType
  * @package Debb\ManagementBundle\Form
  * @author Patrick Bußmann <patrick.bussmann@christmann.info>
  */
-class NodeGroupDraftType extends AbstractType
+class ChassiType extends AbstractType
 {
 	/**
 	 * @param FormBuilderInterface $builder
@@ -20,7 +20,7 @@ class NodeGroupDraftType extends AbstractType
 	 */
 	public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $isNew = !array_key_exists('data', $options) || !($options['data'] instanceof NodeGroupDraft) || $options['data']->getId() == null;
+        $isNew = !array_key_exists('data', $options) || !($options['data'] instanceof Chassi) || $options['data']->getId() == null;
         $builder
             ->add('manufacturer')
             ->add('product', null, array('attr' => array('class' => 'noBreakAfterThis')))
@@ -45,7 +45,7 @@ class NodeGroupDraftType extends AbstractType
 	public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Debb\ManagementBundle\Entity\NodeGroupDraft'
+            'data_class' => 'Debb\ManagementBundle\Entity\Chassi'
         ));
     }
 
@@ -67,6 +67,6 @@ class NodeGroupDraftType extends AbstractType
 	 */
 	public function getName()
     {
-        return 'debb_managementbundle_nodegroupdrafttype';
+        return 'debb_managementbundle_chassitype';
     }
 }
