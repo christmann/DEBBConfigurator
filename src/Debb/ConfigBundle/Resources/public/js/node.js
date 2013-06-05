@@ -106,6 +106,11 @@ $(function()
                 $('#addnodetype').modal('show');
             }
         });
+        $('#addnodetype [data-dismiss="modal"]').click(function()
+        {
+            $('#debb_managementbundle_nodetypetype_name').val('');
+            $('#debb_configbundle_nodetype_type').val('');
+        });
         $('.submitNodeType').click(function(e)
         {
             e.preventDefault();
