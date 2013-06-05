@@ -46,7 +46,7 @@ class ChassisController extends CRUDController
 		return $this->render($this->resolveTemplate(__METHOD__), array(
 			'form' => $form->createView(),
 			'item' => $item,
-			'nodetypspecs' => Node::getTypes(),
+			'nodetypspecs' => $this->getManager()->createQuery('SELECT node.type FROM DebbConfigBundle:Node node WHERE node.type IS NOT NULL GROUP BY node.type')->execute(),
             'duplicated' => $duplicated
 		));
 	}

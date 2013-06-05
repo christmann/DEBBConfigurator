@@ -49,36 +49,40 @@
 			<div class="clear"></div>
 		</div>
 		<div id="node-select-box">
-			<h5 style="font-weight: normal;">{{ 'select.%what%' | trans({'%what%': 'node' | trans}) }}</h5>
+			<h5 style="font-weight: normal;">{{ 'select.%what%' | trans({'%what%': 'node' | trans}) }}<span id="nodegroupType"></span></h5>
 			<select id="node-chooser" size="16">
 				<option value="0" selected="selected">&nbsp;</option>
-				{% for node in nodes|dSort %}
-					{% set sText %}
-					{% set first = true %}
-					{% if node.manufacturer is not null %}
-						{% if first %}{% set first = false %}{% else %}<br/>{% endif %}
-						<span rel="tooltip" style="font-weight: bold;" data-original-title="{{ 'Manufacturer' | trans }}">{{ node.manufacturer }}</span>
-					{% endif %}
-					{% if node.product is not null %}
-						{% if first %}{% set first = false %}{% else %}<br/>{% endif %}
-						<span rel="tooltip" style="font-weight: bold;" data-original-title="{{ 'Product' | trans }}">{{ node.product }}</span>
-					{% endif %}
-					{% if node.model is not null %}
-						{% if first %}{% set first = false %}{% else %}<br/>{% endif %}
-						<span rel="tooltip" style="font-weight: bold;" data-original-title="{{ 'Model' | trans }}">{{ node.model }}</span>
-					{% endif %}
-					<br/>{% for component in node.components if component.active is not null %}
-					{% set transThis = 'component.' ~ component.type %}
-					{% if first %}{% set first = false %}{% else %}<br/>{% endif %}
-					{{ component.amount }} x <span rel="tooltip"
-												   data-original-title="{{ transThis | trans }}">{{ component.active }}</span>
-				{% endfor %}
-					{% endset %}
-					<option value="{{ node.id }}"
-							{% if node.image is not null %}img="{{ node.image.getFullPath | apply_filter('node_thumb') }}"{% endif %}
-							{% if node.type is not null %}nodetyp="{{ node.type }}"{% endif %}
-							text="{{ sText | e }}">
-						{{ node }}</option>
+				{% for key, nodeGroup in nodeGroups %}
+					<optgroup label="{{ key }}">
+						{% for node in nodeGroup|dSort %}
+							{% set sText %}
+							{% set first = true %}
+							{% if node.manufacturer is not null %}
+								{% if first %}{% set first = false %}{% else %}<br/>{% endif %}
+								<span rel="tooltip" style="font-weight: bold;" data-original-title="{{ 'Manufacturer' | trans }}">{{ node.manufacturer }}</span>
+							{% endif %}
+							{% if node.product is not null %}
+								{% if first %}{% set first = false %}{% else %}<br/>{% endif %}
+								<span rel="tooltip" style="font-weight: bold;" data-original-title="{{ 'Product' | trans }}">{{ node.product }}</span>
+							{% endif %}
+							{% if node.model is not null %}
+								{% if first %}{% set first = false %}{% else %}<br/>{% endif %}
+								<span rel="tooltip" style="font-weight: bold;" data-original-title="{{ 'Model' | trans }}">{{ node.model }}</span>
+							{% endif %}
+							<br/>{% for component in node.components if component.active is not null %}
+							{% set transThis = 'component.' ~ component.type %}
+							{% if first %}{% set first = false %}{% else %}<br/>{% endif %}
+							{{ component.amount }} x <span rel="tooltip"
+														   data-original-title="{{ transThis | trans }}">{{ component.active }}</span>
+							{% endfor %}
+							{% endset %}
+							<option value="{{ node.id }}"
+									{% if node.image is not null %}img="{{ node.image.getFullPath | apply_filter('node_thumb') }}"{% endif %}
+									{% if node.type is not null %}nodetyp="{{ node.type }}"{% endif %}
+									text="{{ sText | e }}">
+								{{ node }}</option>
+						{% endfor %}
+					</optgroup>
 				{% endfor %}
 			</select>
 

@@ -38,6 +38,12 @@ class NodeGroupController extends XMLController
 	{
 		$item = $this->getEntity($id);
 		$nodes = $this->getEntities('DebbConfigBundle:Node');
+		$nodeGroups = array();
+		foreach($nodes as $node)
+		{
+			$nodeGroups[$node->getType()][] = $node;
+		}
+		ksort($nodeGroups);
 
 		$form = $this->createForm($this->getFormType($item), $item);
 		if ($request->getMethod() == 'POST')
@@ -54,7 +60,7 @@ class NodeGroupController extends XMLController
 		return $this->render($this->resolveTemplate(__METHOD__), array(
 				'form' => $form->createView(),
 				'item' => $item,
-				'nodes' => $nodes
+				'nodeGroups' => $nodeGroups
 			));
 	}
 

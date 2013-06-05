@@ -28,12 +28,13 @@ $(function () {
 		$('#node-chooser').change();
 		$('.adopt').show();
 		$('.adopt').attr('field', field);
-		var typspec = getFieldTyp(parseInt($(this).parents('.node').find('input[id$="_field"]:first').val()));
+		var typspec = getFieldTyp($(this).parents('.node').find('input[id$="_field"]:first').val());
+        $('#nodegroupType').html(' (' + Translator.get('Type') + ' ' + typspec + ')');
 		$('#node-chooser option').each(function()
 		{
 			if(typeof($(this).attr('nodetyp')) != 'undefined')
 			{
-				if(parseInt($(this).attr('nodetyp')) != typspec && typspec >= 0)
+				if($(this).attr('nodetyp') != typspec && typspec != '')
 				{
 					$(this).prop('disabled', true).css('color', '#BBB');
 				}
@@ -79,6 +80,7 @@ $(function () {
 		$('#node-chooser').change();
 		$('.adopt').hide();
         $('#node-chooser option').prop('disabled', false).css('color', '#555');
+        $('#nodegroupType').html('');
 		updateNodes();
 		e.preventDefault();
 	});
@@ -120,5 +122,5 @@ function getFreeId(name, id) {
 function getFieldTyp(field)
 {
 	var currentSpecifications = $('#debb_configbundle_nodegrouptype_draft option:selected').length > 0 && typeof($('#debb_configbundle_nodegrouptype_draft option:selected').attr('typspecs')) != 'undefined' ? $.parseJSON($('#debb_configbundle_nodegrouptype_draft option:selected').attr('typspecs')) : [];
-	return currentSpecifications != null && currentSpecifications.length > field && field >= 0 ? parseInt(currentSpecifications[field]) : -1;
+	return currentSpecifications != null && currentSpecifications.length > field && field >= 0 ? currentSpecifications[field] : '';
 }
