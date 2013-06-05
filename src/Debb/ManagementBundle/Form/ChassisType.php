@@ -33,7 +33,7 @@ class ChassisType extends AbstractType
 			->add('slotsY', 'choice', array('choices' => $this->getSlotsAmount(), 'empty_value' => false, 'attr' => array('style' => 'width: 223px;'), 'disabled' => !$isNew))
             ->add('heSize', 'choice', array('choices' => $this->getSlotsAmount(), 'empty_value' => false, 'attr' => array('style' => 'width: 223px;', 'class' => 'noBreakAfterThis'), 'disabled' => !$isNew))
 			->add('frontView', 'choice', array('choices' => array(0 => 'Top', 1 => 'Front'), 'empty_value' => false, 'attr' => array('style' => 'width: 223px;'), 'label' => 'View', 'disabled' => !$isNew))
-            ->add('image', 'plupload')
+            ->add('image', 'plupload', array('placeholder' => true))
             ->add('spaceLeft', 'hidden', array('required' => false, 'disabled' => !$isNew))
             ->add('spaceTop', 'hidden', array('required' => false, 'disabled' => !$isNew))
             ->add('spaceRight', 'hidden', array('required' => false, 'disabled' => !$isNew))
