@@ -98,6 +98,23 @@ $(function()
 			}
 			e.preventDefault();
 		});
+        $('#debb_configbundle_nodetype_type').change(function()
+        {
+            if($(this).val() == -1)
+            {
+                $('#debb_managementbundle_nodetypetype_name').val('');
+                $('#addnodetype').modal('show');
+            }
+        });
+        $('.submitNodeType').click(function(e)
+        {
+            e.preventDefault();
+
+            var val = $('#debb_managementbundle_nodetypetype_name').val();
+            $('#debb_configbundle_nodetype_type option:last').before('<option value="' + val + '">' + val + '</option>');
+            $('#debb_configbundle_nodetype_type').val(val);
+            $('#addnodetype').modal('hide');
+        });
 		updateComponents();
 	});
 

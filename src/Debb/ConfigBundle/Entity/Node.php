@@ -43,9 +43,9 @@ class Node extends Dimensions
 	private $stlFile;
 
 	/**
-	 * @var integer
+	 * @var string
 	 *
-     * @ORM\ManyToOne(targetEntity="Debb\ManagementBundle\Entity\NodeType", cascade={"all"})
+     * @ORM\Column(name="type", type="string", length=4, nullable=true)
 	 */
 	private $type;
 
@@ -246,10 +246,10 @@ class Node extends Dimensions
     /**
      * Set type
      *
-     * @param \Debb\ManagementBundle\Entity\NodeType $type
+     * @param string $type
      * @return Node
      */
-    public function setType(\Debb\ManagementBundle\Entity\NodeType $type = null)
+    public function setType($type)
     {
         $this->type = $type;
     
@@ -259,7 +259,7 @@ class Node extends Dimensions
     /**
      * Get type
      *
-     * @return \Debb\ManagementBundle\Entity\NodeType 
+     * @return string 
      */
     public function getType()
     {

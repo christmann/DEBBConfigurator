@@ -94,6 +94,7 @@ class NodeController extends XMLController
 
 		return $this->render($this->resolveTemplate(__METHOD__), array(
 				'form' => $form->createView(),
+				'nodeTypes' => $this->getManager()->createQuery('SELECT node.type FROM DebbConfigBundle:Node node WHERE node.type IS NOT NULL GROUP BY node.type')->execute(),
 				'item' => $item
 			));
 	}

@@ -43,7 +43,7 @@ class NodeType extends AbstractType
             ->add('image', 'plupload', array('required' => false, 'label' => 'select image file'))
             ->add('vrmlFile', 'plupload', array('required' => false, 'filter' => array('vrml,wrl' => 'VRML'), 'label' => 'select vrml file'))
             ->add('stlFile', 'plupload', array('required' => false, 'filter' => array('stl' => 'STL'), 'label' => 'select stl file'))
-			->add('type')
+			->add('type', 'hidden', array('required' => false))
         ;
     }
 

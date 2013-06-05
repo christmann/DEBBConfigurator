@@ -59,21 +59,6 @@
             <div class="row-fluid">{{ form_widget(form.image) }}</div>
 		</div>
         <div class="uploadVrl">
-            {# <div class="row">
-                <div class="span5" style="text-align: right; font-weight: bold;">
-                    {{ 'Dimensions' | trans }}:
-                </div>
-                <div class="span7" style="text-align: left;">
-                    {% spaceless %}
-                        <span id="sizex">{{ form.sizeX.vars.data }}</span> mm
-                        <input type="hidden" name="debb_configbundle_nodetype[sizeX]" id="debb_configbundle_nodetype_sizeX" value="{{ form.sizeX.vars.data }}" />
-                        x <span id="sizey">{{ form.sizeY.vars.data }}</span> mm
-                        <input type="hidden" name="debb_configbundle_nodetype[sizeY]" id="debb_configbundle_nodetype_sizeY" value="{{ form.sizeY.vars.data }}" />
-                        x <span id="sizez">{{ form.sizeZ.vars.data }}</span> mm
-                        <input type="hidden" name="debb_configbundle_nodetype[sizeZ]" id="debb_configbundle_nodetype_sizeZ" value="{{ form.sizeZ.vars.data }}" />
-                    {% endspaceless %}
-                </div>
-            </div> #}
             <div class="row-fluid" style="font-weight: bold; padding-left: 5px;">
                 {{ '3D model' | trans }}
             </div>
@@ -86,8 +71,40 @@
         </div>
 		<div class="span9" style="border-left: 1px solid #DFDFDF; padding-left: 5px;">
             {% set topForm = block('topForm') %}
-            <div style="margin-left: 6px;">{{ form_rest(form) }}</div>
+            <div style="margin-left: 6px;">
+	            {{ form.type.setRendered() | default() }}
+	            {{ form_rest(form) }}
+	            <div>
+		            <label for="{{ form.type.vars.id }}">Type</label>
+		            {{ form_errors(form.type) }}
+		            <select name="{{ form.type.vars.full_name }}" id="{{ form.type.vars.id }}">
+			            <option value="">&nbsp;</option>
+			            {% for nodeType in nodeTypes %}
+				            <option value="{{ nodeType.type }}"{% if form.type.vars.data == nodeType.type %} selected="selected"{% endif %}>{{ nodeType.type }}</option>
+			            {% endfor %}
+			            <option value="-1">{{ 'new' | trans }}</option>
+		            </select>
+	            </div>
+            </div>
             {{ topForm | raw }}
+		</div>
+	</div>
+	<div id="addnodetype" class="modal hide">
+		<div class="modal-header">
+			<button data-dismiss="modal" class="close" type="button">×</button>
+			<h3>{{ 'add new node type' | trans }}</h3>
+		</div>
+		<div action="/debbconfig/web/app_dev.php/en/management/nodetype/form" class="modal-body" id="debb_managementbundle_nodetypetype">
+			<label class="required" for="debb_managementbundle_nodetypetype_name">Name</label>
+			<input type="text" maxlength="4" required="required" name="debb_managementbundle_nodetypetype[name]" id="debb_managementbundle_nodetypetype_name">
+		</div>
+		<div class="modal-footer">
+			<a data-dismiss="modal" class="btn" href="#">
+				{{ 'localdev_admin.actions.close'|trans({}, 'crud') }}
+			</a>
+			<a class="btn btn-primary submitNodeType" href="#">
+				{{ 'localdev_admin.actions.save'|trans({}, 'crud') }}
+			</a>
 		</div>
 	</div>
 {% endblock %}
