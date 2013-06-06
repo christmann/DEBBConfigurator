@@ -173,7 +173,7 @@ class Base
 				$res[] = '(' . $this->getCapacity() . ' MB)';
 			}
 		}
-		return substr(implode(' ', $res), 0, 60);
+		return implode(' ', $res);
 	}
 
 	/**
