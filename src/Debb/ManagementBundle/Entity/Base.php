@@ -25,21 +25,21 @@ class Base
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="manufacturer", type="string", length=20, nullable=true)
+	 * @ORM\Column(name="manufacturer", type="string", length=255, nullable=true)
 	 */
 	private $manufacturer;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="product", type="string", length=20, nullable=true)
+	 * @ORM\Column(name="product", type="string", length=255, nullable=true)
 	 */
 	private $product;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="model", type="string", length=20, nullable=true)
+	 * @ORM\Column(name="model", type="string", length=255, nullable=true)
 	 */
 	private $model;
 
@@ -173,7 +173,7 @@ class Base
 				$res[] = '(' . $this->getCapacity() . ' MB)';
 			}
 		}
-		return implode(' ', $res);
+		return substr(implode(' ', $res), 0, 60);
 	}
 
 	/**
