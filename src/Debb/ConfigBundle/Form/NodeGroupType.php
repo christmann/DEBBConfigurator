@@ -41,7 +41,8 @@ class NodeGroupType extends AbstractType
 				'required' => false,
 			))
 			->add('draft', 'entity', array(
-				'class' => 'DebbManagementBundle:Chassis'
+				'class' => 'DebbManagementBundle:Chassis',
+				'label' => 'Chassis'
 			))
         ;
     }

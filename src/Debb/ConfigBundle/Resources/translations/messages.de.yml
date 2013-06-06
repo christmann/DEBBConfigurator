@@ -77,20 +77,20 @@ Description: Beschreibung
 Socket: Sockel
 Connections: Verbindungen
 Component: Komponente
-Maxpower: maximale Leistung [Watt]
-Maxclockspeed: Maximale Taktrate [MHz]
-Maxcoolingcapacity: Maximale Kühlleistung
-Maxairthroughput: Maximaler Luftdurchsatz [m³/h]
-Maxwaterthroughput: Maximaler Wasserdurchsatz [l/h]
-Totaloutputpower: Gesamt-Ausgangsleistung [Watt]
+Max power: maximale Leistung [Watt]
+Max clock speed: Maximale Taktrate [MHz]
+Max cooling capacity: Maximale Kühlleistung
+Max air throughput: Maximaler Luftdurchsatz [m³/h]
+Max water throughput: Maximaler Wasserdurchsatz [l/h]
+Total output power: Gesamt-Ausgangsleistung [Watt]
 Capacity: Kapazität [MByte]
 processors: Prozessoren
 mainboards: Mainboards
 memory: Speicher
 Efficiency: Typische Effizienz [%]
 Debbcomponentsxml: DEBBComponents.xml
-Slotsx: Slots Horizontal
-Slotsy: Slots Vertikal
+Slots x: Slots Horizontal
+Slots y: Slots Vertikal
 Hesize: Höhe [RU]
 Draft: Entwurf
 View: Ansicht
@@ -99,6 +99,12 @@ Ziparchive: ZIP Archiv
 archive: Archiv
 Scale: Maßstab
 Node type: Knotentyp
+upload node image: Upload node bild
+upload chassis image: Upload chassis bild
+upload vrml model: Upload VRML model
+upload stl model: Upload STL model
+upload zip file: Upload ZIP datei
+new: - Neu
 
 # help
 help:

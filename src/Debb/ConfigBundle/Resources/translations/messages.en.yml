@@ -72,12 +72,12 @@ Description: Description
 Socket: Socket type
 Connections: Connections
 Component: Component
-Maxpower: Maximum power usage [Watt]
-Maxclockspeed: Maximum clock speed [MHz]
-Maxcoolingcapacity: Maximum cooling capacity
-Maxairthroughput: Max air throughput [m³/h]
-Maxwaterthroughput: Max water throughput [l/h]
-Totaloutputpower: Total output power [Watt]
+Max power: Maximum power usage [Watt]
+Max clock speed: Maximum clock speed [MHz]
+Max cooling capacity: Maximum cooling capacity
+Max air throughput: Max air throughput [m³/h]
+Max water throughput: Max water throughput [l/h]
+Total output power: Total output power [Watt]
 Capacity: Capacity [MByte]
 processors: Processors
 mainboards: Mainboards
@@ -86,15 +86,21 @@ power supply: Power supply
 Efficiency: Typical efficiency [%]
 power supplies: Power supplies
 Debbcomponentsxml: DEBBComponents.xml
-Slotsx: Slot count horizontal
-Slotsy: Slot count vertical
-Hesize: Height [RU]
+Slots x: Slot count horizontal
+Slots y: Slot count vertical
+He size: Height [RU]
 Draft: Draft
 nospace: Not enough space..
 Ziparchive: ZIP archive
 archive: Archive
 Scale: Scale
 Node type: Node type
+upload node image: Upload node image
+upload chassis image: Upload chassis image
+upload vrml model: Upload VRML model
+upload stl model: Upload STL model
+upload zip file: Upload ZIP file
+new: - New
 
 # help
 help:
