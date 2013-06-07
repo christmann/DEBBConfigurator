@@ -184,11 +184,11 @@ abstract class XMLController extends CRUDController
 									$i++;
 								}
 							}
-							$nodesForThatNodeGroup[] = $partReference[1];
+							$nodesForThatNodeGroup[] = '#' . $partReference[1];
 						}
 					}
 
-					$productRevisionView->addAttribute('partRef', implode(' ', $nodesForThatNodeGroup));
+					$productRevisionView->addAttribute('instanceRefs', implode(' ', $nodesForThatNodeGroup));
 				}
 			}
 
