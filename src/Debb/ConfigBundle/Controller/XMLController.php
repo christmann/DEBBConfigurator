@@ -119,7 +119,6 @@ abstract class XMLController extends CRUDController
 		$productDef->addAttribute('id', 'id1');
 		$instanceGraph = $productDef->addChild('InstanceGraph');
 		$instanceGraph->addAttribute('id', 'id2');
-		$instanceGraph->addAttribute('rootRefs', 'inst' . sprintf('%02d', $item->getId()) . '_1');
 
 		if($item instanceof Room)
 		{
@@ -153,7 +152,7 @@ abstract class XMLController extends CRUDController
 					$nodeGroupsForThatRack[] = 'id' . sprintf('%04d', $id);
 
 					$productRevisionView = $this->addPlmXmlProductRevisionView(
-						$instanceGraph, 'view' . sprintf('%04d', $id) . '_2', 'DefNodeGroup' . sprintf('%04d', $id), array(), 'assembly', 'VRML', '.\objects\file.wrl', $nodeGroup->getNodeGroup()->getComponentId(), 'NodeGroup'
+						$instanceGraph, 'view' . sprintf('%04d', $id) . '_2', 'DefNodeGroup' . sprintf('%04d', $id), array(), 'assembly', null, null, $nodeGroup->getNodeGroup()->getComponentId(), 'NodeGroup'
 					);
 
 					/* @var $nodeGroup NodegroupToRack */
@@ -184,7 +183,7 @@ abstract class XMLController extends CRUDController
 									$i++;
 								}
 							}
-							$nodesForThatNodeGroup[] = '#' . $partReference[1];
+							$nodesForThatNodeGroup[] = '' . $partReference[1];
 						}
 					}
 
@@ -239,10 +238,6 @@ abstract class XMLController extends CRUDController
 		if ($name != null)
 		{
 			$productInstance->addAttribute('name', $name . '_' . $iId); // example: Node7
-		}
-		if ($partRef != null)
-		{
-			$productInstance->addAttribute('partRef', $partRef); // example: #id71_01_1
 		}
 
 		if ($hostname != null || $transform != null)
@@ -374,7 +369,7 @@ abstract class XMLController extends CRUDController
 	 */
 	public function convertIdToRevId($id)
 	{
-		return str_replace('id', 'id10', $id);
+		return str_replace('view', 'rep', $id);
 	}
 
 	/**
@@ -470,7 +465,7 @@ abstract class XMLController extends CRUDController
 					$controller = new NodeController();
 					$controller->setContainer($this->getContainer());
 					$zip->addFromString('Node_'.$node->getComponentId().'.xml', $controller->getDebbXml($node->getId(), true));
-					if ($node->getImage() != null)
+					if ($node->getImage() != null && file_exists($node->getImage()->getFullPath()))
 					{
 						$zip->addFile($node->getImage()->getFullPath(), 'pics/' . $node->getComponentId() . '.' . $node->getImage()->getExtension());
 					}
