@@ -153,7 +153,7 @@ abstract class XMLController extends CRUDController
 					$nodeGroupsForThatRack[] = 'id' . sprintf('%04d', $id);
 
 					$productRevisionView = $this->addPlmXmlProductRevisionView(
-						$instanceGraph, 'id' . sprintf('%04d', $id), 'DefNodeGroup' . sprintf('%04d', $id), array(), 'assembly', 'VRML', '.\objects\file.wrl', $nodeGroup->getNodeGroup()->getComponentId(), 'NodeGroup'
+						$instanceGraph, 'view' . sprintf('%04d', $id) . '_2', 'DefNodeGroup' . sprintf('%04d', $id), array(), 'assembly', 'VRML', '.\objects\file.wrl', $nodeGroup->getNodeGroup()->getComponentId(), 'NodeGroup'
 					);
 
 					/* @var $nodeGroup NodegroupToRack */
@@ -168,7 +168,7 @@ abstract class XMLController extends CRUDController
 						if ($node->getNode() != null)
 						{
 							$partReference = $this->addPlmXmlProductInstance(
-								$instanceGraph, 'id' . sprintf('%04d', $id) . '_2', 'DefNode' . sprintf('%04d', $id), 'id' . sprintf('%04d', $id), $node->getNode()->getHostname(), '0 1 0 0 -1 0 0 0 0 0 1 0 '.$x.' '.$y.' 0.005 1' // position
+								$instanceGraph, 'inst' . sprintf('%04d', $id) . '_2', 'DefNode' . sprintf('%04d', $id), 'id' . sprintf('%04d', $id), $node->getNode()->getHostname(), '0 1 0 0 -1 0 0 0 0 0 1 0 '.$x.' '.$y.' 0.005 1' // position
 							);
 							if($draft != null)
 							{
@@ -212,7 +212,7 @@ abstract class XMLController extends CRUDController
 	 * Adds a ProductInstance entry to the SimpleXMLElement $xml [PLMXML]
 	 *
 	 * @param \SimpleXMLElement $xml the SimpleXMLElement
-	 * @param string $id the id of the ProductRevisionView
+	 * @param string $id the id of the ProductInstance
 	 * @param null|string optional $name the name of this product instance
 	 * @param null|string optional $partRef the part reference of this product instance
 	 * @param null|string optional $hostname the hostname of this product instance
@@ -248,7 +248,7 @@ abstract class XMLController extends CRUDController
 		if ($hostname != null || $transform != null)
 		{
 			$userData = $productInstance->addChild('UserData');
-			$userData->addAttribute('id', str_replace('inst', 'id', $id) . '_1'); // example: id71_01_7_1
+			$userData->addAttribute('id', str_replace('view', 'userdata', $id) . '_1'); // example: id71_01_7_1
 
 			if ($hostname != null)
 			{
@@ -284,6 +284,20 @@ abstract class XMLController extends CRUDController
 	public function addPlmXmlProductRevisionView(\SimpleXMLElement &$xml, $id, $name = null, $instanceRefs = array(), $type = null, $format = 'VRML', $location = '.\objects\\', $DEBBComponentId = null, $DEBBLevel = null)
 	{
 		$productRevisionView = $xml->addChild('ProductRevisionView');
+
+		/* Generate single id */
+		$isId = explode('_', $id);
+		$iId = (int) $isId[count($isId) - 1];
+		unset($isId[count($isId) - 1]);
+		$exId = implode('_', $isId);
+		$id = $exId . '_' . $iId;
+
+		while (count($xml->xpath('*[@id="' . $id . '"]/@id')) > 0)
+		{
+			$iId++;
+			$id = $exId . '_' . $iId;
+		}
+
 		$productRevisionView->addAttribute('id', $id); // example: id84_04_1
 		if ($name != null)
 		{
