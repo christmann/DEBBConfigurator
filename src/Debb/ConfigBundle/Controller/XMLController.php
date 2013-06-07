@@ -446,7 +446,7 @@ abstract class XMLController extends CRUDController
 			}
 
 			/* loop every array (which we need!) and generate files */
-			$zip->addEmptyDir('img');
+			$zip->addEmptyDir('pics');
 			$zip->addEmptyDir('objects');
 			foreach($nodes as $node)
 			{
@@ -458,7 +458,7 @@ abstract class XMLController extends CRUDController
 					$zip->addFromString('Node_'.$node->getComponentId().'.xml', $controller->getDebbXml($node->getId(), true));
 					if ($node->getImage() != null)
 					{
-						$zip->addFile($node->getImage()->getFullPath(), 'img/' . $node->getComponentId() . '.' . $node->getImage()->getExtension());
+						$zip->addFile($node->getImage()->getFullPath(), 'pics/' . $node->getComponentId() . '.' . $node->getImage()->getExtension());
 					}
 					if ($node->getStlFile() != null)
 					{
