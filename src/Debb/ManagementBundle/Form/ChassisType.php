@@ -26,14 +26,14 @@ class ChassisType extends AbstractType
             $isNew = (bool) $options['attr']['duplicated'];
         }
         $builder
-            ->add('manufacturer')
-            ->add('product', null, array('attr' => array('class' => 'noBreakAfterThis')))
-            ->add('model')
-			->add('slotsX', 'choice', array('choices' => $this->getSlotsAmount(), 'empty_value' => false, 'attr' => array('style' => 'width: 223px;', 'class' => 'noBreakAfterThis'), 'disabled' => !$isNew))
-			->add('slotsY', 'choice', array('choices' => $this->getSlotsAmount(), 'empty_value' => false, 'attr' => array('style' => 'width: 223px;'), 'disabled' => !$isNew))
-            ->add('heSize', 'choice', array('choices' => $this->getSlotsAmount(), 'empty_value' => false, 'attr' => array('style' => 'width: 223px;', 'class' => 'noBreakAfterThis'), 'disabled' => !$isNew))
-			->add('frontView', 'choice', array('choices' => array(0 => 'Top', 1 => 'Front'), 'empty_value' => false, 'attr' => array('style' => 'width: 223px;'), 'label' => 'View', 'disabled' => !$isNew))
-            ->add('image', 'plupload', array('placeholder' => true, 'label' => 'upload chassis image'))
+	        ->add('manufacturer', null, array('required' => false))
+	        ->add('product', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false))
+	        ->add('model', null, array('required' => false))
+			->add('slotsX', 'choice', array('choices' => $this->getSlotsAmount(), 'empty_value' => false, 'attr' => array('class' => 'noBreakAfterThis'), 'disabled' => !$isNew))
+			->add('slotsY', 'choice', array('choices' => $this->getSlotsAmount(), 'empty_value' => false, 'disabled' => !$isNew))
+            ->add('heSize', 'choice', array('choices' => $this->getSlotsAmount(), 'empty_value' => false, 'attr' => array('class' => 'noBreakAfterThis'), 'disabled' => !$isNew))
+			->add('frontView', 'choice', array('choices' => array(0 => 'Top', 1 => 'Front'), 'empty_value' => false, 'label' => 'View', 'disabled' => !$isNew))
+            ->add('image', 'plupload', array('placeholder' => true, 'label' => 'upload chassis image', 'bootstrap' => true))
             ->add('spaceLeft', 'hidden', array('required' => false, 'disabled' => !$isNew))
             ->add('spaceTop', 'hidden', array('required' => false, 'disabled' => !$isNew))
             ->add('spaceRight', 'hidden', array('required' => false, 'disabled' => !$isNew))

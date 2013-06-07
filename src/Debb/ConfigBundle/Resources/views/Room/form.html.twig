@@ -11,7 +11,6 @@
 	<style>
 		ul.hoz { list-style-type: none; margin: 0; padding: 0; margin-bottom: 10px; }
 		li.hoz { margin: 5px; padding: 5px; width: 150px; }
-        .eDraftRack { float: left; cursor: pointer; }
 	</style>
 {% endblock %}
 
@@ -34,48 +33,33 @@
 {% block contentExtras %} style="width: {{ rackSizeX + 21 }}px;"{% endblock %}
 
 {% block content %}
-	<div class="row-fluid">
-		<div class="span2" style="text-align: right; width: 12.53%;">
-			{{ 'Building' | trans }}:
+	<div style="margin-left: 6px;">
+		{{ form_row(form.building) }}
+		{{ form_row(form.name) }}
+		<div>
+			{{ 'Add rack' | trans }}:
+			<ul class="hoz">
+				{% for rack in racks %}
+					<li class="hoz ui-state-default eDraftRack" style="margin-left: 0px; margin-right: 10px;"><div class="draftRack" rackId="{{ rack.id }}" rackX="{{ rack.fullx }}" rackZ="{{ rack.fullz }}">{{ rack }}</div></li>
+				{% endfor %}
+			</ul>
 		</div>
-		<div class="span4">
-			{{ form_widget(form.building) }}
-		</div>
-	</div>
-	<div class="row-fluid">
-		<div class="span2" style="text-align: right; width: 12.53%;">
-			{{ 'Name' | trans }}:
-		</div>
-		<div class="span4">
-			{{ form_widget(form.name) }}
-		</div>
-	</div>
-	{{ form_widget(form.sizeX, {attr: {'style': 'display: none;'}}) }}
-	{{ form_widget(form.sizeY, {attr: {'style': 'display: none;'}}) }}
-
-	<div>
-        {{ 'Add rack' | trans }}:
-		<ul class="hoz">
-			{% for rack in racks %}
-				<li class="hoz ui-state-default eDraftRack" style="margin-left: 0px; margin-right: 10px;"><div class="draftRack" rackId="{{ rack.id }}" rackX="{{ rack.fullx }}" rackZ="{{ rack.fullz }}">{{ rack }}</div></li>
-			{% endfor %}
-		</ul>
-	</div>
-	<div class="clear"></div>
-	<div id="rackSize">{{ 'size' | trans }}: <span id="rackSizeX">{{ (rackSizeX / 100.0) | number_format(2, '.', '') }}</span>m x <span id="rackSizeY">{{ (rackSizeY / 100.0) | number_format(2, '.', '') }}</span>m</div>
-	<div id="rackContainer" style="position: relative; width: {{ rackSizeX }}px; height: {{ rackSizeY }}px; border: 2px solid #000; background: url('{{ asset('bundles/debbconfig/img/room-grid.png') }}') repeat scroll 1px {{ rackSizeY + 1 }}px transparent;" data-prototype="{{ form_row(form.racks.vars.prototype) | escape }}">
-		{% for rack in form.racks %}
-			<div class="rackG" posx="{{ rack.vars.data.posx }}" posy="{{ rack.vars.data.posy }}"
-				 rackId="{{ rack.vars.data.id }}" rackX="{{ rack.vars.data.rack.fullx }}" rackZ="{{ rack.vars.data.rack.fullz }}">{{ rack.vars.data.rack }} - <a href="#" class="removeRack"><i class="icon-trash"></i></a>
-				<div class="rackGform" style="display: none;">
-					{{ form_widget(rack) }}
+		<div class="clear"></div>
+		<div id="rackSize">{{ 'size' | trans }}: <span id="rackSizeX">{{ (rackSizeX / 100.0) | number_format(2, '.', '') }}</span>m x <span id="rackSizeY">{{ (rackSizeY / 100.0) | number_format(2, '.', '') }}</span>m</div>
+		<div id="rackContainer" style="position: relative; width: {{ rackSizeX }}px; height: {{ rackSizeY }}px; border: 2px solid #000; background: url('{{ asset('bundles/debbconfig/img/room-grid.png') }}') repeat scroll 1px {{ rackSizeY + 1 }}px transparent;" data-prototype="{{ form_row(form.racks.vars.prototype) | escape }}">
+			{% for rack in form.racks %}
+				<div class="rackG" posx="{{ rack.vars.data.posx }}" posy="{{ rack.vars.data.posy }}"
+				     rackId="{{ rack.vars.data.id }}" rackX="{{ rack.vars.data.rack.fullx }}" rackZ="{{ rack.vars.data.rack.fullz }}"><a href="#" class="removeRack"><i class="icon-trash"></i></a> - {{ rack.vars.data.rack }}
+					<div class="rackGform" style="display: none;">
+						{{ form_widget(rack) }}
+					</div>
 				</div>
-			</div>
-		{% endfor %}
-	</div>
-	<div class="clear"></div>
-	<div id="rackScale"><i class="icon-arrow-left"></i> {{ 'Scale' | trans }} 1m <i class="icon-arrow-right"></i></div>
+			{% endfor %}
+		</div>
+		<div class="clear"></div>
+		<div id="rackScale"><i class="icon-arrow-left"></i> {{ 'Scale' | trans }} 1m <i class="icon-arrow-right"></i></div>
 
-	{{ form_widget(form._token) }}
-	<div class="clear"></div>
+		{{ form_widget(form._token) }}
+		<div class="clear"></div>
+	</div>
 {% endblock %}

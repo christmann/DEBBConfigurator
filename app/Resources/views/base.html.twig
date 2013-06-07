@@ -27,7 +27,7 @@
 	{% endblock %}
 </head>
 <body>
-<div id="wrapper">
+<div id="wrapper" class="navbar">
 	<div id="main-menu">
 		<div id="app-logo"></div>
 	</div>
@@ -46,14 +46,14 @@
 
 <div class="container">
     <div class="row-fluid">
-        <div class="span3" style="margin-left: -15px;">
+        <div class="span3" style="max-width: 174px;">
             <div id="config-menu">
                 {% block menu %}
                     {{ knp_menu_render('main') }}
                 {% endblock %}
             </div>
         </div>
-        <div class="span9" style="margin-left: -53px;">
+        <div class="span9" style="">
             {% block form_header %}{% endblock %}
             <div id="content"{% block contentExtras %}{% endblock %}>
                 {% block flashes %}

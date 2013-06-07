@@ -20,9 +20,9 @@ class PowerSupplyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('manufacturer')
-            ->add('product', null, array('attr' => array('class' => 'noBreakAfterThis')))
-            ->add('model')
+	        ->add('manufacturer', null, array('required' => false))
+	        ->add('product', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false))
+	        ->add('model', null, array('required' => false))
             ->add('efficiency', 'text', array('attr' => array('class' => 'noBreakAfterThis')))
             ->add('totalOutputPower')
         ;

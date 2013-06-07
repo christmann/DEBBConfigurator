@@ -17,8 +17,8 @@ body
 
 #content
 {
-	width:      921px;
-	min-width:  921px;
+	width:      938px;
+	min-width:  938px;
 	margin-top: 19px;
 	padding:    28px 22px 28px 22px;
 	color:      #555555;
@@ -29,7 +29,7 @@ body
 .buttonbar
 {
 	color:        #c2d1d8;
-	margin-right: -21px;
+	margin-right: -23px;
 	margin-top:   43px;
 	position:     relative;
 }
@@ -154,11 +154,8 @@ table tr td
 
 #config-menu
 {
-	float:        left;
-	width:        182px;
-	margin-right: 18px;
-	margin-left:  18px;
-	margin-top:   19px;
+	width:      182px;
+	margin-top: 19px;
 }
 
 #config-menu > ul:not(.menu_level_1)
@@ -269,7 +266,7 @@ table tr td
 
 #config-menu a
 {
-	color: #000;
+	color:     #000000;
 	font-size: 15px;
 }
 
@@ -468,7 +465,7 @@ table tr td
 	margin-bottom: 20px;
 }
 
-#grouptitle-box input[type=text]
+input[type=text]
 {
 	width: 360px;
 }
@@ -742,6 +739,11 @@ label
 	width:  200px;
 }
 
+select
+{
+	width: 378px;
+}
+
 .component input
 {
 	height: 17px;
@@ -958,7 +960,7 @@ div[class*="noBreakAfterThis"]
 .bigTextbox
 {
 	height: 200px;
-	width:  466px;
+	width:  363px;
 }
 
 .node_image
@@ -975,9 +977,21 @@ div[class*="noBreakAfterThis"]
 	border:           1px solid #777777;
 	position:         absolute;
 	background-color: #ffffff;
+	overflow:         hidden;
+}
+
+.eDraftRack
+{
+	float:         left;
+	cursor:        pointer;
+	height:        60px;
+	overflow:      hidden;
+	padding-right: 5px;
+	word-wrap:     break-word;
+	line-height:   21px;
 }
 
 .removeRack
 {
-	color: #555;
+	color: #555555;
 }

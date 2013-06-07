@@ -20,9 +20,9 @@ class ProcessorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('manufacturer', 'text')
-            ->add('product', 'text', array('attr' => array('class' => 'noBreakAfterThis')))
-            ->add('model', 'text')
+	        ->add('manufacturer', null, array('required' => false))
+	        ->add('product', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false))
+	        ->add('model', null, array('required' => false))
 			->add('MaxClockSpeed', 'text')
 			->add('cores', 'text', array('attr' => array('class' => 'noBreakAfterThis')))
             ->add('tdp', 'text')

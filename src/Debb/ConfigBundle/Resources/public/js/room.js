@@ -12,15 +12,12 @@ var rackDragOpt = {
 },
 	rackDropOpt = {};
 
-function setStyleOfRack(newRack)
+function setStyleOfRack()
 {
-	if(typeof param == 'undefined')
+    var self = $(this).hasClass('draftRack') ? $(this) : $(this).find('.draftRack:first');
+	if(self.hasClass('draftRack'))
 	{
-		var newRack = $(this);
-	}
-	if(newRack.hasClass('draftRack'))
-	{
-		newRack = $(this).clone().removeClass('draftRack').addClass('rackG');
+		var newRack = self.clone().removeClass('draftRack').addClass('rackG');
 
 		var id = 0;
 		$('.rackGform').each(function()
@@ -35,12 +32,18 @@ function setStyleOfRack(newRack)
 
 		var prototype = $('#rackContainer').attr('data-prototype'),
 			newForm = prototype.replace(/__name__/g, id),
-			newFormLi = $('<div class="rackGform" style="display: none;"></div>').append($(newForm).children('div')).before(' - <a href="#" class="removeRack"><i class="icon-trash"></i></a>');
+			newFormLi = $('<div class="rackGform" style="display: none;"></div>').append($(newForm).children('div'));
 		newFormLi.find('#debb_configbundle_roomtype_racks_' + id + '_rack').val(newRack.attr('rackId'));
 		newRack.append(newFormLi);
 
 		newRack.appendTo('#rackContainer').draggable(rackDragOpt).droppable(rackDropOpt);
+
+        newRack.prepend('<a href="#" class="removeRack"><i class="icon-trash"></i></a> - ');
 	}
+    else
+    {
+        var newRack = $(this);
+    }
 	newRack.css('width', (parseFloat(newRack.attr('rackX')) <= 0 ? 99 : parseFloat(newRack.attr('rackX')) * 100 - 1) + 'px');
 	newRack.css('height', (parseFloat(newRack.attr('rackZ')) <= 0 ? 99 : parseFloat(newRack.attr('rackZ')) * 100 - 1) + 'px');
 	if(typeof newRack.attr('posx') != 'undefined')
@@ -57,8 +60,8 @@ function setStyleOfRack(newRack)
 
 function setMinimalRoomSize()
 {
-    var minX = 10;
-        minY = 10;
+    var minX = 50;
+        minY = 50;
     $('.rackG').each(function()
     {
         var thisX = $(this).position().left + $(this).width() + parseInt($(this).css('borderLeftWidth')),
@@ -77,7 +80,7 @@ function setMinimalRoomSize()
 
 $(function()
 {
-	$('.draftRack').on('click', setStyleOfRack);
+	$('.eDraftRack').on('click', setStyleOfRack);
 	// dynamic size for our room
 	$('#rackContainer').resizable({
 		grid: 10,

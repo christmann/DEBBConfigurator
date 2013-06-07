@@ -23,9 +23,9 @@ class NodeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('manufacturer')
-            ->add('product', null, array('attr' => array('class' => 'noBreakAfterThis')))
-            ->add('model')
+	        ->add('manufacturer', null, array('required' => false))
+	        ->add('product', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false))
+	        ->add('model', null, array('required' => false))
             ->add('sizeX', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis'), 'label' => 'SizeX'))
             ->add('sizeY', null, array('required' => false, 'label' => 'SizeY'))
             ->add('sizeZ', null, array('required' => false, 'label' => 'SizeZ'))
@@ -40,9 +40,9 @@ class NodeType extends AbstractType
 				'by_reference' => false,
 				'required' => false,
 			))
-            ->add('image', 'plupload', array('required' => false, 'label' => 'upload node image', 'placeholder' => true))
-            ->add('vrmlFile', 'plupload', array('required' => false, 'filter' => array('vrml,wrl' => 'VRML'), 'label' => 'upload vrml model'))
-            ->add('stlFile', 'plupload', array('required' => false, 'filter' => array('stl' => 'STL'), 'label' => 'upload stl model'))
+            ->add('image', 'plupload', array('required' => false, 'label' => 'upload node image', 'placeholder' => true, 'bootstrap' => true))
+            ->add('vrmlFile', 'plupload', array('required' => false, 'filter' => array('vrml,wrl' => 'VRML'), 'label' => 'upload vrml model', 'bootstrap' => true))
+            ->add('stlFile', 'plupload', array('required' => false, 'filter' => array('stl' => 'STL'), 'label' => 'upload stl model', 'bootstrap' => true))
 			->add('type', 'hidden', array('required' => false))
         ;
     }

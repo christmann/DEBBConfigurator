@@ -143,7 +143,7 @@ class Base
 	 */
 	public function __toString()
 	{
-		return $this->getName();
+		return $this->getFullName();
 	}
 
 	/**
@@ -151,7 +151,7 @@ class Base
 	 * 
 	 * @return string the name
 	 */
-	public function getName()
+	public function getFullName()
 	{
 		$res = array();
 		if($this->getManufacturer() != null)
@@ -195,7 +195,7 @@ class Base
 	{
 		if($this->componentId == null)
 		{
-			$name = preg_replace('#[^\d\w]#', '', $this->getName());
+			$name = preg_replace('#[^\d\w]#', '', $this->getFullName());
 			while(strlen($name) < 5)
 			{
 				$name .= substr(sha1($this->getId()), strlen($name), 5 - strlen($name));

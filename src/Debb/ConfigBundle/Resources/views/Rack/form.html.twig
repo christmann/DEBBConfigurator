@@ -1,6 +1,16 @@
 {% extends "DebbManagementBundle::form.html.twig" %}
 {% form_theme form "DebbManagementBundle::form_theme.html.twig" %}
 
+{% block stylesheets %}
+	{{ parent() }}
+	<style type="text/css">
+		input[type="text"] { width: 285px; }
+		select { width: 302px; }
+		#content { padding: 0 0 0 0 !important; }
+		.buttonbar { margin-right: -1px; margin-top: 15px; }
+	</style>
+{% endblock %}
+
 {% block javascripts %}
 	{{ parent() }}
 	{% javascripts '@DebbConfigBundle/Resources/public/js/rack.js' %}
@@ -12,11 +22,6 @@
 {% endblock %}
 
 {% block content %}
-	<style type="text/css">
-		#content {
-			padding: 0 0 0 0 !important;
-		}
-	</style>
 	<div class="rackTop">&nbsp;</div>
 	<div class="rack" data-prototype="{{ form_row(form.nodegroups.vars.prototype) | escape }}">
 		{% set formNodeGroups = form.nodegroups | reverse %}
@@ -53,7 +58,7 @@
 			</div>
 
 			<div class="rackConfig">
-				<select id="selectedNodeGroup" disabled="disabled" style="margin-right: 15px">
+				<select id="selectedNodeGroup" disabled="disabled" style="margin-right: 15px; width: 232px;">
 					<option value="" disabled="disabled" selected="selected">- {{ 'choose.%person%.%what%' | trans({'%person%': 'your' | trans, '%what%': 'node.group' | trans}) }} -</option>
 					<option id="emptyval" value="0" style="display: none;">--- {{ 'empty' | trans }} ---</option>
 					{% for nodegroup in nodegroups|dSort %}
@@ -145,7 +150,7 @@
 			</div>
 		</div>
 	</div>
+	<div class="clear"></div>
 
 	{{ form_widget(form._token) }}
-	<div class="clear"></div>
 {% endblock %}

@@ -20,9 +20,9 @@ class RackType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('manufacturer')
-            ->add('product', null, array('attr' => array('class' => 'noBreakAfterThis')))
-            ->add('model')
+	        ->add('manufacturer', null, array('required' => false))
+	        ->add('product', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false))
+	        ->add('model', null, array('required' => false))
             ->add('sizeX', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis'), 'label' => 'SizeX'))
             ->add('sizeY', null, array('required' => false, 'label' => 'SizeY'))
             ->add('sizeZ', null, array('required' => false, 'label' => 'SizeZ'))

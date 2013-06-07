@@ -20,9 +20,9 @@ class NodeGroupType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('model', null, array('required' => false))
-            ->add('manufacturer', null, array('required' => false))
-            ->add('product', null, array('required' => false))
+	        ->add('manufacturer', null, array('required' => false))
+	        ->add('product', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false))
+	        ->add('model', null, array('required' => false))
 			->add('nodes', null, array('required' => false))
             ->add('sizeX', null, array('required' => false))
             ->add('sizeY', null, array('required' => false))

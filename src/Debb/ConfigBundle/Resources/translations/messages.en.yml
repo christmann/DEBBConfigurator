@@ -101,6 +101,7 @@ upload vrml model: Upload VRML model
 upload stl model: Upload STL model
 upload zip file: Upload ZIP file
 new: - New
+add new node type: Add new node type
 
 # help
 help:

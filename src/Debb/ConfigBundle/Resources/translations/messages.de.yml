@@ -105,6 +105,7 @@ upload vrml model: Upload VRML model
 upload stl model: Upload STL model
 upload zip file: Upload ZIP datei
 new: - Neu
+add new node type: Neuen Knoten-Typ hinzufügen
 
 # help
 help:

@@ -1,6 +1,14 @@
 {% extends "DebbManagementBundle::form.html.twig" %}
 {% form_theme form "DebbManagementBundle::form_theme.html.twig" %}
 
+{% block stylesheets %}
+	{{ parent() }}
+	<style type="text/css">
+		input[type="text"] { width: 300px; }
+		select { width: 317px; }
+	</style>
+{% endblock %}
+
 {% block javascripts %}
 	{{ parent() }}
 	{% javascripts
@@ -89,7 +97,7 @@
             {{ topForm | raw }}
 		</div>
 	</div>
-	<div id="addnodetype" class="modal hide">
+	<div id="addnodetype" class="modal hide" style="width: 347px; left: 57%;">
 		<div class="modal-header">
 			<button data-dismiss="modal" class="close" type="button">×</button>
 			<h3>{{ 'add new node type' | trans }}</h3>
