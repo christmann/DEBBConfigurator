@@ -33,7 +33,7 @@
                     "Avalanche\\Bundle\\ImagineBundle": ""
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -59,7 +59,7 @@
             "source": {
                 "type": "git",
                 "url": "ssh://git@git.christmann.info/bundles/PluploadBundle.git",
-                "reference": "ec9d9b2db6d31b5cd33deabbdce173cff719c282"
+                "reference": "7feac27bb47a4e2c2e6acb85a735168074a105dd"
             },
             "require": {
                 "php": ">=5.3.3",
@@ -79,7 +79,7 @@
             ],
             "description": "plupload for symfony",
             "homepage": "http://christmann.info",
-            "time": "2013-06-05 12:22:57"
+            "time": "2013-06-07 08:05:24"
         },
         {
             "name": "doctrine/common",
@@ -379,7 +379,7 @@
                     "Imagine": "lib/"
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -548,7 +548,7 @@
                     "email": "stof@notk.org"
                 },
                 {
-                    "name": "Knplabs",
+                    "name": "KnpLabs",
                     "homepage": "http://knplabs.com"
                 },
                 {
@@ -1187,7 +1187,7 @@
                     "Psr\\Log\\": ""
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1884,12 +1884,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/Behat.git",
-                "reference": "1dcb03bf2b1112bedca1a70f7b3f3a384c2a5cff"
+                "reference": "e099821571950da399a8a6561283665106fdd81a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/Behat/zipball/1dcb03bf2b1112bedca1a70f7b3f3a384c2a5cff",
-                "reference": "1dcb03bf2b1112bedca1a70f7b3f3a384c2a5cff",
+                "url": "https://api.github.com/repos/Behat/Behat/zipball/e099821571950da399a8a6561283665106fdd81a",
+                "reference": "e099821571950da399a8a6561283665106fdd81a",
                 "shasum": ""
             },
             "require": {
@@ -1943,7 +1943,7 @@
                 "Behat",
                 "Symfony2"
             ],
-            "time": "2013-05-23 13:47:04"
+            "time": "2013-06-07 13:39:16"
         },
         {
             "name": "behat/gherkin",
@@ -2176,12 +2176,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/MinkSelenium2Driver.git",
-                "reference": "v1.1.1"
+                "reference": "d385cbab655b175914e928032442131924ff6c89"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/MinkSelenium2Driver/zipball/v1.1.1",
-                "reference": "v1.1.1",
+                "url": "https://api.github.com/repos/Behat/MinkSelenium2Driver/zipball/d385cbab655b175914e928032442131924ff6c89",
+                "reference": "d385cbab655b175914e928032442131924ff6c89",
                 "shasum": ""
             },
             "require": {
@@ -2226,7 +2226,7 @@
                 "testing",
                 "webdriver"
             ],
-            "time": "2013-06-02 19:09:45"
+            "time": "2013-06-06 13:26:24"
         },
         {
             "name": "behat/symfony2-extension",
@@ -2234,12 +2234,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/Symfony2Extension.git",
-                "reference": "567ceeb4ea049d19ffea26c9cce65df5fb7bd23a"
+                "reference": "cb68f8b30b33ad51b0832a39c3886c7244889ace"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/Symfony2Extension/zipball/567ceeb4ea049d19ffea26c9cce65df5fb7bd23a",
-                "reference": "567ceeb4ea049d19ffea26c9cce65df5fb7bd23a",
+                "url": "https://api.github.com/repos/Behat/Symfony2Extension/zipball/cb68f8b30b33ad51b0832a39c3886c7244889ace",
+                "reference": "cb68f8b30b33ad51b0832a39c3886c7244889ace",
                 "shasum": ""
             },
             "require": {
@@ -2282,7 +2282,7 @@
                 "framework",
                 "symfony"
             ],
-            "time": "2013-04-03 11:53:42"
+            "time": "2013-06-06 20:36:08"
         },
         {
             "name": "instaclick/php-webdriver",
