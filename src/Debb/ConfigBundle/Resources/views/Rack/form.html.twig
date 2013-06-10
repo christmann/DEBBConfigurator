@@ -8,6 +8,7 @@
 		select { width: 302px; }
 		#content { padding: 0 0 0 0 !important; }
 		.buttonbar { margin-right: -1px; margin-top: 15px; }
+        .rack_title { overflow: hidden; width: 226px; display: inline-block; text-align: left; }
 	</style>
 {% endblock %}
 
@@ -18,6 +19,10 @@
 	{% endjavascripts %}
 	<script type="text/javascript">
 		var rackId = {{ form.vars.data.id | default(0) }};
+        $(function()
+          {
+              $('.rack_title').tooltip();
+          });
 	</script>
 {% endblock %}
 
@@ -31,11 +36,10 @@
 		{% for nodeGroup in formNodeGroups %}
 			<div class="nodegroup">
 				{{ form_widget(nodeGroup, {attr: {'style': 'display: none'}}) }}
-				<span id="{{ nodeGroup.vars.id }}_title" size="{{ nodeGroup.vars.data.nodegroup.draft.heSize | default(1)}}">{{ nodeGroup.vars.value.nodegroup }}</span>
+				<span id="{{ nodeGroup.vars.id }}_title" data-toggle="tooltip" class="rack_title" data-original-title="{{ nodeGroup.vars.value.nodegroup }}" size="{{ nodeGroup.vars.data.nodegroup.draft.heSize | default(1)}}">{{ nodeGroup.vars.value.nodegroup }}</span>
 			</div>
 		{% endfor %}
 	</div>
-
 	<div class="extraContent">
 		<div style="margin-left: 13px; color: #555;">
             {{ form_row(form.manufacturer) }}

@@ -136,7 +136,7 @@ $(function()
 					var prototype = rack.attr('data-prototype'),
 						newForm = prototype.replace(/__name__/g, id),
 						newFormLi = $('<div />').addClass('nodegroup').append($(newForm).children('div').css('display', 'none'));
-					newFormLi.append($('<span />').attr('id', 'debb_configbundle_racktype_nodegroups_' + id + '_title'));
+					newFormLi.append($('<span />').attr('id', 'debb_configbundle_racktype_nodegroups_' + id + '_title').addClass('rack_title').attr('data-toggle', 'tooltip'));
 					rack.append(newFormLi);
 				}
 			}
@@ -171,16 +171,15 @@ function updateRack()
     {
         var num = $(this).children('div').attr('id').split('_');
         num = parseInt(num[num.length-1]);
-        var group = this;
         if ($(this).find('select[id$="_nodegroup"]').val() != '')
         {
             var size = parseInt($(this).children('span').attr('size'));
             var hei = $(this).height() * size;
-            $(this).css('height', hei + 'px');
+            $(this).css('height', hei + 'px').find('.rack_title').height(hei + 'px');
             if (size > 1)
             {
                 var end = size + num;
-                for (i = num + 1; i < end; i++)
+                for (var i = num + 1; i < end; i++)
                 {
                     $('#debb_configbundle_racktype_nodegroups_' + i + '_title').parent().hide();
                 }
@@ -222,7 +221,8 @@ function updateRack()
 	$('[id^="debb_configbundle_racktype_nodegroups_"][id$="_title"]').each(function()
 	{
 		var value = $(this).prev('div[id!=""]').find('select[id$="_nodegroup"]').val();
-		$(this).html(value > 0 ? $('#selectedNodeGroup option[value="' + value + '"]').html() : '');
+        var title = value > 0 ? $('#selectedNodeGroup option[value="' + value + '"]').html() : '';
+        $(this).html(title).attr('data-original-title', title).tooltip();
 	});
 
 	// update field ids
