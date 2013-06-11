@@ -4,6 +4,7 @@ namespace Debb\ConfigBundle\Entity;
 
 use Debb\ManagementBundle\Entity\Chassis;
 use Debb\ManagementBundle\Entity\NodeToNodegroup;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -15,151 +16,153 @@ use Doctrine\ORM\Mapping as ORM;
 class NodeGroup extends Dimensions
 {
 
-	/**
-	 * @var NodeToNodegroup
-	 *
-	 * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\NodeToNodegroup", cascade={"persist"}, mappedBy="nodeGroup", orphanRemoval=true)
-	 */
-	private $nodes;
+    /**
+     * @var NodeToNodegroup[]
+     *
+     * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\NodeToNodegroup", cascade={"persist"}, mappedBy="nodeGroup", orphanRemoval=true)
+     */
+    private $nodes;
 
-	/**
-	 * @var Chassis
-	 *
-	 * @ORM\ManyToOne(targetEntity="Debb\ManagementBundle\Entity\Chassis")
-	 */
-	private $draft;
+    /**
+     * @var Chassis
+     *
+     * @ORM\ManyToOne(targetEntity="Debb\ManagementBundle\Entity\Chassis", inversedBy="nodeGroups")
+     */
+    private $draft;
 
-	/**
-	 * Constructor
-	 */
-	public function __construct()
-	{
-		$this->nodes = new \Doctrine\Common\Collections\ArrayCollection();
-	}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->nodes = new ArrayCollection();
+    }
 
-	/**
-	 * Add nodes
-	 *
-	 * @param \Debb\ManagementBundle\Entity\NodeToNodegroup $nodes
-	 * @return NodeGroup
-	 */
-	public function addNode(\Debb\ManagementBundle\Entity\NodeToNodegroup $nodes)
-	{
-		$nodes->setNodeGroup($this);
-		$this->nodes[] = $nodes;
+    /**
+     * Add nodes
+     *
+     * @param NodeToNodegroup $nodes
+     *
+     * @return NodeGroup
+     */
+    public function addNode(NodeToNodegroup $nodes)
+    {
+        $nodes->setNodeGroup($this);
+        $this->nodes[] = $nodes;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Set nodes
-	 *
-	 * @param \Debb\ManagementBundle\Entity\NodeToNodegroup[] $nodes
-	 * @return NodeGroup
-	 */
-	public function setNodes($nodes)
-	{
-		$this->nodes = $nodes;
+    /**
+     * Set nodes
+     *
+     * @param NodeToNodegroup $nodes
+     *
+     * @return NodeGroup
+     */
+    public function setNodes($nodes)
+    {
+        $this->nodes = $nodes;
 
-		foreach ($this->nodes as $node) {
-			$node->setNodeGroup($this);
-		}
+        foreach ($this->nodes as $node) {
+            $node->setNodeGroup($this);
+        }
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Remove nodes
-	 *
-	 * @param \Debb\ManagementBundle\Entity\NodeToNodegroup $nodes
-	 */
-	public function removeNode(\Debb\ManagementBundle\Entity\NodeToNodegroup $nodes)
-	{
-		$this->nodes->removeElement($nodes);
-	}
+    /**
+     * Remove nodes
+     *
+     * @param NodeToNodegroup $nodes
+     */
+    public function removeNode(NodeToNodegroup $nodes)
+    {
+        $this->nodes->removeElement($nodes);
+    }
 
-	/**
-	 * Get nodes
-	 *
-	 * @return \Doctrine\Common\Collections\Collection
-	 */
-	public function getNodes()
-	{
-		return $this->nodes;
-	}
+    /**
+     * Get nodes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getNodes()
+    {
+        return $this->nodes;
+    }
 
-	/**
-	 * Sort nodes (unused) (reverse)
-	 */
-	public function sortNodes()
-	{
-		$ordered = new \Doctrine\Common\Collections\ArrayCollection();
-		for ($i = $this->nodes->count() - 1; $i >= 0; $i--) {
-			$ordered->add($this->nodes[$i]);
-		}
-		$this->nodes = $ordered;
+    /**
+     * Sort nodes (unused) (reverse)
+     */
+    public function sortNodes()
+    {
+        $ordered = new ArrayCollection();
+        for ($i = $this->nodes->count() - 1; $i >= 0; $i--) {
+            $ordered->add($this->nodes[$i]);
+        }
+        $this->nodes = $ordered;
 
-		$x = 0;
-		foreach ($this->nodes as $node) {
-			$node->setField($x);
-			$x++;
-		}
-	}
+        $x = 0;
+        foreach ($this->nodes as $node) {
+            $node->setField($x);
+            $x++;
+        }
+    }
 
-	/**
-	 * Get the next free field in node array
-	 *
-	 * @return int the next free field in node array
-	 */
-	public function getFreeNode()
-	{
-		$ids = array();
-		foreach ($this->getNodes() as $node) {
-			$ids[] = $node->getField();
-		}
-		ksort($ids);
+    /**
+     * Get the next free field in node array
+     *
+     * @return int the next free field in node array
+     */
+    public function getFreeNode()
+    {
+        $ids = array();
+        foreach ($this->getNodes() as $node) {
+            $ids[] = $node->getField();
+        }
+        ksort($ids);
 
-		$res = 0;
-		foreach ($ids as $id) {
-			if ($id == $res) {
-				$res++;
-			}
-		}
-		return $res;
-	}
+        $res = 0;
+        foreach ($ids as $id) {
+            if ($id == $res) {
+                $res++;
+            }
+        }
+        return $res;
+    }
 
-	/**
-	 * Returns a array for later converting
-	 *
-	 * @return array the array for later converting
-	 */
-	public function getDebbXmlArray()
-	{
-		$array['NodeGroup'] = parent::getDebbXmlArray();
-		return $array;
-	}
+    /**
+     * Returns a array for later converting
+     *
+     * @return array the array for later converting
+     */
+    public function getDebbXmlArray()
+    {
+        $array['NodeGroup'] = parent::getDebbXmlArray();
+        return $array;
+    }
 
+    /**
+     * Set draft
+     *
+     * @param Chassis $draft
+     *
+     * @return NodeGroup
+     */
+    public function setDraft(Chassis $draft = null)
+    {
+        $this->draft = $draft;
 
-	/**
-	 * Set draft
-	 *
-	 * @param \Debb\ManagementBundle\Entity\Chassis $draft
-	 * @return NodeGroup
-	 */
-	public function setDraft(\Debb\ManagementBundle\Entity\Chassis $draft = null)
-	{
-		$this->draft = $draft;
+        return $this;
+    }
 
-		return $this;
-	}
-
-	/**
-	 * Get draft
-	 *
-	 * @return \Debb\ManagementBundle\Entity\Chassis
-	 */
-	public function getDraft()
-	{
-		return $this->draft;
-	}
+    /**
+     * Get draft
+     *
+     * @return Chassis
+     */
+    public function getDraft()
+    {
+        return $this->draft;
+    }
 }
