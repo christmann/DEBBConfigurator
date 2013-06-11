@@ -204,7 +204,7 @@ class NodeGroup extends Dimensions
     /**
      * Get racks
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection|NodegroupToRack[]
      */
     public function getRacks()
     {

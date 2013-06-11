@@ -13,3 +13,7 @@ debb_management.storage.singular: HDD
 debb_management.chassis.plural: Chassis
 debb_management.chassis.singular: chassis
 localdev_admin.actions.create: create %name%
+
+debb_management.chassis.nodegroup.message: <strong>Chassis is in use by the following node groups</strong>: %items%<br />
+debb_management.chassis.rack.message: <strong>Chassis is in use by the following racks</strong>: %items%
+debb_management.chassis.message.title: Information

@@ -1,37 +1,58 @@
 {% block form_row %}
-	{% spaceless %}
-		<div>
-			{{ form_label(form) }}
-			{{ form_errors(form) }}
-			{{ form_widget(form) }}
-		</div>
-	{% endspaceless %}
+    {% spaceless %}
+        <div>
+            {{ form_label(form) }}
+            {{ form_errors(form) }}
+            {{ form_widget(form) }}
+        </div>
+    {% endspaceless %}
 {% endblock form_row %}
 
 {% block checkbox_label %}{% endblock %}
 {% block checkbox_widget %}
-	{% spaceless %}
-		<div>
-			{{ form_errors(form) }}
-			{% if not compound %}
-				{% set label_attr = label_attr|merge({'for': id}) %}
-			{% endif %}
-			{% if required %}
-				{% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
-			{% endif %}
-			{% if label is empty %}
-				{% set label = name|humanize %}
-			{% endif %}
-			<label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-			<input type="{{ type|default('checkbox') }}" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
-			{{ label|trans({}, translation_domain) }}
-			</label>
-		</div>
-	{% endspaceless %}
+    {% spaceless %}
+        <div>
+            {{ form_errors(form) }}
+            {% if not compound %}
+                {% set label_attr = label_attr|merge({'for': id}) %}
+            {% endif %}
+            {% if required %}
+                {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+            {% endif %}
+            {% if label is empty %}
+                {% set label = name|humanize %}
+            {% endif %}
+            <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+            <input type="{{ type|default('checkbox') }}" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+            {{ label|trans({}, translation_domain) }}
+            </label>
+        </div>
+    {% endspaceless %}
 {% endblock %}
 
 {% block radio_label %}{% endblock %}
 {% block radio_widget %}
-	{% set type = 'radio' %}
-	{{ block('checkbox_widget') }}
+    {% set type = 'radio' %}
+    {{ block('checkbox_widget') }}
+{% endblock %}
+
+{% block _debb_managementbundle_chassistype_heSize_label %}
+    {% spaceless %}
+        {% if label is not sameas(false) %}
+            {% if not compound %}
+                {% set label_attr = label_attr|merge({'for': id}) %}
+            {% endif %}
+            {% if required %}
+                {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+            {% endif %}
+            {% if label is empty %}
+                {% set label = name|humanize %}
+            {% endif %}
+            {#{% set original_title = "" %}#}
+            {#{% if label_attr['data-original-title'] is defined %}#}
+                {#{% set original_title = "" %}#}
+            {#{% endif %}#}
+            <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue|raw }}"{% endfor %}>{{ label|trans({}, translation_domain) }}{% if label_attr['data-title'] is defined %} <i class="icon-info-sign"></i>{% endif %}</label>
+        {% endif %}
+    {% endspaceless %}
 {% endblock %}

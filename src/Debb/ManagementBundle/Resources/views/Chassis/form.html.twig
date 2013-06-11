@@ -19,6 +19,12 @@
 	%}
 		<script src="{{ asset_url }}" type="text/javascript"></script>
 	{% endjavascripts %}
+    <script type="text/javascript">
+        $(function()
+          {
+              $('label[data-title]').popover({html: true});
+          });
+    </script>
 {% endblock %}
 
 {% block form %}

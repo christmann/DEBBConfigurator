@@ -3,6 +3,10 @@
 namespace Debb\ManagementBundle\Form;
 
 use Debb\ConfigBundle\Entity\NodeGroup;
+use InvalidArgumentException;
+use Localdev\FrameworkExtraBundle\Extensions\ContainerExtension;
+use Localdev\FrameworkExtraBundle\Extensions\FrameworkExtension;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -13,9 +17,29 @@ use Debb\ManagementBundle\Entity\Chassis;
  *
  * @package Debb\ManagementBundle\Form
  * @author Patrick Bußmann <patrick.bussmann@christmann.info>
+ * @author Fabian Martin <fabian.martin@christmann.info>
  */
 class ChassisType extends AbstractType
 {
+    use FrameworkExtension, ContainerExtension;
+
+    /**
+     * Container
+     *
+     * @var ContainerInterface
+     */
+    private $container;
+
+    /**
+     * Initializes a new instance of the ChassisType class.
+     *
+     * @param ContainerInterface $container
+     */
+    function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
+
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
@@ -23,16 +47,34 @@ class ChassisType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $isInUse = false;
+        $title = "";
+        $content = "";
         $duplicate = isset($options['attr']['duplicated']) ? $options['attr']['duplicated'] : false;
         if (!$duplicate) {
             $data =& $options['data'];
             if (isset($data) && $data instanceof Chassis && $data->getId()) {
+                $racks = array();
+                $nodeGroups = array();
                 /** @var $nodeGroup NodeGroup */
                 foreach ($data->getNodeGroups() as $nodeGroup) {
-                    if ($nodeGroup->getRacks()->count()) {
-                        $isInUse = true;
-                        break;
+                    $nodeGroups[$nodeGroup->getId()] = $nodeGroup;
+                    foreach ($nodeGroup->getRacks() as $nodeRack) {
+                        $rack = $nodeRack->getRack();
+                        $racks[$rack->getId()] = $rack;
                     }
+                }
+
+                $isInUse = count($racks) > 0;
+
+                $translator = $this->getTranslator();
+                $title = $isInUse ? $translator->trans('debb_management.chassis.message.title', array(), 'crud') : '';
+                if ($nodeGroups) {
+                    $items = array('%items%' => '<ul><li>' . implode("</li><li>", $nodeGroups) . '</li></ul>');
+                    $content .= $translator->trans('debb_management.chassis.nodegroup.message', $items, 'crud');
+                }
+                if ($racks) {
+                    $items = array('%items%' => '<ul><li>' . implode("", $racks) . '</li></ul>');
+                    $content .= $translator->trans('debb_management.chassis.rack.message', $items, 'crud');
                 }
             }
         }
@@ -46,7 +88,7 @@ class ChassisType extends AbstractType
                 array(
                     'choices' => $this->getSlotsAmount(),
                     'empty_value' => false,
-                    'attr' => array('class' => 'noBreakAfterThis')
+                    'attr' => array('class' => 'noBreakAfterThis'),
                 )
             )
             ->add('slotsY', 'choice', array('choices' => $this->getSlotsAmount(), 'empty_value' => false))
@@ -57,6 +99,11 @@ class ChassisType extends AbstractType
                     'choices' => $this->getSlotsAmount(),
                     'empty_value' => false,
                     'attr' => array('class' => 'noBreakAfterThis'),
+                    'label_attr' => array(
+                        'data-title' => $title,
+                        'data-content' => $content,
+                        'data-toggle' => "tooltip"
+                    ),
                     'disabled' => $isInUse
                 )
             )
@@ -108,5 +155,15 @@ class ChassisType extends AbstractType
     public function getName()
     {
         return 'debb_managementbundle_chassistype';
+    }
+
+    /**
+     * Returns the service container
+     *
+     * @return ContainerInterface
+     */
+    public function getContainer()
+    {
+        return $this->container;
     }
 }
