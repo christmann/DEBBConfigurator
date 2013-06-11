@@ -8,7 +8,6 @@
 		select { width: 302px; }
 		#content { padding: 0 0 0 0 !important; }
 		.buttonbar { margin-right: -1px; margin-top: 15px; }
-        .rack_title { overflow: hidden; width: 226px; display: inline-block; text-align: left; }
 	</style>
 {% endblock %}
 
@@ -22,6 +21,7 @@
         $(function()
           {
               $('.rack_title').tooltip();
+              $('.nodegroup').tooltip({placement: 'right'});
           });
 	</script>
 {% endblock %}
@@ -34,7 +34,7 @@
 			{% set formNodeGroups = formNodeGroups | reverse %}
 		{% endif %}
 		{% for nodeGroup in formNodeGroups %}
-			<div class="nodegroup">
+			<div class="nodegroup" data-original-title="{{ (nodeGroup.vars.id|replace({"debb_configbundle_racktype_nodegroups_":""})+1) }}.">
 				{{ form_widget(nodeGroup, {attr: {'style': 'display: none'}}) }}
 				<span id="{{ nodeGroup.vars.id }}_title" data-toggle="tooltip" class="rack_title" data-original-title="{{ nodeGroup.vars.value.nodegroup }}" size="{{ nodeGroup.vars.data.nodegroup.draft.heSize | default(1)}}">{{ nodeGroup.vars.value.nodegroup }}</span>
 			</div>

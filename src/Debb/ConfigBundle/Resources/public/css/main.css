@@ -339,6 +339,13 @@ table tr td
 	margin-left: -7px;
 }
 
+.rack_title {
+    overflow: hidden;
+    width: 226px;
+    display: inline-block;
+    text-align: left;
+}
+
 .nodegroup
 {
 	border-bottom:  1px solid #dedede;
