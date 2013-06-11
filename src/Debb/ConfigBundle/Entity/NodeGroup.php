@@ -3,6 +3,7 @@
 namespace Debb\ConfigBundle\Entity;
 
 use Debb\ManagementBundle\Entity\Chassis;
+use Debb\ManagementBundle\Entity\NodegroupToRack;
 use Debb\ManagementBundle\Entity\NodeToNodegroup;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,18 +18,28 @@ class NodeGroup extends Dimensions
 {
 
     /**
-     * @var NodeToNodegroup[]
-     *
+     * Nodes
      * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\NodeToNodegroup", cascade={"persist"}, mappedBy="nodeGroup", orphanRemoval=true)
+     *
+     * @var NodeToNodegroup[]
      */
     private $nodes;
 
     /**
-     * @var Chassis
-     *
+     * Chassis
      * @ORM\ManyToOne(targetEntity="Debb\ManagementBundle\Entity\Chassis", inversedBy="nodeGroups")
+     *
+     * @var Chassis
      */
     private $draft;
+
+    /**
+     * Racks
+     * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\NodegroupToRack", mappedBy="nodegroup")
+     *
+     * @var \Doctrine\Common\Collections\ArrayCollection|NodegroupToRack[]
+     */
+    private $racks;
 
     /**
      * Constructor
@@ -164,5 +175,39 @@ class NodeGroup extends Dimensions
     public function getDraft()
     {
         return $this->draft;
+    }
+
+    /**
+     * Add racks
+     *
+     * @param NodegroupToRack $racks
+     *
+     * @return NodeGroup
+     */
+    public function addRack(NodegroupToRack $racks)
+    {
+        $this->racks[] = $racks;
+
+        return $this;
+    }
+
+    /**
+     * Remove racks
+     *
+     * @param NodegroupToRack $racks
+     */
+    public function removeRack(NodegroupToRack $racks)
+    {
+        $this->racks->removeElement($racks);
+    }
+
+    /**
+     * Get racks
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRacks()
+    {
+        return $this->racks;
     }
 }

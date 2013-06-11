@@ -2,6 +2,7 @@
 
 namespace Debb\ManagementBundle\Form;
 
+use Debb\ConfigBundle\Entity\NodeGroup;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -26,7 +27,13 @@ class ChassisType extends AbstractType
         if (!$duplicate) {
             $data =& $options['data'];
             if (isset($data) && $data instanceof Chassis && $data->getId()) {
-                $isInUse = $data->getNodeGroups()->count();
+                /** @var $nodeGroup NodeGroup */
+                foreach ($data->getNodeGroups() as $nodeGroup) {
+                    if ($nodeGroup->getRacks()->count()) {
+                        $isInUse = true;
+                        break;
+                    }
+                }
             }
         }
         $builder
