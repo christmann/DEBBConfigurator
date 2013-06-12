@@ -119,8 +119,7 @@ $(function ()
                   var newForm = prototype.replace(/__name__/g, id);
                   var newFormLi = $('<div />')
                           .addClass('nodegroup')
-                          .append($(newForm).children('div').css('display', 'none'))
-                          .attr('data-original-title', (id + 1) + '.').tooltip({placement: 'right'});
+                          .append($(newForm).children('div').css('display', 'none'));
                   var titleTag = $('<span />')
                           .attr('id', 'debb_configbundle_racktype_nodegroups_' + id + '_title')
                           .addClass('rack_title').attr('data-toggle', 'tooltip');
@@ -216,6 +215,15 @@ function updateRack()
                                 {
                                     $(this).find('input[id$="_field"]').val(-1);
                                 });
+
+    // update rack units
+    var ru = 1;
+    $($('.nodegroup').toArray().reverse()).each(function ()
+                                                {
+                                                    $(this)
+                                                            .attr('data-original-title', 'RU ' + ru++)
+                                                            .tooltip({placement: 'right'});
+                                                });
 }
 
 function getExactId(str)
