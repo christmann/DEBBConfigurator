@@ -150,6 +150,22 @@ class NodeGroup extends Dimensions
     public function getDebbXmlArray()
     {
         $array['NodeGroup'] = parent::getDebbXmlArray();
+		if($this->getDraft() != null && $this->getDraft()->getTypspecification() != null)
+		{
+			foreach($this->getDraft()->getTypspecification() as $slot => $typSpec)
+			{
+				/**
+						<Slot>
+							<Number>1</Number>
+							<ConnectorType>ComExpress Type 2</ConnectorType>
+							<Label>Slot_1</Label>
+							<Transform>0 -1 0 0 1 0 0 0 0 0 1 0 X Y Z 1</Transform><!-- No input in chassis! -->
+						</Slot>
+				 */
+				$slot++;
+				$array['NodeGroup'][] = array(array('Slot' => array('Number' => $slot, 'ConnectorType' => $typSpec, 'Label' => 'Slot_' . $slot)));
+			}
+		}
         return $array;
     }
 
