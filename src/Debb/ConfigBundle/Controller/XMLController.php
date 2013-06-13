@@ -119,6 +119,7 @@ abstract class XMLController extends CRUDController
 		$productDef->addAttribute('id', 'id1');
 		$instanceGraph = $productDef->addChild('InstanceGraph');
 		$instanceGraph->addAttribute('id', 'id2');
+		$instanceGraph->addAttribute('rootRefs', 'inst02_1');
 
 		if($item instanceof Room)
 		{
@@ -136,8 +137,12 @@ abstract class XMLController extends CRUDController
 				$item = $item->getRack();
 			}
 
-			$rackInstance = $this->addPlmXmlProductInstance(
-				$instanceGraph, 'inst' . sprintf('%02d', $item->getId()) . '_1', 'DefRack' . sprintf('%02d', $item->getId()), null, $item->getHostname()
+			$rackInstance = $this->addPlmXmlProductRevisionView(
+				$instanceGraph, 'iview' . sprintf('%02d', $item->getId()) . '_1', 'DefRackView' . sprintf('%02d', $item->getId()), null, $item->getHostname()
+			);
+			$rackInstanceViewArr = (array) $rackInstance->attributes();
+			$rackInstanceView = $this->addPlmXmlProductInstance(
+				$instanceGraph, 'inst' . sprintf('%02d', $item->getId()) . '_1', 'DefRack' . sprintf('%02d', $item->getId()), $rackInstanceViewArr['@attributes']['id'], $item->getHostname()
 			);
 
 			$rackInstance = $rackInstance[0];
@@ -152,7 +157,7 @@ abstract class XMLController extends CRUDController
 					$nodeGroupsForThatRack[] = 'id' . sprintf('%04d', $id);
 
 					$productRevisionView = $this->addPlmXmlProductRevisionView(
-						$instanceGraph, 'view' . sprintf('%04d', $id) . '_2', 'DefNodeGroup' . sprintf('%04d', $id), array(), 'assembly', null, null, $nodeGroup->getNodeGroup()->getComponentId(), 'NodeGroup'
+						$instanceGraph, 'id' . sprintf('%04d', $id), 'DefNodeGroup' . sprintf('%04d', $id), array(), 'assembly', null, null, $nodeGroup->getNodeGroup()->getComponentId(), 'NodeGroup'
 					);
 
 					/* @var $nodeGroup NodegroupToRack */
@@ -191,7 +196,7 @@ abstract class XMLController extends CRUDController
 				}
 			}
 
-			$rackInstance->addAttribute('partRef', implode(' ', $nodeGroupsForThatRack));
+			$rackInstance->addAttribute('instanceRefs', implode(' ', $nodeGroupsForThatRack));
 		}
 
 		if ($pretty)
@@ -240,6 +245,11 @@ abstract class XMLController extends CRUDController
 			$productInstance->addAttribute('name', $name . '_' . $iId); // example: Node7
 		}
 
+		if($partRef != null)
+		{
+			$productInstance->addAttribute('partRef', is_array($partRef) ? implode(' ', $partRef) : $partRef);
+		}
+
 		if ($hostname != null || $transform != null)
 		{
 			$userData = $productInstance->addChild('UserData');
@@ -281,17 +291,17 @@ abstract class XMLController extends CRUDController
 		$productRevisionView = $xml->addChild('ProductRevisionView');
 
 		/* Generate single id */
-		$isId = explode('_', $id);
-		$iId = (int) $isId[count($isId) - 1];
-		unset($isId[count($isId) - 1]);
-		$exId = implode('_', $isId);
-		$id = $exId . '_' . $iId;
-
-		while (count($xml->xpath('*[@id="' . $id . '"]/@id')) > 0)
-		{
-			$iId++;
-			$id = $exId . '_' . $iId;
-		}
+//		$isId = explode('_', $id);
+//		$iId = (int) $isId[count($isId) - 1];
+//		unset($isId[count($isId) - 1]);
+//		$exId = implode('_', $isId);
+//		$id = $exId . '_' . $iId;
+//
+//		while (count($xml->xpath('*[@id="' . $id . '"]/@id')) > 0)
+//		{
+//			$iId++;
+//			$id = $exId . '_' . $iId;
+//		}
 
 		$productRevisionView->addAttribute('id', $id); // example: id84_04_1
 		if ($name != null)
@@ -376,13 +386,18 @@ abstract class XMLController extends CRUDController
 	 * Download a zip archive with all xml files
 	 *
 	 * @Route("/download/{id}.zip", defaults={"id"=0}, requirements={"id"="\d+|"});
-	 * @param type $id the id of entity to generate plm xml and DEBBComponents.xml
+	 * @param string $id the id of entity to generate plm xml and DEBBComponents.xml
+	 * @param boolean $debug only for testing / output to browser
 	 * @throws error 404
 	 */
-	public function exportAsArchiveAction($id)
+	public function exportAsArchiveAction($id, $debug = false)
 	{
 		$fileName = tempnam(sys_get_temp_dir(), 'zip');
 
+		if($debug)
+		{
+			header('Content-type: text/plain');
+		}
 		$zip = new \ZipArchive;
 		$res = $zip->open($fileName, \ZipArchive::CREATE);
 		if ($res == true)
@@ -495,11 +510,14 @@ abstract class XMLController extends CRUDController
 			$this->valide($plmXml, file_get_contents('../utils/PLMXMLSchema.xsd'), 'PLMXML');
 
 			$zip->close();
-			header('Content-Disposition: attachment; filename=' . date('Y-m-d-H-i-s') . '.zip');
-			header('Content-type: application/zip');
-			if (readfile($fileName))
+			if(!$debug)
 			{
-				unlink($fileName);
+				header('Content-Disposition: attachment; filename=' . date('Y-m-d-H-i-s') . '.zip');
+				header('Content-type: application/zip');
+				if (readfile($fileName))
+				{
+					unlink($fileName);
+				}
 			}
 		}
 		else
