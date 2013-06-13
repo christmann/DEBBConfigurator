@@ -81,3 +81,8 @@ avalanche_imagine:
         node_thumb:
             type: thumbnail
             options: { size: [195, 130], mode: inset }
+
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: CoolEmAll\UserBundle\Entity\User

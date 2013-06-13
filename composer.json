@@ -26,7 +26,8 @@
 		"avalanche123/imagine-bundle": "v2.1",
         "willdurand/expose-translation-bundle": "dev-master",
         "phpunit/phpunit": "*",
-        "christmann/pluploadbundle": "dev-Symfony2.3"
+        "christmann/pluploadbundle": "dev-Symfony2.3",
+        "friendsofsymfony/user-bundle": "~2.0@dev"
 	},
     "require-dev": {
         "behat/behat": "*@dev",

@@ -24,6 +24,8 @@ class AppKernel extends Kernel
 			new CIM\PluploadBundle\CIMPluploadBundle(),
 			new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
 			new Bazinga\ExposeTranslationBundle\BazingaExposeTranslationBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
+            new CoolEmAll\UserBundle\CoolEmAllUserBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
