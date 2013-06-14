@@ -6,8 +6,10 @@ var rackDragOpt = {
 	stop: function(event, ui) {
 		$(this).draggable('option', 'revert', 'invalid');
 		var id = getExactId(ui.helper.find('.rackGform').find('div[id!=""]').attr('id'));
-		ui.helper.find('#debb_configbundle_roomtype_racks_' + id + '_posx').val(ui.position.left);
-		ui.helper.find('#debb_configbundle_roomtype_racks_' + id + '_posy').val(parseInt(ui.helper.css('bottom')));
+        var left = ui.position.left;
+        var bottom = $('#rackContainer').height() - ui.helper.height() - ui.position.top - 1;
+        ui.helper.find('#debb_configbundle_roomtype_racks_' + id + '_posx').val(left);
+        ui.helper.find('#debb_configbundle_roomtype_racks_' + id + '_posy').val(parseInt(bottom));
 	}
 },
 	rackDropOpt = {};
