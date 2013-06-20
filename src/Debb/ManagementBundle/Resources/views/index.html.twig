@@ -45,7 +45,7 @@
 													{% endif %}
 													{% if exportasarchive is defined and route_exists(localdev_admin_route("_exportasarchive")) %}
 														<a target="_blank" href="{{ path(localdev_admin_route("_exportasarchive"), {"id": item.id}) }}" class="btn">
-															<span rel="tooltip" data-original-title="{{ 'download.%what%.file' | trans({'%what%': 'archive' | trans}) }}"><i class="icon-file"></i></span>
+															<span rel="tooltip" data-original-title="{{ 'download.%what%.file' | trans({'%what%': 'archive' | trans}) }}"><i class="icon-download-alt"></i></span>
 														</a>
 													{% endif %}
                                                     {% if route_exists(localdev_admin_route("_duplicate")) %}
