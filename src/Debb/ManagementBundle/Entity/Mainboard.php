@@ -24,7 +24,7 @@ class Mainboard extends Base
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="socket", type="integer", nullable=true)
+	 * @ORM\Column(name="socket", type="string", length=255)
 	 */
 	private $socket;
 
