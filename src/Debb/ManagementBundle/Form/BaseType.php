@@ -12,6 +12,8 @@ class BaseType extends AbstractType
 		$builder
 			->add('manufacturer', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false))
 			->add('product', null, array('required' => false))
+			->add('componentId', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false))
+			->add('label', null, array('required' => false))
 		;
 	}
 

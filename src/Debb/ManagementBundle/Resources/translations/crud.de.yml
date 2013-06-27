@@ -13,7 +13,8 @@ debb_management.storage.singular: HDD
 debb_management.chassis.plural: Gehäuse
 debb_management.chassis.singular: Gehäuse
 localdev_admin.actions.create: %name% erstellen
-
 debb_management.chassis.nodegroup.message: <strong>Das Gehäuse wird in den folgenden Knotengruppen verwendet</strong>:  %items%<br />
 debb_management.chassis.rack.message: <strong>Das Gehäuse wird in den folgenden Racks verwendet</strong>:  %items%
 debb_management.chassis.message.title: Information
+debb_management.heatsink.plural: Heatsinks
+debb_management.heatsink.singular: Heatsink
