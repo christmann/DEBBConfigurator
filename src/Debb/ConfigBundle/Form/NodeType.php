@@ -2,19 +2,17 @@
 
 namespace Debb\ConfigBundle\Form;
 
-use Debb\ConfigBundle\Entity\Node;
-use Symfony\Component\Form\AbstractType;
+use Debb\ManagementBundle\Form\BaseType;
+use Debb\ManagementBundle\Form\ComponentType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-
-use Debb\ManagementBundle\Form\ComponentType;
 
 /**
  * Class NodeType
  * @package Debb\ConfigBundle\Form
  * @author Patrick Bußmann <patrick.bussmann@christmann.info>
  */
-class NodeType extends AbstractType
+class NodeType extends BaseType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -22,10 +20,8 @@ class NodeType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+	    parent::buildForm($builder, $options);
         $builder
-	        ->add('manufacturer', null, array('required' => false))
-	        ->add('product', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false))
-	        ->add('model', null, array('required' => false))
             ->add('sizeX', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis'), 'label' => 'SizeX'))
             ->add('sizeY', null, array('required' => false, 'label' => 'SizeY'))
             ->add('sizeZ', null, array('required' => false, 'label' => 'SizeZ'))

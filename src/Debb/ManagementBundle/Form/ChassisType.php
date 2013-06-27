@@ -3,14 +3,12 @@
 namespace Debb\ManagementBundle\Form;
 
 use Debb\ConfigBundle\Entity\NodeGroup;
-use InvalidArgumentException;
+use Debb\ManagementBundle\Entity\Chassis;
 use Localdev\FrameworkExtraBundle\Extensions\ContainerExtension;
 use Localdev\FrameworkExtraBundle\Extensions\FrameworkExtension;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Debb\ManagementBundle\Entity\Chassis;
 
 /**
  * Class ChassisType
@@ -19,7 +17,7 @@ use Debb\ManagementBundle\Entity\Chassis;
  * @author Patrick Bußmann <patrick.bussmann@christmann.info>
  * @author Fabian Martin <fabian.martin@christmann.info>
  */
-class ChassisType extends AbstractType
+class ChassisType extends BaseType
 {
     use FrameworkExtension, ContainerExtension;
 
@@ -46,6 +44,7 @@ class ChassisType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+	    parent::buildForm($builder, $options);
         $isInUse = false;
         $title = "";
         $content = "";
@@ -79,9 +78,6 @@ class ChassisType extends AbstractType
             }
         }
         $builder
-            ->add('manufacturer', null, array('required' => false))
-            ->add('product', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false))
-            ->add('model', null, array('required' => false))
             ->add(
                 'slotsX',
                 'choice',

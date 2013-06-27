@@ -2,7 +2,6 @@
 
 namespace Debb\ManagementBundle\Form;
 
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -11,7 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  * @package Debb\ManagementBundle\Form
  * @author Patrick Bußmann <patrick.bussmann@christmann.info>
  */
-class MainboardType extends AbstractType
+class MainboardType extends BaseType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -19,10 +18,8 @@ class MainboardType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+	    parent::buildForm($builder, $options);
         $builder
-	        ->add('manufacturer', null, array('required' => false))
-	        ->add('product', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false))
-	        ->add('model', null, array('required' => false))
             ->add('description', null, array('attr' => array('class' => 'noBreakAfterThis')))
             ->add('socket', 'text')
             ->add('connections', null, array('attr' => array('class' => 'bigTextbox')))

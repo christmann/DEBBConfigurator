@@ -44,7 +44,6 @@
 		<div style="margin-left: 13px; color: #555;">
             {{ form_row(form.manufacturer) }}
             {{ form_row(form.product) }}
-            {{ form_row(form.model) }}
             {{ form_row(form.sizeX) }}
             {{ form_row(form.sizeY) }}
             {{ form_row(form.sizeZ) }}
@@ -91,14 +90,6 @@
 								{{ nodegroup.product }}
 							</div>
 						</div>
-						<div class="row">
-							<div class="span1" style="text-align: right; width: 89px; font-weight: bold;">
-								{{ 'Model' | trans }}:
-							</div>
-							<div class="span4">
-								{{ nodegroup.model }}
-							</div>
-						</div>
 						<br /><table class="table table-striped" style="background-color: #fff;">
 							<thead>
 								<tr>
@@ -130,10 +121,6 @@
 												{% if node.node.product is not null %}
 													{% if first %}{% set first = false %}{% else %}<br />{% endif %}
 													<span rel="tooltip" data-original-title="{{ 'Product' | trans }}" style="font-weight: bold;">{{ node.node.product }}</span>
-												{% endif %}
-												{% if node.node.model is not null %}
-													{% if first %}{% set first = false %}{% else %}<br />{% endif %}
-													<span rel="tooltip" data-original-title="{{ 'Model' | trans }}" style="font-weight: bold;">{{ node.node.model }}</span>
 												{% endif %}
 												<br />{% for component in node.node.components if component.active is not null %}
 													{% set transThis = 'component.' ~ component.type %}

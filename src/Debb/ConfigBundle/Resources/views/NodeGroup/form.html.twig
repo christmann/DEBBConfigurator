@@ -44,7 +44,6 @@
 		<div id="grouptitle-box">
             {{ form_row(form.manufacturer) }}
             {{ form_row(form.product) }}
-            {{ form_row(form.model) }}
             {{ form_row(form.draft) }}
 			<div class="clear"></div>
 		</div>
@@ -64,10 +63,6 @@
 							{% if node.product is not null %}
 								{% if first %}{% set first = false %}{% else %}<br/>{% endif %}
 								<span rel="tooltip" style="font-weight: bold;" data-original-title="{{ 'Product' | trans }}">{{ node.product }}</span>
-							{% endif %}
-							{% if node.model is not null %}
-								{% if first %}{% set first = false %}{% else %}<br/>{% endif %}
-								<span rel="tooltip" style="font-weight: bold;" data-original-title="{{ 'Model' | trans }}">{{ node.model }}</span>
 							{% endif %}
 							<br/>{% for component in node.components if component.active is not null %}
 							{% set transThis = 'component.' ~ component.type %}

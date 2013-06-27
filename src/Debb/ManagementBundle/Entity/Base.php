@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Base entity for manufacturer, product and model
+ * Base entity for manufacturer, product
  * 
  * @ORM\MappedSuperclass
  */
@@ -25,6 +25,20 @@ class Base
 	/**
 	 * @var string
 	 *
+	 * @ORM\Column(name="componentid", type="string", length=255, nullable=true)
+	 */
+	private $componentId;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="label", type="string", length=255, nullable=true)
+	 */
+	private $label;
+
+	/**
+	 * @var string
+	 *
 	 * @ORM\Column(name="manufacturer", type="string", length=255, nullable=true)
 	 */
 	private $manufacturer;
@@ -39,23 +53,9 @@ class Base
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="model", type="string", length=255, nullable=true)
-	 */
-	private $model;
-
-	/**
-	 * @var string
-	 *
 	 * @ORM\Column(name="hostname", type="string", length=255, nullable=true)
 	 */
 	private $hostname;
-
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="componentid", type="string", length=255, nullable=true)
-	 */
-	private $componentId;
 
 	/**
 	 * Get id
@@ -114,29 +114,6 @@ class Base
 	}
 
 	/**
-	 * Set model
-	 *
-	 * @param string $model
-	 * @return Bas
-	 */
-	public function setModel($model)
-	{
-		$this->model = $model;
-
-		return $this;
-	}
-
-	/**
-	 * Get model
-	 *
-	 * @return string 
-	 */
-	public function getModel()
-	{
-		return $this->model;
-	}
-
-	/**
 	 * Returns the name of the product
 	 * 
 	 * @return string the name of the product
@@ -161,10 +138,6 @@ class Base
 		if($this->getProduct() != null)
 		{
 			$res[] = $this->getProduct();
-		}
-		if($this->getModel() != null)
-		{
-			$res[] = $this->getModel();
 		}
 		if(in_array(get_class($this), array('Debb\ManagementBundle\Entity\Memory', 'Debb\ManagementBundle\Entity\Storage')))
 		{
@@ -213,9 +186,15 @@ class Base
 	 */
 	public function getDebbXmlArray()
 	{
-		$array = array(
-			'ComponentId' => $this->getComponentId()
-		);
+		$array = array();
+		if ($this->getComponentId() != null)
+		{
+			$array['ComponentId'] = $this->getComponentId();
+		}
+		if ($this->getLabel() != null)
+		{
+			$array['Label'] = $this->getLabel();
+		}
 		if ($this->getManufacturer() != null)
 		{
 			$array['Manufacturer'] = $this->getManufacturer();
@@ -281,11 +260,11 @@ class Base
 	}
 
     /**
-     * @Assert\True(message = "You have to fill in one of these fields: Manufacturer, Product or Model")
+     * @Assert\True(message = "You have to fill in one of these fields: Manufacturer or Product")
      */
     public function isThisCorrect()
     {
-        return !empty($this->manufacturer) || !empty($this->product) || !empty($this->model);
+        return !empty($this->manufacturer) || !empty($this->product);
     }
 
     /**
@@ -297,4 +276,27 @@ class Base
         return $this;
     }
 
+
+    /**
+     * Set label
+     *
+     * @param string $label
+     * @return Base
+     */
+    public function setLabel($label)
+    {
+        $this->label = $label;
+    
+        return $this;
+    }
+
+    /**
+     * Get label
+     *
+     * @return string 
+     */
+    public function getLabel()
+    {
+        return $this->label;
+    }
 }
