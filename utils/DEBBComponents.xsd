@@ -87,6 +87,9 @@
 		<xsd:complexContent>
 			<xsd:extension base="xsd_1:DEBBSimpleType">
 				<xsd:sequence>
+					<xsd:element name="Inlet" type="xsd_1:OutletType"
+						maxOccurs="unbounded" minOccurs="0">
+					</xsd:element>
 					<xsd:element name="Outlet" type="xsd_1:OutletType"
 						maxOccurs="unbounded" minOccurs="0">
 					</xsd:element>
@@ -492,6 +495,7 @@
 	<xsd:element name="ComputeBox2" type="xsd_1:DEBBComponentType"></xsd:element>
 	<xsd:element name="PowerSupply" type="xsd_1:PowerSupplyType"></xsd:element>
 	<xsd:element name="CoolingDevice" type="xsd_1:CoolingDeviceType"></xsd:element>
+	<xsd:element name="Inlet" type="xsd_1:OutletType"></xsd:element>
 	<xsd:element name="Outlet" type="xsd_1:OutletType"></xsd:element>
 	<xsd:element name="Heatsink" type="xsd_1:HeatsinkType"></xsd:element>
 	<xsd:element name="Sensor" type="xsd_1:SensorType"></xsd:element>
