@@ -28,6 +28,7 @@ class ComponentType extends AbstractType
 			->add('memory', null, array('required' => false))
 			->add('powersupply', null, array('required' => false))
 			->add('storage', null, array('required' => false))
+			->add('heatsink', null, array('required' => false))
 			->add('amount', 'choice', array('choices' => $this->getAmountChoices(), 'required' => false,
 				'empty_value' => false, 'attr' => array('style' => 'width: 90px;')))
 		;

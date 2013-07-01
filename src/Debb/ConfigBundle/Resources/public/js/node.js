@@ -1,10 +1,11 @@
-var TYPE_NOTHING = 0;
-var TYPE_MAINBOARD = 1;
-var TYPE_PROCESSOR = 2;
-var TYPE_COOLING_DEVICE = 3;
-var TYPE_MEMORY = 4;
-var TYPE_POWER_SUPPLY = 5;
-var TYPE_STORAGE = 6;
+var TYPE_NOTHING = 0,
+    TYPE_MAINBOARD = 1,
+    TYPE_PROCESSOR = 2,
+    TYPE_COOLING_DEVICE = 3,
+    TYPE_MEMORY = 4,
+    TYPE_POWER_SUPPLY = 5,
+    TYPE_STORAGE = 6,
+    TYPE_HEATSINK = 7;
 
 $(function()
 	{
@@ -159,6 +160,10 @@ function updateComponents() {
 		{
 			$('#debb_configbundle_nodetype_components_' + id + '_storage').parent().find('input, select, label, .amountExtras').show();
 		}
+        else if(type == TYPE_HEATSINK)
+        {
+            $('#debb_configbundle_nodetype_components_' + id + '_heatsink').parent().find('input, select, label, .amountExtras').show();
+        }
 		if(amount < 1)
 		{
 			$('#debb_configbundle_nodetype_components_' + id).find('select, .amountExtras').hide();

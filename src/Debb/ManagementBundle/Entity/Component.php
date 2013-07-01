@@ -13,8 +13,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Component
 {
+	/* Define types always in DebbConfigBundle Controller NodeController.php */
 	/* Define types always in DebbConfigBundle Resources public js node.js */
 	/* Define types always in DebbConfigBundle Resources translations messages.*.yml */
+	/* Define types always in DebbManagementBundle Form ComponentType.php */
 
 	/**
 	 * [Type] Nothing
@@ -65,6 +67,13 @@ class Component
 	 * @var int
 	 */
 	const TYPE_STORAGE = 6;
+
+	/**
+	 * [Type] Heatsink
+	 *
+	 * @var int
+	 */
+	const TYPE_HEATSINK = 7;
 
 	/**
 	 * @var integer
@@ -143,6 +152,14 @@ class Component
 	 * @ORM\JoinColumn(name="storage_id", referencedColumnName="id", onDelete="cascade")
 	 */
 	private $storage;
+
+	/**
+	 * @var Debb\ManagementBundle\Entity\Heatsink
+	 *
+	 * @ORM\ManyToOne(targetEntity="Heatsink")
+	 * @ORM\JoinColumn(name="heatsink_id", referencedColumnName="id", onDelete="cascade")
+	 */
+	private $heatsink;
 
 	/**
 	 * Get id
@@ -363,6 +380,33 @@ class Component
 	}
 
 	/**
+	 * Set heatsink
+	 *
+	 * @param \Debb\ManagementBundle\Entity\Heatsink $heatsink
+	 * @return Component
+	 */
+	public function setHeatsink(\Debb\ManagementBundle\Entity\Heatsink $heatsink = null)
+	{
+		$this->heatsink = $heatsink;
+		if($this->heatsink != null)
+		{
+			$this->setType(self::TYPE_HEATSINK);
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Get heatsink
+	 *
+	 * @return \Debb\ManagementBundle\Entity\Heatsink
+	 */
+	public function getHeatsink()
+	{
+		return $this->storage;
+	}
+
+	/**
 	 * Set amount
 	 *
 	 * @param integer $amount
@@ -420,6 +464,10 @@ class Component
 		{
 			return $this->getStorage();
 		}
+		else if($this->getType() == $this::TYPE_HEATSINK)
+		{
+			return $this->getHeatsink();
+		}
 		return null;
 	}
 
@@ -456,6 +504,10 @@ class Component
 			else if($this->getType() == $this::TYPE_STORAGE && $this->getStorage() != null)
 			{
 				$array[]['Storage'] = $this->getStorage()->getDebbXmlArray();
+			}
+			else if($this->getType() == $this::TYPE_HEATSINK && $this->getHeatsink() != null)
+			{
+				$array[]['Heatsink'] = $this->getHeatsink()->getDebbXmlArray();
 			}
 		}
 		return $array;

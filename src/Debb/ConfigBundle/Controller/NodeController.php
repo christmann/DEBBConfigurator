@@ -47,7 +47,8 @@ class NodeController extends XMLController
 				Component::TYPE_COOLING_DEVICE => false,
 				Component::TYPE_POWER_SUPPLY => false,
 				Component::TYPE_MEMORY => false,
-				Component::TYPE_STORAGE => false
+				Component::TYPE_STORAGE => false,
+				Component::TYPE_HEATSINK => false
 			);
 
 			/* check components */

@@ -101,4 +101,27 @@ class Heatsink extends Base
     {
         return $this->stlFile;
     }
+
+	/**
+	 * Returns a array for later converting
+	 *
+	 * @return array the array for later converting
+	 */
+	public function getXmlArray()
+	{
+		$array = parent::getDebbXmlArray();
+		if ($this->getType() != null)
+		{
+			$array['Type'] = $this->getType();
+		}
+		if($this->getStlFile() != null)
+		{
+			$array[] = array('Reference' => array('Type' => 'STL', 'Location' => './object/' . $this->getStlFile()->getName()));
+		}
+		if($this->getVrmlFile() != null)
+		{
+			$array[] = array('Reference' => array('Type' => 'VRML', 'Location' => './object/' . $this->getVrmlFile()->getName()));
+		}
+		return $array;
+	}
 }

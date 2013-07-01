@@ -52,6 +52,7 @@ component.3: Kühler
 component.4: Speicher
 component.5: Netzteil
 component.6: HDD
+component.7: Heatsink
 empty: leer
 import.%name%: %name% importieren
 Yes: Ja

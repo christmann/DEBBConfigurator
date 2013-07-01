@@ -52,6 +52,7 @@ component.3: Cooler
 component.4: Memory
 component.5: Power supply
 component.6: HDD
+component.7: Heatsink
 empty: Empty
 import.%name%: Import %name%
 Tdp: TDP [Watt]
