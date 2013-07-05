@@ -1,13 +1,11 @@
-cool_em_all_user:
-    resource: "@CoolEmAllUserBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
 DebbConfigBundle:
     resource: "@DebbConfigBundle/Resources/config/routing.yml"
 
 DebbManagementBundle:
     resource: "@DebbManagementBundle/Resources/config/routing.yml"
+
+CoolEmAllUserBundle:
+    resource: "@CoolEmAllUserBundle/Resources/config/routing.yml"
 
 CIMPluploadBundle:
     resource: "@CIMPluploadBundle/Controller/"

@@ -2,6 +2,7 @@
 
 namespace Debb\ConfigBundle\Controller;
 
+use CoolEmAll\UserBundle\Entity\User;
 use Debb\ConfigBundle\Entity\Node;
 use Debb\ConfigBundle\Entity\NodeGroup;
 use Debb\ConfigBundle\Entity\Rack;
@@ -112,7 +113,7 @@ abstract class XMLController extends CRUDController
 		$xml = new \SimpleXMLElement('<?xml version="1.0" encoding="utf-8"?>
 <PLMXML xmlns="http://www.plmxml.org/Schemas/PLMXMLSchema"
 	xmlns:vis="PLMXMLTcVisSchema" schemaVersion="6" date="' . date('Y-m-d') . '" time="' . date('H:i:s') . '"
-	author="'.'{USERNAME}'.'" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	author="'.htmlentities((string) $this->getUser(), ENT_QUOTES).'" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.plmxml.org/Schemas/PLMXMLSchema PLMXMLSchema.xsd" />');
 
 		$productDef = $xml->addChild('ProductDef');
@@ -525,5 +526,13 @@ abstract class XMLController extends CRUDController
 			throw $this->createNotFoundException($this->get('translator')->trans('could not create zip archive'));
 		}
 		exit(0);
+	}
+
+	/**
+	 * @return string|User
+	 */
+	public function getUser()
+	{
+		return $this->container->get('security.context')->getToken()->getUser();
 	}
 }
