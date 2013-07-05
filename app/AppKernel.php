@@ -16,16 +16,16 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
-            new Debb\ConfigBundle\DebbConfigBundle(),
 			new Knp\Bundle\MenuBundle\KnpMenuBundle(),
-            new Debb\ManagementBundle\DebbManagementBundle(),
 			new Localdev\FrameworkExtraBundle\LocaldevFrameworkExtraBundle(),
 			new Localdev\AdminBundle\LocaldevAdminBundle(),
-			new CIM\PluploadBundle\CIMPluploadBundle(),
 			new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
 			new Bazinga\ExposeTranslationBundle\BazingaExposeTranslationBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+	        new CIM\PluploadBundle\CIMPluploadBundle(),
             new CoolEmAll\UserBundle\CoolEmAllUserBundle(),
+	        new Debb\ConfigBundle\DebbConfigBundle(),
+	        new Debb\ManagementBundle\DebbManagementBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
