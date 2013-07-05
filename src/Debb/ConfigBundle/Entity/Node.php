@@ -155,6 +155,12 @@ class Node extends Dimensions
 		{
 			$array['Node'][] = array('Reference' => array('Type' => 'VRML', 'Location' => './object/' . $this->getVrmlFile()->getName()));
 		}
+		// todo: use dynamic connector instead:
+		$array['Node']['Connector'] = array(
+			'ConnectorType' => ($this->getType() == 'CXP2' ? 'COMExpress Type 2' : ($this->getType() == 'CPX6' ? 'COMExpress Type 6' : 'Apalis')),
+			'Label' => 'COMExpress',
+			'Transform' => 'Transform'
+		);
 		$array['Node']['Baseboard'] = array();
 		$rest = array();
 		$firstAllowedWasInserted = false;
@@ -232,16 +238,6 @@ class Node extends Dimensions
 	{
 		return $this->stlFile;
 	}
-
-	/**
-	 * Get all types
-	 *
-	 * @return array
-	 */
-//	public static function getTypes()
-//	{
-//		return array(0 => 'CXP2', 1 => 'CXP6', 2 => 'Apls');
-//	}
 
     /**
      * Set type
