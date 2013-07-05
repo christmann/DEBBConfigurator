@@ -52,9 +52,12 @@ class Rack extends Dimensions
 	 * @param \Debb\ManagementBundle\Entity\NodegroupToRack $nodeGroups
 	 * @return Rack
 	 */
-	public function addNodeGroup(\Debb\ManagementBundle\Entity\NodegroupToRack $nodeGroups)
+	public function addNodeGroup(\Debb\ManagementBundle\Entity\NodegroupToRack $nodeGroups, $setRack = true)
 	{
-		$nodeGroups->setRack($this);
+		if($setRack)
+		{
+			$nodeGroups->setRack($this);
+		}
 		$this->nodeGroups[] = $nodeGroups;
 
 		return $this;

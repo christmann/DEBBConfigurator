@@ -128,7 +128,18 @@ abstract class XMLController extends CRUDController
 		}
 		else
 		{
-			$items = array($item);
+			if($item instanceof NodeGroup)
+			{
+				$eRack = new Rack();
+				$eItem = new NodegroupToRack();
+				$eItem->setRack($eRack);
+				$eItem->setNodegroup($item);
+				$items = array($eRack);
+			}
+			else
+			{
+				$items = array($item);
+			}
 		}
 
 		foreach($items as $item)
@@ -508,7 +519,9 @@ abstract class XMLController extends CRUDController
 
 			$plmXml = $this->asPlmXmlAction($id, true);
 			$zip->addFromString('PLMXML_'.$item->getComponentId().'.xml', $plmXml);
-			$this->valide($plmXml, file_get_contents('../utils/PLMXMLSchema.xsd'), 'PLMXML');
+			$room = new \Debb\ConfigBundle\Controller\RoomController();
+			$room->setContainer($this->getContainer());
+			$room->valide($plmXml, file_get_contents('../utils/PLMXMLSchema.xsd'), 'PLMXML');
 
 			$zip->close();
 			if(!$debug)
