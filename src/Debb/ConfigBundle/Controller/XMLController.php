@@ -82,7 +82,7 @@ abstract class XMLController extends CRUDController
 			$dom = dom_import_simplexml($xml)->ownerDocument;
 			$dom->formatOutput = true;
 			$dom->preserveWhiteSpace = true;
-			$xmlStr = $dom->saveXML();
+			$xmlStr = $dom->saveXML(null, LIBXML_NOEMPTYTAG);
 		}
 		else
 		{
@@ -205,7 +205,7 @@ abstract class XMLController extends CRUDController
 			$dom = dom_import_simplexml($xml)->ownerDocument;
 			$dom->formatOutput = true;
 			$dom->preserveWhiteSpace = true;
-			return $dom->saveXML();
+			return $dom->saveXML(null, LIBXML_NOEMPTYTAG);
 		}
 		else
 		{
