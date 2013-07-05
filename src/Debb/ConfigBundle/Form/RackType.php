@@ -36,7 +36,12 @@ class RackType extends BaseType
 				'required' => false,
 			))
 			->add('nodeGroupSize', 'choice', array('choices' => $this->getNodeGroupSizeChoices(), 'required' => false, 'label' => 'RackSize',
-				'empty_value' => false, 'attr' => array('class' => 'updateRackSize')))
+				'empty_value' => false, 'attr' => array('class' => 'updateRackSize noBreakAfterThis')))
+	        ->add(
+		        'frontView',
+		        'choice',
+		        array('choices' => array(0 => 'Top', 1 => 'Front'), 'empty_value' => false, 'label' => 'View')
+	        )
         ;
     }
 

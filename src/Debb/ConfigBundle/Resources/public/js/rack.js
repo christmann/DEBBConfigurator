@@ -140,6 +140,14 @@ $(function ()
           }
           updateRack();
       });
+      $('#debb_configbundle_racktype_frontView').change(function()
+      {
+          var showOrHide = parseInt($(this).val()) == 0;
+          $('#debb_configbundle_racktype_spaceTop, #debb_configbundle_racktype_spaceBottom, #debb_configbundle_racktype_spaceLeft, #debb_configbundle_racktype_spaceRight').each(function()
+          {
+              $(this).parents('div:first').toggle(showOrHide);
+          });
+      }).change();
       $('#selectedNodeGroup').change();
       $('.updateRackSize').change();
       updateRack();
