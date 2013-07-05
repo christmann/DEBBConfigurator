@@ -25,10 +25,6 @@ class NodeType extends BaseType
             ->add('sizeX', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis'), 'label' => 'SizeX'))
             ->add('sizeY', null, array('required' => false, 'label' => 'SizeY'))
             ->add('sizeZ', null, array('required' => false, 'label' => 'SizeZ'))
-            ->add('spaceTop', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis'), 'label' => 'SpaceTop'))
-            ->add('spaceBottom', null, array('required' => false, 'label' => 'SpaceBottom'))
-            ->add('spaceLeft', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis'), 'label' => 'SpaceLeft'))
-            ->add('spaceRight', null, array('required' => false, 'label' => 'SpaceRight'))
             ->add('components', 'collection', array(
 				'type' => new ComponentType(),
 				'allow_add' => true,
