@@ -107,6 +107,8 @@ upload stl model: Upload STL model
 upload zip file: Upload ZIP datei
 new: - Neu
 add new node type: Neuen Knoten-Typ hinzufügen
+Maxtemp: Maximale Temperatur
+Mintemp: Minimale Temperatur
 
 # help
 help:

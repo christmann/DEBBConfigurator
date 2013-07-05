@@ -103,6 +103,8 @@ upload stl model: Upload STL model
 upload zip file: Upload ZIP file
 new: - New
 add new node type: Add new node type
+Maxtemp: Maximum Temperatur
+Mintemp: Minimale Temperatur
 
 # help
 help:

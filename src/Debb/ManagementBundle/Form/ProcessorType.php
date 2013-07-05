@@ -23,6 +23,8 @@ class ProcessorType extends BaseType
 			->add('MaxClockSpeed', 'text')
 			->add('cores', 'text', array('attr' => array('class' => 'noBreakAfterThis')))
             ->add('tdp', 'text')
+	        ->add('mintemp', 'number', array('attr' => array('class' => 'noBreakAfterThis')))
+	        ->add('maxtemp', 'number')
         ;
     }
 

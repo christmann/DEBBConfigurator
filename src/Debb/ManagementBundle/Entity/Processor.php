@@ -36,6 +36,20 @@ class Processor extends Base
 	private $tdp;
 
 	/**
+	 * @var decimal
+	 *
+	 * @ORM\Column(name="mintemp", type="decimal", nullable=true)
+	 */
+	private $mintemp;
+
+	/**
+	 * @var decimal
+	 *
+	 * @ORM\Column(name="maxtemp", type="decimal", nullable=true)
+	 */
+	private $maxtemp;
+
+	/**
 	 * Set maxClockSpeed
 	 *
 	 * @param integer $maxClockSpeed
@@ -127,4 +141,49 @@ class Processor extends Base
 		return $array;
 	}
 
+    /**
+     * Set mintemp
+     *
+     * @param float $mintemp
+     * @return Processor
+     */
+    public function setMintemp($mintemp)
+    {
+        $this->mintemp = $mintemp;
+    
+        return $this;
+    }
+
+    /**
+     * Get mintemp
+     *
+     * @return float 
+     */
+    public function getMintemp()
+    {
+        return $this->mintemp;
+    }
+
+    /**
+     * Set maxtemp
+     *
+     * @param float $maxtemp
+     * @return Processor
+     */
+    public function setMaxtemp($maxtemp)
+    {
+        $this->maxtemp = $maxtemp;
+    
+        return $this;
+    }
+
+    /**
+     * Get maxtemp
+     *
+     * @return float 
+     */
+    public function getMaxtemp()
+    {
+        return $this->maxtemp;
+    }
 }
