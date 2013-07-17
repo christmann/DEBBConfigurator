@@ -403,7 +403,7 @@ class Component
 	 */
 	public function getHeatsink()
 	{
-		return $this->storage;
+		return $this->heatsink;
 	}
 
 	/**
