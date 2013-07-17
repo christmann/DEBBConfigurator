@@ -67,7 +67,7 @@ h5
 	margin:      0px 0px 10px 0px;
 }
 
-input[type="text"], input[type="number"], input[type="email"]
+input[type="text"], input[type="number"], input[type="email"], input[type="password"]
 {
 	border:     1px solid #e3d7d7;
 	height:     28px;
@@ -472,7 +472,7 @@ table tr td
 	margin-bottom: 20px;
 }
 
-input[type=text]
+input[type="text"], input[type="password"], input[type="email"]
 {
 	width: 360px;
 }
