@@ -12,7 +12,7 @@ class HeatsinkType extends BaseType
     {
 	    parent::buildForm($builder, $options);
         $builder
-            ->add('hostname')
+            ->add('hostname', null, array('attr' => array('class' => 'noBreakAfterThis')))
             ->add('type')
 	        ->add('vrmlFile', 'plupload', array('required' => false, 'filter' => array('vrml,wrl' => 'VRML'), 'label' => 'upload vrml model', 'bootstrap' => true))
 	        ->add('stlFile', 'plupload', array('required' => false, 'filter' => array('stl' => 'STL'), 'label' => 'upload stl model', 'bootstrap' => true))
