@@ -107,20 +107,21 @@ class Heatsink extends Base
 	 *
 	 * @return array the array for later converting
 	 */
-	public function getXmlArray()
+	public function getDebbXmlArray()
 	{
 		$array = parent::getDebbXmlArray();
 		if ($this->getType() != null)
 		{
 			$array['Type'] = $this->getType();
 		}
+		$array['Transform'] = '1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1'; // missing example ...
 		if($this->getStlFile() != null)
 		{
-			$array[] = array('Reference' => array('Type' => 'STL', 'Location' => './object/' . $this->getStlFile()->getName()));
+			$array[] = array(array('Reference' => array('Type' => 'STL', 'Location' => './object/' . $this->getStlFile()->getName())));
 		}
 		if($this->getVrmlFile() != null)
 		{
-			$array[] = array('Reference' => array('Type' => 'VRML', 'Location' => './object/' . $this->getVrmlFile()->getName()));
+			$array[] = array(array('Reference' => array('Type' => 'VRML', 'Location' => './object/' . $this->getVrmlFile()->getName())));
 		}
 		return $array;
 	}

@@ -37,3 +37,4 @@ web/js/*
 src/CIM/PluploadBundle/
 index.php
 *.iml
+tests/*
