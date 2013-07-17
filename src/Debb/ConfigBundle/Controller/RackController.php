@@ -57,7 +57,7 @@ class RackController extends XMLController
 		$form = $this->createForm($this->getFormType($item), $item);
 		if ($request->getMethod() == 'POST')
 		{
-			$form->bind($request);
+			$form->submit($request);
 
 			if ($form->isValid())
 			{

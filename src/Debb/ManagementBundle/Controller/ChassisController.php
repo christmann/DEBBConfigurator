@@ -33,7 +33,7 @@ class ChassisController extends CRUDController
 		$form = $this->createForm($this->getFormType($item), $item, array('attr' => array('duplicated' => $duplicated)));
 		if ($request->getMethod() == 'POST')
 		{
-			$form->bind($request);
+			$form->submit($request);
 
 			if ($form->isValid())
 			{

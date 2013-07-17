@@ -93,7 +93,7 @@ class DefaultController extends Controller
         $form = $this->createForm(new \Debb\ConfigBundle\Form\ImportDebbComponentsXmlType());
         if ($request->getMethod() == 'POST')
         {
-            $form->bind($request);
+            $form->submit($request);
 
             if ($form->isValid())
             {
