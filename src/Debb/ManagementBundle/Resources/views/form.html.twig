@@ -13,13 +13,14 @@
 {% endblock %}
 
 {% block form_header %}
-	<form action="{% if ownaction is not defined %}
-			{% if item is not defined or item.id is null %}{{ path( localdev_admin_route('_form')) }}{% else %}{{ path( localdev_admin_route('_form'), {id: item.id}) }}{% endif %}
-		  {% else %}
+	{%- set action -%}
+		{%- if ownaction is not defined -%}
+			{%- if item is not defined or item.id is null -%}{{ path( localdev_admin_route('_form')) }}{%- else -%}{{ path( localdev_admin_route('_form'), {id: item.id}) }}{%- endif -%}
+		{%- else -%}
 			{{ ownaction }}
-		  {% endif %}"
-		  class="clearfix"
-		  method="post" {{ form_enctype(form) }}>
+		{%- endif -%}
+	{%- endset -%}
+	{{ form_start(form, {'method': 'POST', 'attr': {'class': 'clearfix'}, 'action': action}) }}
 {% endblock %}
 
 {% block content %}
@@ -42,5 +43,5 @@
 {% endblock %}
 
 {% block form_footer %}
-	</form>
+	{{ form_end(form) }}
 {% endblock %}
