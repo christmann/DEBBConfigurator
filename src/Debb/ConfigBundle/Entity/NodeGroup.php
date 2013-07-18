@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * NodeGroup
  *
  * @ORM\Table(name="nodegroup")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Debb\ManagementBundle\Repository\BaseRepository")
  */
 class NodeGroup extends Dimensions
 {

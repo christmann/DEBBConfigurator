@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * CoolingDevice
  *
  * @ORM\Table(name="coolingdevice")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Debb\ManagementBundle\Repository\BaseRepository")
  */
 class CoolingDevice extends Base
 {

@@ -16,7 +16,8 @@ framework:
     templating:      { engines: ['twig'] }
     default_locale:  "%locale%"
     trusted_proxies: ~
-    session:         ~
+    session:
+        save_path:   null
     fragments:       ~
 
 # Twig Configuration

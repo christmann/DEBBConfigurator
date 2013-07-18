@@ -4,7 +4,6 @@ namespace Debb\ManagementBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Localdev\AdminBundle\Controller\CRUDController;
 use \Debb\ConfigBundle\Entity\Node;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -12,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @author Patrick Bußmann <patrick.bussmann@christmann.info>
  * @Route("/{_locale}/management/chassis", requirements={"_locale" = "en|de"}, defaults={"_locale" = "en"})
  */
-class ChassisController extends CRUDController
+class ChassisController extends BaseController
 {
 	/**
 	 * Creates a new entity

@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Rack
  *
  * @ORM\Table(name="rack")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Debb\ManagementBundle\Repository\BaseRepository")
  */
 class Rack extends Dimensions
 {

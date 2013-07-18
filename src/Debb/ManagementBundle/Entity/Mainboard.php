@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Mainboard
  *
  * @ORM\Table(name="mainboard")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Debb\ManagementBundle\Repository\BaseRepository")
  */
 class Mainboard extends Base
 {

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Heatsink
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Debb\ManagementBundle\Repository\BaseRepository")
  */
 class Heatsink extends Base
 {

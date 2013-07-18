@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Processor
  *
  * @ORM\Table(name="processor")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Debb\ManagementBundle\Repository\BaseRepository")
  */
 class Processor extends Base
 {

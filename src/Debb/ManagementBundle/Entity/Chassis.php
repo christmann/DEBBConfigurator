@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Chassis
  *
  * @ORM\Table(name="chassis")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Debb\ManagementBundle\Repository\BaseRepository")
  */
 class Chassis extends Dimensions
 {

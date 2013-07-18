@@ -2,6 +2,7 @@
 
 namespace Debb\ManagementBundle\Entity;
 
+use CoolEmAll\UserBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -56,6 +57,14 @@ class Base
 	 * @ORM\Column(name="hostname", type="string", length=255, nullable=true)
 	 */
 	private $hostname;
+
+	/**
+	 * @var User
+	 *
+	 * @ORM\ManyToOne(targetEntity="CoolEmAll\UserBundle\Entity\User")
+	 * aa@JoinColumn(name="parent_id", referencedColumnName="id")
+	 */
+	private $user;
 
 	/**
 	 * Get id
@@ -302,5 +311,28 @@ class Base
     public function getLabel()
     {
         return $this->label;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \CoolEmAll\UserBundle\Entity\User $user
+     * @return Base
+     */
+    public function setUser(\CoolEmAll\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+    
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \CoolEmAll\UserBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

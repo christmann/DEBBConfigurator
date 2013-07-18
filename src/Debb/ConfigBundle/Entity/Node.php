@@ -9,7 +9,7 @@ use \Debb\ManagementBundle\Entity\Component;
  * Node
  *
  * @ORM\Table(name="node")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Debb\ManagementBundle\Repository\BaseRepository")
  */
 class Node extends Dimensions
 {

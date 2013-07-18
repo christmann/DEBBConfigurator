@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Storage
  *
  * @ORM\Table(name="storage")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Debb\ManagementBundle\Repository\BaseRepository")
  */
 class Storage extends Base
 {

@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Box
  *
  * @ORM\Table(name="box")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Debb\ManagementBundle\Repository\BaseRepository")
  */
 class Box extends \Debb\ConfigBundle\Entity\Dimensions
 {

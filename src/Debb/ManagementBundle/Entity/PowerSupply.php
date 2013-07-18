@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * PowerSupply
  *
  * @ORM\Table(name="powersupply")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Debb\ManagementBundle\Repository\BaseRepository")
  */
 class PowerSupply extends Base
 {

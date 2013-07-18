@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Room
  *
  * @ORM\Table(name="room")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Debb\ManagementBundle\Repository\BaseRepository")
  */
 class Room extends Dimensions
 {
