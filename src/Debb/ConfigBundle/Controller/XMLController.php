@@ -150,11 +150,19 @@ abstract class XMLController extends CRUDController
 			}
 
 			$rackInstance = $this->addPlmXmlProductRevisionView(
-				$instanceGraph, 'iview' . sprintf('%02d', $item->getId()) . '_1', 'DefRackView' . sprintf('%02d', $item->getId()), null, $item->getHostname()
+				$instanceGraph,                                                         // $xml
+				'iview' . sprintf('%02d', $item->getId()) . '_1',                       // $id
+				'DefRackView' . sprintf('%02d', $item->getId()),                        // $name
+				null,                                                                   // $instanceRefs
+				$item->getHostname()                                                    // $type
 			);
 			$rackInstanceViewArr = (array) $rackInstance->attributes();
 			$rackInstanceView = $this->addPlmXmlProductInstance(
-				$instanceGraph, 'inst' . sprintf('%02d', $item->getId()) . '_1', 'DefRack' . sprintf('%02d', $item->getId()), $rackInstanceViewArr['@attributes']['id'], $item->getHostname()
+				$instanceGraph,                                                         // $xml
+				'inst' . sprintf('%02d', $item->getId()) . '_1',                        // $id
+				'DefRack' . sprintf('%02d', $item->getId()),                            // $name
+				$rackInstanceViewArr['@attributes']['id'],                              // $partRef
+				$item->getHostname()                                                    // $hostname
 			);
 
 			$rackInstance = $rackInstance[0];
@@ -168,8 +176,16 @@ abstract class XMLController extends CRUDController
 					$id = $item->getId() . $nodeGroup->getId();
 					$nodeGroupsForThatRack[] = 'id' . sprintf('%04d', $id);
 
+					/** @var $nodeGroup NodegroupToRack */
 					$productRevisionView = $this->addPlmXmlProductRevisionView(
-						$instanceGraph, 'id' . sprintf('%04d', $id), 'DefNodeGroup' . sprintf('%04d', $id), array(), 'assembly', null, null, $nodeGroup->getNodeGroup()->getComponentId(), 'NodeGroup'
+						$instanceGraph,                                                 // $xml
+						'id' . sprintf('%04d', $id),                                    // $id
+						'DefNodeGroup' . sprintf('%04d', $id),                          // $name
+						array(),                                                        // $instanceRefs
+						'assembly',                                                     // $type
+						array(),                                                        // $representations
+						$nodeGroup->getNodeGroup()->getComponentId(),                   // $DEBBComponentId
+						'NodeGroup'                                                     // $DEBBLevel
 					);
 
 					/* @var $nodeGroup NodegroupToRack */
@@ -184,7 +200,12 @@ abstract class XMLController extends CRUDController
 						if ($node->getNode() != null)
 						{
 							$partReference = $this->addPlmXmlProductInstance(
-								$instanceGraph, 'inst' . sprintf('%04d', $id) . '_2', 'DefNode' . sprintf('%04d', $id), 'id' . sprintf('%04d', $id), $node->getNode()->getHostname(), '0 1 0 0 -1 0 0 0 0 0 1 0 '.$x.' '.$y.' 0.005 1' // position
+								$instanceGraph,                                         // $xml
+								'inst' . sprintf('%04d', $id) . '_2',                   // $id
+								'DefNode' . sprintf('%04d', $id),                       // $name
+								'id' . sprintf('%04d', $id),                            // $partRef
+								$node->getNode()->getHostname(),                        // $hostname
+								'0 1 0 0 -1 0 0 0 0 0 1 0 '.$x.' '.$y.' 0.005 1'        // $transform
 							);
 							if($draft != null)
 							{
@@ -235,7 +256,7 @@ abstract class XMLController extends CRUDController
 	 * @param null|string optional $transform the position of this product instance
 	 * @return array the SimpleXMLElement product instance (0) and the generated id (1)
 	 */
-	public function addPlmXmlProductInstance(\SimpleXMLElement &$xml, $id, $name = null, $partRef = null, $hostname = null, $transform = null)
+	public function addPlmXmlProductInstance(\SimpleXMLElement &$xml, $id, $name = null, $partRef = null, $hostname = null, $transform = null, $locationInMesh = null)
 	{
 		$productInstance = $xml->addChild('ProductInstance');
 
@@ -262,10 +283,16 @@ abstract class XMLController extends CRUDController
 			$productInstance->addAttribute('partRef', is_array($partRef) ? implode(' ', $partRef) : $partRef);
 		}
 
-		if ($hostname != null || $transform != null)
+		if ($transform != null)
+		{
+			$transform = $productInstance->addChild('Transform', $transform); // example: 0 1 0 0 -1 0 0 0 0 0 1 0 0.175 0.744 0.005 1
+			$transform->addAttribute('id', $this->convertIdToTransId($id)); // example: id71_01_07
+		}
+
+		if ($hostname != null || $locationInMesh != null)
 		{
 			$userData = $productInstance->addChild('UserData');
-			$userData->addAttribute('id', str_replace('view', 'userdata', $id) . '_1'); // example: id71_01_7_1
+			$userData->addAttribute('id', preg_replace('#[i]{0,1}view#i', 'userdata', $id) . '_1'); // example: id71_01_7_1
 
 			if ($hostname != null)
 			{
@@ -274,10 +301,11 @@ abstract class XMLController extends CRUDController
 				$userValue->addAttribute('title', 'hostname');
 			}
 
-			if ($transform != null)
+			if ($locationInMesh != null)
 			{
-				$transform = $productInstance->addChild('Transform', $transform); // example: 0 1 0 0 -1 0 0 0 0 0 1 0 0.175 0.744 0.005 1
-				$transform->addAttribute('id', $this->convertIdToTransId($id)); // example: id71_01_07
+				$locationInMesh = $userData->addChild('LocationInMesh');
+				$locationInMesh->addAttribute('value', $locationInMesh); // example: 1 0 0 0 0 1 0 0 0 0 1 0 -0.003 -0.003 0.003 1
+				$locationInMesh->addAttribute('title', 'LocationInMesh');
 			}
 		}
 
@@ -298,7 +326,7 @@ abstract class XMLController extends CRUDController
 	 * @param null|string optional $DEBBLevel the type from DEBBComponents.xml file (Node, NodeGroup, Computebox1, ComputeBox2, Sensor, CoolingDevice, Powersupply, ...)
 	 * @return \SimpleXMLElement the SimpleXMLElement product revision view
 	 */
-	public function addPlmXmlProductRevisionView(\SimpleXMLElement &$xml, $id, $name = null, $instanceRefs = array(), $type = null, $format = 'VRML', $location = '.\objects\\', $DEBBComponentId = null, $DEBBLevel = null)
+	public function addPlmXmlProductRevisionView(\SimpleXMLElement &$xml, $id, $name = null, $instanceRefs = array(), $type = null, $representations = array(), $DEBBComponentId = null, $DEBBLevel = null)
 	{
 		$productRevisionView = $xml->addChild('ProductRevisionView');
 
@@ -348,17 +376,14 @@ abstract class XMLController extends CRUDController
 			}
 		}
 
-		if ($format != null || $location != null)
+		if ($representations != null && count($representations) > 0)
 		{
-			$representation = $productRevisionView->addChild('Representation');
-			$representation->addAttribute('id', $this->convertIdToRevId($id)); // example: id1084_04_1
-			if ($format != null)
+			foreach($representations as $rep)
 			{
-				$representation->addAttribute('format', $format); // example: VRML
-			}
-			if ($location != null)
-			{
-				$representation->addAttribute('location', $location); // example: .\objects\NodeBoard.wrl
+				$representation = $productRevisionView->addChild('Representation');
+				$representation->addAttribute('id', $this->convertLocationToId($rep['location'])); // example: id1084_04_1
+				$representation->addAttribute('format', $rep['format']); // example: VRML
+				$representation->addAttribute('location', $rep['location']); // example: .\objects\NodeBoard.wrl
 			}
 		}
 
@@ -391,7 +416,18 @@ abstract class XMLController extends CRUDController
 	 */
 	public function convertIdToRevId($id)
 	{
-		return str_replace('view', 'rep', $id);
+		return preg_replace('#[i]{0,1}view#i', 'rep', $id);
+	}
+
+	/**
+	 * Converts a location to a id
+	 *
+	 * @param string $location the location to convert (example: .\objects\NodeGroup_recscase.stl)
+	 * @return mixed the id of the location (example: _objects_NodeGroup_recscase_stl)
+	 */
+	public function convertLocationToId($location)
+	{
+		return preg_replace('#[^0-9a-zA-Z]+#i', '_', $location);
 	}
 
 	/**
