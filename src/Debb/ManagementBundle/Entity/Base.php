@@ -258,7 +258,7 @@ class Base
 	{
 		if($this->hostname === null)
 		{
-			return uniqid($this->getComponentId() . 'abc' . rand(11111, 99999) . rand(11, 99));
+			return uniqid($this->getComponentId() . rand(11111, 99999) . rand(11, 99));
 		}
 		return $this->hostname;
 	}
