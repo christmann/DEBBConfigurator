@@ -45,7 +45,12 @@
 		<div id="grouptitle-box">
             {{ form_row(form.manufacturer) }}
             {{ form_row(form.product) }}
+            {{ form_row(form.label) }}
+            {{ form_row(form.hostname) }}
             {{ form_row(form.draft) }}
+			{% do form.sizeX.setRendered %}{% do form.sizeY.setRendered %}{% do form.sizeZ.setRendered %}
+			{% do form.spaceLeft.setRendered %}{% do form.spaceRight.setRendered %}{% do form.spaceTop.setRendered %}{% do form.spaceBottom.setRendered %}{% do form.spaceFront.setRendered %}{% do form.spaceBehind.setRendered %}
+			{% do form.nodes.setRendered %}
 			<div class="clear"></div>
 		</div>
 		<div id="node-select-box">
