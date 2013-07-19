@@ -119,7 +119,6 @@ abstract class XMLController extends BaseController
 		$productDef->addAttribute('id', 'id1');
 		$instanceGraph = $productDef->addChild('InstanceGraph');
 		$instanceGraph->addAttribute('id', 'id2');
-		$instanceGraph->addAttribute('rootRefs', 'inst02_1');
 
 		if($item instanceof Room)
 		{
@@ -163,6 +162,10 @@ abstract class XMLController extends BaseController
 				$rackInstanceViewArr['@attributes']['id'],                              // $partRef
 				$item->getHostname()                                                    // $hostname
 			);
+			if($instanceGraph->attributes()->rootRefs === null)
+			{
+				$instanceGraph->addAttribute('rootRefs', $rackInstanceView[1]);
+			}
 
 			$rackInstance = $rackInstance[0];
 
