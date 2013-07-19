@@ -1,12 +1,4 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * Project: DebbConfig
- * User: Patrick Bußmann <patrick.bussmann@christmann.info>
- * Date: 18.07.13
- * Time: 14:18
- */
-
 namespace Debb\ManagementBundle\Controller;
 
 use Debb\ManagementBundle\Entity\Base;

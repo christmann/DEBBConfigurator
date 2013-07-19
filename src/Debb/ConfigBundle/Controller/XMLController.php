@@ -7,20 +7,19 @@ use Debb\ConfigBundle\Entity\Node;
 use Debb\ConfigBundle\Entity\NodeGroup;
 use Debb\ConfigBundle\Entity\Rack;
 use Debb\ConfigBundle\Entity\Room;
+use Debb\ManagementBundle\Controller\BaseController;
 use Debb\ManagementBundle\Entity\NodegroupToRack;
 use Debb\ManagementBundle\Entity\RackToRoom;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Localdev\AdminBundle\Util\ControllerUtils;
-use Localdev\AdminBundle\Controller\CRUDController;
 
 /**
  * Contains default actions for xml generation of DEBBComponents or PLMXML
  * @author Patrick Bußmann <patrick.bussmann@christmann.info>
  */
-abstract class XMLController extends CRUDController
+abstract class XMLController extends BaseController
 {
 	/**
 	 * @var string type of debbcomponent

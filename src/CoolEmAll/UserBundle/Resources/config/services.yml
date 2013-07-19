@@ -1,1 +1,6 @@
-parameters:
+services:
+    coolemall_user.doctrine.listener:
+        class: CoolEmAll\UserBundle\EventListener\AddUserToEntityListener
+        arguments: ["@service_container"]
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }

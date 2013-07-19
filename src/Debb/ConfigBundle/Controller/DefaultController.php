@@ -2,12 +2,13 @@
 
 namespace Debb\ConfigBundle\Controller;
 
+use CoolEmAll\UserBundle\Entity\User;
 use Debb\ConfigBundle\Entity\Node;
 use Debb\ConfigBundle\Entity\NodeGroup;
+use Debb\ManagementBundle\Controller\BaseController;
 use Debb\ManagementBundle\Entity\File;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use \Localdev\FrameworkExtraBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use \Symfony\Component\HttpFoundation\Response;
 use \Debb\ManagementBundle\Entity\Component;
@@ -16,7 +17,7 @@ use \Debb\ManagementBundle\Entity\Component;
  * @author Patrick Bußmann <patrick.bussmann@christmann.info>
  * @Route("/{_locale}", requirements={"_locale" = "en|de"}, defaults={"_locale" = "en"})
  */
-class DefaultController extends Controller
+class DefaultController extends BaseController
 {
 
 	/**
@@ -114,7 +115,7 @@ class DefaultController extends Controller
                         $zip->extractTo($dir);
                         $zip->close();
                         /* Remove $file / $zip */
-                        unlink($file->getRealPath());
+	                    unlink($file->getFullPath());
                         unset($file);
                         unset($zip);
                         /* Import each xml file */
@@ -173,7 +174,7 @@ class DefaultController extends Controller
 		if(strtolower($xml->getName()) == 'node')
 		{
 			// Node
-			$node = $em->getRepository('DebbConfigBundle:Node')->findBy(array('componentId' => $xml->ComponentId));
+			$node = $em->getRepository('DebbConfigBundle:Node')->findBy(array('componentId' => $xml->ComponentId, 'user' => $this->getUserId()));
 			if(count($node) > 0)
 			{
 				$node = $node[0];
@@ -203,7 +204,7 @@ class DefaultController extends Controller
 							}
 						}
 
-						$eEntry = $em->getRepository('DebbManagementBundle:'.$key)->findBy(array('componentId' => $entry->getComponentId()));
+						$eEntry = $em->getRepository('DebbManagementBundle:'.$key)->findBy(array('componentId' => $entry->getComponentId(), 'user' => $this->getUserId()));
 						if(count($eEntry) > 0)
 						{
 							$entry = $eEntry[0];
@@ -270,7 +271,7 @@ class DefaultController extends Controller
 		else if(strtolower($xml->getName()) == 'nodegroup')
 		{
 			// NodeGroup
-			$nodeGroup = $em->getRepository('DebbConfigBundle:NodeGroup')->findBy(array('componentId' => $xml->ComponentId));
+			$nodeGroup = $em->getRepository('DebbConfigBundle:NodeGroup')->findBy(array('componentId' => $xml->ComponentId, 'user' => $this->getUserId()));
 			if(count($nodeGroup) > 0)
 			{
 				$nodeGroup = $nodeGroup[0];
@@ -369,4 +370,18 @@ class DefaultController extends Controller
 		$em->flush();
 	}
 
+	/**
+	 * Gets the current user id or null
+	 *
+	 * @return integer|null
+	 */
+	public function getUserId()
+	{
+		$user = parent::getUser();
+		if(!($user instanceof User))
+		{
+			return null;
+		}
+		return $user->getId();
+	}
 }
