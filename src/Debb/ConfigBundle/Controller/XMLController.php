@@ -102,7 +102,7 @@ abstract class XMLController extends BaseController
 	 * Return entity as plm xml string
 	 *
 	 * @param int $id item id
-	 *
+	 *1
 	 * @return string the plm xml string
 	 */
 	public function asPlmXmlAction($id, $pretty = false)
