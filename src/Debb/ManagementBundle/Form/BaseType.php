@@ -2,6 +2,7 @@
 
 namespace Debb\ManagementBundle\Form;
 
+use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -11,6 +12,13 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class BaseType extends AbstractType
 {
+	protected $container;
+
+	function __construct(Container $container = null)
+	{
+		$this->container = $container;
+	}
+
 	/**
 	 * @param FormBuilderInterface $builder
 	 * @param array $options

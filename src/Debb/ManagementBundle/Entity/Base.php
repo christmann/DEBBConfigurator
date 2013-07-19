@@ -315,8 +315,12 @@ class Base
      * @param \CoolEmAll\UserBundle\Entity\User $user
      * @return Base
      */
-    public function setUser(\CoolEmAll\UserBundle\Entity\User $user = null)
+    public function setUser($user = null)
     {
+	    if(!($user instanceof \CoolEmAll\UserBundle\Entity\User))
+	    {
+		    $user = null;
+	    }
         $this->user = $user;
     
         return $this;

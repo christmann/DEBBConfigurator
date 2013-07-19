@@ -40,7 +40,8 @@ class NodeGroupType extends BaseType
 			))
 			->add('draft', 'entity', array(
 				'class' => 'DebbManagementBundle:Chassis',
-				'label' => 'Chassis'
+				'label' => 'Chassis',
+	            'choices' => $this->container->get('doctrine')->getRepository('DebbManagementBundle:Chassis')->findAllFromUser($this->container->get('security.context')->getToken()->getUser())
 			))
         ;
     }
