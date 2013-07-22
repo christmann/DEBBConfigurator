@@ -26,7 +26,7 @@ class ChassisType extends BaseType
      *
      * @var ContainerInterface
      */
-    private $container;
+    protected $container;
 
     /**
      * Initializes a new instance of the ChassisType class.

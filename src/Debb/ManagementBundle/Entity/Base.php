@@ -175,7 +175,7 @@ class Base
 	 */
 	public function getComponentId()
 	{
-		if($this->componentId == null)
+		if($this->componentId == null || strlen($this->componentId) < 2)
 		{
 			$name = preg_replace('#[^\d\w]#', '', $this->getFullName());
 			while(strlen($name) < 5)

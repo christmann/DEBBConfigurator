@@ -8,6 +8,7 @@ use Debb\ConfigBundle\Entity\NodeGroup;
 use Debb\ConfigBundle\Entity\Rack;
 use Debb\ConfigBundle\Entity\Room;
 use Debb\ManagementBundle\Controller\BaseController;
+use Debb\ManagementBundle\Entity\File;
 use Debb\ManagementBundle\Entity\NodegroupToRack;
 use Debb\ManagementBundle\Entity\RackToRoom;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -99,6 +100,84 @@ abstract class XMLController extends BaseController
 	}
 
 	/**
+	 * Obtains an object class name without namespaces
+	 * @param object $obj
+	 * @return string real class name without namespace
+	 * @author http://www.php.net/manual/de/function.get-class.php#112159 <emmanuel.antico@gmail.com>
+	 */
+	public function get_real_class($obj) {
+		$classname = get_class($obj);
+
+		if (preg_match('@\\\\([\w]+)$@', $classname, $matches)) {
+			$classname = $matches[1];
+		}
+
+		return $classname;
+	}
+
+	/**
+			<ProductInstance id="inst_psnc_recs_i7" name="testbed/psnc/hpc/hw/rack1/recs_i7" partRef="#view_psnc_recs_i7">
+				<UserData id="userdata_inst_psnc_recs_i7">
+					<UserValue value="i7_mc" title="hostname"></UserValue>
+					<UserValue value="1 0 0 0 0 1 0 0 0 0 1 0 -0.003 -0.003 0.003 1" title="LocationInMesh"></UserValue>
+				</UserData>
+			</ProductInstance>
+	 */
+
+	/**
+	 * @param mixed $entity
+	 */
+	public function addEntityToPLMXML(\SimpleXMLElement & $xml, $entity)
+	{
+		$real_class_name = $this->get_real_class($entity);
+
+		$childIds = array();
+		if(method_exists($entity, 'getChildrens'))
+		{
+			foreach($entity->getChildrens() as $children)
+			{
+				$childIds[] = $this->addEntityToPLMXML($xml, $children);
+			}
+		}
+
+		/** $representations array generation */
+		$representations = array();
+		if(method_exists($entity, 'getStlFile') && $entity->getStlFile() instanceof File)
+		{
+			$representations[] = array('format' => 'STL', 'location' => './objects/' . $entity->getStlFile()->getName());
+		}
+		if(method_exists($entity, 'getVrmlFile') && $entity->getVrmlFile() instanceof File)
+		{
+			$representations[] = array('format' => 'VRML', 'location' => './objects/' . $entity->getVrmlFile()->getName());
+		}
+
+		/** ProductRevisionView */
+		$revisionView = $this->addPlmXmlProductRevisionView(
+			$xml,                                                                                                       // $xml
+			'iview' . sprintf('%02d', $entity->getId()) . '_1',                                                         // $id
+			'Def' . $real_class_name . 'View' . sprintf('%02d', $entity->getId()),                                      // $name
+			$childIds,                                                                                                  // $instanceRefs
+			'assembly',                                                                                                 // $type
+			$representations,                                                                                           // $representations
+			$entity->getComponentId(),                                                                                  // $DEBBComponentId
+			method_exists($entity, 'getDebbLevel') ? $entity->getDebbLevel() : $real_class_name,                        // $DEBBLevel
+			preg_match('#(NodeGroup|Node)#i', $real_class_name) ? $real_class_name . '_'.$entity->getComponentId().'.xml' : null // $DEBBComponentsFile
+		);
+		$revisionViewAttr = $revisionView->attributes();
+
+		/** ProductInstance */
+		$instance = $this->addPlmXmlProductInstance(
+			$xml,                                                                                                       // $xml
+			'inst' . sprintf('%02d', $entity->getId()) . '_1',                                                          // $id
+			'Def' . sprintf('%s%02d', $real_class_name, $entity->getId()),                                              // $name
+			$revisionViewAttr->id,                                                                                      // $partRef
+			$entity->getHostname()                                                                                      // $hostname
+		);
+
+		return $instance[1];
+	}
+
+	/**
 	 * Return entity as plm xml string
 	 *
 	 * @param int $id item id
@@ -120,119 +199,7 @@ abstract class XMLController extends BaseController
 		$instanceGraph = $productDef->addChild('InstanceGraph');
 		$instanceGraph->addAttribute('id', 'id2');
 
-		if($item instanceof Room)
-		{
-			$items = $item->getRacks();
-		}
-		else
-		{
-			if($item instanceof NodeGroup)
-			{
-				$eRack = new Rack();
-				$eItem = new NodegroupToRack();
-				$eItem->setRack($eRack);
-				$eItem->setNodegroup($item);
-				$items = array($eRack);
-			}
-			else
-			{
-				$items = array($item);
-			}
-		}
-
-		foreach($items as $item)
-		{
-			if($item instanceof RackToRoom)
-			{
-				$item = $item->getRack();
-			}
-
-			$rackInstance = $this->addPlmXmlProductRevisionView(
-				$instanceGraph,                                                         // $xml
-				'iview' . sprintf('%02d', $item->getId()) . '_1',                       // $id
-				'DefRackView' . sprintf('%02d', $item->getId()),                        // $name
-				null,                                                                   // $instanceRefs
-				$item->getHostname()                                                    // $type
-			);
-			$rackInstanceViewArr = (array) $rackInstance->attributes();
-			$rackInstanceView = $this->addPlmXmlProductInstance(
-				$instanceGraph,                                                         // $xml
-				'inst' . sprintf('%02d', $item->getId()) . '_1',                        // $id
-				'DefRack' . sprintf('%02d', $item->getId()),                            // $name
-				$rackInstanceViewArr['@attributes']['id'],                              // $partRef
-				$item->getHostname()                                                    // $hostname
-			);
-			if($instanceGraph->attributes()->rootRefs === null)
-			{
-				$instanceGraph->addAttribute('rootRefs', $rackInstanceView[1]);
-			}
-
-			$rackInstance = $rackInstance[0];
-
-			$nodeGroupsForThatRack = array();
-
-			foreach ($item->getNodeGroups() as $nodeGroup)
-			{
-				if ($nodeGroup->getNodeGroup() != null)
-				{
-					$id = $item->getId() . $nodeGroup->getId();
-					$nodeGroupsForThatRack[] = 'id' . sprintf('%04d', $id);
-
-					/** @var $nodeGroup NodegroupToRack */
-					$productRevisionView = $this->addPlmXmlProductRevisionView(
-						$instanceGraph,                                                 // $xml
-						'id' . sprintf('%04d', $id),                                    // $id
-						'DefNodeGroup' . sprintf('%04d', $id),                          // $name
-						array(),                                                        // $instanceRefs
-						'assembly',                                                     // $type
-						array(),                                                        // $representations
-						$nodeGroup->getNodeGroup()->getComponentId(),                   // $DEBBComponentId
-						'NodeGroup'                                                     // $DEBBLevel
-					);
-
-					/* @var $nodeGroup NodegroupToRack */
-					$draft = $nodeGroup->getNodegroup()->getDraft();
-
-					$nodesForThatNodeGroup = array();
-					$i = 1;
-					$x = $nodeGroup->getNodegroup()->getSpaceLeft();
-					$y = $nodeGroup->getNodegroup()->getSpaceBottom();
-					foreach ($nodeGroup->getNodeGroup()->getNodes() as $node)
-					{
-						if ($node->getNode() != null)
-						{
-							$partReference = $this->addPlmXmlProductInstance(
-								$instanceGraph,                                         // $xml
-								'inst' . sprintf('%04d', $id) . '_2',                   // $id
-								'DefNode' . sprintf('%04d', $id),                       // $name
-								'id' . sprintf('%04d', $id),                            // $partRef
-								$node->getNode()->getHostname(),                        // $hostname
-								'0 1 0 0 -1 0 0 0 0 0 1 0 '.$x.' '.$y.' 0.005 1'        // $transform
-							);
-							if($draft != null)
-							{
-								if($i == $draft->getSlotsY())
-								{
-									$x += $node->getNode()->getSizeX();
-									$i = 1;
-									$y = 0;
-								}
-								else
-								{
-									$y = $i * $node->getNode()->getSizeY();
-									$i++;
-								}
-							}
-							$nodesForThatNodeGroup[] = '' . $partReference[1];
-						}
-					}
-
-					$productRevisionView->addAttribute('instanceRefs', implode(' ', $nodesForThatNodeGroup));
-				}
-			}
-
-			$rackInstance->addAttribute('instanceRefs', implode(' ', $nodeGroupsForThatRack));
-		}
+		$instanceGraph->addAttribute('rootRefs', $this->addEntityToPLMXML($instanceGraph, $item));
 
 		if ($pretty)
 		{
@@ -326,31 +293,32 @@ abstract class XMLController extends BaseController
 	 * @param null|string optional $location the path to file for representation
 	 * @param null|string optional $DEBBComponentId the ComponentID from DEBBComponents.xml file
 	 * @param null|string optional $DEBBLevel the type from DEBBComponents.xml file (Node, NodeGroup, Computebox1, ComputeBox2, Sensor, CoolingDevice, Powersupply, ...)
+	 * @param null|string optional $DEBBComponentFile the name of the DEBBComponents.xml file
 	 * @return \SimpleXMLElement the SimpleXMLElement product revision view
 	 */
-	public function addPlmXmlProductRevisionView(\SimpleXMLElement &$xml, $id, $name = null, $instanceRefs = array(), $type = null, $representations = array(), $DEBBComponentId = null, $DEBBLevel = null)
+	public function addPlmXmlProductRevisionView(\SimpleXMLElement &$xml, $id, $name = null, $instanceRefs = array(), $type = null, $representations = array(), $DEBBComponentId = null, $DEBBLevel = null, $DEBBComponentFile = null)
 	{
 		$productRevisionView = $xml->addChild('ProductRevisionView');
 
 		/* Generate single id */
-//		$isId = explode('_', $id);
-//		$iId = (int) $isId[count($isId) - 1];
-//		unset($isId[count($isId) - 1]);
-//		$exId = implode('_', $isId);
-//		$id = $exId . '_' . $iId;
-//
-//		while (count($xml->xpath('*[@id="' . $id . '"]/@id')) > 0)
-//		{
-//			$iId++;
-//			$id = $exId . '_' . $iId;
-//		}
+		$isId = explode('_', $id);
+		$iId = (int) $isId[count($isId) - 1];
+		unset($isId[count($isId) - 1]);
+		$exId = implode('_', $isId);
+		$id = $exId . '_' . $iId;
+
+		while (count($xml->xpath('*[@id="' . $id . '"]/@id')) > 0)
+		{
+			$iId++;
+			$id = $exId . '_' . $iId;
+		}
 
 		$productRevisionView->addAttribute('id', $id); // example: id84_04_1
 		if ($name != null)
 		{
 			$productRevisionView->addAttribute('name', $name); // example: NodeGeometry
 		}
-		if (is_array($instanceRefs) && count($instanceRefs) > 1)
+		if (is_array($instanceRefs) && count($instanceRefs) > 0)
 		{
 			$productRevisionView->addAttribute('instanceRefs', implode(' ', $instanceRefs)); // example: inst83_01_1 inst83_01_2 inst83_01_3 inst83_01_4 inst83_01_5 inst83_01_6
 		}
@@ -359,7 +327,7 @@ abstract class XMLController extends BaseController
 			$productRevisionView->addAttribute('type', $type); // example: assembly
 		}
 
-		if ($DEBBComponentId != null && $DEBBLevel != null)
+		if ($DEBBComponentId != null || $DEBBLevel != null || $DEBBComponentFile != null)
 		{
 			$userData = $productRevisionView->addChild('UserData');
 			$userData->addAttribute('id', $id . '_1'); // example: id84_04_1_1
@@ -376,16 +344,22 @@ abstract class XMLController extends BaseController
 				$userValue->addAttribute('value', $DEBBComponentId); // example: node_psnc_i7-16GB-sandy
 				$userValue->addAttribute('title', 'DEBBComponentId'); // example: DEBBComponentId
 			}
+			if ($DEBBComponentFile != null)
+			{
+				$userValue = $userData->addChild('UserValue');
+				$userValue->addAttribute('value', $DEBBComponentFile); // example: Component_Nodegroup_RECS_Sirius_2.0.xml
+				$userValue->addAttribute('title', 'DEBBComponentFile'); // example: DEBBComponentFile
+			}
 		}
 
-		if ($representations != null && count($representations) > 0)
+		if (is_array($representations) && count($representations) > 0)
 		{
 			foreach($representations as $rep)
 			{
 				$representation = $productRevisionView->addChild('Representation');
 				$representation->addAttribute('id', $this->convertLocationToId($rep['location'])); // example: id1084_04_1
 				$representation->addAttribute('format', $rep['format']); // example: VRML
-				$representation->addAttribute('location', $rep['location']); // example: .\objects\NodeBoard.wrl
+				$representation->addAttribute('location', $rep['location']); // example: ./objects/NodeBoard.wrl
 			}
 		}
 
@@ -424,7 +398,7 @@ abstract class XMLController extends BaseController
 	/**
 	 * Converts a location to a id
 	 *
-	 * @param string $location the location to convert (example: .\objects\NodeGroup_recscase.stl)
+	 * @param string $location the location to convert (example: ./objects/NodeGroup_recscase.stl)
 	 * @return mixed the id of the location (example: _objects_NodeGroup_recscase_stl)
 	 */
 	public function convertLocationToId($location)

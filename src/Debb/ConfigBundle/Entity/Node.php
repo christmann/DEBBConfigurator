@@ -2,6 +2,7 @@
 
 namespace Debb\ConfigBundle\Entity;
 
+use Debb\ManagementBundle\Entity\Heatsink;
 use Doctrine\ORM\Mapping as ORM;
 use \Debb\ManagementBundle\Entity\Component;
 
@@ -15,7 +16,7 @@ class Node extends Dimensions
 {
 
 	/**
-	 * @var array
+	 * @var \Debb\ManagementBundle\Entity\Component[]
 	 *
 	 * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\Component", mappedBy="node", cascade={"persist"}, orphanRemoval=true)
 	 */
@@ -109,7 +110,7 @@ class Node extends Dimensions
 	/**
 	 * Get components
 	 *
-	 * @return \Doctrine\Common\Collections\Collection 
+	 * @return \Debb\ManagementBundle\Entity\Component[]
 	 */
 	public function getComponents()
 	{
@@ -261,4 +262,23 @@ class Node extends Dimensions
     {
         return $this->type;
     }
+
+	/**
+	 * @return \Debb\ManagementBundle\Entity\Heatsink[]
+	 */
+	public function getChildrens()
+	{
+		$childrens = array();
+		foreach($this->getComponents() as $component)
+		{
+			if($component->getActive() instanceof Heatsink)
+			{
+				for($x = 0; $x < $component->getAmount(); $x++)
+				{
+					$childrens[] = $component->getActive();
+				}
+			}
+		}
+		return $childrens;
+	}
 }

@@ -21,7 +21,7 @@ class NodeGroup extends Dimensions
      * Nodes
      * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\NodeToNodegroup", cascade={"persist"}, mappedBy="nodeGroup", orphanRemoval=true)
      *
-     * @var NodeToNodegroup[]
+     * @var \Debb\ManagementBundle\Entity\NodeToNodegroup[]
      */
     private $nodes;
 
@@ -95,7 +95,7 @@ class NodeGroup extends Dimensions
     /**
      * Get nodes
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Debb\ManagementBundle\Entity\NodeToNodegroup[]
      */
     public function getNodes()
     {
@@ -226,4 +226,20 @@ class NodeGroup extends Dimensions
     {
         return $this->racks;
     }
+
+	/**
+	 * @return \Debb\ConfigBundle\Entity\Node[]
+	 */
+	public function getChildrens()
+	{
+		$childrens = array();
+		foreach($this->getNodes() as $nodeToNodeGroup)
+		{
+			if($nodeToNodeGroup->getNode() != null)
+			{
+				$childrens[] = $nodeToNodeGroup->getNode();
+			}
+		}
+		return $childrens;
+	}
 }

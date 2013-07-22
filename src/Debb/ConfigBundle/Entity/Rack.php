@@ -20,6 +20,8 @@ class Rack extends Dimensions
 {
 
 	/**
+	 * @var \Debb\ManagementBundle\Entity\NodeGroupToRack[]
+	 *
 	 * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\NodegroupToRack", cascade={"persist"}, mappedBy="rack", orphanRemoval=true)
 	 */
 	private $nodeGroups;
@@ -94,7 +96,7 @@ class Rack extends Dimensions
 	/**
 	 * Get nodeGroups
 	 *
-	 * @return \Doctrine\Common\Collections\Collection 
+	 * @return \Debb\ManagementBundle\Entity\NodeGroupToRack[]
 	 */
 	public function getNodeGroups()
 	{
@@ -198,4 +200,27 @@ class Rack extends Dimensions
 		return $this->frontview;
 	}
 
+	/**
+	 * @return \Debb\ConfigBundle\Entity\NodeGroup[]
+	 */
+	public function getChildrens()
+	{
+		$childrens = array();
+		foreach($this->getNodeGroups() as $nodeGroupToRack)
+		{
+			if($nodeGroupToRack->getNodegroup() != null)
+			{
+				$childrens[] = $nodeGroupToRack->getNodegroup();
+			}
+		}
+		return $childrens;
+	}
+
+	/**
+	 * @return string the debb level
+	 */
+	public function getDebbLevel()
+	{
+		return 'Computebox1';
+	}
 }

@@ -93,7 +93,7 @@ function updateNodes() {
 	$('.nodeTitle').each(function () {
 		var node = $(this).parents('.node'),
 			nodeId = $(node).find('[id$="_node"]').val();
-		$(this).html($('#node-chooser [value="' + (nodeId == null ? '0' : nodeId) + '"]').html());
+		$(this).html($('#node-chooser [value="' + (nodeId == null || nodeId == '' ? '0' : nodeId) + '"]').html());
 	});
 	var nodes = $('.node'),
 		y = 0;

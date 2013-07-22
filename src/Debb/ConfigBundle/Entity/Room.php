@@ -14,6 +14,8 @@ class Room extends Dimensions
 {
 
 	/**
+	 * @var \Debb\ManagementBundle\Entity\RackToRoom[]
+	 *
 	 * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\RackToRoom", cascade={"persist"}, mappedBy="room", orphanRemoval=true)
 	 */
 	private $racks;
@@ -85,7 +87,7 @@ class Room extends Dimensions
 	/**
 	 * Get racks
 	 *
-	 * @return \Doctrine\Common\Collections\Collection 
+	 * @return \Debb\ManagementBundle\Entity\RackToRoom[]
 	 */
 	public function getRacks()
 	{
@@ -212,4 +214,28 @@ class Room extends Dimensions
         }
         $this->setProduct(implode(' - ', $name));
     }
+
+	/**
+	 * @return \Debb\ConfigBundle\Entity\Rack[]
+	 */
+	public function getChildrens()
+	{
+		$childrens = array();
+		foreach($this->getRacks() as $rackToRoom)
+		{
+			if($rackToRoom->getRack() != null)
+			{
+				$childrens[] = $rackToRoom->getRack();
+			}
+		}
+		return $childrens;
+	}
+
+	/**
+	 * @return string the debb level
+	 */
+	public function getDebbLevel()
+	{
+		return 'ComputeBox2';
+	}
 }
