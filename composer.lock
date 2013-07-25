@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "59d7483d90c94a9d449ed7ecf16faf82",
+    "hash": "0281a5bfa257532ee5d25f4e002a4a76",
     "packages": [
         {
             "name": "avalanche123/imagine-bundle",
@@ -58,10 +58,11 @@
             "target-dir": "CIM/PluploadBundle",
             "source": {
                 "type": "git",
-                "url": "ssh://git@git.christmann.info/bundles/PluploadBundle.git",
-                "reference": "7feac27bb47a4e2c2e6acb85a735168074a105dd"
+                "url": "git://git.christmann.info/bundles/PluploadBundle.git",
+                "reference": "ba76d814ca44a9f5e7e955e7c690e10bbb2e0af7"
             },
             "require": {
+                "avalanche123/imagine-bundle": "v2.1",
                 "php": ">=5.3.3",
                 "symfony/symfony": "2.3.*"
             },
@@ -79,7 +80,7 @@
             ],
             "description": "plupload for symfony",
             "homepage": "http://christmann.info",
-            "time": "2013-06-07 08:05:24"
+            "time": "2013-07-23 12:19:54"
         },
         {
             "name": "doctrine/common",

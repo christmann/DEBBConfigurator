@@ -73,7 +73,7 @@
 		},
         {
             "type": "vcs",
-            "url": "ssh://git@git.christmann.info/bundles/PluploadBundle.git"
+            "url": "git://git.christmann.info/bundles/PluploadBundle.git"
         }
 	]
 }
