@@ -40,7 +40,7 @@ function setStyleOfRack()
 
 		newRack.appendTo('#rackContainer').draggable(rackDragOpt).droppable(rackDropOpt);
 
-        newRack.prepend('<a href="#" class="removeRack"><i class="icon-trash"></i></a> - ');
+        newRack.prepend('<a href="#" class="removeRack"><i class="icon-trash"></i></a> - <a class="rotateRack" href="#"><i class="icon-arrow-down"></i></a>');
 	}
     else
     {
@@ -80,6 +80,17 @@ function setMinimalRoomSize()
 	$('#rackContainer').resizable('option', 'minHeight', minY).resizable('option', 'minWidth', minX);
 }
 
+function objToRot(obj)
+{
+    obj = typeof(obj) != 'undefined' ? $(obj) : $(this);
+    return obj.hasClass('icon-arrow-down') ? 0 : (obj.hasClass('icon-arrow-left') ? 90 : (obj.hasClass('icon-arrow-up') ? 180 : 270));
+}
+
+function rotToClass(rot)
+{
+    return 'icon-arrow-' + ( rot > 0 && rot < 91 ? 'left' : (rot > 90 && rot < 181 ? 'up' : (rot > 180 && rot < 271 ? 'right' : 'down')) );
+}
+
 $(function()
 {
 	$('.eDraftRack').on('click', setStyleOfRack);
@@ -105,6 +116,16 @@ $(function()
 		e.preventDefault();
 		$(this).parent('.rackG').remove();
 	});
+    $(document).on('click', '.rotateRack', function(e)
+    {
+        e.preventDefault();
+        var i = $(this).find('i'),
+            rotation = objToRot(i);
+        i.removeClass(rotToClass(rotation));
+        rotation += 90;
+        i.addClass(rotToClass(rotation));
+        $(this).parents('.rackG').find('input[id$="_rotation"]').val(rotation);
+    });
 	// a single rack which we could move in our room
 	$('.rackG').draggable(rackDragOpt).droppable(rackDropOpt);
 	$('.rackG').each(setStyleOfRack);

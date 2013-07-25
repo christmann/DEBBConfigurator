@@ -22,6 +22,7 @@ class RackToRoomType extends AbstractType
         $builder
             ->add('posx')
 			->add('posy')
+			->add('rotation')
             ->add('rack')
             ->add('room')
         ;

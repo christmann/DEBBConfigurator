@@ -45,6 +45,13 @@ class RackToRoom extends Connector
 	private $posY;
 
 	/**
+	 * @var float
+	 *
+	 * @ORM\Column(name="rotation", type="float", nullable=true)
+	 */
+	private $rotation;
+
+	/**
 	 * Set rack
 	 *
 	 * @param \Debb\ConfigBundle\Entity\Rack $rack
@@ -144,4 +151,27 @@ class RackToRoom extends Connector
 		return $this->posY;
 	}
 
+
+    /**
+     * Set rotation
+     *
+     * @param float $rotation
+     * @return RackToRoom
+     */
+    public function setRotation($rotation)
+    {
+        $this->rotation = $rotation;
+    
+        return $this;
+    }
+
+    /**
+     * Get rotation
+     *
+     * @return float 
+     */
+    public function getRotation()
+    {
+        return (float) $this->rotation;
+    }
 }
