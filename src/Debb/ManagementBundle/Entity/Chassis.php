@@ -47,9 +47,9 @@ class Chassis extends Dimensions
     /**
      * Field specification - typ
      *
-     * @var array
+     * @var \Debb\ManagementBundle\Entity\ChassisTypSpecification[]
      *
-     * @ORM\Column(name="typspecification", type="array", nullable=true)
+     * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\ChassisTypSpecification", cascade={"persist"}, mappedBy="chassis", orphanRemoval=true)
      */
     private $typspecification;
 
@@ -174,37 +174,6 @@ class Chassis extends Dimensions
     }
 
     /**
-     * Set typspecification
-     *
-     * @param array $typspecification
-     *
-     * @return Chassis
-     */
-    public function setTypspecification($typspecification)
-    {
-        $this->typspecification = $typspecification;
-
-        return $this;
-    }
-
-    /**
-     * Get typspecification
-     *
-     * @return array
-     */
-    public function getTypspecification()
-    {
-        if (is_array($this->typspecification)) {
-            reset($this->typspecification);
-            if (key($this->typspecification) != 0) {
-                ksort($this->typspecification);
-            }
-        }
-
-        return $this->typspecification;
-    }
-
-    /**
      * Set frontview
      *
      * @param boolean $frontview
@@ -270,5 +239,57 @@ class Chassis extends Dimensions
     public function getNodeGroups()
     {
         return $this->nodeGroups;
+    }
+
+    /**
+     * Add typspecification
+     *
+     * @param \Debb\ManagementBundle\Entity\ChassisTypSpecification $typspecification
+     * @return Chassis
+     */
+    public function addTypspecification(\Debb\ManagementBundle\Entity\ChassisTypSpecification $typspecification)
+    {
+	    $typspecification->setChassis($this);
+        $this->typspecification[] = $typspecification;
+    
+        return $this;
+    }
+
+    /**
+     * Set typspecification
+     *
+     * @param \Debb\ManagementBundle\Entity\ChassisTypSpecification[] $typspecification
+     * @return Chassis
+     */
+    public function setTypspecification($typspecification)
+    {
+	    $this->typspecification = $typspecification;
+
+	    foreach ($this->typspecification as $typspecification)
+	    {
+		    $typspecification->setChassis($this);
+	    }
+
+        return $this;
+    }
+
+    /**
+     * Remove typspecification
+     *
+     * @param \Debb\ManagementBundle\Entity\ChassisTypSpecification $typspecification
+     */
+    public function removeTypspecification(\Debb\ManagementBundle\Entity\ChassisTypSpecification $typspecification)
+    {
+        $this->typspecification->removeElement($typspecification);
+    }
+
+    /**
+     * Get typspecification
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTypspecification()
+    {
+        return $this->typspecification;
     }
 }

@@ -36,7 +36,6 @@ class ChassisController extends BaseController
 
 			if ($form->isValid())
 			{
-				$item->setTypspecification($request->request->get('typspec'));
 				$this->persistEntity($item);
 				$this->addSuccessMsg("localdev_admin.messages.saved");
 			}

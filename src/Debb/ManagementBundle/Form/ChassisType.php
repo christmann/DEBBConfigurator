@@ -113,12 +113,22 @@ class ChassisType extends BaseType
                 'plupload',
                 array('placeholder' => true, 'label' => 'upload chassis image', 'bootstrap' => true)
             )
+	        ->add('sizeX', 'hidden', array('required' => false))
+	        ->add('sizeY', 'hidden', array('required' => false))
             ->add('spaceLeft', 'hidden', array('required' => false))
             ->add('spaceTop', 'hidden', array('required' => false))
             ->add('spaceRight', 'hidden', array('required' => false))
             ->add('spaceBottom', 'hidden', array('required' => false))
             ->add('spaceFront', 'hidden', array('required' => false))
-            ->add('spaceBehind', 'hidden', array('required' => false));
+            ->add('spaceBehind', 'hidden', array('required' => false))
+	        ->add('typspecification', 'collection', array(
+		        'type' => new \Debb\ManagementBundle\Form\ChassisTypSpecificationType(),
+		        'allow_add' => true,
+		        'allow_delete' => true,
+		        'by_reference' => false,
+		        'required' => false
+	        ))
+        ;
     }
 
     /**

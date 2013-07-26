@@ -1002,3 +1002,26 @@ div[class*="noBreakAfterThis"]
 {
 	color: #555555;
 }
+
+#nodegroupContainer
+{
+	position: relative;
+	background: url('../img/room-grid.png') repeat scroll 1px 701px transparent;
+	border-right: 1px solid #777777;
+	border-bottom: 1px solid #777777;
+	margin: 10px 10px 10px 4px;
+	padding: 0;
+	float: left;
+}
+
+#nodegroupContainer .node
+{
+	border: 1px solid #888888;
+	background-color: #FFFFFF;
+	overflow: hidden;
+	position: absolute;
+	width: 79px;
+	height: 79px;
+	top: auto;
+	z-index: 1;
+}

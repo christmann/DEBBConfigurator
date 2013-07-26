@@ -51,7 +51,7 @@
 			{% for rack in form.racks %}
 				{%- set rackRot -%}
 					{%- spaceless -%}
-						{% if rack.vars.data.rotation is not empty %}
+						{% if rack.vars.data.rotation|default() is not empty %}
 							{% if rack.vars.data.rotation > 0 and rack.vars.data.rotation < 91 %}
 								left
 							{% elseif rack.vars.data.rotation > 90 and rack.vars.data.rotation < 181 %}

@@ -1,4 +1,55 @@
-var currentNode = null;
+var currentNode = null,
+    rackDragOpt = {
+        containment: '#nodegroupContainer',
+        scroll: true,
+        stack: '.node',
+        zIndex: 10000,
+        grid: [ 10, 10 ],
+        stop: function(event, ui) {
+            var id = getExactId(ui.helper.find('div[id]').attr('id')),
+                left = ui.position.left,
+                bottom = $('#nodegroupContainer').height() - (ui.helper.height() + 1) - ui.position.top - parseInt(ui.helper.css('paddingTop')) - parseInt(ui.helper.css('paddingBottom'));
+            ui.helper.find('#debb_managementbundle_chassistype_typspecification_' + id + '_posX').val(left);
+            ui.helper.find('#debb_managementbundle_chassistype_typspecification_' + id + '_posY').val(parseInt(bottom));
+        }
+    },
+    rackDropOpt = {};
+
+function setMinimalRoomSize()
+{
+    var minX = 50,
+        minY = 50;
+    $('.node').each(function()
+    {
+        var thisX = $(this).position().left + $(this).width() + parseInt($(this).css('borderLeftWidth')) + parseInt($(this).css('paddingLeft')) + parseInt($(this).css('paddingRight')),
+            thisY = $(this).position().top + $(this).height() + parseInt($(this).css('borderTopWidth')) + parseInt($(this).css('paddingTop')) + parseInt($(this).css('paddingBottom'));
+        if(thisX > minX)
+        {
+            minX = thisX;
+        }
+        if(thisY > minY)
+        {
+            minY = thisY;
+        }
+    });
+    minY = minY < 50 ? 50 : minY;
+    $('#nodegroupContainer').resizable('option', 'minHeight', minY).resizable('option', 'minWidth', minX);
+}
+
+function objToRot(obj)
+{
+    obj = typeof(obj) != 'undefined' ? $(obj) : $(this);
+    return obj.hasClass('icon-arrow-down') ? 0 : (obj.hasClass('icon-arrow-left') ? 90 : (obj.hasClass('icon-arrow-up') ? 180 : 270));
+}
+
+function rotToClass(rot, asHtml)
+{
+    if(typeof(asHtml) == 'undefined')
+    {
+        asHtml = false;
+    }
+    return (asHtml ? '' : 'icon-arrow-') + (rot > 0 && rot < 91 ? 'left' : (rot > 90 && rot < 181 ? (asHtml ? 'top' : 'up') : (rot > 180 && rot < 271 ? 'right' : (asHtml ? 'bottom' : 'down'))));
+}
 
 $(function () {
 	$('#debb_managementbundle_chassistype_slotsX, #debb_managementbundle_chassistype_slotsY').change(function () {
@@ -26,6 +77,76 @@ $(function () {
 	{
 		$('#' + $(this).attr('refto')).val($(this).val());
 	});
+
+
+
+    $('#nodegroupContainer').resizable({
+        grid: 10,
+        handles: 's',
+        stop: function( event, ui ) {
+            $('#debb_managementbundle_chassistype_sizeX').val(ui.helper.width());
+            $('#debb_managementbundle_chassistype_sizeY').val(ui.helper.height());
+        },
+        resize: function ( event, ui ) {
+            ui.helper.css('background-position', '1px ' + parseInt(parseInt(ui.size.height) + 1) + 'px');
+        },
+        start: function ( event, ui ) {
+            setMinimalRoomSize();
+        }
+    }).droppable({tolerance: 'fit'});
+    $('.node').draggable(rackDragOpt).droppable(rackDropOpt);
+    $('.addNode').click(function(e)
+    {
+        e.preventDefault();
+
+        var id = 0;
+        $('.node').each(function()
+        {
+            if(getExactId($(this).find('div[id]').attr('id')) > id)
+            {
+                id = getExactId($(this).children('div').attr('id'));
+                id++;
+            }
+        });
+        id++;
+
+        var container = $('#nodegroupContainer'),
+            newNode = $(container.attr('data-prototype').replace(/__name__/g, id));
+
+        newNode.appendTo(container).draggable(rackDragOpt).droppable(rackDropOpt);
+    });
+    $('.node').each(function()
+    {
+        if(typeof $(this).attr('posx') != 'undefined')
+        {
+            $(this).css('left', (parseInt($(this).attr('posx')) < 0 ? 0 : parseInt($(this).attr('posx'))) + 'px');
+            $(this).removeAttr('posx');
+        }
+        if(typeof $(this).attr('posy') != 'undefined')
+        {
+            $(this).css('bottom', (parseInt($(this).attr('posy')) < 0 ? $('#nodegroupContainer').height() - $(this).outerHeight() : parseInt($(this).attr('posy'))) + 'px');
+            $(this).removeAttr('posy');
+        }
+        $(this).css('top', $(this).position().top + parseInt($(this).css('borderTopWidth')));
+    });
+    $(document).on('click', '.removeNode', function(e)
+    {
+        e.preventDefault();
+        $(this).parents('.node:first').remove();
+    });
+    $(document).on('click', '.rotateNode', function(e)
+    {
+        e.preventDefault();
+        var i = $(this).find('i'),
+            node = $(this).parents('.node'),
+            rotation = objToRot(i);
+        i.removeClass(rotToClass(rotation));
+        rotation += 90;
+        i.addClass(rotToClass(rotation));
+        node.find('input[id$="_rotation"]').val(rotation);
+    });
+
+
 	updateNodes();
 });
 
@@ -46,8 +167,8 @@ function updateNodegroupSize(slotsX, slotsY)
 
 function addNode(x)
 {
-	var id = getFreeId('debb_managementbundle_chassistype_typspec_', typeof(x) == 'undefined' ? $('#nodegroup .node').length : x);
-	$('#nodegroup').append($('#nodegroup').attr('data-prototype').replace(/__name__/g, getExactId(id)));
+//	var id = getFreeId('debb_managementbundle_chassistype_typspec_', typeof(x) == 'undefined' ? $('#nodegroup .node').length : x);
+//	$('#nodegroup').append($('#nodegroup').attr('data-prototype').replace(/__name__/g, getExactId(id)));
 }
 
 function updateNodes() {
