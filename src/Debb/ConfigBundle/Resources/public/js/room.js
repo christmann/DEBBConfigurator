@@ -1,18 +1,31 @@
 var rackDragOpt = {
-	containment: '#rackContainer',
-	scroll: true,
-	stack: '.rackG',
-	grid: [ 10, 10 ],
-	stop: function(event, ui) {
-		$(this).draggable('option', 'revert', 'invalid');
-		var id = getExactId(ui.helper.find('.rackGform').find('div[id!=""]').attr('id'));
-        var left = ui.position.left;
-        var bottom = $('#rackContainer').height() - ui.helper.height() - ui.position.top - 1;
-        ui.helper.find('#debb_configbundle_roomtype_racks_' + id + '_posx').val(left);
-        ui.helper.find('#debb_configbundle_roomtype_racks_' + id + '_posy').val(parseInt(bottom));
-	}
-},
+        containment: '#rackContainer',
+        scroll: true,
+        stack: '.rackG',
+        grid: [ 10, 10 ],
+        stop: function(event, ui) {
+            $(this).draggable('option', 'revert', 'invalid');
+            updateRackDimensions(ui.helper);
+        }
+    },
 	rackDropOpt = {};
+
+function updateRackDimensions(rack)
+{
+    if(typeof(rack) === 'undefined')
+    {
+        var rack = $('.rackG');
+    }
+    $(rack).each(function()
+    {
+        var id = getExactId($(this).find('.rackGform').find('div[id]').attr('id')),
+            position = $(this).position(),
+            left = position.left,
+            bottom = $('#rackContainer').height() - position.top - $(this).outerHeight(true);
+        $(this).find('#debb_configbundle_roomtype_racks_' + id + '_posx').val(left);
+        $(this).find('#debb_configbundle_roomtype_racks_' + id + '_posy').val(parseInt(bottom) + 1);
+    });
+}
 
 function setStyleOfRack()
 {
@@ -41,6 +54,7 @@ function setStyleOfRack()
 		newRack.appendTo('#rackContainer').draggable(rackDragOpt).droppable(rackDropOpt);
 
         newRack.prepend('<a href="#" class="removeRack"><i class="icon-trash"></i></a> - <a class="rotateRack" href="#"><i class="icon-arrow-down"></i></a>');
+        newRack.addClass('rack0Deg');
 	}
     else
     {
@@ -55,9 +69,24 @@ function setStyleOfRack()
 	}
 	if(typeof newRack.attr('posy') != 'undefined')
 	{
-		newRack.css('bottom', (parseInt(newRack.attr('posy')) < 0 ? $('#rackContainer').height() - newRack.outerHeight() : parseInt(newRack.attr('posy'))) + 'px');
+		newRack.css('bottom', (parseInt(newRack.attr('posy')) < 0 ? $('#rackContainer').height() - newRack.outerHeight(true) : parseInt(newRack.attr('posy'))) + 'px');
 		newRack.removeAttr('posy');
 	}
+    if(!newRack.is('[rotated]'))
+    {
+        var rotation = objToRot(newRack.find('.rotateRack i'));
+        if(rotation == 90 || rotation == 270)
+        {
+            newRack.width(newRack.width() - 3);
+        }
+        else
+        {
+            newRack.height(newRack.height() - 3);
+        }
+        newRack.css('border-' + rotToClass(rotation, true) + '-width', '4px');
+        newRack.attr('rotated', true);
+    }
+    updateRackDimensions(newRack);
 }
 
 function setMinimalRoomSize()
@@ -66,8 +95,8 @@ function setMinimalRoomSize()
         minY = 50;
     $('.rackG').each(function()
     {
-        var thisX = $(this).position().left + $(this).width() + parseInt($(this).css('borderLeftWidth')),
-            thisY = $(this).position().top + $(this).height() + parseInt($(this).css('borderTopWidth'));
+        var thisX = $(this).position().left + $(this).outerWidth(true) - 1,
+            thisY = $(this).position().top + $(this).outerHeight(true) - 1;
         if(thisX > minX)
         {
             minX = thisX;
@@ -83,7 +112,7 @@ function setMinimalRoomSize()
 function objToRot(obj)
 {
     obj = typeof(obj) != 'undefined' ? $(obj) : $(this);
-    return obj.hasClass('icon-arrow-down') ? 0 : (obj.hasClass('icon-arrow-left') ? 90 : (obj.hasClass('icon-arrow-up') ? 180 : 270));
+    return obj.hasClass('icon-arrow-right') ? 270 : (obj.hasClass('icon-arrow-left') ? 90 : (obj.hasClass('icon-arrow-up') ? 180 : 0));
 }
 
 function rotToClass(rot, asHtml)
@@ -104,6 +133,7 @@ $(function()
 		stop: function( event, ui ) {
 			$('#debb_configbundle_roomtype_sizeX').val(ui.helper.width());
 			$('#debb_configbundle_roomtype_sizeY').val(ui.helper.height());
+            updateRackDimensions();
 		},
 		resize: function ( event, ui ) {
 			$('#rackSizeX').html((parseInt(ui.size.width) / 100).toFixed(2));
@@ -127,12 +157,25 @@ $(function()
             rack = $(this).parents('.rackG'),
             rotation = objToRot(i);
         i.removeClass(rotToClass(rotation));
+        rack.css('border-' + rotToClass(rotation, true) + '-width', '1px');
         rotation += 90;
+        if ( rotation > 270 ) { rotation = 0; }
+        if(rotation == 90 || rotation == 270)
+        {
+            rack.height(rack.height() + 3);
+            rack.width(rack.width() - 3);
+        }
+        else
+        {
+            rack.height(rack.height() - 3);
+            rack.width(rack.width() + 3);
+        }
+        rack.css('border-' + rotToClass(rotation, true) + '-width', '4px');
         i.addClass(rotToClass(rotation));
         rack.find('input[id$="_rotation"]').val(rotation);
     });
 	// a single rack which we could move in our room
 	$('.rackG').draggable(rackDragOpt).droppable(rackDropOpt);
 	$('.rackG').each(setStyleOfRack);
-    $('.rackG').each(function() { $(this).css('top', $(this).position().top + parseInt($(this).css('borderTopWidth'))); });
+    $('.rackG').each(function() { $(this).css('top', $(this).position().top + 1); });
 });

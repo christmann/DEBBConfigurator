@@ -138,6 +138,7 @@ $(function ()
 
 
 	updateNodes();
+    $('.node').each(function() { $(this).css('top', $(this).position().top); });
 });
 
 function updateNodes() {

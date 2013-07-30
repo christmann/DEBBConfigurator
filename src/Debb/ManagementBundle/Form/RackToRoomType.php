@@ -20,11 +20,10 @@ class RackToRoomType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('posx')
-			->add('posy')
-			->add('rotation')
+            ->add('posx', 'hidden')
+			->add('posy', 'hidden')
+			->add('rotation', 'hidden')
             ->add('rack')
-            ->add('room')
         ;
     }
 
