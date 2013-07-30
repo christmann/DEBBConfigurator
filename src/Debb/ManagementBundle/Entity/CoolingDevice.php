@@ -13,14 +13,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class CoolingDevice extends Base
 {
-
-	/**
-	 * @var float
-	 *
-	 * @ORM\Column(name="MaxPower", type="decimal", nullable=true)
-	 */
-	private $maxPower;
-
 	/**
 	 * @var float
 	 *
@@ -41,29 +33,6 @@ class CoolingDevice extends Base
 	 * @ORM\Column(name="MaxWaterThroughput", type="decimal", nullable=true)
 	 */
 	private $maxWaterThroughput;
-
-	/**
-	 * Set maxPower
-	 *
-	 * @param float $maxPower
-	 * @return CoolingDevice
-	 */
-	public function setMaxPower($maxPower)
-	{
-		$this->maxPower = $maxPower;
-
-		return $this;
-	}
-
-	/**
-	 * Get maxPower
-	 *
-	 * @return float 
-	 */
-	public function getMaxPower()
-	{
-		return $this->maxPower;
-	}
 
 	/**
 	 * Set maxCoolingCapacity
@@ -142,10 +111,6 @@ class CoolingDevice extends Base
 	public function getDebbXmlArray()
 	{
 		$array = parent::getDebbXmlArray();
-		if ($this->getMaxPower() != null)
-		{
-			$array['MaxPower'] = $this->getMaxPower();
-		}
 		if ($this->getMaxCoolingCapacity() != null)
 		{
 			$array['MaxCoolingCapacity'] = $this->getMaxCoolingCapacity();

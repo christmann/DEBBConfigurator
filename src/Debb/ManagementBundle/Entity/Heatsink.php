@@ -27,34 +27,11 @@ class Heatsink extends Base
 	private $stlFile;
 
 	/**
-	 * @var string
+	 * @var float
 	 *
-	 * @ORM\Column(name="type", type="string", length=4, nullable=true)
+	 * @ORM\Column(name="transfer_rate", type="float", nullable=true)
 	 */
-	private $type;
-
-    /**
-     * Set type
-     *
-     * @param string $type
-     * @return Heatsink
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-    
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return string 
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
+	private $transferRate;
 
     /**
      * Set vrmlFile
@@ -110,10 +87,6 @@ class Heatsink extends Base
 	public function getDebbXmlArray()
 	{
 		$array = parent::getDebbXmlArray();
-		if ($this->getType() != null)
-		{
-			$array['Type'] = $this->getType();
-		}
 		$array['Transform'] = '1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1'; // missing example ...
 		if($this->getStlFile() != null)
 		{
@@ -125,4 +98,27 @@ class Heatsink extends Base
 		}
 		return $array;
 	}
+
+    /**
+     * Set transferRate
+     *
+     * @param float $transferRate
+     * @return Heatsink
+     */
+    public function setTransferRate($transferRate)
+    {
+        $this->transferRate = $transferRate;
+    
+        return $this;
+    }
+
+    /**
+     * Get transferRate
+     *
+     * @return float 
+     */
+    public function getTransferRate()
+    {
+        return $this->transferRate;
+    }
 }

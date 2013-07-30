@@ -30,6 +30,8 @@ class BaseType extends AbstractType
 			->add('product', null, array('required' => false))
 			->add('label', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false))
 			->add('hostname', null, array('required' => false))
+			->add('type', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false))
+			->add('maxPower', null, array('required' => false))
 		;
 	}
 

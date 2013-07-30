@@ -20,9 +20,8 @@ class CoolingDeviceType extends BaseType
     {
 	    parent::buildForm($builder, $options);
         $builder
-            ->add('maxPower', null, array('attr' => array('class' => 'noBreakAfterThis')))
-            ->add('maxCoolingCapacity')
-            ->add('maxAirThroughput', null, array('attr' => array('class' => 'noBreakAfterThis')))
+            ->add('maxCoolingCapacity', null, array('attr' => array('class' => 'noBreakAfterThis')))
+            ->add('maxAirThroughput')
             ->add('maxWaterThroughput')
         ;
     }

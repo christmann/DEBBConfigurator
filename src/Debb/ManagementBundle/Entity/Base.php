@@ -8,6 +8,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Base entity for manufacturer, product
+ *
+ * Description from DEBBComponents.xsd
+ * DEBBPhysicalElementType is the basic type for all physical existing parts.
+ * Examples for DEBBPhysical ElementTypes but not DEBBComplexTypes (memory module, shelves, ...) which might also have a power consumption (normally static).
+ * These modules are directly derived from DEBBPhysicalElementType since no additional definition is needed.
  * 
  * @ORM\MappedSuperclass
  */
@@ -62,9 +67,27 @@ class Base
 	 * @var User
 	 *
 	 * @ORM\ManyToOne(targetEntity="CoolEmAll\UserBundle\Entity\User")
-	 * aa@JoinColumn(name="parent_id", referencedColumnName="id")
 	 */
 	private $user;
+
+	/**
+	 * The type element might be used to specify a type for the module, i.e. for memory DDR/DDR2, for CPU architecture name etc..
+	 * It has only informational character.
+	 *
+	 * @var string
+	 *
+	 * @ORM\Column(name="type", type="string", length=255, nullable=true)
+	 */
+	private $type;
+
+	/**
+	 * MaxPowerUsage is the theoretical limit of power consumption and may used for designing.
+	 *
+	 * @var float
+	 *
+	 * @ORM\Column(name="max_power", type="float", nullable=true)
+	 */
+	private $maxPower;
 
 	/**
 	 * Get id
@@ -212,6 +235,23 @@ class Base
 		{
 			$array['Product'] = $this->getProduct();
 		}
+		if ($this->getMaxPower() != null)
+		{
+			$array['MaxPower'] = $this->getMaxPower();
+		}
+		/**
+		 * <xsd:choice>
+		 *      <xsd:element name="PowerUsage" type="xsd:double" minOccurs="0" maxOccurs="1"></xsd:element>
+		 *   OR
+		 *      <xsd:element name="PowerUsageState" type="xsd_1:FlowStateType" minOccurs="0" maxOccurs="1"></xsd:element>
+		 *   OR
+		 *      <xsd:element name="PowerUsageProfile" type="xsd_1:FlowProfileType" minOccurs="0" maxOccurs="1"></xsd:element>
+		 * </xsd:choice>
+		 */
+		if ($this->getType() != null)
+		{
+			$array['Type'] = $this->getMaxPower();
+		}
 		return $array;
 	}
 
@@ -334,5 +374,51 @@ class Base
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     * @return Base
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string 
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set maxPower
+     *
+     * @param float $maxPower
+     * @return Base
+     */
+    public function setMaxPower($maxPower)
+    {
+        $this->maxPower = $maxPower;
+    
+        return $this;
+    }
+
+    /**
+     * Get maxPower
+     *
+     * @return float 
+     */
+    public function getMaxPower()
+    {
+        return $this->maxPower;
     }
 }

@@ -13,43 +13,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Memory extends Base
 {
-
-	/**
-	 * @var float
-	 *
-	 * @ORM\Column(name="MaxPower", type="float", nullable=true)
-	 */
-	private $maxPower;
-
 	/**
 	 * @var integer
 	 *
 	 * @ORM\Column(name="Capacity", type="integer", nullable=true)
 	 */
 	private $capacity;
-
-	/**
-	 * Set maxPower
-	 *
-	 * @param float $maxPower
-	 * @return Memory
-	 */
-	public function setMaxPower($maxPower)
-	{
-		$this->maxPower = $maxPower;
-
-		return $this;
-	}
-
-	/**
-	 * Get maxPower
-	 *
-	 * @return float 
-	 */
-	public function getMaxPower()
-	{
-		return $this->maxPower;
-	}
 
 	/**
 	 * Set capacity
@@ -82,10 +51,6 @@ class Memory extends Base
 	public function getDebbXmlArray()
 	{
 		$array = parent::getDebbXmlArray();
-		if ($this->getMaxPower() != null)
-		{
-			$array['MaxPower'] = $this->getMaxPower();
-		}
 		if ($this->getCapacity() != null)
 		{
 			$array['Capacity'] = $this->getCapacity();

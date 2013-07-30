@@ -44,13 +44,6 @@ class Node extends Dimensions
 	private $stlFile;
 
 	/**
-	 * @var string
-	 *
-     * @ORM\Column(name="type", type="string", length=4, nullable=true)
-	 */
-	private $type;
-
-	/**
 	 * Returns the name of this node for the table view or selections
 	 * 
 	 * @return string the name of this node
@@ -239,29 +232,6 @@ class Node extends Dimensions
 	{
 		return $this->stlFile;
 	}
-
-    /**
-     * Set type
-     *
-     * @param string $type
-     * @return Node
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-    
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return string 
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
 
 	/**
 	 * @return \Debb\ManagementBundle\Entity\Heatsink[]

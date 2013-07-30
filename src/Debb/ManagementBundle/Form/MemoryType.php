@@ -20,7 +20,6 @@ class MemoryType extends BaseType
     {
 	    parent::buildForm($builder, $options);
         $builder
-            ->add('maxPower')
             ->add('capacity', 'text')
         ;
     }
