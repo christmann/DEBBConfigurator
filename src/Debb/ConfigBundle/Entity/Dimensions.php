@@ -17,63 +17,63 @@ class Dimensions extends \Debb\ManagementBundle\Entity\Base
 	 *
 	 * @ORM\Column(name="sizeX", type="float", nullable=true)
 	 */
-	private $sizeX;
+	private $sizeX = 0;
 
 	/**
 	 * @var float
 	 *
 	 * @ORM\Column(name="sizeY", type="float", nullable=true)
 	 */
-	private $sizeY;
+	private $sizeY = 0;
 
 	/**
 	 * @var float
 	 *
 	 * @ORM\Column(name="sizeZ", type="float", nullable=true)
 	 */
-	private $sizeZ;
+	private $sizeZ = 0;
 
 	/**
 	 * @var float
 	 *
 	 * @ORM\Column(name="spaceLeft", type="float", nullable=true)
 	 */
-	private $spaceLeft;
+	private $spaceLeft = 0;
 
 	/**
 	 * @var float
 	 *
 	 * @ORM\Column(name="spaceRight", type="float", nullable=true)
 	 */
-	private $spaceRight;
+	private $spaceRight = 0;
 
 	/**
 	 * @var float
 	 *
 	 * @ORM\Column(name="spaceTop", type="float", nullable=true)
 	 */
-	private $spaceTop;
+	private $spaceTop = 0;
 
 	/**
 	 * @var float
 	 *
 	 * @ORM\Column(name="spaceBottom", type="float", nullable=true)
 	 */
-	private $spaceBottom;
+	private $spaceBottom = 0;
 
 	/**
 	 * @var float
 	 *
 	 * @ORM\Column(name="spaceFront", type="float", nullable=true)
 	 */
-	private $spaceFront;
+	private $spaceFront = 0;
 
 	/**
 	 * @var float
 	 *
 	 * @ORM\Column(name="spaceBehind", type="float", nullable=true)
 	 */
-	private $spaceBehind;
+	private $spaceBehind = 0;
 
 	/**
 	 * Set sizeX

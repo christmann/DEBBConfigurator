@@ -25,28 +25,28 @@ class ChassisTypSpecification extends Connector
 	 *
 	 * @ORM\Column(name="posx", type="integer")
 	 */
-	private $posX;
+	private $posX = 0;
 
 	/**
 	 * @var integer
 	 *
 	 * @ORM\Column(name="posy", type="integer")
 	 */
-	private $posY;
+	private $posY = 0;
 
 	/**
 	 * @var float
 	 *
 	 * @ORM\Column(name="posz", type="float", nullable=true)
 	 */
-	private $posZ;
+	private $posZ = 0;
 
 	/**
 	 * @var float
 	 *
 	 * @ORM\Column(name="rotation", type="float", nullable=true)
 	 */
-	private $rotation;
+	private $rotation = 0;
 
 	/**
 	 * @var string

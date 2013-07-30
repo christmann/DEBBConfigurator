@@ -6,14 +6,27 @@ var currentNode = null,
         zIndex: 10000,
         grid: [ 10, 10 ],
         stop: function(event, ui) {
-            var id = getExactId(ui.helper.find('div[id]').attr('id')),
-                left = ui.position.left,
-                bottom = $('#nodegroupContainer').height() - (ui.helper.height() + 1) - ui.position.top - parseInt(ui.helper.css('paddingTop')) - parseInt(ui.helper.css('paddingBottom'));
-            ui.helper.find('#debb_managementbundle_chassistype_typspecification_' + id + '_posX').val(left);
-            ui.helper.find('#debb_managementbundle_chassistype_typspecification_' + id + '_posY').val(parseInt(bottom));
+            updateNodeDimensions(ui.helper);
         }
     },
     rackDropOpt = {};
+
+function updateNodeDimensions(node)
+{
+    if(typeof(node) === 'undefined')
+    {
+        var node = $('.node');
+    }
+    $(node).each(function()
+    {
+        var id = getExactId($(this).find('div[id]').attr('id')),
+            position = $(this).position(),
+            left = position.left,
+            bottom = $('#nodegroupContainer').height() - position.top - $(this).outerHeight(true);
+        $(this).find('#debb_managementbundle_chassistype_typspecification_' + id + '_posX').val(left);
+        $(this).find('#debb_managementbundle_chassistype_typspecification_' + id + '_posY').val(parseInt(bottom));
+    });
+}
 
 function setMinimalRoomSize()
 {
@@ -21,8 +34,8 @@ function setMinimalRoomSize()
         minY = 50;
     $('.node').each(function()
     {
-        var thisX = $(this).position().left + $(this).width() + parseInt($(this).css('borderLeftWidth')) + parseInt($(this).css('paddingLeft')) + parseInt($(this).css('paddingRight')),
-            thisY = $(this).position().top + $(this).height() + parseInt($(this).css('borderTopWidth')) + parseInt($(this).css('paddingTop')) + parseInt($(this).css('paddingBottom'));
+        var thisX = $(this).position().left + $(this).outerWidth(true),
+            thisY = $(this).position().top + $(this).outerHeight(true);
         if(thisX > minX)
         {
             minX = thisX;
@@ -39,7 +52,7 @@ function setMinimalRoomSize()
 function objToRot(obj)
 {
     obj = typeof(obj) != 'undefined' ? $(obj) : $(this);
-    return obj.hasClass('icon-arrow-down') ? 0 : (obj.hasClass('icon-arrow-left') ? 90 : (obj.hasClass('icon-arrow-up') ? 180 : 270));
+    return obj.hasClass('icon-arrow-right') ? 270 : (obj.hasClass('icon-arrow-left') ? 90 : (obj.hasClass('icon-arrow-up') ? 180 : 0));
 }
 
 function rotToClass(rot, asHtml)
@@ -51,41 +64,15 @@ function rotToClass(rot, asHtml)
     return (asHtml ? '' : 'icon-arrow-') + (rot > 0 && rot < 91 ? 'left' : (rot > 90 && rot < 181 ? (asHtml ? 'top' : 'up') : (rot > 180 && rot < 271 ? 'right' : (asHtml ? 'bottom' : 'down'))));
 }
 
-$(function () {
-	$('#debb_managementbundle_chassistype_slotsX, #debb_managementbundle_chassistype_slotsY').change(function () {
-		var slotsX = $('#debb_managementbundle_chassistype_slotsX'),
-			slotsY = $('#debb_managementbundle_chassistype_slotsY');
-		updateNodegroupSize(slotsX, slotsY);
-		$('#nodegroup').width(parseInt(slotsX.val()) * 71);
-		$('#nodegroup').height(parseInt(slotsY.val()) * 52);
-		var nodes = parseInt(slotsX.val()) * parseInt(slotsY.val()),
-			nodeArr = $('#nodegroup').find('.node');
-		if (nodeArr.length > nodes) {
-			for (var x = nodes; x < nodeArr.length; x++) {
-				$(nodeArr[x]).remove();
-			}
-		}
-		else {
-			for (var x = nodeArr.length; x < nodes; x++) {
-				addNode(x);
-			}
-		}
-		updateNodes();
-	}).change();
-	/* works with input fields and select fields at the moment */
-	$(document).on('keyup change', '[refto!=""]', function()
-	{
-		$('#' + $(this).attr('refto')).val($(this).val());
-	});
-
-
-
+$(function ()
+{
     $('#nodegroupContainer').resizable({
         grid: 10,
         handles: 's',
         stop: function( event, ui ) {
             $('#debb_managementbundle_chassistype_sizeX').val(ui.helper.width());
             $('#debb_managementbundle_chassistype_sizeY').val(ui.helper.height());
+            updateNodeDimensions();
         },
         resize: function ( event, ui ) {
             ui.helper.css('background-position', '1px ' + parseInt(parseInt(ui.size.height) + 1) + 'px');
@@ -114,6 +101,7 @@ $(function () {
             newNode = $(container.attr('data-prototype').replace(/__name__/g, id));
 
         newNode.appendTo(container).draggable(rackDragOpt).droppable(rackDropOpt);
+        updateNodeDimensions(newNode);
     });
     $('.node').each(function()
     {
@@ -127,7 +115,6 @@ $(function () {
             $(this).css('bottom', (parseInt($(this).attr('posy')) < 0 ? $('#nodegroupContainer').height() - $(this).outerHeight() : parseInt($(this).attr('posy'))) + 'px');
             $(this).removeAttr('posy');
         }
-        $(this).css('top', $(this).position().top + parseInt($(this).css('borderTopWidth')));
     });
     $(document).on('click', '.removeNode', function(e)
     {
@@ -141,35 +128,17 @@ $(function () {
             node = $(this).parents('.node'),
             rotation = objToRot(i);
         i.removeClass(rotToClass(rotation));
+        node.removeClass('node' + rotation + 'Deg');
         rotation += 90;
+        if ( rotation > 270 ) { rotation = 0; }
         i.addClass(rotToClass(rotation));
+        node.addClass('node' + rotation + 'Deg');
         node.find('input[id$="_rotation"]').val(rotation);
     });
 
 
 	updateNodes();
 });
-
-function updateNodegroupSize(slotsX, slotsY)
-{
-	if(typeof(slotsX) == 'undefined')
-	{
-		var slotsX = $('#debb_managementbundle_chassistype_slotsX');
-	}
-	if(typeof(slotsY) == 'undefined')
-	{
-		var slotsY = $('#debb_managementbundle_chassistype_slotsY');
-	}
-	$('#nodegroup').width(parseInt(slotsX.val()) * 71);
-	$('#nodegroup').height(parseInt(slotsY.val()) * 48);
-	$('.nodegroupSpaceInfo').css('margin-top', parseInt(parseInt($('#nodegroup').height()) * 0.49));
-}
-
-function addNode(x)
-{
-//	var id = getFreeId('debb_managementbundle_chassistype_typspec_', typeof(x) == 'undefined' ? $('#nodegroup .node').length : x);
-//	$('#nodegroup').append($('#nodegroup').attr('data-prototype').replace(/__name__/g, getExactId(id)));
-}
 
 function updateNodes() {
 	var nodes = $('#nodegroup .node'),

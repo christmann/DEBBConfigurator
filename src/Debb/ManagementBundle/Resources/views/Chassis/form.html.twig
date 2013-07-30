@@ -5,10 +5,13 @@
 {% block stylesheets %}
 	{{ parent() }}
 	{% stylesheets filter='cssrewrite'
-	'bundles/debbconfig/css/jquery-ui.min.css'
+		'bundles/debbconfig/css/jquery-ui.min.css'
 	%}
-	<link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
+		<link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
 	{% endstylesheets %}
+	<style>
+		.node { padding: 10px; margin: 0px; }
+	</style>
 {% endblock %}
 
 {% block javascripts %}
@@ -61,7 +64,7 @@
 
 {% macro typspec(nodetypspecs, nodeForm, nodeContainer) %}
 	{% if nodeContainer is null or nodeContainer == true -%}
-		<div class="node" style="padding: 10px; margin: 0px;" posx="{{ nodeForm.vars.data.posX|default('') }}" posy="{{ nodeForm.vars.data.posY|default('') }}" posz="{{ nodeForm.vars.data.posZ|default('') }}">
+		<div class="node node{{ nodeForm.vars.data.rotation | default(0) }}Deg" posx="{{ nodeForm.vars.data.posX|default('') }}" posy="{{ nodeForm.vars.data.posY|default('') }}" posz="{{ nodeForm.vars.data.posZ|default('') }}">
 	{%- endif %}
 	{%- set nodeRot -%}
 		{%- spaceless -%}
