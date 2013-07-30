@@ -14,6 +14,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Memory extends Base
 {
 	/**
+	 * Size of Capacity in MB
+	 *
 	 * @var integer
 	 *
 	 * @Assert\NotBlank()
