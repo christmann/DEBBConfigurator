@@ -20,7 +20,8 @@ class MemoryType extends BaseType
     {
 	    parent::buildForm($builder, $options);
         $builder
-            ->add('capacity', 'text')
+            ->add('capacity', 'integer')
+            ->add('interface', null, array('required' => false))
         ;
     }
 

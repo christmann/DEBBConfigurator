@@ -16,9 +16,17 @@ class Memory extends Base
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="Capacity", type="integer", nullable=true)
+	 * @Assert\NotBlank()
+	 * @ORM\Column(name="capacity", type="integer")
 	 */
 	private $capacity;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="interface", type="string", length=255, nullable=true)
+	 */
+	private $interface;
 
 	/**
 	 * Set capacity
@@ -44,6 +52,29 @@ class Memory extends Base
 	}
 
 	/**
+	 * Set interface
+	 *
+	 * @param string $interface
+	 * @return Memory
+	 */
+	public function setInterface($interface)
+	{
+		$this->interface = $interface;
+
+		return $this;
+	}
+
+	/**
+	 * Get interface
+	 *
+	 * @return string
+	 */
+	public function getInterface()
+	{
+		return $this->interface;
+	}
+
+	/**
 	 * Returns a array for later converting
 	 * 
 	 * @return array the array for later converting
@@ -55,7 +86,10 @@ class Memory extends Base
 		{
 			$array['Capacity'] = $this->getCapacity();
 		}
+		if ($this->getInterface() != null)
+		{
+			$array['Interface'] = $this->getInterface();
+		}
 		return $array;
 	}
-
 }
