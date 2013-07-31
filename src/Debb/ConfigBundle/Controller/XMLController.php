@@ -157,7 +157,7 @@ abstract class XMLController extends BaseController
 			'iview' . sprintf('%02d', $entity->getId()) . '_1',                                                         // $id
 			'Def' . $real_class_name . 'View' . sprintf('%02d', $entity->getId()),                                      // $name
 			$childIds,                                                                                                  // $instanceRefs
-			'assembly',                                                                                                 // $type
+			null,                                                                                                       // $type
 			$representations,                                                                                           // $representations
 			$entity->getComponentId(),                                                                                  // $DEBBComponentId
 			method_exists($entity, 'getDebbLevel') ? $entity->getDebbLevel() : $real_class_name,                        // $DEBBLevel
