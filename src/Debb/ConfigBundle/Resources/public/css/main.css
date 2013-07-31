@@ -1051,3 +1051,13 @@ div[class*="noBreakAfterThis"]
 	border-right-width: 3px !important;
 	margin-bottom: -1px !important;
 }
+
+.toprightcorner {
+	position: absolute;
+	right: 3px;
+	top: 3px;
+}
+
+.well {
+	position: relative;
+}

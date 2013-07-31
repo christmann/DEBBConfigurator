@@ -15,9 +15,12 @@ class Processor extends Base
 {
 
 	/**
+	 * Maximum Clockfrequency of CPU in MHz
+	 *
 	 * @var integer
 	 *
-	 * @ORM\Column(name="max_clock_speed", type="integer", nullable=true)
+	 * @Assert\NotNull()
+	 * @ORM\Column(name="max_clock_speed", type="integer")
 	 */
 	private $maxClockSpeed;
 
@@ -29,6 +32,20 @@ class Processor extends Base
 	private $cores;
 
 	/**
+	 * @var \Debb\ManagementBundle\Entity\PState[]
+	 *
+	 * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\PState", mappedBy="processor", cascade={"all"})
+	 */
+	private $pStates;
+
+	/**
+	 * @var \Debb\ManagementBundle\Entity\CState[]
+	 *
+	 * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\CState", mappedBy="processor", cascade={"all"})
+	 */
+	private $cStates;
+
+	/**
 	 * @var decimal
 	 *
 	 * @ORM\Column(name="tdp", type="decimal", nullable=true)
@@ -36,91 +53,8 @@ class Processor extends Base
 	private $tdp;
 
 	/**
-	 * @var decimal
-	 *
-	 * @ORM\Column(name="mintemp", type="decimal", nullable=true)
-	 */
-	private $mintemp;
-
-	/**
-	 * @var decimal
-	 *
-	 * @ORM\Column(name="maxtemp", type="decimal", nullable=true)
-	 */
-	private $maxtemp;
-
-	/**
-	 * Set maxClockSpeed
-	 *
-	 * @param integer $maxClockSpeed
-	 * @return Processor
-	 */
-	public function setMaxClockSpeed($maxClockSpeed)
-	{
-		$this->maxClockSpeed = $maxClockSpeed;
-
-		return $this;
-	}
-
-	/**
-	 * Get maxClockSpeed
-	 *
-	 * @return decimal
-	 */
-	public function getMaxClockSpeed()
-	{
-		return $this->maxClockSpeed;
-	}
-
-	/**
-	 * Set cores
-	 *
-	 * @param integer $cores
-	 * @return Processor
-	 */
-	public function setCores($cores)
-	{
-		$this->cores = $cores;
-
-		return $this;
-	}
-
-	/**
-	 * Get cores
-	 *
-	 * @return integer
-	 */
-	public function getCores()
-	{
-		return $this->cores;
-	}
-
-	/**
-	 * Set TDP
-	 *
-	 * @param \double $tdp
-	 * @return Processor
-	 */
-	public function setTDP($tdp)
-	{
-		$this->tdp = $tdp;
-
-		return $this;
-	}
-
-	/**
-	 * Get TDP
-	 *
-	 * @return decimal
-	 */
-	public function getTDP()
-	{
-		return $this->tdp;
-	}
-
-	/**
 	 * Returns a array for later converting
-	 * 
+	 *
 	 * @return array the array for later converting
 	 */
 	public function getDebbXmlArray()
@@ -134,6 +68,14 @@ class Processor extends Base
 		{
 			$array['Cores'] = $this->getCores();
 		}
+		foreach($this->getPStates() as $pState)
+		{
+			$array[] = array(array('PState' => $pState->getDebbXmlArray()));
+		}
+		foreach($this->getCStates() as $cState)
+		{
+			$array[] = array(array('CState' => $cState->getDebbXmlArray()));
+		}
 		if($this->getTDP() != null)
 		{
 			$array['TDP'] = $this->getTDP();
@@ -142,48 +84,150 @@ class Processor extends Base
 	}
 
     /**
-     * Set mintemp
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->pStates = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->cStates = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Set maxClockSpeed
      *
-     * @param float $mintemp
+     * @param integer $maxClockSpeed
      * @return Processor
      */
-    public function setMintemp($mintemp)
+    public function setMaxClockSpeed($maxClockSpeed)
     {
-        $this->mintemp = $mintemp;
+        $this->maxClockSpeed = $maxClockSpeed;
     
         return $this;
     }
 
     /**
-     * Get mintemp
+     * Get maxClockSpeed
      *
-     * @return float 
+     * @return integer 
      */
-    public function getMintemp()
+    public function getMaxClockSpeed()
     {
-        return $this->mintemp;
+        return $this->maxClockSpeed;
     }
 
     /**
-     * Set maxtemp
+     * Set cores
      *
-     * @param float $maxtemp
+     * @param integer $cores
      * @return Processor
      */
-    public function setMaxtemp($maxtemp)
+    public function setCores($cores)
     {
-        $this->maxtemp = $maxtemp;
+        $this->cores = $cores;
     
         return $this;
     }
 
     /**
-     * Get maxtemp
+     * Get cores
      *
-     * @return float 
+     * @return integer 
      */
-    public function getMaxtemp()
+    public function getCores()
     {
-        return $this->maxtemp;
+        return $this->cores;
     }
+
+    /**
+     * Add pStates
+     *
+     * @param \Debb\ManagementBundle\Entity\PState $pStates
+     * @return Processor
+     */
+    public function addPState(\Debb\ManagementBundle\Entity\PState $pStates)
+    {
+        $this->pStates[] = $pStates;
+	    $pStates->setProcessor($this);
+    
+        return $this;
+    }
+
+    /**
+     * Remove pStates
+     *
+     * @param \Debb\ManagementBundle\Entity\PState $pStates
+     */
+    public function removePState(\Debb\ManagementBundle\Entity\PState $pStates)
+    {
+	    $pStates->setProcessor();
+        $this->pStates->removeElement($pStates);
+    }
+
+    /**
+     * Get pStates
+     *
+     * @return \Debb\ManagementBundle\Entity\PState[]
+     */
+    public function getPStates()
+    {
+        return $this->pStates;
+    }
+
+	/**
+	 * Add cStates
+	 *
+	 * @param \Debb\ManagementBundle\Entity\CState $cStates
+	 * @return Processor
+	 */
+	public function addCState(\Debb\ManagementBundle\Entity\CState $cStates)
+	{
+		$this->cStates[] = $cStates;
+		$cStates->setProcessor($this);
+
+		return $this;
+	}
+
+	/**
+	 * Remove cStates
+	 *
+	 * @param \Debb\ManagementBundle\Entity\CState $cStates
+	 */
+	public function removeCState(\Debb\ManagementBundle\Entity\CState $cStates)
+	{
+		$cStates->setProcessor();
+		$this->cStates->removeElement($cStates);
+	}
+
+	/**
+	 * Get cStates
+	 *
+	 * @return \Debb\ManagementBundle\Entity\CState[]
+	 */
+	public function getCStates()
+	{
+		return $this->cStates;
+	}
+
+	/**
+	 * Set tdp
+	 *
+	 * @param float $tdp
+	 * @return Processor
+	 */
+	public function setTdp($tdp)
+	{
+		$this->tdp = $tdp;
+
+		return $this;
+	}
+
+	/**
+	 * Get tdp
+	 *
+	 * @return float
+	 */
+	public function getTdp()
+	{
+		return $this->tdp;
+	}
 }

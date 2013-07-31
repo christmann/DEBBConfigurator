@@ -23,8 +23,23 @@ class ProcessorType extends BaseType
 			->add('MaxClockSpeed', 'text')
 			->add('cores', 'text', array('attr' => array('class' => 'noBreakAfterThis')))
             ->add('tdp', 'text')
-	        ->add('mintemp', 'number', array('attr' => array('class' => 'noBreakAfterThis')))
-	        ->add('maxtemp', 'number')
+	        ->add('pstates', 'collection', array(
+		        'type' => new PStateType(),
+		        'allow_add' => true,
+		        'allow_delete' => true,
+		        'by_reference' => false,
+		        'required' => false,
+	            'attr' => array('class' => 'noBreakAfterThis'),
+	            'label' => 'PStates',
+	        ))
+	        ->add('cstates', 'collection', array(
+		        'type' => new CStateType(),
+		        'allow_add' => true,
+		        'allow_delete' => true,
+		        'by_reference' => false,
+		        'required' => false,
+	            'label' => 'CStates',
+	        ))
         ;
     }
 

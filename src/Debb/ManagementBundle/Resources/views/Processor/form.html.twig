@@ -1,2 +1,40 @@
-{% extends "DebbManagementBundle::form.html.twig" %}
-{% form_theme form "DebbManagementBundle::form_theme.html.twig" %}
+{%- extends "DebbManagementBundle::form.html.twig" -%}
+{%- form_theme form "DebbManagementBundle::form_theme.html.twig" -%}
+{%- import _self as utils -%}
+
+{% block p_c_states -%}
+	<div class="span6">
+		{{- utils.stateBlock(form.pstates) -}}
+	</div>
+	<div class="span6">
+		{{- utils.stateBlock(form.cstates) -}}
+	</div>
+	{%- do form.pstates.setRendered() -%}
+	{%- do form.cstates.setRendered() -%}
+{%- endblock %}
+
+{% block content -%}
+	{%- set p_c_states = block('p_c_states') -%}
+	{{ parent() }}
+	<hr />
+	<div class="row-fluid">
+		{{ p_c_states | raw }}
+	</div>
+{%- endblock %}
+
+{% macro stateBlock(f) -%}
+	{%- import _self as utils -%}
+	{%- form_theme f _self -%}
+	<h4>{{- f.vars.label }} <a class="addThing" data-prototype="{{ utils.stateForm(f.vars.prototype) | e }}" href="#"><i class="icon-plus"></i></a></h4>
+	{%- for children in f.children -%}
+		{%- form_theme children _self -%}
+		{{- utils.stateForm(children) -}}
+	{%- endfor -%}
+{%- endmacro %}
+
+{% macro stateForm(f) -%}
+	<div class="well">
+		<div class="toprightcorner"><a href="#" class="trash" obj="$(this).parents('.well')"><i class="icon-trash"></i></a></div>
+		{{ form_widget(f) }}
+	</div>
+{%- endmacro %}

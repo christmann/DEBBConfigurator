@@ -96,6 +96,10 @@ class Heatsink extends Base
 		{
 			$array[] = array(array('Reference' => array('Type' => 'VRML', 'Location' => './object/' . $this->getVrmlFile()->getName())));
 		}
+		if($this->getTransferRate() != null)
+		{
+			$array['TransferRate'] = $this->getTransferRate();
+		}
 		return $array;
 	}
 
