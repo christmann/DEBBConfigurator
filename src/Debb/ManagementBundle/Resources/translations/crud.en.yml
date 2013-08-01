@@ -18,3 +18,5 @@ debb_management.chassis.rack.message: <strong>Chassis is in use by the following
 debb_management.chassis.message.title: Information
 debb_management.heatsink.plural: Heatsinks
 debb_management.heatsink.singular: Heatsink
+debb_management.network.plural: Networks
+debb_management.network.singular: Network

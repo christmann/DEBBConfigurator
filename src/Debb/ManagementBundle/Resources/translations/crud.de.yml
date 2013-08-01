@@ -18,3 +18,5 @@ debb_management.chassis.rack.message: <strong>Das Gehäuse wird in den folgenden
 debb_management.chassis.message.title: Information
 debb_management.heatsink.plural: Heatsinks
 debb_management.heatsink.singular: Heatsink
+debb_management.network.plural: Netzwerke
+debb_management.network.singular: Netzwerk
