@@ -29,14 +29,14 @@ class FlowState
     /**
      * @var string
      *
-     * @ORM\Column(name="state", type="string", length=255)
+     * @Assert\NotNull()
+     * @ORM\Column(name="state", type="string", length=255, nullable=true)
      */
     private $state;
 
     /**
      * @var float
      *
-     * @Assert\NotNull()
      * @ORM\Column(name="flow", type="decimal")
      */
     private $flow;
@@ -44,7 +44,6 @@ class FlowState
     /**
      * @var float
      *
-     * @Assert\NotNull()
      * @ORM\Column(name="powerUsage", type="decimal")
      */
     private $powerUsage;
