@@ -1,11 +1,10 @@
 var TYPE_NOTHING = 0,
-    TYPE_MAINBOARD = 1,
+    TYPE_BASEBOARD = 1,
     TYPE_PROCESSOR = 2,
     TYPE_COOLING_DEVICE = 3,
     TYPE_MEMORY = 4,
     TYPE_POWER_SUPPLY = 5,
-    TYPE_STORAGE = 6,
-    TYPE_HEATSINK = 7;
+    TYPE_HEATSINK = 6;
 
 $(function()
 	{
@@ -23,7 +22,7 @@ $(function()
 			id++;
 			var type = $(this).parents('.component:first').find('input[id$="_type"]').attr('value'),
 				selectBox = $(this).parents('.component:first').find('[id$="_amount"]');
-			if(parseInt(selectBox.val()) < 1 || (type != TYPE_PROCESSOR && type != TYPE_POWER_SUPPLY && type != TYPE_MAINBOARD))
+			if(parseInt(selectBox.val()) < 1 || (type != TYPE_PROCESSOR && type != TYPE_POWER_SUPPLY && type != TYPE_BASEBOARD))
 			{
 				var prototype = $('.componentBox').attr('data-prototype'),
 					newForm = prototype.replace(/__name__/g, id),
@@ -136,9 +135,9 @@ function updateComponents() {
 		{
 			$('#debb_configbundle_nodetype_components_' + id + '_amount').parent().find('input, select, label, .amountExtras').show();
 		}
-		if(type == TYPE_MAINBOARD)
+		if(type == TYPE_BASEBOARD)
 		{
-			$('#debb_configbundle_nodetype_components_' + id + '_mainboard').parent().find('input, select, label, .amountExtras').show();
+			$('#debb_configbundle_nodetype_components_' + id + '_baseboard').parent().find('input, select, label, .amountExtras').show();
 		}
 		else if(type == TYPE_PROCESSOR)
 		{

@@ -46,13 +46,12 @@ free rack units: Free Rack Units
 selected rack unit: Selected Rack Unit
 none: none
 component.0: Unknown
-component.1: Mainboard
+component.1: Baseboard
 component.2: Processor
 component.3: Cooler
 component.4: Memory
 component.5: Power supply
-component.6: HDD
-component.7: Heatsink
+component.6: Heatsink
 empty: Empty
 import.%name%: Import %name%
 Tdp: TDP [Watt]

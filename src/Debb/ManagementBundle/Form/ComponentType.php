@@ -23,11 +23,10 @@ class ComponentType extends AbstractType
 			->add('type', null, array('required' => true))
 			->add('node', null, array('required' => false))
 			->add('processor', null, array('required' => false))
-			->add('mainboard', null, array('required' => false))
+			->add('baseboard', null, array('required' => false))
 			->add('coolingDevice', null, array('required' => false))
 			->add('memory', null, array('required' => false))
 			->add('powersupply', null, array('required' => false))
-			->add('storage', null, array('required' => false))
 			->add('heatsink', null, array('required' => false))
 			->add('amount', 'choice', array('choices' => $this->getAmountChoices(), 'required' => false,
 				'empty_value' => false, 'attr' => array('style' => 'width: 90px;')))

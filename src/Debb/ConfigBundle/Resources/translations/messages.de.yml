@@ -46,13 +46,12 @@ free rack units: freie HE's
 selected rack unit: ausgewählte HE
 none: Keine
 component.0: Unbekannt
-component.1: Mainboard
+component.1: Baseboard
 component.2: Prozessor
 component.3: Kühler
 component.4: Speicher
 component.5: Netzteil
-component.6: HDD
-component.7: Heatsink
+component.6: Heatsink
 empty: leer
 import.%name%: %name% importieren
 Yes: Ja

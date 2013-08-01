@@ -27,11 +27,11 @@ class Component
 	const TYPE_NOTHING = 0;
 
 	/**
-	 * [Type] Mainboard
+	 * [Type] Baseboard
 	 *
 	 * @var int
 	 */
-	const TYPE_MAINBOARD = 1;
+	const TYPE_BASEBOARD = 1;
 
 	/**
 	 * [Type] Processor
@@ -62,18 +62,11 @@ class Component
 	const TYPE_POWER_SUPPLY = 5;
 
 	/**
-	 * [Type] Storage
-	 *
-	 * @var int
-	 */
-	const TYPE_STORAGE = 6;
-
-	/**
 	 * [Type] Heatsink
 	 *
 	 * @var int
 	 */
-	const TYPE_HEATSINK = 7;
+	const TYPE_HEATSINK = 6;
 
 	/**
 	 * @var integer
@@ -114,12 +107,12 @@ class Component
 	private $processor;
 
 	/**
-	 * @var \Debb\ManagementBundle\Entity\Mainboard
+	 * @var \Debb\ManagementBundle\Entity\Baseboard
 	 * 
-	 * @ORM\ManyToOne(targetEntity="Mainboard")
-	 * @ORM\JoinColumn(name="mainboard_id", referencedColumnName="id", onDelete="cascade")
+	 * @ORM\ManyToOne(targetEntity="Baseboard")
+	 * @ORM\JoinColumn(name="baseboard_id", referencedColumnName="id", onDelete="cascade")
 	 */
-	private $mainboard;
+	private $baseboard;
 
 	/**
 	 * @var \Debb\ManagementBundle\Entity\CoolingDevice
@@ -144,14 +137,6 @@ class Component
 	 * @ORM\JoinColumn(name="powersupply_id", referencedColumnName="id", onDelete="cascade")
 	 */
 	private $powersupply;
-
-	/**
-	 * @var \Debb\ManagementBundle\Entity\Storage
-	 * 
-	 * @ORM\ManyToOne(targetEntity="Storage")
-	 * @ORM\JoinColumn(name="storage_id", referencedColumnName="id", onDelete="cascade")
-	 */
-	private $storage;
 
 	/**
 	 * @var \Debb\ManagementBundle\Entity\Heatsink
@@ -245,30 +230,30 @@ class Component
 	}
 
 	/**
-	 * Set mainboard
+	 * Set baseboard
 	 *
-	 * @param \Debb\ManagementBundle\Entity\Mainboard $mainboard
+	 * @param \Debb\ManagementBundle\Entity\Baseboard $baseboard
 	 * @return Component
 	 */
-	public function setMainboard(\Debb\ManagementBundle\Entity\Mainboard $mainboard = null)
+	public function setBaseboard(\Debb\ManagementBundle\Entity\Baseboard $baseboard = null)
 	{
-		$this->mainboard = $mainboard;
-		if($this->mainboard != null)
+		$this->baseboard = $baseboard;
+		if($this->baseboard !== null)
 		{
-			$this->setType(self::TYPE_MAINBOARD);
+			$this->setType(self::TYPE_BASEBOARD);
 		}
 
 		return $this;
 	}
 
 	/**
-	 * Get mainboard
+	 * Get baseboard
 	 *
-	 * @return \Debb\ManagementBundle\Entity\Mainboard 
+	 * @return \Debb\ManagementBundle\Entity\Baseboard
 	 */
-	public function getMainboard()
+	public function getBaseboard()
 	{
-		return $this->mainboard;
+		return $this->baseboard;
 	}
 
 	/**
@@ -353,33 +338,6 @@ class Component
 	}
 
 	/**
-	 * Set storage
-	 *
-	 * @param \Debb\ManagementBundle\Entity\Storage $storage
-	 * @return Component
-	 */
-	public function setStorage(\Debb\ManagementBundle\Entity\Storage $storage = null)
-	{
-		$this->storage = $storage;
-		if($this->storage != null)
-		{
-			$this->setType(self::TYPE_STORAGE);
-		}
-
-		return $this;
-	}
-
-	/**
-	 * Get storage
-	 *
-	 * @return \Debb\ManagementBundle\Entity\Storage 
-	 */
-	public function getStorage()
-	{
-		return $this->storage;
-	}
-
-	/**
 	 * Set heatsink
 	 *
 	 * @param \Debb\ManagementBundle\Entity\Heatsink $heatsink
@@ -440,9 +398,9 @@ class Component
 		{
 			return null;
 		}
-		if($this->getType() == $this::TYPE_MAINBOARD)
+		if($this->getType() == $this::TYPE_BASEBOARD)
 		{
-			return $this->getMainboard();
+			return $this->getBaseboard();
 		}
 		else if($this->getType() == $this::TYPE_PROCESSOR)
 		{
@@ -459,10 +417,6 @@ class Component
 		else if($this->getType() == $this::TYPE_POWER_SUPPLY)
 		{
 			return $this->getPowersupply();
-		}
-		else if($this->getType() == $this::TYPE_STORAGE)
-		{
-			return $this->getStorage();
 		}
 		else if($this->getType() == $this::TYPE_HEATSINK)
 		{
@@ -481,9 +435,9 @@ class Component
 		$array = array();
 		for($x = 0; $x < $this->getAmount(); $x++)
 		{
-			if($this->getType() === $this::TYPE_MAINBOARD && $this->getMainboard() !== null)
+			if($this->getType() === $this::TYPE_BASEBOARD && $this->getBaseboard() !== null)
 			{
-				$array[]['Mainboard'] = $this->getMainboard()->getDebbXmlArray();
+				$array[]['Baseboard'] = $this->getBaseboard()->getDebbXmlArray();
 			}
 			else if($this->getType() === $this::TYPE_PROCESSOR && $this->getProcessor() !== null)
 			{
@@ -500,10 +454,6 @@ class Component
 			else if($this->getType() === $this::TYPE_POWER_SUPPLY && $this->getPowersupply() !== null)
 			{
 				$array[]['PowerSupply'] = $this->getPowersupply()->getDebbXmlArray();
-			}
-			else if($this->getType() === $this::TYPE_STORAGE && $this->getStorage() !== null)
-			{
-				$array[]['Storage'] = $this->getStorage()->getDebbXmlArray();
 			}
 			else if($this->getType() === $this::TYPE_HEATSINK && $this->getHeatsink() !== null)
 			{

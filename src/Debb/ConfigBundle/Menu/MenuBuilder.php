@@ -52,11 +52,9 @@ class MenuBuilder
 			'attributes' => array('class' => 'zero first current')
 		));
 		$management->addChild($this->translateIt('debb_management.processor.plural', array(), 'crud'), array('route' => 'debb_management_processor_index'));
-		$management->addChild($this->translateIt('debb_management.mainboard.plural', array(), 'crud'), array('route' => 'debb_management_mainboard_index'));
 		$management->addChild($this->translateIt('debb_management.coolingdevice.plural', array(), 'crud'), array('route' => 'debb_management_coolingdevice_index'));
 		$management->addChild($this->translateIt('debb_management.memory.plural', array(), 'crud'), array('route' => 'debb_management_memory_index'));
 		$management->addChild($this->translateIt('debb_management.powersupply.plural', array(), 'crud'), array('route' => 'debb_management_powersupply_index'));
-		$management->addChild($this->translateIt('debb_management.storage.plural', array(), 'crud'), array('route' => 'debb_management_storage_index'));
 		$management->addChild($this->translateIt('debb_management.chassis.plural', array(), 'crud'), array('route' => 'debb_management_chassis_index'));
 		$management->addChild($this->translateIt('debb_management.heatsink.plural', array(), 'crud'), array('route' => 'debb_management_heatsink_index'));
 		$management->addChild($this->translateIt('debb_management.network.plural', array(), 'crud'), array('route' => 'debb_management_network_index'));
