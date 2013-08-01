@@ -60,6 +60,7 @@ class MenuBuilder
 		$management->addChild($this->translateIt('debb_management.chassis.plural', array(), 'crud'), array('route' => 'debb_management_chassis_index'));
 		$management->addChild($this->translateIt('debb_management.heatsink.plural', array(), 'crud'), array('route' => 'debb_management_heatsink_index'));
 		$management->addChild($this->translateIt('debb_management.network.plural', array(), 'crud'), array('route' => 'debb_management_network_index'));
+		$management->addChild($this->translateIt('debb_management.flowprofile.plural', array(), 'crud'), array('route' => 'debb_management_flowprofile_index'));
 
 		$menu->addChild($this->translateIt('debb_config.node.plural', array(), 'crud'), array(
 			'route' => 'debb_config_node_index',

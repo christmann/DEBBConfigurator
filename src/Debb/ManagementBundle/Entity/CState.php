@@ -41,7 +41,7 @@ class CState
 	/**
 	 * @var \Debb\ManagementBundle\Entity\Processor
 	 *
-	 * @ORM\ManyToOne(targetEntity="Debb\ManagementBundle\Entity\Processor", inversedBy="cstate")
+	 * @ORM\ManyToOne(targetEntity="Debb\ManagementBundle\Entity\Processor", inversedBy="cStates")
 	 */
 	private $processor;
 

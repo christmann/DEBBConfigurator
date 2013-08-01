@@ -34,14 +34,14 @@ class Processor extends Base
 	/**
 	 * @var \Debb\ManagementBundle\Entity\PState[]
 	 *
-	 * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\PState", mappedBy="processor", cascade={"all"})
+	 * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\PState", mappedBy="processor", cascade={"all"}, orphanRemoval=true)
 	 */
 	private $pStates;
 
 	/**
 	 * @var \Debb\ManagementBundle\Entity\CState[]
 	 *
-	 * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\CState", mappedBy="processor", cascade={"all"})
+	 * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\CState", mappedBy="processor", cascade={"all"}, orphanRemoval=true)
 	 */
 	private $cStates;
 

@@ -38,14 +38,21 @@ $(function()
     $(document).on('click', 'a.addThing[data-prototype]', function(e)
     {
         e.preventDefault();
-        $($(this).attr('data-prototype').replace(/__name__/g, debbUtils.generateUniqueId())).hide().appendTo($(this).parents('div:first')).show('slow');
+        $($(this).attr('data-prototype').replace(/__name__/g, debbUtils.generateUniqueId())).hide().appendTo(eval($(this).attr('obj'))).show('slow');
     });
     $(document).on('click', 'a.trash[obj]', function(e)
     {
         e.preventDefault();
-        eval($(this).attr('obj')).hide('slow', function()
+        if(typeof($(this).attr('slow')) !== 'undefined' && $(this).attr('slow').toLowerCase() === 'false')
         {
-            $(this).remove();
-        });
+            eval($(this).attr('obj')).remove();
+        }
+        else
+        {
+            eval($(this).attr('obj')).hide('slow', function()
+            {
+                $(this).remove();
+            });
+        }
     });
 });

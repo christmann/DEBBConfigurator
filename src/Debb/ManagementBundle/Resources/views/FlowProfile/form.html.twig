@@ -1,0 +1,39 @@
+{%- extends "DebbManagementBundle::form.html.twig" -%}
+{%- form_theme form "DebbManagementBundle::form_theme.html.twig" -%}
+{%- import _self as utils -%}
+
+{% block stylesheets -%}
+	{{- parent() -}}
+	<style type="text/css">#content .well.span6:nth-child(2n) { margin-left: 0px; }</style>
+{%- endblock %}
+
+{% block flow_states -%}
+	{{- utils.stateBlock(form.flowStates) -}}
+	{%- do form.flowStates.setRendered() -%}
+{%- endblock %}
+
+{% block content -%}
+	{%- set flowStates = block('flow_states') -%}
+	{{ parent() }}
+	<hr />
+	<div class="row-fluid">
+		{{ flowStates | raw }}
+	</div>
+{%- endblock %}
+
+{% macro stateBlock(f) -%}
+	{%- import _self as utils -%}
+	{%- form_theme f _self -%}
+	<h4>{{- f.vars.label }} <a class="addThing" data-prototype="{{ utils.stateForm(f.vars.prototype) | e }}" obj="$(this).parents('div:first')" href="#"><i class="icon-plus"></i></a></h4>
+	{%- for children in f.children -%}
+		{%- form_theme children _self -%}
+		{{- utils.stateForm(children) -}}
+	{%- endfor -%}
+{%- endmacro %}
+
+{% macro stateForm(f) -%}
+	<div class="well span6" style="float: left;">
+		<div class="toprightcorner"><a href="#" class="trash" obj="$(this).parents('.well.span6')" slow="false"><i class="icon-trash"></i></a></div>
+		{{ form_widget(f) }}
+	</div>
+{%- endmacro %}

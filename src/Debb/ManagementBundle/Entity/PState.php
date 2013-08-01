@@ -65,7 +65,7 @@ class PState
 	/**
 	 * @var \Debb\ManagementBundle\Entity\Processor
 	 *
-	 * @ORM\ManyToOne(targetEntity="Debb\ManagementBundle\Entity\Processor", inversedBy="pstate")
+	 * @ORM\ManyToOne(targetEntity="Debb\ManagementBundle\Entity\Processor", inversedBy="pStates")
 	 */
 	private $processor;
 
