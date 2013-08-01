@@ -3,6 +3,7 @@
 namespace Debb\ManagementBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * FlowState
@@ -35,6 +36,7 @@ class FlowState
     /**
      * @var float
      *
+     * @Assert\NotNull()
      * @ORM\Column(name="flow", type="decimal")
      */
     private $flow;
@@ -42,6 +44,7 @@ class FlowState
     /**
      * @var float
      *
+     * @Assert\NotNull()
      * @ORM\Column(name="powerUsage", type="decimal")
      */
     private $powerUsage;
@@ -49,6 +52,7 @@ class FlowState
 	/**
 	 * @var \Debb\ManagementBundle\Entity\FlowProfile
 	 *
+	 * @Assert\NotNull()
 	 * @ORM\ManyToOne(targetEntity="Debb\ManagementBundle\Entity\FlowProfile", inversedBy="flowStates")
 	 */
 	private $flowProfile;

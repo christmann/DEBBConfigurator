@@ -35,6 +35,8 @@ class FlowProfile
     /**
      * @var \Debb\ManagementBundle\Entity\FlowState[]
      *
+     * @Assert\NotNull()
+     * @Assert\Count(min="1", minMessage="You need one flow state!")
      * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\FlowState", mappedBy="flowProfile", cascade={"all"}, orphanRemoval=true)
      */
     private $flowStates;
