@@ -14,7 +14,6 @@ use \Debb\ManagementBundle\Entity\Component;
  */
 class Node extends Dimensions
 {
-
 	/**
 	 * @var \Debb\ManagementBundle\Entity\Component[]
 	 *

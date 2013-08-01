@@ -64,15 +64,15 @@ class FlowState
 	public function getDebbXmlArray()
 	{
 		$array = array();
-		if ($this->getState() != null)
+		if ($this->getState() !== null)
 		{
 			$array['State'] = $this->getState();
 		}
-		if ($this->getFlow() != null)
+		if ($this->getFlow() !== null)
 		{
 			$array['Flow'] = $this->getFlow();
 		}
-		if ($this->getPowerUsage() != null)
+		if ($this->getPowerUsage() !== null)
 		{
 			$array['PowerUsage'] = $this->getPowerUsage();
 		}

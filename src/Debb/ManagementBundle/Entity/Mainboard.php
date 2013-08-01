@@ -112,15 +112,15 @@ class Mainboard extends Base
 	public function getXmlArray()
 	{
 		$array = parent::getDebbXmlArray();
-		if ($this->getDescription() != null)
+		if ($this->getDescription() !== null)
 		{
 			$array['Description'] = $this->getDescription();
 		}
-		if ($this->getSocket() != null)
+		if ($this->getSocket() !== null)
 		{
 			$array['Socket'] = $this->getSocket();
 		}
-		if ($this->getConnections() != null)
+		if ($this->getConnections() !== null)
 		{
 			$array['Connections'] = $this->getConnections();
 		}

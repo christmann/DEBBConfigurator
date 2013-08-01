@@ -82,7 +82,7 @@ class Box extends \Debb\ConfigBundle\Entity\Dimensions
 	public function getDebbXmlArray()
 	{
 		$array = parent::getDebbXmlArray();
-		if ($this->getSlots() != null)
+		if ($this->getSlots() !== null)
 		{
 			$array['Slots'] = $this->getSlots();
 		}

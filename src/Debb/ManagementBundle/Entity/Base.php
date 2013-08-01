@@ -163,17 +163,17 @@ class Base
 	public function getFullName()
 	{
 		$res = array();
-		if($this->getManufacturer() != null)
+		if($this->getManufacturer() !== null)
 		{
 			$res[] = $this->getManufacturer();
 		}
-		if($this->getProduct() != null)
+		if($this->getProduct() !== null)
 		{
 			$res[] = $this->getProduct();
 		}
 		if(in_array(get_class($this), array('Debb\ManagementBundle\Entity\Memory', 'Debb\ManagementBundle\Entity\Storage')))
 		{
-			if($this->getCapacity() != null)
+			if($this->getCapacity() !== null)
 			{
 				$res[] = '(' . $this->getCapacity() . ' MB)';
 			}

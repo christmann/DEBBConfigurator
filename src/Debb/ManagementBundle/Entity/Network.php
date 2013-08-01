@@ -40,6 +40,29 @@ class Network extends Base
      */
     private $maxBandwidth;
 
+	/**
+	 * Returns a array for later converting
+	 *
+	 * @return array the array for later converting
+	 */
+	public function getDebbXmlArray()
+	{
+		$array = array();
+		if($this->getInterface() !== null)
+		{
+			$array['Interface'] = $this->getInterface();
+		}
+		if($this->getTechnology() !== null)
+		{
+			$array['Technology'] = $this->getTechnology();
+		}
+		if($this->getMaxBandwidth() !== null)
+		{
+			$array['MaxBandwidth'] = $this->getMaxBandwidth();
+		}
+		return $array;
+	}
+
     /**
      * Set interface
      *

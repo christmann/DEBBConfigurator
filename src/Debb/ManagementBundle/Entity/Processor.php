@@ -60,11 +60,11 @@ class Processor extends Base
 	public function getDebbXmlArray()
 	{
 		$array = parent::getDebbXmlArray();
-		if($this->getMaxClockSpeed() != null)
+		if($this->getMaxClockSpeed() !== null)
 		{
 			$array['MaxClockSpeed'] = $this->getMaxClockSpeed();
 		}
-		if($this->getCores() != null)
+		if($this->getCores() !== null)
 		{
 			$array['Cores'] = $this->getCores();
 		}
@@ -76,7 +76,7 @@ class Processor extends Base
 		{
 			$array[] = array(array('CState' => $cState->getDebbXmlArray()));
 		}
-		if($this->getTDP() != null)
+		if($this->getTDP() !== null)
 		{
 			$array['TDP'] = $this->getTDP();
 		}

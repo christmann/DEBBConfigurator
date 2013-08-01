@@ -55,21 +55,21 @@ class PowerSupply extends Base /* extends DEBBComplexType */
 	public function getDebbXmlArray()
 	{
 		$array = parent::getDebbXmlArray();
-		if ($this->getClass() != null)
+		if ($this->getClass() !== null)
 		{
 			$array['Class'] = $this->getClass();
 		}
-		if ($this->getTotalOutputPower() != null)
+		if ($this->getTotalOutputPower() !== null)
 		{
 			$array['TotalOutputPower'] = $this->getTotalOutputPower();
 		}
-		if ($this->getEfficiency() != null)
+		if ($this->getEfficiency() !== null)
 		{
 			$array['Efficiency'] = $this->getEfficiency();
 		}
-		if ($this->getPowerProfile() != null)
+		if ($this->getPowerProfile() !== null)
 		{
-			$array['PowerProfile'] = $this->getPowerProfile()->get;
+			$array['PowerProfile'] = $this->getPowerProfile()->getDebbXmlArray();
 		}
 		return $array;
 	}

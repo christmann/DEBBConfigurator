@@ -20,9 +20,12 @@ class CoolingDeviceType extends BaseType
     {
 	    parent::buildForm($builder, $options);
         $builder
-            ->add('maxCoolingCapacity', null, array('attr' => array('class' => 'noBreakAfterThis')))
-            ->add('maxAirThroughput')
-            ->add('maxWaterThroughput')
+            ->add('class', 'choice', array('choices' => $this->getClasses(true), 'attr' => array('class' => 'noBreakAfterThis')))
+            ->add('maxCoolingCapacity', null, array('required' => false))
+            ->add('maxAirThroughput', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis')))
+            ->add('maxWaterThroughput', null, array('required' => false))
+            ->add('airThroughputProfile', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis')))
+            ->add('waterThroughputProfile', null, array('required' => false))
         ;
     }
 
@@ -43,4 +46,24 @@ class CoolingDeviceType extends BaseType
     {
         return 'debb_managementbundle_coolingdevicetype';
     }
+
+	/**
+	 * @return array the array with valid classes
+	 */
+	public static function getClasses($inclKeys = false)
+	{
+		$ret = array();
+		foreach(array('Fan', 'Refrigeration', 'Heatpipe', 'ILC', 'LCU', 'CRAH', 'HVAC') as $class)
+		{
+			if($inclKeys)
+			{
+				$ret[$class] = $class;
+			}
+			else
+			{
+				$ret[] = $class;
+			}
+		}
+		return $ret;
+	}
 }

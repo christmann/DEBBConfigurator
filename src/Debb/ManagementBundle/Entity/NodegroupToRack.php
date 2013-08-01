@@ -30,7 +30,6 @@ class NodegroupToRack extends Connector
 	 */
 	private $rack;
 
-
     /**
      * Set nodegroup
      *

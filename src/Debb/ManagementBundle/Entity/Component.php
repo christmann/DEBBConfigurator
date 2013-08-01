@@ -99,14 +99,14 @@ class Component
 	private $amount;
 
 	/**
-	 * @var Debb\ConfigBundle\Entity\Node
+	 * @var \Debb\ConfigBundle\Entity\Node
 	 *
 	 * @ORM\ManyToOne(targetEntity="Debb\ConfigBundle\Entity\Node", inversedBy="components")
 	 */
 	private $node;
 
 	/**
-	 * @var Debb\ManagementBundle\Entity\Processor
+	 * @var \Debb\ManagementBundle\Entity\Processor
 	 * 
 	 * @ORM\ManyToOne(targetEntity="Processor")
 	 * @ORM\JoinColumn(name="processor_id", referencedColumnName="id", onDelete="cascade")
@@ -114,7 +114,7 @@ class Component
 	private $processor;
 
 	/**
-	 * @var Debb\ManagementBundle\Entity\Mainboard
+	 * @var \Debb\ManagementBundle\Entity\Mainboard
 	 * 
 	 * @ORM\ManyToOne(targetEntity="Mainboard")
 	 * @ORM\JoinColumn(name="mainboard_id", referencedColumnName="id", onDelete="cascade")
@@ -122,7 +122,7 @@ class Component
 	private $mainboard;
 
 	/**
-	 * @var Debb\ManagementBundle\Entity\CoolingDevice
+	 * @var \Debb\ManagementBundle\Entity\CoolingDevice
 	 * 
 	 * @ORM\ManyToOne(targetEntity="CoolingDevice")
 	 * @ORM\JoinColumn(name="coolingdevice_id", referencedColumnName="id", onDelete="cascade")
@@ -130,7 +130,7 @@ class Component
 	private $coolingDevice;
 
 	/**
-	 * @var Debb\ManagementBundle\Entity\Memory
+	 * @var \Debb\ManagementBundle\Entity\Memory
 	 * 
 	 * @ORM\ManyToOne(targetEntity="Memory")
 	 * @ORM\JoinColumn(name="memory_id", referencedColumnName="id", onDelete="cascade")
@@ -138,7 +138,7 @@ class Component
 	private $memory;
 
 	/**
-	 * @var Debb\ManagementBundle\Entity\PowerSupply
+	 * @var \Debb\ManagementBundle\Entity\PowerSupply
 	 * 
 	 * @ORM\ManyToOne(targetEntity="PowerSupply")
 	 * @ORM\JoinColumn(name="powersupply_id", referencedColumnName="id", onDelete="cascade")
@@ -146,7 +146,7 @@ class Component
 	private $powersupply;
 
 	/**
-	 * @var Debb\ManagementBundle\Entity\Storage
+	 * @var \Debb\ManagementBundle\Entity\Storage
 	 * 
 	 * @ORM\ManyToOne(targetEntity="Storage")
 	 * @ORM\JoinColumn(name="storage_id", referencedColumnName="id", onDelete="cascade")
@@ -154,7 +154,7 @@ class Component
 	private $storage;
 
 	/**
-	 * @var Debb\ManagementBundle\Entity\Heatsink
+	 * @var \Debb\ManagementBundle\Entity\Heatsink
 	 *
 	 * @ORM\ManyToOne(targetEntity="Heatsink")
 	 * @ORM\JoinColumn(name="heatsink_id", referencedColumnName="id", onDelete="cascade")
@@ -481,31 +481,31 @@ class Component
 		$array = array();
 		for($x = 0; $x < $this->getAmount(); $x++)
 		{
-			if($this->getType() == $this::TYPE_MAINBOARD && $this->getMainboard() != null)
+			if($this->getType() === $this::TYPE_MAINBOARD && $this->getMainboard() !== null)
 			{
 				$array[]['Mainboard'] = $this->getMainboard()->getDebbXmlArray();
 			}
-			else if($this->getType() == $this::TYPE_PROCESSOR && $this->getProcessor() != null)
+			else if($this->getType() === $this::TYPE_PROCESSOR && $this->getProcessor() !== null)
 			{
 				$array[]['Processor'] = $this->getProcessor()->getDebbXmlArray();
 			}
-			else if($this->getType() == $this::TYPE_COOLING_DEVICE && $this->getCoolingDevice() != null)
+			else if($this->getType() === $this::TYPE_COOLING_DEVICE && $this->getCoolingDevice() !== null)
 			{
 				$array[]['CoolingDevice'] = $this->getCoolingDevice()->getDebbXmlArray();
 			}
-			else if($this->getType() == $this::TYPE_MEMORY && $this->getMemory() != null)
+			else if($this->getType() === $this::TYPE_MEMORY && $this->getMemory() !== null)
 			{
 				$array[]['Memory'] = $this->getMemory()->getDebbXmlArray();
 			}
-			else if($this->getType() == $this::TYPE_POWER_SUPPLY && $this->getPowersupply() != null)
+			else if($this->getType() === $this::TYPE_POWER_SUPPLY && $this->getPowersupply() !== null)
 			{
 				$array[]['PowerSupply'] = $this->getPowersupply()->getDebbXmlArray();
 			}
-			else if($this->getType() == $this::TYPE_STORAGE && $this->getStorage() != null)
+			else if($this->getType() === $this::TYPE_STORAGE && $this->getStorage() !== null)
 			{
 				$array[]['Storage'] = $this->getStorage()->getDebbXmlArray();
 			}
-			else if($this->getType() == $this::TYPE_HEATSINK && $this->getHeatsink() != null)
+			else if($this->getType() === $this::TYPE_HEATSINK && $this->getHeatsink() !== null)
 			{
 				$array[]['Heatsink'] = $this->getHeatsink()->getDebbXmlArray();
 			}

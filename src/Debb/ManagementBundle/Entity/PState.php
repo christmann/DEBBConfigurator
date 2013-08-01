@@ -77,23 +77,23 @@ class PState
 	public function getDebbXmlArray()
 	{
 		$array = array();
-		if($this->getState() != null)
+		if($this->getState() !== null)
 		{
 			$array['State'] = $this->getState();
 		}
-		if($this->getFrequency() != null)
+		if($this->getFrequency() !== null)
 		{
 			$array['Frequency'] = $this->getFrequency();
 		}
-		if($this->getVoltage() != null)
+		if($this->getVoltage() !== null)
 		{
 			$array['Voltage'] = $this->getVoltage();
 		}
-		if($this->getPowerUsageMin() != null)
+		if($this->getPowerUsageMin() !== null)
 		{
 			$array['PowerUsageMin'] = $this->getPowerUsageMin();
 		}
-		if($this->getPowerUsageMax() != null)
+		if($this->getPowerUsageMax() !== null)
 		{
 			$array['PowerUsageMax'] = $this->getPowerUsageMax();
 		}

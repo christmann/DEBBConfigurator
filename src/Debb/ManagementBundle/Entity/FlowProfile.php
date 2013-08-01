@@ -56,7 +56,7 @@ class FlowProfile
 	public function getDebbXmlArray()
 	{
 		$array = array();
-		if ($this->getName() != null)
+		if ($this->getName() !== null)
 		{
 			$array['Name'] = $this->getName();
 		}

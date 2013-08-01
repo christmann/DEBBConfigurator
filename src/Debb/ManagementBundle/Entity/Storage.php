@@ -81,11 +81,11 @@ class Storage extends Base
 	public function getDebbXmlArray()
 	{
 		$array = parent::getDebbXmlArray();
-		if ($this->getCapacity() != null)
+		if ($this->getCapacity() !== null)
 		{
 			$array['Capacity'] = $this->getCapacity();
 		}
-		if ($this->getInterface() != null)
+		if ($this->getInterface() !== null)
 		{
 			$array['Interface'] = $this->getInterface();
 		}

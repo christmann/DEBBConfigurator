@@ -22,3 +22,5 @@ debb_management.network.plural: Networks
 debb_management.network.singular: Network
 debb_management.flowprofile.plural: Flow profiles
 debb_management.flowprofile.singular: Flow profile
+debb_management.sensor.plural: Sensors
+debb_management.sensor.singular: Sensor
