@@ -472,7 +472,7 @@ table tr td
 	margin-bottom: 20px;
 }
 
-input[type="text"], input[type="password"], input[type="email"]
+input[type="text"], input[type="password"], input[type="email"], input[type="number"]
 {
 	width: 360px;
 }

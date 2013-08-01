@@ -29,7 +29,7 @@ class FlowState
     /**
      * @var string
      *
-     * @Assert\NotNull()
+     * @Assert\NotBlank()
      * @ORM\Column(name="state", type="string", length=255, nullable=true)
      */
     private $state;
@@ -44,7 +44,7 @@ class FlowState
     /**
      * @var float
      *
-     * @ORM\Column(name="powerUsage", type="decimal")
+     * @ORM\Column(name="power_usage", type="decimal")
      */
     private $powerUsage;
 
@@ -55,6 +55,29 @@ class FlowState
 	 * @ORM\ManyToOne(targetEntity="Debb\ManagementBundle\Entity\FlowProfile", inversedBy="flowStates")
 	 */
 	private $flowProfile;
+
+	/**
+	 * Returns a array for later converting
+	 *
+	 * @return array the array for later converting
+	 */
+	public function getDebbXmlArray()
+	{
+		$array = array();
+		if ($this->getState() != null)
+		{
+			$array['State'] = $this->getState();
+		}
+		if ($this->getFlow() != null)
+		{
+			$array['Flow'] = $this->getFlow();
+		}
+		if ($this->getPowerUsage() != null)
+		{
+			$array['PowerUsage'] = $this->getPowerUsage();
+		}
+		return $array;
+	}
 
     /**
      * Get id

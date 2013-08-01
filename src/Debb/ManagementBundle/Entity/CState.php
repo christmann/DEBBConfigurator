@@ -25,7 +25,7 @@ class CState
     /**
      * @var integer
      *
-     * @Assert\NotNull()
+     * @Assert\NotBlank()
      * @ORM\Column(name="state", type="integer")
      */
     private $state;
@@ -33,7 +33,7 @@ class CState
     /**
      * @var float
      *
-     * @Assert\NotNull()
+     * @Assert\NotBlank()
      * @ORM\Column(name="power_usage", type="decimal")
      */
     private $powerUsage;

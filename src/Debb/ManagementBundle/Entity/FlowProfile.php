@@ -28,7 +28,7 @@ class FlowProfile
     /**
      * @var string
      *
-     * @ORM\Column(name="Name", type="string", length=255, nullable=true)
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
     private $name;
 
@@ -47,6 +47,25 @@ class FlowProfile
 	 * @ORM\ManyToOne(targetEntity="CoolEmAll\UserBundle\Entity\User")
 	 */
 	private $user;
+
+	/**
+	 * Returns a array for later converting
+	 *
+	 * @return array the array for later converting
+	 */
+	public function getDebbXmlArray()
+	{
+		$array = array();
+		if ($this->getName() != null)
+		{
+			$array['Name'] = $this->getName();
+		}
+		foreach($this->getFlowStates() as $flowState)
+		{
+			$array[] = array(array('FlowState' => $flowState->getDebbXmlArray()));
+		}
+		return $array;
+	}
 
     /**
      * Constructor
@@ -117,7 +136,7 @@ class FlowProfile
     /**
      * Get flowStates
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Debb\ManagementBundle\Entity\FlowState[]
      */
     public function getFlowStates()
     {
@@ -146,4 +165,12 @@ class FlowProfile
     {
         return $this->user;
     }
+
+	/**
+	 * @return string the name of flow profile
+	 */
+	function __toString()
+	{
+		return $this->getName();
+	}
 }

@@ -20,8 +20,10 @@ class PowerSupplyType extends BaseType
     {
 	    parent::buildForm($builder, $options);
         $builder
-            ->add('efficiency', 'text', array('attr' => array('class' => 'noBreakAfterThis')))
+            ->add('class', 'choice', array('choices' => $this->getClasses(true), 'attr' => array('class' => 'noBreakAfterThis')))
             ->add('totalOutputPower')
+            ->add('efficiency', null, array('attr' => array('class' => 'noBreakAfterThis')))
+            ->add('powerProfile')
         ;
     }
 
@@ -42,4 +44,24 @@ class PowerSupplyType extends BaseType
     {
         return 'debb_managementbundle_powersupplytype';
     }
+
+	/**
+	 * @return array the array with valid classes
+	 */
+	public static function getClasses($inclKeys = false)
+	{
+		$ret = array();
+		foreach(array('PSU', 'UPS', 'PDU', 'MVLVTransformer') as $class)
+		{
+			if($inclKeys)
+			{
+				$ret[$class] = $class;
+			}
+			else
+			{
+				$ret[] = $class;
+			}
+		}
+		return $ret;
+	}
 }
