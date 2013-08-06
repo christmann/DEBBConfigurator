@@ -12,6 +12,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="debbcomplex")
  * @ORM\Entity(repositoryClass="Debb\ManagementBundle\Repository\BaseRepository")
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="typ", type="string")
  */
 class DEBBComplex extends DEBBSimple
 {

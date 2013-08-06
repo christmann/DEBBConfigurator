@@ -5,9 +5,18 @@ namespace Debb\ManagementBundle\Form;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+/**
+ * Class DEBBSimpleType
+ * @package Debb\ManagementBundle\Form
+ * @author Patrick Bußmann <patrick.bussmann@christmann.info>
+ */
 class DEBBSimpleType extends BaseType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+	/**
+	 * @param FormBuilderInterface $builder
+	 * @param array $options
+	 */
+	public function buildForm(FormBuilderInterface $builder, array $options)
     {
 	    parent::buildForm($builder, $options);
         $builder
@@ -22,14 +31,20 @@ class DEBBSimpleType extends BaseType
         ;
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+	/**
+	 * @param OptionsResolverInterface $resolver
+	 */
+	public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Debb\ManagementBundle\Entity\DEBBSimple'
         ));
     }
 
-    public function getName()
+	/**
+	 * @return string
+	 */
+	public function getName()
     {
         return 'debb_managementbundle_debbsimpletype';
     }

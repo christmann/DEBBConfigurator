@@ -24,3 +24,5 @@ debb_management.flowprofile.plural: Flow profiles
 debb_management.flowprofile.singular: Flow profile
 debb_management.sensor.plural: Sensors
 debb_management.sensor.singular: Sensor
+debb_management.baseboard.plural: Baseboards
+debb_management.baseboard.singular: Baseboard

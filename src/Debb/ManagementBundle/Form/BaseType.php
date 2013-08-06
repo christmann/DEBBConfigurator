@@ -9,11 +9,18 @@ use Symfony\Component\Form\FormBuilderInterface;
 /**
  * Class BaseType
  * @package Debb\ManagementBundle\Form
+ * @author Patrick Bußmann <patrick.bussmann@christmann.info>
  */
 class BaseType extends AbstractType
 {
+	/**
+	 * @var \Symfony\Component\DependencyInjection\Container
+	 */
 	protected $container;
 
+	/**
+	 * @param Container $container
+	 */
 	function __construct(Container $container = null)
 	{
 		$this->container = $container;

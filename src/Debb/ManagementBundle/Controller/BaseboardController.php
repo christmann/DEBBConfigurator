@@ -8,8 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  * @author Patrick Bußmann <patrick.bussmann@christmann.info>
- * @Route("/{_locale}/management/storage", requirements={"_locale" = "en|de"}, defaults={"_locale" = "en"})
+ * @Route("/{_locale}/management/baseboard", requirements={"_locale" = "en|de"}, defaults={"_locale" = "en"})
  */
-class StorageController extends BaseController
+class BaseboardController extends BaseController
 {
 }

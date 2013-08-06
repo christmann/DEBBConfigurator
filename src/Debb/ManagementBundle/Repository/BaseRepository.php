@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityRepository;
 /**
  * Class BaseRepository
  * @package Debb\ManagementBundle\Repository
- *
  * @author Patrick Bußmann <patrick.bussmann@christmann.info>
  */
 class BaseRepository extends EntityRepository

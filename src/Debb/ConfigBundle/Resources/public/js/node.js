@@ -155,10 +155,6 @@ function updateComponents() {
 		{
 			$('#debb_configbundle_nodetype_components_' + id + '_powersupply').parent().find('input, select, label, .amountExtras').show();
 		}
-		else if(type == TYPE_STORAGE)
-		{
-			$('#debb_configbundle_nodetype_components_' + id + '_storage').parent().find('input, select, label, .amountExtras').show();
-		}
         else if(type == TYPE_HEATSINK)
         {
             $('#debb_configbundle_nodetype_components_' + id + '_heatsink').parent().find('input, select, label, .amountExtras').show();

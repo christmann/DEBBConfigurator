@@ -24,7 +24,7 @@
     <div class="row-fluid">
         <div class="span6">
             <div class="componentBox" style="border-left: 1px solid #DFDFDF; padding-left: 5px;" data-prototype="{{ form_row(form.components.vars.prototype) | escape }}">
-                {% for component in form.components if component.vars.data.type != component_type('STORAGE') %}
+                {% for component in form.components if component.vars.data.type % 2 == 0 %}
                     <div class="component">
                         {{ form_widget(component) }}
                         <div class="componentExtras">
@@ -41,7 +41,7 @@
         </div>
         <div class="span6">
             <div class="componentBoxHdds">
-                {% for component in form.components if component.vars.data.type == component_type('STORAGE') %}
+                {% for component in form.components if component.vars.data.type % 2 == 1 %}
                     <div class="component">
                         {{ form_widget(component) }}
                         <div class="componentExtras">

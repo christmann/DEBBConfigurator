@@ -6,9 +6,18 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+/**
+ * Class SensorType
+ * @package Debb\ManagementBundle\Form
+ * @author Patrick Bußmann <patrick.bussmann@christmann.info>
+ */
 class SensorType extends BaseType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+	/**
+	 * @param FormBuilderInterface $builder
+	 * @param array $options
+	 */
+	public function buildForm(FormBuilderInterface $builder, array $options)
     {
 	    parent::buildForm($builder, $options);
         $builder
@@ -22,14 +31,20 @@ class SensorType extends BaseType
         ;
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+	/**
+	 * @param OptionsResolverInterface $resolver
+	 */
+	public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Debb\ManagementBundle\Entity\Sensor'
         ));
     }
 
-    public function getName()
+	/**
+	 * @return string
+	 */
+	public function getName()
     {
         return 'debb_managementbundle_sensortype';
     }

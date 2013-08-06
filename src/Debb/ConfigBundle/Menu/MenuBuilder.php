@@ -13,11 +13,11 @@ use Symfony\Bundle\FrameworkBundle\Translation\Translator;
  */
 class MenuBuilder
 {
-
     /**
      * @var \Knp\Menu\FactoryInterface
      */
     private $factory;
+
     /**
      * @var \Symfony\Bundle\FrameworkBundle\Translation\Translator
      */
@@ -52,6 +52,7 @@ class MenuBuilder
 			'attributes' => array('class' => 'zero first current')
 		));
 		$management->addChild($this->translateIt('debb_management.processor.plural', array(), 'crud'), array('route' => 'debb_management_processor_index'));
+		$management->addChild($this->translateIt('debb_management.baseboard.plural', array(), 'crud'), array('route' => 'debb_management_baseboard_index'));
 		$management->addChild($this->translateIt('debb_management.coolingdevice.plural', array(), 'crud'), array('route' => 'debb_management_coolingdevice_index'));
 		$management->addChild($this->translateIt('debb_management.memory.plural', array(), 'crud'), array('route' => 'debb_management_memory_index'));
 		$management->addChild($this->translateIt('debb_management.powersupply.plural', array(), 'crud'), array('route' => 'debb_management_powersupply_index'));

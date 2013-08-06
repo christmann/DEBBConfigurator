@@ -6,9 +6,18 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+/**
+ * Class PStateType
+ * @package Debb\ManagementBundle\Form
+ * @author Patrick Bußmann <patrick.bussmann@christmann.info>
+ */
 class PStateType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+	/**
+	 * @param FormBuilderInterface $builder
+	 * @param array $options
+	 */
+	public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('state')
@@ -19,14 +28,20 @@ class PStateType extends AbstractType
         ;
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+	/**
+	 * @param OptionsResolverInterface $resolver
+	 */
+	public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Debb\ManagementBundle\Entity\PState'
         ));
     }
 
-    public function getName()
+	/**
+	 * @return string
+	 */
+	public function getName()
     {
         return 'debb_managementbundle_pstatetype';
     }
