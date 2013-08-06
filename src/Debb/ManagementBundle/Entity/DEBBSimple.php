@@ -30,9 +30,9 @@ class DEBBSimple extends Base
     private $transform;
 
     /**
-     * @var \Debb\ManagementBundle\Entity\Reference[]
+     * @var \Debb\ManagementBundle\Entity\File[]
      *
-     * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\Reference", mappedBy="debbSimple", cascade={"all"}, orphanRemoval=true)
+     * @ORM\ManyToMany(targetEntity="Debb\ManagementBundle\Entity\File", cascade={"all"}, orphanRemoval=true)
      */
     private $references;
 
@@ -50,18 +50,10 @@ class DEBBSimple extends Base
 		}
 		foreach($this->getReferences() as $reference)
 		{
-			$array[] = array(array('Reference' => $reference->getDebbXmlArray()));
+			$array[] = array(array('Reference' => array('Type' => $reference->getType(), 'Location' => $reference->getFullPath())));
 		}
 		return $array;
 	}
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->references = new \Doctrine\Common\Collections\ArrayCollection();
-    }
     
     /**
      * Set transform
@@ -85,17 +77,23 @@ class DEBBSimple extends Base
     {
         return $this->transform;
     }
-
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->references = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
     /**
      * Add references
      *
-     * @param \Debb\ManagementBundle\Entity\Reference $references
+     * @param \Debb\ManagementBundle\Entity\File $references
      * @return DEBBSimple
      */
-    public function addReference(\Debb\ManagementBundle\Entity\Reference $references)
+    public function addReference(\Debb\ManagementBundle\Entity\File $references)
     {
         $this->references[] = $references;
-	    $references->setDebbSimple($this);
     
         return $this;
     }
@@ -103,21 +101,20 @@ class DEBBSimple extends Base
     /**
      * Remove references
      *
-     * @param \Debb\ManagementBundle\Entity\Reference $references
+     * @param \Debb\ManagementBundle\Entity\File $references
      */
-    public function removeReference(\Debb\ManagementBundle\Entity\Reference $references)
+    public function removeReference($reference)
     {
-	    $references->setDebbSimple();
-        $this->references->removeElement($references);
+        $this->references->removeElement($reference);
     }
 
     /**
      * Get references
      *
-     * @return \Debb\ManagementBundle\Entity\Reference[]
+     * @return \Debb\ManagementBundle\Entity\File[]
      */
     public function getReferences()
     {
-        return $this->references;
+        return $this->references->getValues();
     }
 }
