@@ -286,10 +286,19 @@ class Chassis extends Dimensions
     /**
      * Get typspecification
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Debb\ManagementBundle\Entity\ChassisTypSpecification[]
      */
-    public function getTypspecification()
+    public function getTypspecification($asArray = false)
     {
+	    if($asArray)
+	    {
+		    $array = array();
+		    foreach($this->getTypspecification(false) as $typSpec)
+		    {
+			    $array[] = $typSpec->asArray();
+		    }
+		    return $array;
+	    }
         return $this->typspecification;
     }
 }

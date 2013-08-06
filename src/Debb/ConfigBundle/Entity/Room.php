@@ -225,7 +225,7 @@ class Room extends Dimensions
 		{
 			if($rackToRoom->getRack() != null)
 			{
-				$childrens[] = $rackToRoom->getRack();
+				$childrens[] = array($rackToRoom->getRack(), $rackToRoom);
 			}
 		}
 		return $childrens;

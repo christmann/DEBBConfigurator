@@ -9,7 +9,7 @@
 			<option value="{{ var.value }}" slotsx="{{ var.data.slotsX | default(0) }}"
 					slotsy="{{ var.data.slotsY | default(0) }}"{% if value == var.value %} selected="selected"{% endif %}
 					image="{% if var.data.image is not null %}{{ asset(var.data.image.getFullPath) }}{% endif %}"
-					typspecs="{% if var.data.typspecification is not null %}{{ var.data.typspecification | json_encode | e }}{% endif %}">{{ var.label }}</option>
+					typspecs="{% if var.data.typspecification is not null %}{{ var.data.getTypspecification(true) | raw | json_encode | e }}{% endif %}">{{ var.label }}</option>
 		{% endfor %}
 	</select>
 {% endblock %}
@@ -48,6 +48,8 @@
             {{ form_row(form.label) }}
             {{ form_row(form.hostname) }}
             {{ form_row(form.draft) }}
+            {{ form_row(form.type) }}
+            {{ form_row(form.maxPower) }}
 			{% do form.sizeX.setRendered %}{% do form.sizeY.setRendered %}{% do form.sizeZ.setRendered %}
 			{% do form.spaceLeft.setRendered %}{% do form.spaceRight.setRendered %}{% do form.spaceTop.setRendered %}{% do form.spaceBottom.setRendered %}{% do form.spaceFront.setRendered %}{% do form.spaceBehind.setRendered %}
 			{% do form.nodes.setRendered %}

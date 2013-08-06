@@ -192,4 +192,20 @@ class ChassisTypSpecification extends Connector
     {
         return $this->typ;
     }
+
+	/**
+	 * Convert this ChassisTypSpecification into (json) array
+	 *
+	 * @param bool $json should the return value be a array or a json string
+	 * @return array|string the ChassisTypSpecification as json string or as array
+	 */
+	public function asArray($json = false)
+	{
+		$array = array(
+			'posX' => $this->getPosX(),
+			'posY' => $this->getPosY(),
+			'typ' => $this->getTyp()
+		);
+		return $json ? json_encode($array) : $array;
+	}
 }

@@ -237,7 +237,7 @@ class NodeGroup extends Dimensions
 		{
 			if($nodeToNodeGroup->getNode() != null)
 			{
-				$childrens[] = $nodeToNodeGroup->getNode();
+				$childrens[] = array($nodeToNodeGroup->getNode(), $nodeToNodeGroup);
 			}
 		}
 		return $childrens;

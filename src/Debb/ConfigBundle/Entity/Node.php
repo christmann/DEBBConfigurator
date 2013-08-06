@@ -159,7 +159,7 @@ class Node extends Dimensions
 		$firstAllowedWasInserted = false;
 		foreach ($this->getComponents() as $component)
 		{
-			if ($component->getAmount() >= 1 && $component->getType() != Component::TYPE_NOTHING && $component->getType() != Component::TYPE_COOLING_DEVICE && $component->getType() != Component::TYPE_MAINBOARD)
+			if ($component->getAmount() >= 1 && $component->getType() != Component::TYPE_NOTHING && $component->getType() != Component::TYPE_COOLING_DEVICE)
 			{
 				if(!in_array($component->getType(), array(Component::TYPE_PROCESSOR, Component::TYPE_MEMORY)) && !$firstAllowedWasInserted)
 				{
@@ -244,7 +244,7 @@ class Node extends Dimensions
 			{
 				for($x = 0; $x < $component->getAmount(); $x++)
 				{
-					$childrens[] = $component->getActive();
+					$childrens[] = array($component->getActive(), $component);
 				}
 			}
 		}

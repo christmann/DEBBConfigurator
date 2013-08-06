@@ -210,7 +210,7 @@ class Rack extends Dimensions
 		{
 			if($nodeGroupToRack->getNodegroup() != null)
 			{
-				$childrens[] = $nodeGroupToRack->getNodegroup();
+				$childrens[] = array($nodeGroupToRack->getNodegroup(), $nodeGroupToRack);
 			}
 		}
 		return $childrens;

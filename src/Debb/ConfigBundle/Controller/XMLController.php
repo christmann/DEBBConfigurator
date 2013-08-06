@@ -11,6 +11,7 @@ use Debb\ManagementBundle\Controller\BaseController;
 use Debb\ManagementBundle\Entity\File;
 use Debb\ManagementBundle\Entity\NodegroupToRack;
 use Debb\ManagementBundle\Entity\RackToRoom;
+use Imagine\Filter\TransformationTest;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
@@ -105,7 +106,7 @@ abstract class XMLController extends BaseController
 	 * @return string real class name without namespace
 	 * @author http://www.php.net/manual/de/function.get-class.php#112159 <emmanuel.antico@gmail.com>
 	 */
-	public function get_real_class($obj) {
+	public static function get_real_class($obj) {
 		$classname = get_class($obj);
 
 		if (preg_match('@\\\\([\w]+)$@', $classname, $matches)) {
@@ -124,11 +125,17 @@ abstract class XMLController extends BaseController
 			</ProductInstance>
 	 */
 
+
 	/**
 	 * @param mixed $entity
 	 */
 	public function addEntityToPLMXML(\SimpleXMLElement & $xml, $entity)
 	{
+		if(is_array($entity))
+		{
+			$parent = $entity[1];
+			$entity = $entity[0];
+		}
 		$real_class_name = $this->get_real_class($entity);
 
 		$childIds = array();
