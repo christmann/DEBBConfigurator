@@ -28,6 +28,7 @@ class NodeGroup extends Dimensions
     /**
      * Chassis
      * @ORM\ManyToOne(targetEntity="Debb\ManagementBundle\Entity\Chassis", inversedBy="nodeGroups")
+     * @ORM\JoinColumn(name="draft_id", referencedColumnName="id", onDelete="SET NULL")
      *
      * @var Chassis
      */
