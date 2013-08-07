@@ -28,7 +28,7 @@ $(function () {
         $('#node-chooser').change();
         $('.adopt').show();
         $('.adopt').attr('field', field);
-        var typspec = getFieldTyp($(this).parents('.node').find('input[id$="_field"]:first').val());
+        var typspec = $(this).parents('.node[specification]').attr('specification');
         $('#nodegroupType').html(' (' + Translator.get('Type') + ' ' + typspec + ')');
         $('#node-chooser option').each(function () {
             if (typeof($(this).attr('nodetyp')) != 'undefined') {
@@ -44,26 +44,38 @@ $(function () {
         e.preventDefault();
     });
     $('#debb_configbundle_nodegrouptype_draft').change(function () {
-        var obj = $(this).find('option:selected:first');
+        var obj = $(this).find('option:selected:first[typspecs]');
         if (obj.length > 0) {
             $('#nodegroup').css('background-image', 'url("' + obj.attr('image') + '")');
-            $('#nodegroup').width(parseInt(obj.attr('slotsx')) * 141);
-            $('#nodegroup').height(parseInt(obj.attr('slotsy')) * 89);
+            $('#nodegroup').width(parseInt(obj.attr('sizex')));
+            $('#nodegroup').height(parseInt(obj.attr('sizey')));
             $('#content').width(parseInt($('#nodegroup').width()) + 559);
-            var nodes = parseInt(obj.attr('slotsx')) * parseInt(obj.attr('slotsy')),
+
+            var typspecs = $.parseJSON(obj.attr('typspecs')),
                 nodeArr = $('#nodegroup').find('.node');
-            if (nodeArr.length > nodes) {
-                for (var x = nodes; x < nodeArr.length; x++) {
+
+            if (nodeArr.length > typspecs.length) {
+                for (var x = typspecs.length; x < nodeArr.length; x++) {
                     $(nodeArr[x]).remove();
                 }
             }
             else {
-                for (var x = nodeArr.length; x < nodes; x++) {
+                for (var x = nodeArr.length; x < typspecs.length; x++) {
                     var id = getFreeId('debb_configbundle_nodegrouptype_nodes_', x);
                     $('#nodegroup').append($('#nodegroup').attr('data-prototype').replace(/__name__/g, getExactId(id)));
                     $('#' + id + '_nodeGroup').val(nodeGroupId);
                 }
             }
+
+            var field = 0;
+            nodeArr = $('#nodegroup').find('.node');
+
+            nodeArr.each(function()
+            {
+                $(this).css('position', 'absolute').css('left', typspecs[field].posX).css('bottom', typspecs[field].posY).attr('specification', typspecs[field].typ);
+                $(this).find('[id$="_field"]').val(++field);
+            });
+
             updateNodes();
         }
     });
@@ -112,9 +124,4 @@ function getFreeId(name, id) {
         return getFreeId(name, parseInt(id) + 1);
     }
     return name + id;
-}
-
-function getFieldTyp(field) {
-    var currentSpecifications = $('#debb_configbundle_nodegrouptype_draft option:selected').length > 0 && typeof($('#debb_configbundle_nodegrouptype_draft option:selected').attr('typspecs')) != 'undefined' ? $.parseJSON($('#debb_configbundle_nodegrouptype_draft option:selected').attr('typspecs')) : [];
-    return currentSpecifications != null && currentSpecifications.length > field && field >= 0 ? currentSpecifications[field] : '';
 }

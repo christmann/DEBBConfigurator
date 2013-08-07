@@ -301,4 +301,28 @@ class Chassis extends Dimensions
 	    }
         return $this->typspecification;
     }
+
+	/**
+	 * @inheritdoc
+	 */
+	public function getSizeX()
+	{
+		if(parent::getSizeX() < 10)
+		{
+			return 900;
+		}
+		return parent::getSizeX();
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function getSizeY()
+	{
+		if(parent::getSizeY() < 10)
+		{
+			return 600;
+		}
+		return parent::getSizeY();
+	}
 }

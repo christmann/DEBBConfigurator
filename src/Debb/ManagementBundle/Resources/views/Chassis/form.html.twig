@@ -31,8 +31,8 @@
     </script>
 {% endblock %}
 
-{% if form.vars.data.sizeX|default(0) < 1 %}{% set chassisSizeX = 900 %}{% else %}{% set chassisSizeX = form.vars.data.sizeX %}{% endif %}
-{% if form.vars.data.sizeY|default(0) < 1 %}{% set chassisSizeY = 600 %}{% else %}{% set chassisSizeY = form.vars.data.sizeY %}{% endif %}
+{% set chassisSizeX = form.vars.data.sizeX %}
+{% set chassisSizeY = form.vars.data.sizeY %}
 
 {% block form %}
 	{% do form.typspecification.setRendered() %}

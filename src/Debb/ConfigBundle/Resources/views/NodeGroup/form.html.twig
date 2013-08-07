@@ -6,8 +6,8 @@
 {% block _debb_configbundle_nodegrouptype_draft_widget %}
 	<select {% if required %}required="required" {% endif %}name="{{ full_name }}" id="{{ id }}">
 		{% for var in choices %}
-			<option value="{{ var.value }}" slotsx="{{ var.data.slotsX | default(0) }}"
-					slotsy="{{ var.data.slotsY | default(0) }}"{% if value == var.value %} selected="selected"{% endif %}
+			<option value="{{ var.value }}" sizex="{{ var.data.sizeX | default(0) }}"
+					sizey="{{ var.data.sizeY | default(0) }}"{% if value == var.value %} selected="selected"{% endif %}
 					image="{% if var.data.image is not null %}{{ asset(var.data.image.getFullPath) }}{% endif %}"
 					typspecs="{% if var.data.typspecification is not null %}{{ var.data.getTypspecification(true) | raw | json_encode | e }}{% endif %}">{{ var.label }}</option>
 		{% endfor %}
