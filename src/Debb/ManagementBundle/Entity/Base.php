@@ -278,7 +278,7 @@ class Base
 					self::array_to_xml($value, $element);
 				}
 			}
-			else
+			else if(!is_object($value))
 			{
 				$element->addChild($key, htmlentities($value));
 			}

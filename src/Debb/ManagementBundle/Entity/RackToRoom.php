@@ -45,6 +45,13 @@ class RackToRoom extends Connector
 	private $posY;
 
 	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="posz", type="integer")
+	 */
+	private $posZ;
+
+	/**
 	 * @var float
 	 *
 	 * @ORM\Column(name="rotation", type="float", nullable=true)
@@ -151,6 +158,28 @@ class RackToRoom extends Connector
 		return $this->posY;
 	}
 
+	/**
+	 * Set posZ
+	 *
+	 * @param integer $posZ
+	 * @return RackToRoom
+	 */
+	public function setPosZ($posZ)
+	{
+		$this->posZ = $posZ;
+
+		return $this;
+	}
+
+	/**
+	 * Get posZ
+	 *
+	 * @return integer
+	 */
+	public function getPosZ()
+	{
+		return $this->posZ;
+	}
 
     /**
      * Set rotation

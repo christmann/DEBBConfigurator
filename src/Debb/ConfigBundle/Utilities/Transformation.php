@@ -22,42 +22,52 @@ class Transformation
 	 *
 	 * @return string
 	 */
-	public function generateTransform($children, $connector)
+	public static function generateTransform($children, $connector)
 	{
 		$className = XMLController::get_real_class($children);
 
 		if(
-				!method_exists($connector, 'getPosX')
-			||
-				!method_exists($connector, 'getPosY')
-			||
-				!method_exists($connector, 'getPosZ')
-				||
-				!method_exists($connector, 'getRotation')
+				(
+						!is_callable(array($connector, 'getPosX'))
+					||
+						!is_callable(array($connector, 'getPosY'))
+					||
+						!is_callable(array($connector, 'getPosZ'))
+					||
+						!is_callable(array($connector, 'getRotation'))
+				)
+			&&
+				(
+						$className == 'Rack'
+					||
+						$className == 'Node'
+				)
 		  )
 		{
-			return $this->generate_transform();
+			var_dump(get_class($connector));
+			return self::generate_transform();
 		}
 
-		if($className == 'Room')
+		if($className == 'Rack' || $className == 'Node')
 		{
-			$transform = $this->generate_transform();
-		}
-		else if($className == 'Rack' || $className == 'Node')
-		{
-			$posX = $connector->getPosX();
-			$posY = $connector->getPosY();
-			$posZ = $connector->getPosZ();
+			$posX = $connector->getPosX() / ($className == 'Rack' ? 100 : 10000);
+			$posY = $connector->getPosY() / ($className == 'Rack' ? 100 : 10000);
+			$posZ = $connector->getPosZ() / ($className == 'Rack' ? 100 : 10000);
 			$rotation = $connector->getRotation();
-			$transform = generate_transform($posX, $posY, $posZ, $rotation);
+			$transform = self::generate_transform($posX, $posY, $posZ, $rotation);
 		}
-		else if($className == 'NodeGroup')
+		else if($className == 'NodeGroup' && is_callable(array($connector, 'getRack')))
 		{
 			$ru = 0.04445; // 1 Rack Unit = 44.45mm
-			$posx = ($nodegrouptorack->rack_id->spaceLeft);
-			$posy = ($nodegrouptorack->rack_id->spaceFront);
-			$posz = ($nodegrouptorack->rack_id->spaceBottom) + (nodegrouptorack -> field) * $ru;
-			$transform = generate_transform($posx, $posy, $posz);
+			$posX = $connector->getRack()->getSpaceLeft();
+			$posY = $connector->getRack()->getSpaceFront();
+			$posZ = $connector->getRack()->getSpaceBottom() + $connector->getField();
+			$posZ *= $ru;
+			$transform = self::generate_transform($posX, $posY, $posZ);
+		}
+		else
+		{
+			$transform = self::generate_transform();
 		}
 
 		return $transform;
@@ -73,7 +83,7 @@ class Transformation
 	 *
 	 * @return string the generated transformation
 	 */
-	public function generate_transform($x = 0, $y = 0, $z = 0, $rotation = 0)
+	public static function generate_transform($x = 0, $y = 0, $z = 0, $rotation = 0)
 	{
 		$matrix = array();
 

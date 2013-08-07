@@ -76,4 +76,33 @@ class NodeToNodegroup extends Connector
 		return $this->nodeGroup;
 	}
 
+	/**
+	 * Getter for undefined functions
+	 *
+	 * @param $name the name of function
+	 * @param $arguments the arguments of function
+	 *
+	 * @return null|mixed the return value of the function
+	 */
+	function __call($name, $arguments)
+	{
+		/**
+		 * getPosX, getPosY, getPosZ and getRotation
+		 */
+		if(preg_match('#^(getPos(X|Y|Z)|getRotation)$#i', $name))
+		{
+			$draft = $this->getNodeGroup()->getDraft();
+			if($draft)
+			{
+				$typSpecs = $draft->getTypspecification(false);
+				/** @var $typSpec ChassisTypSpecification */
+				$typSpec = array_key_exists($this->getField(), $typSpecs) ? $typSpecs[$this->getField()] : null;
+				if($typSpec && method_exists($typSpec, $name))
+				{
+					return $typSpec->$name();
+				}
+			}
+		}
+		return null;
+	}
 }

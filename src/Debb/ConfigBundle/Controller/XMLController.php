@@ -7,6 +7,7 @@ use Debb\ConfigBundle\Entity\Node;
 use Debb\ConfigBundle\Entity\NodeGroup;
 use Debb\ConfigBundle\Entity\Rack;
 use Debb\ConfigBundle\Entity\Room;
+use Debb\ConfigBundle\Utilities\Transformation;
 use Debb\ManagementBundle\Controller\BaseController;
 use Debb\ManagementBundle\Entity\File;
 use Debb\ManagementBundle\Entity\NodegroupToRack;
@@ -178,7 +179,8 @@ abstract class XMLController extends BaseController
 			'inst' . sprintf('%02d', $entity->getId()) . '_1',                                                          // $id
 			'Def' . sprintf('%s%02d', $real_class_name, $entity->getId()),                                              // $name
 			$revisionViewAttr->id,                                                                                      // $partRef
-			$entity->getHostname()                                                                                      // $hostname
+			$entity->getHostname(),                                                                                     // $hostname
+			Transformation::generateTransform($entity, $parent)                                                         // $transform
 		);
 
 		return $instance[1];
