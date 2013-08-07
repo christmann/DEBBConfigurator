@@ -37,7 +37,7 @@ class AddUserToEntityListener
 		{
 			$entity = $args->getEntity();
 			$entityManager = $args->getEntityManager();
-			if($entity instanceof Base && method_exists($entity, 'setUser') && method_exists($entity, 'getUser') && $entity->getUser() === null)
+			if(method_exists($entity, 'setUser') && method_exists($entity, 'getUser') && $entity->getUser() === null)
 			{
 				$entity->setUser($user);
 			}

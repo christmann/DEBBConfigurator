@@ -44,7 +44,8 @@ class ChassisController extends BaseController
 		return $this->render($this->resolveTemplate(__METHOD__), array(
 			'form' => $form->createView(),
 			'item' => $item,
-			'nodetypspecs' => $this->getManager()->createQuery('SELECT node.type FROM DebbConfigBundle:Node node WHERE node.type IS NOT NULL GROUP BY node.type')->execute(),
+			'nodetypspecs' => $this->getManager()->createQuery('SELECT node.type FROM DebbConfigBundle:Node node WHERE node.type IS NOT NULL AND node.user = :user GROUP BY node.type')
+								->setParameter('user', $this->getUser())->execute(),
             'duplicated' => $duplicated
 		));
 	}

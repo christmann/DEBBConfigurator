@@ -30,6 +30,13 @@
 <div id="wrapper" class="navbar">
 	<div id="main-menu">
 		<div id="app-logo"></div>
+		<div class="pull-right" style="padding-right: 10px; padding-top: 7px;">
+			{%- if app.user and is_granted('IS_AUTHENTICATED_REMEMBERED') -%}
+				<a href="{{- path('fos_user_security_logout') -}}">{{- 'layout.logout'|trans({}, 'FOSUserBundle') -}}</a>
+			{%- else -%}
+				<a href="{{- path('fos_user_security_login') -}}">{{- 'layout.login'|trans({}, 'FOSUserBundle') -}}</a>
+			{%- endif -%}
+		</div>
 	</div>
 
 	{% if showTitle is defined %}

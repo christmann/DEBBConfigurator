@@ -11,7 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  * @package Debb\ManagementBundle\Form
  * @author Patrick Bußmann <patrick.bussmann@christmann.info>
  */
-class ChassisTypSpecificationType extends AbstractType
+class ChassisTypSpecificationType extends BaseType
 {
 	/**
 	 * @param FormBuilderInterface $builder

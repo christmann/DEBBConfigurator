@@ -2,6 +2,8 @@
 
 namespace Debb\ManagementBundle\Form;
 
+use CoolEmAll\UserBundle\Entity\User;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,11 +21,30 @@ class BaseType extends AbstractType
 	protected $container;
 
 	/**
+	 * The query builder function for the user specifications
+	 */
+	protected $userQueryBuilder;
+
+	/**
 	 * @param Container $container
 	 */
 	function __construct(Container $container = null)
 	{
 		$this->container = $container;
+		$this->userQueryBuilder = function(EntityRepository $er)
+		{
+			$user = $this->container->get('security.context')->getToken()->getUser();
+			$qb = $er->createQueryBuilder('p');
+			if($user instanceof User)
+			{
+				$qb->where('p.user = :user')->setParameter('user', $user);
+			}
+			else
+			{
+				$qb->where('p.user IS NULL');
+			}
+			return $qb;
+		};
 	}
 
 	/**

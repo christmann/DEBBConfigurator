@@ -26,7 +26,7 @@ class NodeType extends BaseType
             ->add('sizeY', null, array('required' => false, 'label' => 'SizeY'))
             ->add('sizeZ', null, array('required' => false, 'label' => 'SizeZ'))
             ->add('components', 'collection', array(
-				'type' => new ComponentType(),
+				'type' => new ComponentType($this->container),
 				'allow_add' => true,
 				'allow_delete' => true,
 				'by_reference' => false,

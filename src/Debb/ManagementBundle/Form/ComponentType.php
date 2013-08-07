@@ -11,7 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  * @package Debb\ManagementBundle\Form
  * @author Patrick Bußmann <patrick.bussmann@christmann.info>
  */
-class ComponentType extends AbstractType
+class ComponentType extends BaseType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -22,12 +22,12 @@ class ComponentType extends AbstractType
 		$builder
 			->add('type', null, array('required' => true))
 			->add('node', null, array('required' => false))
-			->add('processor', null, array('required' => false))
-			->add('baseboard', null, array('required' => false))
-			->add('coolingDevice', null, array('required' => false))
-			->add('memory', null, array('required' => false))
-			->add('powersupply', null, array('required' => false))
-			->add('heatsink', null, array('required' => false))
+			->add('processor', null, array('required' => false, 'query_builder' => $this->userQueryBuilder))
+			->add('baseboard', null, array('required' => false, 'query_builder' => $this->userQueryBuilder))
+			->add('coolingDevice', null, array('required' => false, 'query_builder' => $this->userQueryBuilder))
+			->add('memory', null, array('required' => false, 'query_builder' => $this->userQueryBuilder))
+			->add('powersupply', null, array('required' => false, 'query_builder' => $this->userQueryBuilder))
+			->add('heatsink', null, array('required' => false, 'query_builder' => $this->userQueryBuilder))
 			->add('amount', 'choice', array('choices' => $this->getAmountChoices(), 'required' => false,
 				'empty_value' => false, 'attr' => array('style' => 'width: 90px;')))
 		;

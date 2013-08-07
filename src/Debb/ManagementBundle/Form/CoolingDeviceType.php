@@ -3,6 +3,8 @@
 namespace Debb\ManagementBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
@@ -24,12 +26,12 @@ class CoolingDeviceType extends BaseType
             ->add('maxCoolingCapacity', null, array('required' => false))
             ->add('maxAirThroughput', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis')))
             ->add('maxWaterThroughput', null, array('required' => false))
-            ->add('airThroughputProfile', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis')))
-            ->add('waterThroughputProfile', null, array('required' => false))
+            ->add('airThroughputProfile', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis'), 'query_builder' => $this->userQueryBuilder))
+            ->add('waterThroughputProfile', null, array('required' => false, 'query_builder' => $this->userQueryBuilder))
         ;
     }
 
-    /**
+	/**
      * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
