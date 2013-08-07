@@ -49,7 +49,7 @@ $(function () {
             $('#nodegroup').css('background-image', 'url("' + obj.attr('image') + '")');
             $('#nodegroup').width(parseInt(obj.attr('sizex')));
             $('#nodegroup').height(parseInt(obj.attr('sizey')));
-            $('#content').width(parseInt($('#nodegroup').width()) + 559);
+            $('#content').width(parseInt($('#nodegroup').width()) + 430);
 
             var typspecs = $.parseJSON(obj.attr('typspecs')),
                 nodeArr = $('#nodegroup').find('.node');
