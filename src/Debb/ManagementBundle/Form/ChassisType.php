@@ -79,16 +79,6 @@ class ChassisType extends BaseType
         }
         $builder
             ->add(
-                'slotsX',
-                'choice',
-                array(
-                    'choices' => $this->getSlotsAmount(),
-                    'empty_value' => false,
-                    'attr' => array('class' => 'noBreakAfterThis'),
-                )
-            )
-            ->add('slotsY', 'choice', array('choices' => $this->getSlotsAmount(), 'empty_value' => false))
-            ->add(
                 'heSize',
                 'choice',
                 array(

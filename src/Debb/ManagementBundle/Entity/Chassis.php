@@ -26,20 +26,6 @@ class Chassis extends Dimensions
     /**
      * @var integer
      *
-     * @ORM\Column(name="slots_x", type="integer")
-     */
-    private $slotsX;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="slots_y", type="integer")
-     */
-    private $slotsY;
-
-    /**
-     * @var integer
-     *
      * @ORM\Column(name="he_size", type="integer")
      */
     private $heSize;
@@ -99,54 +85,6 @@ class Chassis extends Dimensions
     public function getImage()
     {
         return $this->image;
-    }
-
-    /**
-     * Set slotsX
-     *
-     * @param integer $slotsX
-     *
-     * @return Chassis
-     */
-    public function setSlotsX($slotsX)
-    {
-        $this->slotsX = $slotsX;
-
-        return $this;
-    }
-
-    /**
-     * Get slotsX
-     *
-     * @return integer
-     */
-    public function getSlotsX()
-    {
-        return $this->slotsX;
-    }
-
-    /**
-     * Set slotsY
-     *
-     * @param integer $slotsY
-     *
-     * @return Chassis
-     */
-    public function setSlotsY($slotsY)
-    {
-        $this->slotsY = $slotsY;
-
-        return $this;
-    }
-
-    /**
-     * Get slotsY
-     *
-     * @return integer
-     */
-    public function getSlotsY()
-    {
-        return $this->slotsY;
     }
 
     /**

@@ -443,6 +443,8 @@ abstract class XMLController extends BaseController
 			$racks = array(); // @ignore
 			$rooms = array(); // @ignore
 
+			set_time_limit(0); // room with 10 racks with 49 node groups with 18 nodes needs circa ... minutes (windows xampp)
+
 			if($item instanceof Room)
 			{
 				$rooms[$item->getId()] = $item;

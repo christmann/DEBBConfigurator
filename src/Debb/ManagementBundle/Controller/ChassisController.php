@@ -2,6 +2,7 @@
 
 namespace Debb\ManagementBundle\Controller;
 
+use Debb\ConfigBundle\Controller\NodeController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use \Debb\ConfigBundle\Entity\Node;
@@ -41,11 +42,13 @@ class ChassisController extends BaseController
 			}
 		}
 
+		$nodeController = new NodeController();
+		$nodeController->setContainer($this->getContainer());
+
 		return $this->render($this->resolveTemplate(__METHOD__), array(
 			'form' => $form->createView(),
 			'item' => $item,
-			'nodetypspecs' => $this->getManager()->createQuery('SELECT node.type FROM DebbConfigBundle:Node node WHERE node.type IS NOT NULL AND node.user = :user GROUP BY node.type')
-								->setParameter('user', $this->getUser())->execute(),
+			'nodetypspecs' => $nodeController->getNodeTypesQuery()->execute(),
             'duplicated' => $duplicated
 		));
 	}

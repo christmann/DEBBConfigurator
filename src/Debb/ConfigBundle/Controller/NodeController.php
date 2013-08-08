@@ -2,6 +2,7 @@
 
 namespace Debb\ConfigBundle\Controller;
 
+use CoolEmAll\UserBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
@@ -94,10 +95,25 @@ class NodeController extends XMLController
 
 		return $this->render($this->resolveTemplate(__METHOD__), array(
 				'form' => $form->createView(),
-				'nodeTypes' => $this->getManager()->createQuery('SELECT node.type FROM DebbConfigBundle:Node node WHERE node.type IS NOT NULL AND node.user = :user GROUP BY node.type')
-								->setParameter('user', $this->getUser())->execute(),
+				'nodeTypes' => $this->getNodeTypesQuery()->execute(),
 				'item' => $item
 			));
 	}
 
+	/**
+	 * Get the node types query
+	 *
+	 * @return \Doctrine\ORM\Query
+	 */
+	public function getNodeTypesQuery()
+	{
+		$nodeTypesQuery = $this->getManager()->createQuery('SELECT node.type FROM DebbConfigBundle:Node node WHERE node.type IS NOT NULL AND node.user '
+						  . ($this->getUser() instanceof User ? '= :user' : 'IS NULL') . ' GROUP BY node.type');
+		if($this->getUser() instanceof User)
+		{
+			$nodeTypesQuery->setParameter('user', $this->getUser());
+		}
+
+		return $nodeTypesQuery;
+	}
 }

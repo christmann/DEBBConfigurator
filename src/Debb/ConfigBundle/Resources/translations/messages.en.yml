@@ -104,6 +104,7 @@ new: - New
 add new node type: Add new node type
 Maxtemp: Maximum Temperatur
 Mintemp: Minimale Temperatur
+Max bandwidth: Max bandwidth [bit/s]
 
 # help
 help:

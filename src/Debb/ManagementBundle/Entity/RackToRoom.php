@@ -47,7 +47,7 @@ class RackToRoom extends Connector
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="posz", type="integer")
+	 * @ORM\Column(name="posz", type="integer", nullable=true)
 	 */
 	private $posZ;
 
