@@ -20,8 +20,8 @@ debb_management.heatsink.plural: Heatsinks
 debb_management.heatsink.singular: Heatsink
 debb_management.network.plural: Networks
 debb_management.network.singular: Network
-debb_management.flowprofile.plural: Flow profiles
-debb_management.flowprofile.singular: Flow profile
+debb_management.flowprofile.plural: Profiles
+debb_management.flowprofile.singular: Profile
 debb_management.sensor.plural: Sensors
 debb_management.sensor.singular: Sensor
 debb_management.baseboard.plural: Baseboards
