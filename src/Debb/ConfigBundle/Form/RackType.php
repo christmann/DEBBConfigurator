@@ -21,27 +21,18 @@ class RackType extends BaseType
     {
 	    parent::buildForm($builder, $options);
         $builder
-            ->add('sizeX', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis'), 'label' => 'SizeX'))
+            ->add('sizeX', null, array('required' => false, 'label' => 'SizeX', 'attr' => array('class' => 'noBreakAfterThis')))
             ->add('sizeY', null, array('required' => false, 'label' => 'SizeY'))
-            ->add('sizeZ', null, array('required' => false, 'label' => 'SizeZ'))
-            ->add('spaceTop', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis'), 'label' => 'SpaceTop'))
-            ->add('spaceBottom', null, array('required' => false, 'label' => 'SpaceBottom'))
-            ->add('spaceLeft', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis'), 'label' => 'SpaceLeft'))
-            ->add('spaceRight', null, array('required' => false, 'label' => 'SpaceRight'))
-            ->add('nodegroups', 'collection', array(
-				'type' => new \Debb\ManagementBundle\Form\NodegroupToRackType(),
-				'allow_add' => true,
-				'allow_delete' => true,
-				'by_reference' => false,
-				'required' => false,
-			))
+            ->add('sizeZ', null, array('required' => false, 'label' => 'SizeZ', 'attr' => array('class' => 'noBreakAfterThis')))
 			->add('nodeGroupSize', 'choice', array('choices' => $this->getNodeGroupSizeChoices(), 'required' => false, 'label' => 'RackSize',
-				'empty_value' => false, 'attr' => array('class' => 'updateRackSize noBreakAfterThis')))
-	        ->add(
-		        'frontView',
-		        'choice',
-		        array('choices' => array(0 => 'Top', 1 => 'Front'), 'empty_value' => false, 'label' => 'View')
-	        )
+				'empty_value' => false))
+	        ->add('nodegroups', 'collection', array(
+		        'type' => new \Debb\ManagementBundle\Form\NodegroupToRackType(),
+		        'allow_add' => true,
+		        'allow_delete' => true,
+		        'by_reference' => false,
+		        'required' => false,
+	        ))
         ;
     }
 

@@ -105,12 +105,6 @@ class ChassisType extends BaseType
             )
 	        ->add('sizeX', 'hidden', array('required' => false))
 	        ->add('sizeY', 'hidden', array('required' => false))
-            ->add('spaceLeft', 'hidden', array('required' => false))
-            ->add('spaceTop', 'hidden', array('required' => false))
-            ->add('spaceRight', 'hidden', array('required' => false))
-            ->add('spaceBottom', 'hidden', array('required' => false))
-            ->add('spaceFront', 'hidden', array('required' => false))
-            ->add('spaceBehind', 'hidden', array('required' => false))
 	        ->add('typspecification', 'collection', array(
 		        'type' => new \Debb\ManagementBundle\Form\ChassisTypSpecificationType($this->container),
 		        'allow_add' => true,

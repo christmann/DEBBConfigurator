@@ -65,7 +65,7 @@ Title: Title
 Manufacturer: Manufacturer
 Components: Components
 Model: Model
-Cores: Cores
+Cores: Cores [number]
 Maxfrequency: Max frequency [MHz]
 Image: Image
 Description: Description
@@ -105,6 +105,9 @@ add new node type: Add new node type
 Maxtemp: Maximum Temperatur
 Mintemp: Minimale Temperatur
 Max bandwidth: Max bandwidth [bit/s]
+Voltage: Voltage [V]
+Frequency: Frequency [Watt]
+State: State [number]
 
 # help
 help:

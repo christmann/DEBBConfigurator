@@ -34,13 +34,6 @@ class Rack extends Dimensions
 	private $nodeGroupSize;
 
 	/**
-	 * @var boolean
-	 *
-	 * @ORM\Column(name="frontview", type="boolean", nullable=true)
-	 */
-	private $frontview;
-
-	/**
 	 * Constructor
 	 */
 	public function __construct()
@@ -164,40 +157,6 @@ class Rack extends Dimensions
 			$array['Rack']['hostname'] = $this->getHostname();
 		}
 		return $array;
-	}
-
-	/**
-	 * Set frontview
-	 *
-	 * @param boolean $frontview
-	 *
-	 * @return Chassis
-	 */
-	public function setFrontview($frontview)
-	{
-		$this->frontview = $frontview;
-
-		return $this;
-	}
-
-	/**
-	 * Is frontview?
-	 *
-	 * @return boolean
-	 */
-	public function isFrontView()
-	{
-		return $this->frontview != null && $this->frontview == 1;
-	}
-
-	/**
-	 * Get frontview
-	 *
-	 * @return boolean
-	 */
-	public function getFrontview()
-	{
-		return $this->frontview;
 	}
 
 	/**

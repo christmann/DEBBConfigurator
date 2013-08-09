@@ -55,10 +55,6 @@
 		</div>
 		<div id="rackScale" style="float: left; left: 1px; top: -16px; width: 99px;"><i class="icon-arrow-left"></i> {{ 'Scale' | trans }} 10cm <i class="icon-arrow-right"></i></div>
 		<div class="clear"></div>
-		<div class="nodegroupSpaceBottom" style="text-align: center;">
-			{{ 'SpaceBottom' | trans }}<br />
-			<input id="randinput4" type="number" style="width: {{ spaceInfoWidth }}px;" required="required" value="{{ form.spaceBottom.vars.data | default(0) }}" refto="debb_managementbundle_chassistype_spaceBottom"{{ (form.spaceBottom.vars.disabled ? ' disabled="disabled"' : '') }} />
-		</div>
 	</div>
 {% endblock %}
 
