@@ -21,6 +21,7 @@ class RackType extends BaseType
     {
 	    parent::buildForm($builder, $options);
         $builder
+            ->remove('maxPower')
             ->add('sizeX', null, array('required' => false, 'label' => 'SizeX', 'attr' => array('class' => 'noBreakAfterThis')))
             ->add('sizeY', null, array('required' => false, 'label' => 'SizeY'))
             ->add('sizeZ', null, array('required' => false, 'label' => 'SizeZ', 'attr' => array('class' => 'noBreakAfterThis')))

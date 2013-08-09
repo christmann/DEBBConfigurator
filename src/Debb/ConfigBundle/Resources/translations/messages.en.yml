@@ -73,6 +73,7 @@ Socket: Socket type
 Connections: Connections
 Component: Component
 Max power: Maximum power usage [Watt]
+Power usage: Power usage [Watt]
 Max clock speed: Maximum clock speed [MHz]
 Max cooling capacity: Maximum cooling capacity
 Max air throughput: Max air throughput [m³/h]
