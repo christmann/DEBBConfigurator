@@ -22,11 +22,11 @@ class RackType extends BaseType
 	    parent::buildForm($builder, $options);
         $builder
             ->remove('maxPower')
-            ->add('sizeX', null, array('required' => false, 'label' => 'SizeX', 'attr' => array('class' => 'noBreakAfterThis')))
-            ->add('sizeY', null, array('required' => false, 'label' => 'SizeY'))
-            ->add('sizeZ', null, array('required' => false, 'label' => 'SizeZ', 'attr' => array('class' => 'noBreakAfterThis')))
+            ->add('sizeX', null, array('required' => false, 'label' => 'SizeX'))
+            ->add('sizeY', null, array('required' => false, 'label' => 'SizeY', 'attr' => array('class' => 'noBreakAfterThis')))
+            ->add('sizeZ', null, array('required' => false, 'label' => 'SizeZ'))
 			->add('nodeGroupSize', 'choice', array('choices' => $this->getNodeGroupSizeChoices(), 'required' => false, 'label' => 'RackSize',
-				'empty_value' => false))
+				'empty_value' => false, 'attr' => array('class' => 'updateRackSize')))
 	        ->add('nodegroups', 'collection', array(
 		        'type' => new \Debb\ManagementBundle\Form\NodegroupToRackType(),
 		        'allow_add' => true,
