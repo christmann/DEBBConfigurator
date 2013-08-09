@@ -1,0 +1,20 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+{% block title %}{{ 'profile' | trans }}{% endblock %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+	<div class="row-fluid">
+		<div class="span2">{{ 'profile.show.username'|trans }}:</div>
+		<div class="span10">{{ user.username }}</div>
+	</div>
+
+	<div class="row-fluid">
+		<div class="span2">{{ 'profile.show.email'|trans }}:</div>
+		<div class="span10">{{ user.email }}</div>
+	</div>
+{% endblock %}
+
+{% block buttonbar %}
+	<a class="blue blue-button" href="{{ path('fos_user_profile_edit') }}">{{ 'profile.edit.submit'|trans }}</a>
+{% endblock %}

@@ -4,3 +4,9 @@ services:
         arguments: ["@service_container"]
         tags:
             - { name: doctrine.event_listener, event: prePersist }
+
+    coolemall_user.profile.form.type:
+        class: CoolEmAll\UserBundle\Form\Type\ProfileFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: coolemall_user_profile }

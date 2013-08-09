@@ -31,7 +31,11 @@
 	<div id="main-menu">
 		<div id="app-logo"></div>
 		<div class="pull-right" style="padding-right: 10px; padding-top: 7px;">
-			{%- set username = app.user | default('Anonymous') -%}
+			{%- if app.user -%}
+				{%- set username = '<a href="' ~ path('fos_user_profile_show') ~ '">' ~ app.user ~ '</a>' -%}
+			{%- else -%}
+				{%- set username = 'Anonymous' -%}
+			{%- endif -%}
 			{%- trans with {username: username} %}Logged in as %username%{% endtrans %} -
 			{% if app.user and is_granted('IS_AUTHENTICATED_REMEMBERED') -%}
 				<a href="{{- path('fos_user_security_logout') -}}">{{- 'layout.logout'|trans({}, 'FOSUserBundle') -}}</a>

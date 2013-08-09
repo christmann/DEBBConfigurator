@@ -87,3 +87,6 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: CoolEmAll\UserBundle\Entity\User
+    profile:
+        form:
+            type: coolemall_user_profile
