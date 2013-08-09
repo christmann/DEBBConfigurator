@@ -50,9 +50,9 @@ class Transformation
 
 		if($className == 'Rack' || $className == 'Node')
 		{
-			$posX = $connector->getPosX() / ($className == 'Rack' ? 100 : 10000);
-			$posY = $connector->getPosY() / ($className == 'Rack' ? 100 : 10000);
-			$posZ = $connector->getPosZ() / ($className == 'Rack' ? 100 : 10000);
+			$posX = $connector->getPosX() / ($className == 'Rack' ? 100 : 1000);
+			$posY = $connector->getPosY() / ($className == 'Rack' ? 100 : 1000);
+			$posZ = $connector->getPosZ() / ($className == 'Rack' ? 100 : 1000);
 			$rotation = $connector->getRotation();
 			$transform = self::generate_transform($posX, $posY, $posZ, $rotation);
 		}

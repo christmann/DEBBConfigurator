@@ -137,6 +137,10 @@ abstract class XMLController extends BaseController
 			$parent = $entity[1];
 			$entity = $entity[0];
 		}
+		else
+		{
+			$parent = null;
+		}
 		$real_class_name = $this->get_real_class($entity);
 
 		$childIds = array();
