@@ -15,7 +15,7 @@ class ChassisTypSpecification extends Connector
 	/**
 	 * @var \Debb\ManagementBundle\Entity\Chassis
 	 *
-	 * @ORM\ManyToOne(targetEntity="Debb\ManagementBundle\Entity\Chassis", inversedBy="typspecifications")
+	 * @ORM\ManyToOne(targetEntity="Debb\ManagementBundle\Entity\Chassis", inversedBy="typspecification")
 	 * @ORM\JoinColumn(name="chassis_id", referencedColumnName="id", onDelete="cascade")
 	 */
 	private $chassis;
