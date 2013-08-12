@@ -23,7 +23,7 @@ class PowerSupplyType extends BaseType
             ->add('class', 'choice', array('choices' => $this->getClasses(true), 'attr' => array('class' => 'noBreakAfterThis')))
             ->add('totalOutputPower')
             ->add('efficiency', null, array('attr' => array('class' => 'noBreakAfterThis')))
-            ->add('powerProfile', null, array('query_builder' => $this->userQueryBuilder))
+            ->add('powerProfile', null, array('required' => false, 'query_builder' => $this->userQueryBuilder))
         ;
     }
 
