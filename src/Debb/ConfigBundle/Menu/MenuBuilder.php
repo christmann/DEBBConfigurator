@@ -51,16 +51,16 @@ class MenuBuilder
 			'linkAttributes' => array('onclick' => '$(this).next().toggle(); return false;'),
 			'attributes' => array('class' => 'zero first current')
 		));
-		$management->addChild($this->translateIt('debb_management.processor.plural', array(), 'crud'), array('route' => 'debb_management_processor_index'));
 		$management->addChild($this->translateIt('debb_management.baseboard.plural', array(), 'crud'), array('route' => 'debb_management_baseboard_index'));
-		$management->addChild($this->translateIt('debb_management.coolingdevice.plural', array(), 'crud'), array('route' => 'debb_management_coolingdevice_index'));
 		$management->addChild($this->translateIt('debb_management.memory.plural', array(), 'crud'), array('route' => 'debb_management_memory_index'));
-		$management->addChild($this->translateIt('debb_management.powersupply.plural', array(), 'crud'), array('route' => 'debb_management_powersupply_index'));
-		$management->addChild($this->translateIt('debb_management.chassis.plural', array(), 'crud'), array('route' => 'debb_management_chassis_index'));
+		$management->addChild($this->translateIt('debb_management.processor.plural', array(), 'crud'), array('route' => 'debb_management_processor_index'));
 		$management->addChild($this->translateIt('debb_management.heatsink.plural', array(), 'crud'), array('route' => 'debb_management_heatsink_index'));
+		$management->addChild($this->translateIt('debb_management.coolingdevice.plural', array(), 'crud'), array('route' => 'debb_management_coolingdevice_index'));
+		$management->addChild($this->translateIt('debb_management.powersupply.plural', array(), 'crud'), array('route' => 'debb_management_powersupply_index'));
 		$management->addChild($this->translateIt('debb_management.network.plural', array(), 'crud'), array('route' => 'debb_management_network_index'));
-		$management->addChild($this->translateIt('debb_management.flowprofile.plural', array(), 'crud'), array('route' => 'debb_management_flowprofile_index'));
+		$management->addChild($this->translateIt('debb_management.chassis.plural', array(), 'crud'), array('route' => 'debb_management_chassis_index'));
 		$management->addChild($this->translateIt('debb_management.sensor.plural', array(), 'crud'), array('route' => 'debb_management_sensor_index'));
+		$management->addChild($this->translateIt('debb_management.flowprofile.plural', array(), 'crud'), array('route' => 'debb_management_flowprofile_index'));
 
 		$menu->addChild($this->translateIt('debb_config.node.plural', array(), 'crud'), array(
 			'route' => 'debb_config_node_index',
