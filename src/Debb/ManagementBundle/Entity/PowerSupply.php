@@ -42,7 +42,6 @@ class PowerSupply extends Base /* extends DEBBComplexType */
 	/**
 	 * @var integer
 	 *
-	 * @Assert\NotBlank()
 	 * @ORM\ManyToOne(targetEntity="Debb\ManagementBundle\Entity\FlowProfile")
 	 */
 	private $powerProfile;
