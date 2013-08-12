@@ -47,7 +47,7 @@ $(function () {
         var obj = $(this).find('option:selected:first[typspecs]');
         if (obj.length > 0) {
             $('#nodegroup').css('background-image', 'url("' + obj.attr('image') + '")');
-            $('#nodegroup').width(parseInt(obj.attr('sizex')));
+            $('#nodegroup').width(parseInt(obj.attr('sizex')) + 50);
             $('#nodegroup').height(parseInt(obj.attr('sizey')));
             $('#content').width(parseInt($('#nodegroup').width()) + 430);
 
