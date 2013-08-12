@@ -24,15 +24,17 @@ class KernelListener extends ContainerAware
 			return;
 		}
 		$deleteThisFiles = $this->getSession()->has('deletefile') ? (array) $this->getSession()->get('deletefile') : array();
-		var_dump($deleteThisFiles);
-		for($x = 0; $x < count($deleteThisFiles); $x++)
+		if(count($deleteThisFiles) > 0)
 		{
-			if(@unlink($deleteThisFiles[$x]))
+			for($x = 0; $x < count($deleteThisFiles); $x++)
 			{
-				unset($deleteThisFiles[$x]);
+				if(@unlink($deleteThisFiles[$x]))
+				{
+					unset($deleteThisFiles[$x]);
+				}
 			}
+			$this->getSession($event->getKernel())->set('deletefile', $deleteThisFiles);
 		}
-		$this->getSession($event->getKernel())->set('deletefile', $deleteThisFiles);
 	}
 
 	/**
