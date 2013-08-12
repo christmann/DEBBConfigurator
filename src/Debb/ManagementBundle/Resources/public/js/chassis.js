@@ -30,7 +30,7 @@ function updateNodeDimensions(node)
 
 function setMinimalRoomSize()
 {
-    var minX = 50,
+    var minX = 150,
         minY = 50;
     $('.node').each(function()
     {
@@ -45,6 +45,7 @@ function setMinimalRoomSize()
             minY = thisY;
         }
     });
+    minX = minX < 150 ? 150 : minX;
     minY = minY < 50 ? 50 : minY;
     $('#nodegroupContainer').resizable('option', 'minHeight', minY).resizable('option', 'minWidth', minX);
 }
@@ -68,13 +69,16 @@ $(function ()
 {
     $('#nodegroupContainer').resizable({
         grid: 10,
-        handles: 's',
         stop: function( event, ui ) {
             $('#debb_managementbundle_chassistype_sizeX').val(ui.helper.width());
             $('#debb_managementbundle_chassistype_sizeY').val(ui.helper.height());
             updateNodeDimensions();
         },
         resize: function ( event, ui ) {
+            $('#chassisSizeX').html((parseInt(ui.size.width) / 1000).toFixed(2));
+            $('#chassisSizeY').html((parseInt(ui.size.height) / 1000).toFixed(2));
+            $('#chassiscontainer').width(parseInt(ui.size.width) + 10);
+            $('#content').width(parseInt($('#chassiscontainer').outerWidth(true)) + 16);
             ui.helper.css('background-position', '1px ' + parseInt(parseInt(ui.size.height) + 1) + 'px');
         },
         start: function ( event, ui ) {

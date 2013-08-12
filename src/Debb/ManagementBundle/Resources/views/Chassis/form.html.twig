@@ -24,9 +24,9 @@
 	{% endjavascripts %}
     <script type="text/javascript">
         $(function()
-          {
-              $('label[data-title]').popover({html: true});
-          });
+		{
+			$('label[data-title]').popover({html: true});
+		});
         var chassisId = {{ form.vars.data.id | default(0) }};
     </script>
 {% endblock %}
@@ -34,14 +34,17 @@
 {% set chassisSizeX = form.vars.data.sizeX %}
 {% set chassisSizeY = form.vars.data.sizeY %}
 
+{% block contentExtras %} style="width: {{ chassisSizeX + 38 }}px;"{% endblock %}
+
 {% block form %}
 	{% do form.typspecification.setRendered() %}
 	{{ parent() }}
-	<div class="row-fluid" style="border: 1px solid #888; padding: 10px 5px 0; background-color: #E3E3E3; max-width: 910px;">
+	<div id="chassiscontainer" class="row-fluid" style="width: {{ chassisSizeX + 10 }}px;">
 		<div>
 			<a href="#" class="addNode">{{ 'Add node' | trans }}</a>
 		</div>
 		<div class="clear"></div>
+		<div id="chassisSize">{{ 'size' | trans }}: <span id="chassisSizeX">{{ (chassisSizeX / 1000.0) | number_format(2, '.', '') }}</span>m x <span id="chassisSizeY">{{ (chassisSizeY / 1000.0) | number_format(2, '.', '') }}</span>m</div>
 
 		{% set spaceInfoWidth = 75 %}
 		{% set itemtypspecification = item.typspecification %}
@@ -53,8 +56,8 @@
 				{{ chassis.typspec(nodetypspecs, typspec, true) }}
 			{%- endfor -%}
 		</div>
-		<div id="rackScale" style="float: left; left: 1px; top: -16px; width: 99px;"><i class="icon-arrow-left"></i> {{ 'Scale' | trans }} 10cm <i class="icon-arrow-right"></i></div>
 		<div class="clear"></div>
+		<div id="rackScale" style="float: left; left: 1px; top: -16px; width: 99px;"><i class="icon-arrow-left"></i> {{ 'Scale' | trans }} 10cm <i class="icon-arrow-right"></i></div>
 	</div>
 {% endblock %}
 
