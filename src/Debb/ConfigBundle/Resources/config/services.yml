@@ -1,6 +1,3 @@
-parameters:
-#    debb_config.example.class: Debb\ConfigBundle\Example
-
 services:
     debbconfig.menu_builder:
         class: Debb\ConfigBundle\Menu\MenuBuilder
@@ -26,3 +23,10 @@ services:
         class: Symfony\Bundle\SwiftmailerBundle\Command\SendEmailCommand
         calls:
             - [ setContainer, ["@service_container"] ]
+
+    debbconfig.listener.kernel_listener:
+        class: Debb\ConfigBundle\EventListener\KernelListener
+        calls:
+            - [ setContainer, ["@service_container"] ]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }

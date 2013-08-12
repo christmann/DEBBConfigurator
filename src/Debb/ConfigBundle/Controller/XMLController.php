@@ -15,8 +15,10 @@ use Debb\ManagementBundle\Entity\RackToRoom;
 use Imagine\Filter\TransformationTest;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Contains default actions for xml generation of DEBBComponents or PLMXML
@@ -549,23 +551,22 @@ abstract class XMLController extends BaseController
 			$room = new \Debb\ConfigBundle\Controller\RoomController();
 			$room->setContainer($this->getContainer());
 			$room->valide($plmXml, file_get_contents('../utils/PLMXMLSchema.xsd'), 'PLMXML');
-
 			$zip->close();
 			if(!$debug)
 			{
 				header('Content-Disposition: attachment; filename=' . date('Y-m-d-H-i-s') . '.zip');
 				header('Content-type: application/zip');
-				if (readfile($fileName))
-				{
-					unlink($fileName);
-				}
+				$deleteThisFiles = $this->getSession()->has('deletefile') ? (array) $this->getSession()->get('deletefile') : array();
+				$deleteThisFiles[] = $fileName;
+				$this->getSession()->set('deletefile', $deleteThisFiles);
+				return new BinaryFileResponse($fileName);
 			}
 		}
 		else
 		{
 			throw $this->createNotFoundException($this->get('translator')->trans('could not create zip archive'));
 		}
-		exit(0);
+		return new Response();
 	}
 
 	/**
