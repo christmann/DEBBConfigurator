@@ -34,7 +34,7 @@ function setMinimalRoomSize()
         minY = 50;
     $('.node').each(function()
     {
-        var thisX = $(this).position().left + $(this).outerWidth(true),
+        var thisX = $(this).position().left + $(this).outerWidth(true) - 10,
             thisY = $(this).position().top + $(this).outerHeight(true);
         if(thisX > minX)
         {
