@@ -204,6 +204,7 @@ class ChassisTypSpecification extends Connector
 		$array = array(
 			'posX' => $this->getPosX(),
 			'posY' => $this->getPosY(),
+			'rotation' => $this->getRotation(),
 			'typ' => $this->getTyp()
 		);
 		return $json ? json_encode($array) : $array;

@@ -72,7 +72,23 @@ $(function () {
 
             nodeArr.each(function()
             {
-                $(this).css('position', 'absolute').css('left', typspecs[field].posX).css('bottom', typspecs[field].posY).attr('specification', typspecs[field].typ);
+                $(this).css('position', 'absolute').css('left', typspecs[field].posX).css('bottom', typspecs[field].posY).attr('specification', typspecs[field].typ).css('border', '').css('width', '').css('height', '');
+                if(typspecs[field].rotation > 270 || typspecs[field].rotation < 1)
+                {
+                    $(this).css('border-bottom-width', '4px').height($(this).height() - 3);
+                }
+                else if(typspecs[field].rotation > 180)
+                {
+                    $(this).css('border-right-width', '4px').width($(this).width() - 3);
+                }
+                else if(typspecs[field].rotation > 90)
+                {
+                    $(this).css('border-top-width', '4px').height($(this).height() - 3);
+                }
+                else if(typspecs[field].rotation > 0)
+                {
+                    $(this).css('border-left-width', '4px').width($(this).width() - 3);
+                }
                 $(this).find('[id$="_field"]').val(++field);
             });
 
