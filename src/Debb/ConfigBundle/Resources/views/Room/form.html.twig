@@ -41,7 +41,7 @@
 			{{ 'Add rack' | trans }}:
 			<ul class="hoz">
 				{% for rack in racks %}
-					<li class="hoz ui-state-default eDraftRack" style="margin-left: 0px; margin-right: 10px;"><div class="draftRack" rackId="{{ rack.id }}" rackX="{{ rack.fullx }}" rackZ="{{ rack.fullz }}">{{ rack }}</div></li>
+					<li class="hoz ui-state-default eDraftRack" style="margin-left: 0px; margin-right: 10px;"><div class="draftRack" rackId="{{ rack.id }}" rackX="{{ rack.fullx }}" rackY="{{ rack.fully }}" rackZ="{{ rack.fullz }}" title="{{ rack | e }}">{{ rack }}</div></li>
 				{% endfor %}
 			</ul>
 		</div>
@@ -66,8 +66,8 @@
 						{% endif %}
 					{%- endspaceless -%}
 				{%- endset -%}
-				<div class="rackG" posx="{{ rack.vars.data.posx }}" posy="{{ rack.vars.data.posy }}"
-				     rackId="{{ rack.vars.data.id }}" rackX="{{ rack.vars.data.rack.fullx }}" rackZ="{{ rack.vars.data.rack.fullz }}"><a href="#" class="removeRack"><i class="icon-trash"></i></a> - <a href="#" class="rotateRack"><i class="icon-arrow-{{ rackRot }}"></i></a> - {{ rack.vars.data.rack }}
+				<div class="rackG" posx="{{ rack.vars.data.posx }}" posy="{{ rack.vars.data.posy }}" posz="{{ rack.vars.data.posz }}"
+				     rackId="{{ rack.vars.data.id }}" title="{{ rack.vars.data.rack | e }}" rackX="{{ rack.vars.data.rack.fullx }}" rackY="{{ rack.vars.data.rack.fully }}" rackZ="{{ rack.vars.data.rack.fullz }}"><a href="#" class="removeRack"><i class="icon-trash"></i></a> - <a href="#" class="rotateRack"><i class="icon-arrow-{{ rackRot }}"></i></a><br />{{ rack.vars.data.rack }}
 					<div class="rackGform" style="display: none;">
 						{{ form_widget(rack) }}
 					</div>

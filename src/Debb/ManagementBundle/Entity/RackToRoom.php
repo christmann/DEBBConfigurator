@@ -166,7 +166,11 @@ class RackToRoom extends Connector
 	 */
 	public function setPosZ($posZ)
 	{
-		$this->posZ = $posZ;
+		if($posZ < 0)
+		{
+			$posZ = 0;
+		}
+		$this->posZ = round($posZ / 10) * 10;
 
 		return $this;
 	}

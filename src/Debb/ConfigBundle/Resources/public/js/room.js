@@ -53,7 +53,7 @@ function setStyleOfRack()
 
 		newRack.appendTo('#rackContainer').draggable(rackDragOpt).droppable(rackDropOpt);
 
-        newRack.prepend('<a href="#" class="removeRack"><i class="icon-trash"></i></a> - <a class="rotateRack" href="#"><i class="icon-arrow-down"></i></a>');
+        newRack.prepend('<a href="#" class="removeRack"><i class="icon-trash"></i></a> - <a class="rotateRack" href="#"><i class="icon-arrow-down"></i></a><br />');
         newRack.addClass('rack0Deg');
 	}
     else
@@ -124,6 +124,35 @@ function rotToClass(rot, asHtml)
     return (asHtml ? '' : 'icon-arrow-') + (rot > 0 && rot < 91 ? 'left' : (rot > 90 && rot < 181 ? (asHtml ? 'top' : 'up') : (rot > 180 && rot < 271 ? 'right' : (asHtml ? 'bottom' : 'down'))));
 }
 
+/**
+ * Generates the content of a rack popover (per click on rack)
+ *
+ * @returns {string} the data-content
+ */
+function generateTipContent()
+{
+    var obj = $(this),
+        resObj = $('<div class="poszslider" style="height: 300px;"></div>'),
+        rackHeight = parseInt($(obj).attr('rackY')) > 0 ? parseInt($(obj).attr('rackY')) * 100 : 100;
+    resObj.slider(
+        {
+            orientation: 'vertical',
+            range: 'min',
+            value: obj.find('input[type="hidden"][id$="_posz"]').val(),
+            step: 10,
+            min: 0,
+            max: 600,
+            slide: function(event, ui)
+            {
+                obj.find('input[type="hidden"][id$="_posz"]').val(ui.value);
+            }
+        }
+    );
+    resObj.find('.ui-slider-handle').height(rackHeight).css('margin-bottom', '-1px');
+    resObj.find('.ui-widget-header').css('background', 'none');
+    return resObj;
+}
+
 $(function()
 {
 	$('.eDraftRack').on('click', setStyleOfRack);
@@ -148,7 +177,12 @@ $(function()
 	$(document).on('click', '.removeRack', function(e)
 	{
 		e.preventDefault();
-		$(this).parent('.rackG').remove();
+        var obj = $(this).parent('.rackG');
+        if(typeof(obj.data('popover')) != 'undefined')
+        {
+            obj.popover('destroy');
+        }
+		obj.remove();
 	});
     $(document).on('click', '.rotateRack', function(e)
     {
@@ -174,8 +208,24 @@ $(function()
         i.addClass(rotToClass(rotation));
         rack.find('input[id$="_rotation"]').val(rotation);
     });
+    $(document).on('click', '.rackG', function(e)
+    {
+        if($(e.target).is('div.rackG'))
+        {
+            e.preventDefault();
+            if(typeof($(this).data('popover')) == 'undefined')
+            {
+                $(this).popover({html: true, trigger: 'manual', content: generateTipContent}).popover('show');
+            }
+            else
+            {
+                $(this).popover($(this).next('div').is('.popover.in:visible') ? 'hide' : 'show');
+            }
+        }
+    });
 	// a single rack which we could move in our room
 	$('.rackG').draggable(rackDragOpt).droppable(rackDropOpt);
 	$('.rackG').each(setStyleOfRack);
     $('.rackG').each(function() { $(this).css('top', $(this).position().top + 1); });
+    $('.rackG').popover({html: true, trigger: 'manual', content: generateTipContent});
 });

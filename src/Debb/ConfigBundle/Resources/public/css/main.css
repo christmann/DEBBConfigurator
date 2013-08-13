@@ -1005,6 +1005,7 @@ div[class*="noBreakAfterThis"]
 	position:         absolute;
 	background-color: #ffffff;
 	overflow:         hidden;
+	text-align:       center;
 }
 
 .eDraftRack
