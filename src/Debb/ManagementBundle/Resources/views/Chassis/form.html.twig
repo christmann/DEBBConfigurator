@@ -65,31 +65,14 @@
 	{% if nodeContainer is null or nodeContainer == true -%}
 		<div class="node node{{ nodeForm.vars.data.rotation | default(0) }}Deg" posx="{{ nodeForm.vars.data.posX|default('') }}" posy="{{ nodeForm.vars.data.posY|default('') }}" posz="{{ nodeForm.vars.data.posZ|default('') }}">
 	{%- endif %}
-	{%- set nodeRot -%}
-		{%- spaceless -%}
-			{% if nodeForm.vars.data.rotation|default() is not empty %}
-				{% if nodeForm.vars.data.rotation > 0 and nodeForm.vars.data.rotation < 91 %}
-					left
-				{% elseif nodeForm.vars.data.rotation > 90 and nodeForm.vars.data.rotation < 181 %}
-					up
-				{% elseif nodeForm.vars.data.rotation > 180 and nodeForm.vars.data.rotation < 271 %}
-					right
-				{% else %}
-					down
-				{% endif %}
-			{% else %}
-				down
-			{% endif %}
-		{%- endspaceless -%}
-	{%- endset -%}
-		<a href="#" class="removeNode"><i class="icon-trash"></i></a> - <a class="rotateNode" href="#"><i class="icon-arrow-{{ nodeRot }}"></i></a>
-		<select name="{{ nodeForm.typ.vars.full_name }}" id="{{ nodeForm.typ.vars.id }}" style="margin-left: -7px; width: 63px; margin-top: 25px;">
-			{% for value in nodetypspecs|default({}) %}
-				{%- set selectedValue = nodeForm.typ.vars.data -%}
-				<option value="{{ value.type }}"{% if selectedValue is defined and selectedValue is not null and selectedValue == value.type %} selected="selected"{% endif %}>{{ value.type | trans }}</option>
-			{% endfor %}
-		</select>
-		{% do nodeForm.typ.setRendered() %}
-		{{ form_widget(nodeForm) }}
+	<a href="#" class="removeNode"><i class="icon-trash"></i></a> - <a class="rotateNode" href="#"><i class="icon-repeat"></i></a>
+	<select name="{{ nodeForm.typ.vars.full_name }}" id="{{ nodeForm.typ.vars.id }}" style="margin-left: -7px; width: 63px; margin-top: 25px;">
+		{% for value in nodetypspecs|default({}) %}
+			{%- set selectedValue = nodeForm.typ.vars.data -%}
+			<option value="{{ value.type }}"{% if selectedValue is defined and selectedValue is not null and selectedValue == value.type %} selected="selected"{% endif %}>{{ value.type | trans }}</option>
+		{% endfor %}
+	</select>
+	{% do nodeForm.typ.setRendered() %}
+	{{ form_widget(nodeForm) }}
 	{% if nodeContainer is null or nodeContainer == true %}</div>{% endif %}
 {% endmacro %}

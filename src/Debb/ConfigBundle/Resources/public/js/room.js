@@ -83,7 +83,7 @@ function setStyleOfRack()
         {
             newRack.height(newRack.height() - 3);
         }
-        newRack.css('border-' + rotToClass(rotation, true) + '-width', '4px');
+        newRack.css('border-' + rotToClass(rotation) + '-width', '4px');
         newRack.attr('rotated', true);
     }
     updateRackDimensions(newRack);
@@ -111,16 +111,13 @@ function setMinimalRoomSize()
 
 function objToRot(obj)
 {
-    return parseInt($(obj).find('input[type="hidden"][id$="_rotation"][name$="[rotation]"]').val());
+    var rot = parseInt($(obj).find('input[type="hidden"][id$="_rotation"][name$="[rotation]"]').val());
+    return isNaN(rot) ? 0 : rot;
 }
 
-function rotToClass(rot, asHtml)
+function rotToClass(rot)
 {
-    if(typeof(asHtml) == 'undefined')
-    {
-        asHtml = false;
-    }
-    return (asHtml ? '' : 'icon-arrow-') + (rot > 0 && rot < 91 ? 'left' : (rot > 90 && rot < 181 ? (asHtml ? 'top' : 'up') : (rot > 180 && rot < 271 ? 'right' : (asHtml ? 'bottom' : 'down'))));
+    return rot > 0 && rot < 91 ? 'left' : (rot > 90 && rot < 181 ? 'top' : (rot > 180 && rot < 271 ? 'right' : 'bottom'));
 }
 
 /**
@@ -186,10 +183,9 @@ $(function()
     $(document).on('click', '.rotateRack', function(e)
     {
         e.preventDefault();
-        var i = $(this).find('i'),
-            rack = $(this).parents('.rackG'),
+        var rack = $(this).parents('.rackG'),
             rotation = objToRot(rack);
-        rack.css('border-' + rotToClass(rotation, true) + '-width', '1px');
+        rack.css('border-' + rotToClass(rotation) + '-width', '1px');
         rotation += 90;
         if ( rotation > 270 ) { rotation = 0; }
         if(rotation == 90 || rotation == 270)
@@ -202,7 +198,7 @@ $(function()
             rack.height(rack.height() - 3);
             rack.width(rack.width() + 3);
         }
-        rack.css('border-' + rotToClass(rotation, true) + '-width', '4px');
+        rack.css('border-' + rotToClass(rotation) + '-width', '4px');
         rack.find('input[id$="_rotation"]').val(rotation);
     });
     $(document).on('click', '.rackG', function(e)

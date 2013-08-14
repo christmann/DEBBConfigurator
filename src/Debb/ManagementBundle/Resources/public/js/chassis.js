@@ -52,17 +52,13 @@ function setMinimalRoomSize()
 
 function objToRot(obj)
 {
-    obj = typeof(obj) != 'undefined' ? $(obj) : $(this);
-    return obj.hasClass('icon-arrow-right') ? 270 : (obj.hasClass('icon-arrow-left') ? 90 : (obj.hasClass('icon-arrow-up') ? 180 : 0));
+    var rot = parseInt($(obj).find('input[type="hidden"][id$="_rotation"][name$="[rotation]"]').val());
+    return isNaN(rot) ? 0 : rot;
 }
 
-function rotToClass(rot, asHtml)
+function rotToClass(rot)
 {
-    if(typeof(asHtml) == 'undefined')
-    {
-        asHtml = false;
-    }
-    return (asHtml ? '' : 'icon-arrow-') + (rot > 0 && rot < 91 ? 'left' : (rot > 90 && rot < 181 ? (asHtml ? 'top' : 'up') : (rot > 180 && rot < 271 ? 'right' : (asHtml ? 'bottom' : 'down'))));
+    return rot > 0 && rot < 91 ? 'left' : (rot > 90 && rot < 181 ? 'top' : (rot > 180 && rot < 271 ? 'right' : 'bottom'));
 }
 
 $(function ()
@@ -128,14 +124,11 @@ $(function ()
     $(document).on('click', '.rotateNode', function(e)
     {
         e.preventDefault();
-        var i = $(this).find('i'),
-            node = $(this).parents('.node'),
-            rotation = objToRot(i);
-        i.removeClass(rotToClass(rotation));
+        var node = $(this).parents('.node'),
+            rotation = objToRot(node);
         node.removeClass('node' + rotation + 'Deg');
         rotation += 90;
         if ( rotation > 270 ) { rotation = 0; }
-        i.addClass(rotToClass(rotation));
         node.addClass('node' + rotation + 'Deg');
         node.find('input[id$="_rotation"]').val(rotation);
     });
