@@ -19,6 +19,7 @@
 	{{ parent() }}
 	{% javascripts
 		'@DebbConfigBundle/Resources/public/js/jquery-ui.min.js'
+		'@DebbConfigBundle/Resources/public/js/overlaps.function.js'
 		'@DebbConfigBundle/Resources/public/js/room.js'
 	%}
 		<script src="{{ asset_url }}" type="text/javascript"></script>
@@ -50,7 +51,7 @@
 		<div id="rackContainer" style="position: relative; width: {{ rackSizeX }}px; height: {{ rackSizeY }}px; border: 2px solid #000; background: url('{{ asset('bundles/debbconfig/img/room-grid.png') }}') repeat scroll 1px {{ rackSizeY + 1 }}px transparent;" data-prototype="{{ form_row(form.racks.vars.prototype) | escape }}">
 			{% for rack in form.racks %}
 				<div class="rackG" posx="{{ rack.vars.data.posx }}" posy="{{ rack.vars.data.posy }}" posz="{{ rack.vars.data.posz }}"
-				     rackId="{{ rack.vars.data.id }}" title="{{ rack.vars.data.rack | e }}" rackX="{{ rack.vars.data.rack.fullx }}" rackY="{{ rack.vars.data.rack.fully }}" rackZ="{{ rack.vars.data.rack.fullz }}"><a href="#" class="removeRack"><i class="icon-trash"></i></a> - <a href="#" class="rotateRack"><i class="icon-repeat"></i></a><br />{{ rack.vars.data.rack }}
+				     rackId="{{ rack.vars.data.id }}" title="{{ rack.vars.data.rack | e }}" rackx="{{ rack.vars.data.rack.fullx }}" racky="{{ rack.vars.data.rack.fully }}" rackz="{{ rack.vars.data.rack.fullz }}"><a href="#" class="removeRack"><i class="icon-trash"></i></a> - <a href="#" class="rotateRack"><i class="icon-repeat"></i></a><br />{{ rack.vars.data.rack }}
 					<div class="rackGform" style="display: none;">
 						{{ form_widget(rack) }}
 					</div>

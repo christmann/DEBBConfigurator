@@ -60,8 +60,8 @@ function setStyleOfRack()
     {
         var newRack = $(this);
     }
-	newRack.css('width', (parseFloat(newRack.attr('rackX')) <= 0 ? 99 : parseFloat(newRack.attr('rackX')) * 100 - 1) + 'px');
-	newRack.css('height', (parseFloat(newRack.attr('rackZ')) <= 0 ? 99 : parseFloat(newRack.attr('rackZ')) * 100 - 1) + 'px');
+	newRack.css('width', (parseFloat(newRack.attr('rackx')) <= 0 ? 99 : parseFloat(newRack.attr('rackx')) * 100 - 1) + 'px');
+	newRack.css('height', (parseFloat(newRack.attr('rackz')) <= 0 ? 99 : parseFloat(newRack.attr('rackz')) * 100 - 1) + 'px');
 	if(typeof newRack.attr('posx') != 'undefined')
 	{
 		newRack.css('left', (parseInt(newRack.attr('posx')) < 0 ? 0 : parseInt(newRack.attr('posx'))) + 'px');
@@ -128,24 +128,17 @@ function rotToClass(rot)
 function generateTipContent()
 {
     var obj = $(this),
-        resObj = $('<div class="poszslider" style="height: 300px;"></div>'),
-        rackHeight = parseInt($(obj).attr('rackY')) > 0 ? parseInt($(obj).attr('rackY')) * 100 : 100;
-    resObj.slider(
-        {
-            orientation: 'vertical',
-            range: 'min',
-            value: obj.find('input[type="hidden"][id$="_posz"]').val(),
-            step: 10,
-            min: 0,
-            max: 600,
-            slide: function(event, ui)
-            {
-                obj.find('input[type="hidden"][id$="_posz"]').val(ui.value);
-            }
-        }
-    );
-    resObj.find('.ui-slider-handle').height(rackHeight).css('margin-bottom', '-1px');
-    resObj.find('.ui-widget-header').css('background', 'none');
+        resObj = $('<div style="height: 300px;"></div>'),
+        posYForm = obj.find('input[type="hidden"][name$="[posy]"]').clone();
+    posYForm
+        .attr('type', 'decimal')
+        .attr('syncwith', '#' + posYForm.attr('id')) // before id change!
+        .attr('id', '').attr('name', '')
+        .attr('class', 'syncwith')
+        .width(166)
+    ;
+    resObj.append('<div>' + obj.attr('rackx') + 'm /' + obj.attr('racky') + 'm /' + obj.attr('rackz') + 'm' + '</div>');
+    resObj.append($('<div>' + Translator.get('posy') + ': </div>').append(posYForm));
     return resObj;
 }
 
@@ -180,6 +173,14 @@ $(function()
         }
 		obj.remove();
 	});
+    $(document).on('change', '.syncwith[syncwith]', function(e)
+    {
+        var obj = $($(this).attr('syncwith'));
+        if(obj.length > 0)
+        {
+            obj.val($(this).val());
+        }
+    });
     $(document).on('click', '.rotateRack', function(e)
     {
         e.preventDefault();

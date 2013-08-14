@@ -50,15 +50,15 @@ class Transformation
 
 		if($className == 'Rack' || $className == 'Node')
 		{
-			$posX = $connector->getPosX() / ($className == 'Rack' ? 100 : 1000);
-			$posY = $connector->getPosY() / ($className == 'Rack' ? 100 : 1000);
-			$posZ = $connector->getPosZ() / ($className == 'Rack' ? 100 : 1000);
+			$posX = $connector->getPosX() * ($className == 'Rack' ? 10 : 1);
+			$posY = $connector->getPosY() * ($className == 'Rack' ? 10 : 1);
+			$posZ = $connector->getPosZ() * ($className == 'Rack' ? 10 : 1);
 			$rotation = $connector->getRotation();
 			$transform = self::generate_transform($posX, $posY, $posZ, $rotation);
 		}
 		else if($className == 'NodeGroup' && is_callable(array($connector, 'getRack')))
 		{
-			$ru = 0.04445; // 1 Rack Unit = 44.45mm
+			$ru = 44.45; // 1 Rack Unit = 44.45mm
 			$posX = $connector->getRack()->getSpaceLeft();
 			$posY = $connector->getRack()->getSpaceFront();
 			$posZ = $connector->getRack()->getSpaceBottom() + $connector->getField();
