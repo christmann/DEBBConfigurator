@@ -49,25 +49,8 @@
 		<div id="rackSize">{{ 'size' | trans }}: <span id="rackSizeX">{{ (rackSizeX / 100.0) | number_format(2, '.', '') }}</span>m x <span id="rackSizeY">{{ (rackSizeY / 100.0) | number_format(2, '.', '') }}</span>m</div>
 		<div id="rackContainer" style="position: relative; width: {{ rackSizeX }}px; height: {{ rackSizeY }}px; border: 2px solid #000; background: url('{{ asset('bundles/debbconfig/img/room-grid.png') }}') repeat scroll 1px {{ rackSizeY + 1 }}px transparent;" data-prototype="{{ form_row(form.racks.vars.prototype) | escape }}">
 			{% for rack in form.racks %}
-				{%- set rackRot -%}
-					{%- spaceless -%}
-						{% if rack.vars.data.rotation|default() is not empty %}
-							{% if rack.vars.data.rotation > 0 and rack.vars.data.rotation < 91 %}
-								left
-							{% elseif rack.vars.data.rotation > 90 and rack.vars.data.rotation < 181 %}
-								up
-							{% elseif rack.vars.data.rotation > 180 and rack.vars.data.rotation < 271 %}
-								right
-							{% else %}
-								down
-							{% endif %}
-						{% else %}
-							down
-						{% endif %}
-					{%- endspaceless -%}
-				{%- endset -%}
 				<div class="rackG" posx="{{ rack.vars.data.posx }}" posy="{{ rack.vars.data.posy }}" posz="{{ rack.vars.data.posz }}"
-				     rackId="{{ rack.vars.data.id }}" title="{{ rack.vars.data.rack | e }}" rackX="{{ rack.vars.data.rack.fullx }}" rackY="{{ rack.vars.data.rack.fully }}" rackZ="{{ rack.vars.data.rack.fullz }}"><a href="#" class="removeRack"><i class="icon-trash"></i></a> - <a href="#" class="rotateRack"><i class="icon-arrow-{{ rackRot }}"></i></a><br />{{ rack.vars.data.rack }}
+				     rackId="{{ rack.vars.data.id }}" title="{{ rack.vars.data.rack | e }}" rackX="{{ rack.vars.data.rack.fullx }}" rackY="{{ rack.vars.data.rack.fully }}" rackZ="{{ rack.vars.data.rack.fullz }}"><a href="#" class="removeRack"><i class="icon-trash"></i></a> - <a href="#" class="rotateRack"><i class="icon-repeat"></i></a><br />{{ rack.vars.data.rack }}
 					<div class="rackGform" style="display: none;">
 						{{ form_widget(rack) }}
 					</div>

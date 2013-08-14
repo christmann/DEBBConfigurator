@@ -53,7 +53,7 @@ function setStyleOfRack()
 
 		newRack.appendTo('#rackContainer').draggable(rackDragOpt).droppable(rackDropOpt);
 
-        newRack.prepend('<a href="#" class="removeRack"><i class="icon-trash"></i></a> - <a class="rotateRack" href="#"><i class="icon-arrow-down"></i></a><br />');
+        newRack.prepend('<a href="#" class="removeRack"><i class="icon-trash"></i></a> - <a class="rotateRack" href="#"><i class="icon-repeat"></i></a><br />');
         newRack.addClass('rack0Deg');
 	}
     else
@@ -74,7 +74,7 @@ function setStyleOfRack()
 	}
     if(!newRack.is('[rotated]'))
     {
-        var rotation = objToRot(newRack.find('.rotateRack i'));
+        var rotation = objToRot(newRack);
         if(rotation == 90 || rotation == 270)
         {
             newRack.width(newRack.width() - 3);
@@ -111,8 +111,7 @@ function setMinimalRoomSize()
 
 function objToRot(obj)
 {
-    obj = typeof(obj) != 'undefined' ? $(obj) : $(this);
-    return obj.hasClass('icon-arrow-right') ? 270 : (obj.hasClass('icon-arrow-left') ? 90 : (obj.hasClass('icon-arrow-up') ? 180 : 0));
+    return parseInt($(obj).find('input[type="hidden"][id$="_rotation"][name$="[rotation]"]').val());
 }
 
 function rotToClass(rot, asHtml)
@@ -189,8 +188,7 @@ $(function()
         e.preventDefault();
         var i = $(this).find('i'),
             rack = $(this).parents('.rackG'),
-            rotation = objToRot(i);
-        i.removeClass(rotToClass(rotation));
+            rotation = objToRot(rack);
         rack.css('border-' + rotToClass(rotation, true) + '-width', '1px');
         rotation += 90;
         if ( rotation > 270 ) { rotation = 0; }
@@ -205,7 +203,6 @@ $(function()
             rack.width(rack.width() + 3);
         }
         rack.css('border-' + rotToClass(rotation, true) + '-width', '4px');
-        i.addClass(rotToClass(rotation));
         rack.find('input[id$="_rotation"]').val(rotation);
     });
     $(document).on('click', '.rackG', function(e)
