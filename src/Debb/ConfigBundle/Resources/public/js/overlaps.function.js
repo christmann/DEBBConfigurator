@@ -14,8 +14,7 @@ var overlaps = (function ()
         pos = $(elem).position();
         width = $(elem).width();
         height = $(elem).height();
-        return
-        [
+        return [
             [ pos.left, pos.left + width ],
             [ pos.top, pos.top + height ]
         ];
