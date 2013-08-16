@@ -96,23 +96,23 @@ class Transformation
 	{
 		$matrix = array();
 
-		$xCenter = $x + 0.5 * $xSide; // Centered on the x axis
-		$yCenter = $y + 0.5 * $ySide; // Centered on the y axis
-		$radius = sqrt(pow($xSide * 0.5, 2) + pow($ySide * 0.5, 2)); // Radius of the object
-		$angle = rad2deg(atan($ySide != 0 ? $xSide / $ySide : 0)) + 90 + $rotation; // Angle in the unit circle (clockwise)
+		$xCenter = (float) $x + 0.5 * (float) $xSide; // Centered on the x axis
+		$yCenter = (float) $y + 0.5 * (float) $ySide; // Centered on the y axis
+		$radius = sqrt(pow((float) $xSide * 0.5, 2) + pow((float) $ySide * 0.5, 2)); // Radius of the object
+		$angle = rad2deg(atan((float) $ySide != 0 ? (float) $xSide / (float) $ySide : 0)) + 90 + (float) $rotation; // Angle in the unit circle (clockwise)
 		for ($i = 0; $i < 16; $i++)
 		{
 			$matrix[$i] = 0;
 		}
 
-		$matrix[0] = round(cos(deg2rad($rotation)), 14);
-		$matrix[1] = round(sin(deg2rad($rotation)), 14);
-		$matrix[4] = round(-sin(deg2rad($rotation)), 14);
-		$matrix[5] = round(cos(deg2rad($rotation)), 14);
+		$matrix[0] = round(cos(deg2rad((float) $rotation)), 14);
+		$matrix[1] = round(sin(deg2rad((float) $rotation)), 14);
+		$matrix[4] = round(-sin(deg2rad((float) $rotation)), 14);
+		$matrix[5] = round(cos(deg2rad((float) $rotation)), 14);
 		$matrix[10] = 1;
 		$matrix[12] = round($xCenter + cos(deg2rad($angle)) * $radius, 8);
 		$matrix[13] = round($yCenter - sin(deg2rad($angle)) * $radius, 8);
-		$matrix[14] = $z;
+		$matrix[14] = (float) $z;
 		$matrix[15] = 1;
 
 		return implode(' ', $matrix);

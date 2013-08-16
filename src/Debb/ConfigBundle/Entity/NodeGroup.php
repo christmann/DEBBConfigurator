@@ -234,11 +234,20 @@ class NodeGroup extends Dimensions
 	public function getChildrens()
 	{
 		$childrens = array();
-		foreach($this->getNodes() as $nodeToNodeGroup)
+		$draft = $this->getDraft();
+		if($draft !== null)
 		{
-			if($nodeToNodeGroup->getNode() != null)
+			/** @var $typSpecs array */
+			$typSpecs = $draft->getTypspecification()->toArray();
+			/** @var $nodes array */
+			$nodes = $this->getNodes()->toArray();
+
+			for($x = 0; $x < count($typSpecs); $x++)
 			{
-				$childrens[] = array($nodeToNodeGroup->getNode(), $nodeToNodeGroup);
+				if(array_key_exists($x, $nodes))
+				{
+					$childrens[] = array($nodes[$x]->getNode(), $typSpecs[$x]);
+				}
 			}
 		}
 		return $childrens;

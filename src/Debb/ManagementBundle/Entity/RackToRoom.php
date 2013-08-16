@@ -105,7 +105,7 @@ class RackToRoom extends Connector
 	}
 
 	/**
-	 * Set posX (pixel / mm)
+	 * Set posX
 	 *
 	 * @param integer $posX
 	 * @return RackToRoom
@@ -132,7 +132,7 @@ class RackToRoom extends Connector
 	}
 
 	/**
-	 * Set posY (m)
+	 * Set posY
 	 *
 	 * @param integer $posY
 	 * @return RackToRoom
@@ -143,7 +143,7 @@ class RackToRoom extends Connector
 		{
 			$posY = 0;
 		}
-		$this->posY = $posY;
+		$this->posY = round($posY / 10) * 10;
 
 		return $this;
 	}
@@ -159,7 +159,7 @@ class RackToRoom extends Connector
 	}
 
 	/**
-	 * Set posZ (pixel / mm)
+	 * Set posZ
 	 *
 	 * @param integer $posZ
 	 * @return RackToRoom

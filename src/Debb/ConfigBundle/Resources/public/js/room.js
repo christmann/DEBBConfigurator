@@ -220,17 +220,14 @@ $(function()
         {
             e.preventDefault();
             var mainObj = $(this);
-            $('.rackG').filter(function(){ return overlaps(mainObj[0], this); }).each(function()
+            if(typeof(mainObj.data('popover')) == 'undefined')
             {
-                if(typeof($(this).data('popover')) == 'undefined')
-                {
-                    $(this).popover({html: true, trigger: 'manual', content: generateTipContent}).popover('show');
-                }
-                else
-                {
-                    $(this).popover($(this).next('div').is('.popover.in:visible') ? 'hide' : 'show');
-                }
-            });
+                mainObj.popover({html: true, trigger: 'manual', content: generateTipContent}).popover('show');
+            }
+            else
+            {
+                mainObj.popover(mainObj.next('div').is('.popover.in:visible') ? 'hide' : 'show');
+            }
         }
     });
 	// a single rack which we could move in our room
