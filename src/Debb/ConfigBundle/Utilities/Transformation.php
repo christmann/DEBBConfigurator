@@ -8,6 +8,7 @@ use Debb\ConfigBundle\Entity\NodeGroup;
 use Debb\ConfigBundle\Entity\Rack;
 use Debb\ConfigBundle\Entity\Room;
 use Debb\ManagementBundle\Entity\Base;
+use Debb\ManagementBundle\Entity\ChassisTypSpecification;
 use Debb\ManagementBundle\Entity\Connector;
 use Debb\ManagementBundle\Entity\NodegroupToRack;
 use Debb\ManagementBundle\Entity\NodeToNodegroup;
@@ -47,17 +48,17 @@ class Transformation
 			$posZ = $connector->getPosZ() * 10;
 			$rotation = $connector->getRotation();
 			/** @var $children Rack */
-			$transform = self::generate_transform($posX, $posY, $posZ, $rotation, $children->getSizeX(), $children->getSizeY());
+			$transform = self::generate_transform($posX, $posY, $posZ, $rotation, $children->getSizeX() * 1000, $children->getSizeY() * 1000);
 		}
 		else if ($className == 'Node')
 		{
-			/** @var $connector NodeToNodegroup */
+			/** @var $connector ChassisTypSpecification */
 			$posX = $connector->getPosX();
 			$posY = $connector->getPosY();
 			$posZ = $connector->getPosZ();
 			$rotation = $connector->getRotation();
 			/** @var $children Node */
-			$transform = self::generate_transform($posX, $posY, $posZ, $rotation, $children->getSizeX(), $children->getSizeY());
+			$transform = self::generate_transform($posX, $posY, $posZ, $rotation, $children->getSizeX() * 1000, $children->getSizeY() * 1000);
 		}
 		else if ($className == 'NodeGroup' && is_callable(array($connector, 'getRack')))
 		{
