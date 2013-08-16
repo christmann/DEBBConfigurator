@@ -135,9 +135,10 @@ function generateTipContent()
         .attr('syncwith', '#' + posYForm.attr('id')) // before id change!
         .attr('id', '').attr('name', '')
         .attr('class', 'syncwith')
-        .width(166)
+        .attr('maxval', '#debb_configbundle_roomtype_sizeY')
+        .width(159)
     ;
-    resObj.append('<div>' + obj.attr('rackx') + 'm /' + obj.attr('racky') + 'm /' + obj.attr('rackz') + 'm' + '</div>');
+    resObj.append('<div>' + Translator.get('Size') + ': ' + obj.attr('rackx') + 'm /' + obj.attr('racky') + 'm /' + obj.attr('rackz') + 'm' + '</div>');
     resObj.append($('<div>' + Translator.get('posy') + ': </div>').append(posYForm));
     return resObj;
 }
@@ -178,7 +179,18 @@ $(function()
         var obj = $($(this).attr('syncwith'));
         if(obj.length > 0)
         {
-            obj.val($(this).val());
+            var val = $(this).val();
+            if(typeof($(this).attr('maxval')) != 'undefined')
+            {
+                var maxval = parseFloat($($(this).attr('maxval')).val());
+                if(parseFloat(val) > maxval)
+                {
+                    val = maxval;
+                    $(this).val(maxval);
+                    e.preventDefault();
+                }
+            }
+            obj.val(val);
         }
     });
     $(document).on('click', '.rotateRack', function(e)
