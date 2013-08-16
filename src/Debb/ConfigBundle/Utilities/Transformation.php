@@ -3,8 +3,15 @@
 namespace Debb\ConfigBundle\Utilities;
 
 use Debb\ConfigBundle\Controller\XMLController;
+use Debb\ConfigBundle\Entity\Node;
+use Debb\ConfigBundle\Entity\NodeGroup;
+use Debb\ConfigBundle\Entity\Rack;
+use Debb\ConfigBundle\Entity\Room;
 use Debb\ManagementBundle\Entity\Base;
 use Debb\ManagementBundle\Entity\Connector;
+use Debb\ManagementBundle\Entity\NodegroupToRack;
+use Debb\ManagementBundle\Entity\NodeToNodegroup;
+use Debb\ManagementBundle\Entity\RackToRoom;
 
 /**
  * Class Transformation
@@ -32,25 +39,41 @@ class Transformation
 			return self::generate_transform();
 		}
 
-		if ($className == 'Rack' || $className == 'Node')
+		if ($className == 'Rack')
 		{
-			$posX = $connector->getPosX() * ($className == 'Rack' ? 10 : 1);
-			$posY = $connector->getPosY() * ($className == 'Rack' ? 10 : 1);
-			$posZ = $connector->getPosZ() * ($className == 'Rack' ? 10 : 1);
+			/** @var $connector RackToRoom */
+			$posX = $connector->getPosX() * 10;
+			$posY = $connector->getPosY() * 10;
+			$posZ = $connector->getPosZ() * 10;
 			$rotation = $connector->getRotation();
+			/** @var $children Rack */
+			$transform = self::generate_transform($posX, $posY, $posZ, $rotation, $children->getSizeX(), $children->getSizeY());
+		}
+		else if ($className == 'Node')
+		{
+			/** @var $connector NodeToNodegroup */
+			$posX = $connector->getPosX();
+			$posY = $connector->getPosY();
+			$posZ = $connector->getPosZ();
+			$rotation = $connector->getRotation();
+			/** @var $children Node */
 			$transform = self::generate_transform($posX, $posY, $posZ, $rotation, $children->getSizeX(), $children->getSizeY());
 		}
 		else if ($className == 'NodeGroup' && is_callable(array($connector, 'getRack')))
 		{
 			$ru = 44.45; // 1 Rack Unit = 44.45mm
+			/** @var $connector NodegroupToRack */
 			$posX = $connector->getRack()->getSpaceLeft();
 			$posY = $connector->getRack()->getSpaceFront();
 			$posZ = $connector->getRack()->getSpaceBottom() + $connector->getField();
 			$posZ *= $ru;
+			/** @var $children NodeGroup */
 			$transform = self::generate_transform($posX, $posY, $posZ);
 		}
 		else
 		{
+			/** @var $connector Room|mixed */
+			/** @var $children Transformation|mixed */
 			$transform = self::generate_transform();
 		}
 
@@ -64,19 +87,19 @@ class Transformation
 	 * @param float $y the y coordinate
 	 * @param float $z the z coordinate
 	 * @param float $rotation the rotation in degrees
-	 * @param float $xside the x side / width
-	 * @param float $yside the from front looking Z position or top look Y position (height/depth)
+	 * @param float $xSide the x side / width
+	 * @param float $ySide the from front looking Z position or top look Y position (height/depth)
 	 *
 	 * @return string the generated transformation
 	 */
-	public static function generate_transform($x = 0, $y = 0, $z = 0, $rotation = 0, $xside = 0, $yside = 0)
+	public static function generate_transform($x = 0, $y = 0, $z = 0, $rotation = 0, $xSide = 0, $ySide = 0)
 	{
 		$matrix = array();
 
-		$xcenter = $x + 0.5 * $xside; // Mittelpunkt auf der x Achse
-		$ycenter = $y + 0.5 * $yside; // Mittelpunkt auf der y Achse
-		$radius = sqrt(pow($xside * 0.5, 2) + pow($yside * 0.5, 2)); // Radius des Objektes
-		$angle = rad2deg(atan($yside != 0 ? $xside / $yside : 0)) + 90 + $rotation; // Winkel im Einheitskreis (rechtsdrehend)
+		$xCenter = $x + 0.5 * $xSide; // Centered on the x axis
+		$yCenter = $y + 0.5 * $ySide; // Centered on the y axis
+		$radius = sqrt(pow($xSide * 0.5, 2) + pow($ySide * 0.5, 2)); // Radius of the object
+		$angle = rad2deg(atan($ySide != 0 ? $xSide / $ySide : 0)) + 90 + $rotation; // Angle in the unit circle (clockwise)
 		for ($i = 0; $i < 16; $i++)
 		{
 			$matrix[$i] = 0;
@@ -87,8 +110,8 @@ class Transformation
 		$matrix[4] = round(-sin(deg2rad($rotation)), 10);
 		$matrix[5] = round(cos(deg2rad($rotation)), 10);
 		$matrix[10] = 1;
-		$matrix[12] = $xcenter + cos(deg2rad($angle)) * $radius;
-		$matrix[13] = $ycenter - sin(deg2rad($angle)) * $radius;
+		$matrix[12] = $xCenter + cos(deg2rad($angle)) * $radius;
+		$matrix[13] = $yCenter - sin(deg2rad($angle)) * $radius;
 		$matrix[14] = $z;
 		$matrix[15] = 1;
 
