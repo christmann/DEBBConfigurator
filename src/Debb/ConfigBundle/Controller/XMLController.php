@@ -148,10 +148,15 @@ abstract class XMLController extends BaseController
 		$childIds = array();
 		if(method_exists($entity, 'getChildrens'))
 		{
-			foreach($entity->getChildrens() as $children)
+			$childs = $entity->getChildrens();
+			if(is_array($childs))
 			{
-				$childIds[] = $this->addEntityToPLMXML($xml, $children);
+				foreach($childs as $children)
+				{
+					$childIds[] = $this->addEntityToPLMXML($xml, $children);
+				}
 			}
+			unset($childs);
 		}
 
 		/** $representations array generation */
@@ -250,10 +255,16 @@ abstract class XMLController extends BaseController
 		$exId = implode('_', $isId);
 		$id = $exId . '_' . $iId;
 
-		while (count($xml->xpath('*[@id="' . $id . '"]/@id')) > 0)
+		$ids = $xml->xpath('*[@id="' . $id . '"]/@id');
+		if(count($ids) > 0)
 		{
-			$iId++;
-			$id = $exId . '_' . $iId;
+			$ids = $xml->xpath('*[starts-with(@id, "' . $exId . '_")]/@id');
+			$id = max(array_map(
+					function($a) {
+						list(, $id) = explode('_', $a);
+						return intval($id);
+					}, $ids)) + 1;
+			$id = $exId . '_' . $id;
 		}
 
 		$productInstance->addAttribute('id', $id); // example: inst71_01_7
@@ -322,10 +333,16 @@ abstract class XMLController extends BaseController
 		$exId = implode('_', $isId);
 		$id = $exId . '_' . $iId;
 
-		while (count($xml->xpath('*[@id="' . $id . '"]/@id')) > 0)
+		$ids = $xml->xpath('*[@id="' . $id . '"]/@id');
+		if(count($ids) > 0)
 		{
-			$iId++;
-			$id = $exId . '_' . $iId;
+			$ids = $xml->xpath('*[starts-with(@id, "' . $exId . '_")]/@id');
+			$id = max(array_map(
+					function($a) {
+						list(, $id) = explode('_', $a);
+						return intval($id);
+					}, $ids)) + 1;
+			$id = $exId . '_' . $id;
 		}
 
 		$productRevisionView->addAttribute('id', $id); // example: id84_04_1
