@@ -105,13 +105,13 @@ class Transformation
 			$matrix[$i] = 0;
 		}
 
-		$matrix[0] = round(cos(deg2rad($rotation)), 10);
-		$matrix[1] = round(sin(deg2rad($rotation)), 10);
-		$matrix[4] = round(-sin(deg2rad($rotation)), 10);
-		$matrix[5] = round(cos(deg2rad($rotation)), 10);
+		$matrix[0] = round(cos(deg2rad($rotation)), 14);
+		$matrix[1] = round(sin(deg2rad($rotation)), 14);
+		$matrix[4] = round(-sin(deg2rad($rotation)), 14);
+		$matrix[5] = round(cos(deg2rad($rotation)), 14);
 		$matrix[10] = 1;
-		$matrix[12] = $xCenter + cos(deg2rad($angle)) * $radius;
-		$matrix[13] = $yCenter - sin(deg2rad($angle)) * $radius;
+		$matrix[12] = round($xCenter + cos(deg2rad($angle)) * $radius, 8);
+		$matrix[13] = round($yCenter - sin(deg2rad($angle)) * $radius, 8);
 		$matrix[14] = $z;
 		$matrix[15] = 1;
 
