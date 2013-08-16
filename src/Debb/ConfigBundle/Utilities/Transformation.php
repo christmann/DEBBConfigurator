@@ -26,8 +26,7 @@ class Transformation
 	{
 		$className = XMLController::get_real_class($children);
 
-		if ((!is_callable(array($connector, 'getPosX')) || !is_callable(array($connector, 'getPosY')) || !is_callable(array($connector, 'getPosZ')) || !is_callable(array($connector, 'getRotation'))) && ($className == 'Rack' || $className == 'Node')
-		)
+		if ((!is_callable(array($connector, 'getPosX')) || !is_callable(array($connector, 'getPosY')) || !is_callable(array($connector, 'getPosZ')) || !is_callable(array($connector, 'getRotation'))) && ($className == 'Rack' || $className == 'Node'))
 		{
 			var_dump(get_class($connector));
 			return self::generate_transform();
@@ -77,7 +76,7 @@ class Transformation
 		$xcenter = $x + 0.5 * $xside; // Mittelpunkt auf der x Achse
 		$ycenter = $y + 0.5 * $yside; // Mittelpunkt auf der y Achse
 		$radius = sqrt(pow($xside * 0.5, 2) + pow($yside * 0.5, 2)); // Radius des Objektes
-		$angle = rad2deg(atan($xside / $yside)) + 90 + $rotation; // Winkel im Einheitskreis (rechtsdrehend)
+		$angle = rad2deg(atan($yside != 0 ? $xside / $yside : 0)) + 90 + $rotation; // Winkel im Einheitskreis (rechtsdrehend)
 		for ($i = 0; $i < 16; $i++)
 		{
 			$matrix[$i] = 0;
