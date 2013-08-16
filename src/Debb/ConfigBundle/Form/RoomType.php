@@ -20,10 +20,11 @@ class RoomType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+			->add('name', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis')))
             ->add('building', null, array('required' => false))
-            ->add('name', null, array('required' => false))
 			->add('sizeX', 'hidden', array('required' => false))
-			->add('sizeY', 'hidden', array('required' => false))
+			->add('sizeY', 'number', array('required' => false, 'label' => 'SizeY'))
+			->add('sizeZ', 'hidden', array('required' => false))
             ->add('racks', 'collection', array(
 				'type' => new \Debb\ManagementBundle\Form\RackToRoomType(),
 				'allow_add' => true,

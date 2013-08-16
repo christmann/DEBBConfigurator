@@ -150,12 +150,12 @@ $(function()
 		grid: 10,
 		stop: function( event, ui ) {
 			$('#debb_configbundle_roomtype_sizeX').val(ui.helper.width());
-			$('#debb_configbundle_roomtype_sizeY').val(ui.helper.height());
+			$('#debb_configbundle_roomtype_sizeZ').val(ui.helper.height());
             updateRackDimensions();
 		},
 		resize: function ( event, ui ) {
 			$('#rackSizeX').html((parseInt(ui.size.width) / 100).toFixed(2));
-			$('#rackSizeY').html((parseInt(ui.size.height) / 100).toFixed(2));
+			$('#rackSizeZ').html((parseInt(ui.size.height) / 100).toFixed(2));
             $('#content').width(parseInt(ui.size.width) + 21);
             ui.helper.css('background-position', '1px ' + parseInt(parseInt(ui.size.height) + 1) + 'px');
 		},
