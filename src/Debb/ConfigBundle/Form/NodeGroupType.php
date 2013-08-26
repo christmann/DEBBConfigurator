@@ -43,6 +43,13 @@ class NodeGroupType extends BaseType
 				'label' => 'Chassis',
 	            'choices' => $this->container->get('doctrine')->getRepository('DebbManagementBundle:Chassis')->findAllFromUser($this->container->get('security.context')->getToken()->getUser())
 			))
+			->add('references', 'plupload', array(
+					'filter' => array('wrl,vrml' => 'VRML', 'stl' => 'STL'),
+					'label' => 'upload model files',
+					'bootstrap' => true,
+					'multiple' => true
+				)
+			)
         ;
     }
 

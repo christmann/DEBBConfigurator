@@ -29,18 +29,11 @@ class Node extends Dimensions
 	private $image;
 
 	/**
-	 * @var VRML
+	 * @var \Debb\ManagementBundle\Entity\File[]
 	 *
-	 * @ORM\ManyToOne(targetEntity="Debb\ManagementBundle\Entity\File", cascade={"all"})
+	 * @ORM\ManyToMany(targetEntity="Debb\ManagementBundle\Entity\File", cascade={"all"}, orphanRemoval=true)
 	 */
-	private $vrmlFile;
-
-	/**
-	 * @var STL
-	 *
-	 * @ORM\ManyToOne(targetEntity="Debb\ManagementBundle\Entity\File", cascade={"all"})
-	 */
-	private $stlFile;
+	private $references;
 
 	/**
 	 * Returns the name of this node for the table view or selections
@@ -54,6 +47,7 @@ class Node extends Dimensions
 	public function __construct()
 	{
 		$this->components = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->references = new \Doctrine\Common\Collections\ArrayCollection();
 	}
 
 	/**
@@ -140,13 +134,9 @@ class Node extends Dimensions
 	public function getDebbXmlArray()
 	{
 		$array['Node'] = parent::getDebbXmlArray();
-		if($this->getStlFile() != null)
+		foreach($this->getReferences() as $reference)
 		{
-			$array['Node'][] = array('Reference' => array('Type' => 'STL', 'Location' => './object/' . $this->getStlFile()->getName()));
-		}
-		if($this->getVrmlFile() != null)
-		{
-			$array['Node'][] = array('Reference' => array('Type' => 'VRML', 'Location' => './object/' . $this->getVrmlFile()->getName()));
+			$array['Node'][] = array(array('Reference' => array('Type' => $reference->getFileEnding(), 'Location' => './object/' . $reference->getName())));
 		}
 		// todo: use dynamic connector instead:
 		$array['Node']['Connector'] = array(
@@ -187,49 +177,36 @@ class Node extends Dimensions
 	}
 
 	/**
-	 * Set vrmlFile
+	 * Add references
 	 *
-	 * @param \Debb\ManagementBundle\Entity\File $vrmlFile
-	 * @return Node
+	 * @param \Debb\ManagementBundle\Entity\File $references
+	 * @return DEBBSimple
 	 */
-	public function setVrmlFile(\Debb\ManagementBundle\Entity\File $vrmlFile = null)
+	public function addReference(\Debb\ManagementBundle\Entity\File $references)
 	{
-		$this->vrmlFile = $vrmlFile;
+		$this->references[] = $references;
 
 		return $this;
 	}
 
 	/**
-	 * Get vrmlFile
+	 * Remove references
 	 *
-	 * @return \Debb\ManagementBundle\Entity\File 
+	 * @param \Debb\ManagementBundle\Entity\File $references
 	 */
-	public function getVrmlFile()
+	public function removeReference($reference)
 	{
-		return $this->vrmlFile;
+		$this->references->removeElement($reference);
 	}
 
 	/**
-	 * Set stlFile
+	 * Get references
 	 *
-	 * @param \Debb\ManagementBundle\Entity\File $stlFile
-	 * @return Node
+	 * @return \Debb\ManagementBundle\Entity\File[]
 	 */
-	public function setStlFile(\Debb\ManagementBundle\Entity\File $stlFile = null)
+	public function getReferences()
 	{
-		$this->stlFile = $stlFile;
-
-		return $this;
-	}
-
-	/**
-	 * Get stlFile
-	 *
-	 * @return \Debb\ManagementBundle\Entity\File 
-	 */
-	public function getStlFile()
-	{
-		return $this->stlFile;
+		return $this->references->getValues();
 	}
 
 	/**
@@ -249,5 +226,13 @@ class Node extends Dimensions
 			}
 		}
 		return $childrens;
+	}
+
+	/**
+	 * @return string the debb level
+	 */
+	public function getDebbLevel()
+	{
+		return 'Node';
 	}
 }

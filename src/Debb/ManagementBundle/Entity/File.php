@@ -46,4 +46,15 @@ class File extends \CIM\PluploadBundle\Entity\File
 		return $type;
 	}
 
+	/**
+	 * Returns the file ending
+	 *
+	 * @return string
+	 */
+	public function getFileEnding($upper = true)
+	{
+		list(, $ending) = explode('.', $this->getName());
+		return !$upper ? : strtoupper($ending);
+	}
+
 }

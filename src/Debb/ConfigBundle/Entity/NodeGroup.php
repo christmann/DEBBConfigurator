@@ -42,12 +42,20 @@ class NodeGroup extends Dimensions
      */
     private $racks;
 
+	/**
+	 * @var \Debb\ManagementBundle\Entity\File[]
+	 *
+	 * @ORM\ManyToMany(targetEntity="Debb\ManagementBundle\Entity\File", cascade={"all"}, orphanRemoval=true)
+	 */
+	private $references;
+
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->nodes = new ArrayCollection();
+		$this->references = new ArrayCollection();
     }
 
     /**
@@ -167,6 +175,10 @@ class NodeGroup extends Dimensions
 				$array['NodeGroup'][] = array(array('Slot' => array('Number' => $slot, 'ConnectorType' => $typSpec, 'Label' => 'Slot_' . $slot)));
 			}
 		}
+		foreach($this->getReferences() as $reference)
+		{
+			$array['NodeGroup'][] = array(array('Reference' => array('Type' => $reference->getFileEnding(), 'Location' => './object/' . $reference->getName())));
+		}
         return $array;
     }
 
@@ -229,6 +241,39 @@ class NodeGroup extends Dimensions
     }
 
 	/**
+	 * Add references
+	 *
+	 * @param \Debb\ManagementBundle\Entity\File $references
+	 * @return DEBBSimple
+	 */
+	public function addReference(\Debb\ManagementBundle\Entity\File $references)
+	{
+		$this->references[] = $references;
+
+		return $this;
+	}
+
+	/**
+	 * Remove references
+	 *
+	 * @param \Debb\ManagementBundle\Entity\File $references
+	 */
+	public function removeReference($reference)
+	{
+		$this->references->removeElement($reference);
+	}
+
+	/**
+	 * Get references
+	 *
+	 * @return \Debb\ManagementBundle\Entity\File[]
+	 */
+	public function getReferences()
+	{
+		return $this->references->getValues();
+	}
+
+	/**
 	 * @return \Debb\ConfigBundle\Entity\Node[]
 	 */
 	public function getChildrens()
@@ -251,5 +296,13 @@ class NodeGroup extends Dimensions
 			}
 		}
 		return $childrens;
+	}
+
+	/**
+	 * @return string the debb level
+	 */
+	public function getDebbLevel()
+	{
+		return 'NodeGroup';
 	}
 }

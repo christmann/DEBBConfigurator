@@ -32,6 +32,13 @@ class RoomType extends AbstractType
 				'by_reference' => false,
 				'required' => false,
 			))
+			->add('references', 'plupload', array(
+					'filter' => array('wrl,vrml' => 'VRML', 'stl' => 'STL'),
+					'label' => 'upload model files',
+					'bootstrap' => true,
+					'multiple' => true
+				)
+			)
         ;
     }
 

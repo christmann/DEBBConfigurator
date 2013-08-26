@@ -50,7 +50,7 @@ class DEBBSimple extends Base
 		}
 		foreach($this->getReferences() as $reference)
 		{
-			$array[] = array(array('Reference' => array('Type' => $reference->getType(), 'Location' => $reference->getFullPath())));
+			$array[] = array(array('Reference' => array('Type' => $reference->getFileEnding(), 'Location' => './object/' . $reference->getName())));
 		}
 		return $array;
 	}

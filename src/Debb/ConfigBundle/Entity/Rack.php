@@ -34,11 +34,19 @@ class Rack extends Dimensions
 	private $nodeGroupSize;
 
 	/**
+	 * @var \Debb\ManagementBundle\Entity\File[]
+	 *
+	 * @ORM\ManyToMany(targetEntity="Debb\ManagementBundle\Entity\File", cascade={"all"}, orphanRemoval=true)
+	 */
+	private $references;
+
+	/**
 	 * Constructor
 	 */
 	public function __construct()
 	{
 		$this->nodeGroups = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->references = new \Doctrine\Common\Collections\ArrayCollection();
 	}
 
 	/**
@@ -156,7 +164,44 @@ class Rack extends Dimensions
 		{
 			$array['Rack']['hostname'] = $this->getHostname();
 		}
+		foreach($this->getReferences() as $reference)
+		{
+			$array['Rack'][] = array(array('Reference' => array('Type' => $reference->getFileEnding(), 'Location' => './object/' . $reference->getName())));
+		}
 		return $array;
+	}
+
+	/**
+	 * Add references
+	 *
+	 * @param \Debb\ManagementBundle\Entity\File $references
+	 * @return DEBBSimple
+	 */
+	public function addReference(\Debb\ManagementBundle\Entity\File $references)
+	{
+		$this->references[] = $references;
+
+		return $this;
+	}
+
+	/**
+	 * Remove references
+	 *
+	 * @param \Debb\ManagementBundle\Entity\File $references
+	 */
+	public function removeReference($reference)
+	{
+		$this->references->removeElement($reference);
+	}
+
+	/**
+	 * Get references
+	 *
+	 * @return \Debb\ManagementBundle\Entity\File[]
+	 */
+	public function getReferences()
+	{
+		return $this->references->getValues();
 	}
 
 	/**
@@ -180,6 +225,6 @@ class Rack extends Dimensions
 	 */
 	public function getDebbLevel()
 	{
-		return 'Computebox1';
+		return 'Rack';
 	}
 }

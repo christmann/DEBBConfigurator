@@ -9,6 +9,7 @@ use Debb\ConfigBundle\Entity\Rack;
 use Debb\ConfigBundle\Entity\Room;
 use Debb\ConfigBundle\Utilities\Transformation;
 use Debb\ManagementBundle\Controller\BaseController;
+use Debb\ManagementBundle\Entity\DEBBSimple;
 use Debb\ManagementBundle\Entity\File;
 use Debb\ManagementBundle\Entity\NodegroupToRack;
 use Debb\ManagementBundle\Entity\RackToRoom;
@@ -161,13 +162,13 @@ abstract class XMLController extends BaseController
 
 		/** $representations array generation */
 		$representations = array();
-		if(method_exists($entity, 'getStlFile') && $entity->getStlFile() instanceof File)
+		if(method_exists($entity, 'getReferences') && count($entity->getReferences()) > 0)
 		{
-			$representations[] = array('format' => 'STL', 'location' => './objects/' . $entity->getStlFile()->getName());
-		}
-		if(method_exists($entity, 'getVrmlFile') && $entity->getVrmlFile() instanceof File)
-		{
-			$representations[] = array('format' => 'VRML', 'location' => './objects/' . $entity->getVrmlFile()->getName());
+			/** @var $entity DEBBSimple */
+			foreach($entity->getReferences() as $reference)
+			{
+				$representations[] = array('format' => $reference->getFileEnding(), 'location' => './objects/' . $reference->getName());
+			}
 		}
 
 		/** ProductRevisionView */
@@ -180,7 +181,7 @@ abstract class XMLController extends BaseController
 			$representations,                                                                                           // $representations
 			$entity->getComponentId(),                                                                                  // $DEBBComponentId
 			method_exists($entity, 'getDebbLevel') ? $entity->getDebbLevel() : $real_class_name,                        // $DEBBLevel
-			preg_match('#(NodeGroup|Node)#i', $real_class_name) ? $real_class_name . '_'.$entity->getComponentId().'.xml' : null // $DEBBComponentsFile
+			$real_class_name . '_'.$entity->getComponentId().'.xml'                                                     // $DEBBComponentsFile
 		);
 		$revisionViewAttr = $revisionView->attributes();
 
@@ -191,7 +192,9 @@ abstract class XMLController extends BaseController
 			'Def' . sprintf('%s%02d', $real_class_name, $entity->getId()),                                              // $name
 			$revisionViewAttr->id,                                                                                      // $partRef
 			$entity->getHostname(),                                                                                     // $hostname
-			Transformation::generateTransform($entity, $parent)                                                         // $transform
+			$real_class_name == 'Room' ? null : Transformation::generateTransform($entity, $parent),                      // $transform
+			null,                                                                                                       // $locationInMesh
+			$real_class_name == 'Room' ? $entity->getBuilding() : null                                                    // $location
 		);
 
 		return $instance[1];
@@ -243,9 +246,11 @@ abstract class XMLController extends BaseController
 	 * @param null|string optional $partRef the part reference of this product instance
 	 * @param null|string optional $hostname the hostname of this product instance
 	 * @param null|string optional $transform the position of this product instance
+	 * @param null|string optional $locationInMesh the location in mesh
+	 * @param null|string optional $location the location
 	 * @return array the SimpleXMLElement product instance (0) and the generated id (1)
 	 */
-	public function addPlmXmlProductInstance(\SimpleXMLElement &$xml, $id, $name = null, $partRef = null, $hostname = null, $transform = null, $locationInMesh = null)
+	public function addPlmXmlProductInstance(\SimpleXMLElement &$xml, $id, $name = null, $partRef = null, $hostname = null, $transform = null, $locationInMesh = null, $location = null)
 	{
 		$productInstance = $xml->addChild('ProductInstance');
 
@@ -278,30 +283,38 @@ abstract class XMLController extends BaseController
 			$productInstance->addAttribute('partRef', is_array($partRef) ? implode(' ', $partRef) : $partRef);
 		}
 
+		$userData = $productInstance->addChild('UserData');
+		$userData->addAttribute('id', preg_replace('#[i]{0,1}view#i', 'userdata', $id) . '_1'); // example: id71_01_7_1
+
+		if ($hostname != null)
+		{
+			$userValue = $userData->addChild('UserValue');
+			$userValue->addAttribute('value', $hostname); // example: n007
+			$userValue->addAttribute('title', 'hostname');
+		}
+
+		if ($locationInMesh != null)
+		{
+			$locationInMesh = $userData->addChild('UserValue');
+			$locationInMesh->addAttribute('value', $locationInMesh); // example: 100 100 3100
+			$locationInMesh->addAttribute('title', 'LocationInMesh');
+		}
+
+		if ($location != null && strlen($location) > 1)
+		{
+			$location = $userData->addChild('UserValue');
+			$location->addAttribute('value', $location); // example: Room Nr. xxxx, Street, Toulouse, France
+			$location->addAttribute('title', 'location');
+		}
+
+		$label = $userData->addChild('UserValue');
+		$label->addAttribute('value', $name . '_' . $iId);
+		$label->addAttribute('title', 'label');
+
 		if ($transform != null)
 		{
 			$transform = $productInstance->addChild('Transform', $transform); // example: 0 1 0 0 -1 0 0 0 0 0 1 0 0.175 0.744 0.005 1
 			$transform->addAttribute('id', $this->convertIdToTransId($id)); // example: id71_01_07
-		}
-
-		if ($hostname != null || $locationInMesh != null)
-		{
-			$userData = $productInstance->addChild('UserData');
-			$userData->addAttribute('id', preg_replace('#[i]{0,1}view#i', 'userdata', $id) . '_1'); // example: id71_01_7_1
-
-			if ($hostname != null)
-			{
-				$userValue = $userData->addChild('UserValue');
-				$userValue->addAttribute('value', $hostname); // example: n007
-				$userValue->addAttribute('title', 'hostname');
-			}
-
-			if ($locationInMesh != null)
-			{
-				$locationInMesh = $userData->addChild('LocationInMesh');
-				$locationInMesh->addAttribute('value', $locationInMesh); // example: 1 0 0 0 0 1 0 0 0 0 1 0 -0.003 -0.003 0.003 1
-				$locationInMesh->addAttribute('title', 'LocationInMesh');
-			}
 		}
 
 		return array(0 => $productInstance, 1 => $id);
@@ -466,8 +479,6 @@ abstract class XMLController extends BaseController
 			$racks = array(); // @ignore
 			$rooms = array(); // @ignore
 
-			set_time_limit(0); // room with 10 racks with 49 node groups with 18 nodes needs circa ... minutes (windows xampp)
-
 			if($item instanceof Room)
 			{
 				$rooms[$item->getId()] = $item;
@@ -542,13 +553,12 @@ abstract class XMLController extends BaseController
 					{
 						$zip->addFile($node->getImage()->getFullPath(), 'pics/' . $node->getComponentId() . '.' . $node->getImage()->getExtension());
 					}
-					if ($node->getStlFile() != null)
+					if(count($node->getReferences()) > 0)
 					{
-						$zip->addFile($node->getStlFile()->getFullPath(), 'objects/' . $node->getStlFile()->getName());
-					}
-					if ($node->getVrmlFile() != null)
-					{
-						$zip->addFile($node->getVrmlFile()->getFullPath(), 'objects/' . $node->getVrmlFile()->getName());
+						foreach($node->getReferences() as $reference)
+						{
+							$zip->addFile($reference->getFullPath(), 'objects/' . $reference->getName());
+						}
 					}
 				}
 			}
@@ -560,6 +570,47 @@ abstract class XMLController extends BaseController
 					$controller = new NodeGroupController();
 					$controller->setContainer($this->getContainer());
 					$zip->addFromString('NodeGroup_'.$nodeGroup->getComponentId().'.xml', $controller->getDebbXml($nodeGroup->getId(), true));
+					if(count($nodeGroup->getReferences()) > 0)
+					{
+						foreach($nodeGroup->getReferences() as $reference)
+						{
+							$zip->addFile($reference->getFullPath(), 'objects/' . $reference->getName());
+						}
+					}
+				}
+			}
+			foreach($racks as $rack)
+			{
+				if($rack instanceof Rack)
+				{
+					/* @var $rack Rack */
+					$controller = new RackController();
+					$controller->setContainer($this->getContainer());
+					$zip->addFromString('Rack_'.$rack->getComponentId().'.xml', $controller->getDebbXml($rack->getId(), true));
+					if(count($rack->getReferences()) > 0)
+					{
+						foreach($rack->getReferences() as $reference)
+						{
+							$zip->addFile($reference->getFullPath(), 'objects/' . $reference->getName());
+						}
+					}
+				}
+			}
+			foreach($rooms as $rRoom)
+			{
+				if($rRoom instanceof Room)
+				{
+					/* @var $rRoom Room */
+					$controller = new RoomController();
+					$controller->setContainer($this->getContainer());
+					$zip->addFromString('Room_'.$rRoom->getComponentId().'.xml', $controller->getDebbXml($rRoom->getId(), true));
+					if(count($rRoom->getReferences()) > 0)
+					{
+						foreach($rRoom->getReferences() as $reference)
+						{
+							$zip->addFile($reference->getFullPath(), 'objects/' . $reference->getName());
+						}
+					}
 				}
 			}
 
