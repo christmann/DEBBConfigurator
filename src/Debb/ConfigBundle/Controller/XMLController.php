@@ -192,9 +192,9 @@ abstract class XMLController extends BaseController
 			'Def' . sprintf('%s%02d', $real_class_name, $entity->getId()),                                              // $name
 			$revisionViewAttr->id,                                                                                      // $partRef
 			$entity->getHostname(),                                                                                     // $hostname
-			$real_class_name == 'Room' ? null : Transformation::generateTransform($entity, $parent),                      // $transform
+			$real_class_name == 'Room' ? null : Transformation::generateTransform($entity, $parent),                    // $transform
 			null,                                                                                                       // $locationInMesh
-			$real_class_name == 'Room' ? $entity->getBuilding() : null                                                    // $location
+			$real_class_name == 'Room' ? $entity->getBuilding() : null                                                  // $location
 		);
 
 		return $instance[1];
@@ -295,16 +295,16 @@ abstract class XMLController extends BaseController
 
 		if ($locationInMesh != null)
 		{
-			$locationInMesh = $userData->addChild('UserValue');
-			$locationInMesh->addAttribute('value', $locationInMesh); // example: 100 100 3100
-			$locationInMesh->addAttribute('title', 'LocationInMesh');
+			$locationInMeshXML = $userData->addChild('UserValue');
+			$locationInMeshXML->addAttribute('value', $locationInMesh); // example: 100 100 3100
+			$locationInMeshXML->addAttribute('title', 'LocationInMesh');
 		}
 
-		if ($location != null && strlen($location) > 1)
+		if ($location != null && is_string($location) && strlen(trim($location)) > 0)
 		{
-			$location = $userData->addChild('UserValue');
-			$location->addAttribute('value', $location); // example: Room Nr. xxxx, Street, Toulouse, France
-			$location->addAttribute('title', 'location');
+			$locationXML = $userData->addChild('UserValue');
+			$locationXML->addAttribute('value', $location); // example: Room Nr. xxxx, Street, Toulouse, France
+			$locationXML->addAttribute('title', 'location');
 		}
 
 		$label = $userData->addChild('UserValue');
@@ -402,7 +402,7 @@ abstract class XMLController extends BaseController
 			foreach($representations as $rep)
 			{
 				$representation = $productRevisionView->addChild('Representation');
-				$representation->addAttribute('id', $this->convertLocationToId($rep['location'])); // example: id1084_04_1
+				$representation->addAttribute('id', $this->convertLocationToId($id . $rep['location'])); // example: id1084_04_1
 				$representation->addAttribute('format', $rep['format']); // example: VRML
 				$representation->addAttribute('location', $rep['location']); // example: ./objects/NodeBoard.wrl
 			}

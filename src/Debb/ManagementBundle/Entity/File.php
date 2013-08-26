@@ -54,7 +54,7 @@ class File extends \CIM\PluploadBundle\Entity\File
 	public function getFileEnding($upper = true)
 	{
 		list(, $ending) = explode('.', $this->getName());
-		return !$upper ? : strtoupper($ending);
+		return !$upper ? : str_replace('WRL', 'VRML', strtoupper($ending));
 	}
 
 }
