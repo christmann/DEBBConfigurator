@@ -144,7 +144,6 @@ class Node extends Dimensions
 			'Label' => 'COMExpress',
 			'Transform' => 'Transform'
 		);
-		$array['Node']['Baseboard'] = array();
 		$rest = array();
 		$firstAllowedWasInserted = false;
 		foreach ($this->getComponents() as $component)
