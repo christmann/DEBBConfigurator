@@ -11,9 +11,11 @@ use Debb\ConfigBundle\Utilities\Transformation;
 use Debb\ManagementBundle\Controller\BaseController;
 use Debb\ManagementBundle\Entity\DEBBSimple;
 use Debb\ManagementBundle\Entity\File;
+use Debb\ManagementBundle\Entity\Heatsink;
 use Debb\ManagementBundle\Entity\NodegroupToRack;
 use Debb\ManagementBundle\Entity\RackToRoom;
 use Imagine\Filter\TransformationTest;
+use Debb\ManagementBundle\Entity\Component;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -69,6 +71,10 @@ abstract class XMLController extends BaseController
 
 		$xml = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><'.$this->debbType.' />');
 		$info = $item->getDebbXmlArray();
+		if($info === false)
+		{
+			return false;
+		}
 		if(array_key_exists($this->debbType, $info))
 		{
 			$info = $info[$this->debbType];
@@ -167,7 +173,7 @@ abstract class XMLController extends BaseController
 			/** @var $entity DEBBSimple */
 			foreach($entity->getReferences() as $reference)
 			{
-				$representations[] = array('format' => $reference->getFileEnding(), 'location' => './objects/' . $reference->getName());
+				$representations[] = array('format' => $reference->getFileEnding(), 'location' => './objects/' . $reference->getId() . '_' . $reference->getName());
 			}
 		}
 
@@ -548,7 +554,11 @@ abstract class XMLController extends BaseController
 					/* @var $node Node */
 					$controller = new NodeController();
 					$controller->setContainer($this->getContainer());
-					$zip->addFromString('Node_'.$node->getComponentId().'.xml', $controller->getDebbXml($node->getId(), true));
+					$debbXmlStr = $controller->getDebbXml($node->getId(), true);
+					if($debbXmlStr !== false)
+					{
+						$zip->addFromString('Node_'.$node->getComponentId().'.xml', $debbXmlStr);
+					}
 					if ($node->getImage() != null && file_exists($node->getImage()->getFullPath()))
 					{
 						$zip->addFile($node->getImage()->getFullPath(), 'pics/' . $node->getComponentId() . '.' . $node->getImage()->getExtension());
@@ -557,7 +567,28 @@ abstract class XMLController extends BaseController
 					{
 						foreach($node->getReferences() as $reference)
 						{
-							$zip->addFile($reference->getFullPath(), 'objects/' . $reference->getName());
+							$zip->addFile($reference->getFullPath(), 'objects/' . $reference->getId() . '_' . $reference->getName());
+						}
+					}
+					$heatsinks = $node->getComponents(Component::TYPE_HEATSINK);
+					if(count($heatsinks) > 0)
+					{
+						foreach($heatsinks as $heatsink)
+						{
+							if($heatsink instanceof Component)
+							{
+								$heatsink = $heatsink->getHeatsink();
+							}
+							if($heatsink instanceof Heatsink)
+							{
+								if(count($heatsink->getReferences()) > 0)
+								{
+									foreach($heatsink->getReferences() as $reference)
+									{
+										$zip->addFile($reference->getFullPath(), 'objects/' . $reference->getId() . '_' . $reference->getName());
+									}
+								}
+							}
 						}
 					}
 				}
@@ -569,12 +600,16 @@ abstract class XMLController extends BaseController
 					/* @var $nodeGroup NodeGroup */
 					$controller = new NodeGroupController();
 					$controller->setContainer($this->getContainer());
-					$zip->addFromString('NodeGroup_'.$nodeGroup->getComponentId().'.xml', $controller->getDebbXml($nodeGroup->getId(), true));
+					$debbXmlStr = $controller->getDebbXml($nodeGroup->getId(), true);
+					if($debbXmlStr !== false)
+					{
+						$zip->addFromString('NodeGroup_'.$nodeGroup->getComponentId().'.xml', $debbXmlStr);
+					}
 					if(count($nodeGroup->getReferences()) > 0)
 					{
 						foreach($nodeGroup->getReferences() as $reference)
 						{
-							$zip->addFile($reference->getFullPath(), 'objects/' . $reference->getName());
+							$zip->addFile($reference->getFullPath(), 'objects/' . $reference->getId() . '_' . $reference->getName());
 						}
 					}
 				}
@@ -586,12 +621,16 @@ abstract class XMLController extends BaseController
 					/* @var $rack Rack */
 					$controller = new RackController();
 					$controller->setContainer($this->getContainer());
-					$zip->addFromString('Rack_'.$rack->getComponentId().'.xml', $controller->getDebbXml($rack->getId(), true));
+					$debbXmlStr = $controller->getDebbXml($rack->getId(), true);
+					if($debbXmlStr !== false)
+					{
+						$zip->addFromString('Rack_'.$rack->getComponentId().'.xml', $debbXmlStr);
+					}
 					if(count($rack->getReferences()) > 0)
 					{
 						foreach($rack->getReferences() as $reference)
 						{
-							$zip->addFile($reference->getFullPath(), 'objects/' . $reference->getName());
+							$zip->addFile($reference->getFullPath(), 'objects/' . $reference->getId() . '_' . $reference->getName());
 						}
 					}
 				}
@@ -603,12 +642,16 @@ abstract class XMLController extends BaseController
 					/* @var $rRoom Room */
 					$controller = new RoomController();
 					$controller->setContainer($this->getContainer());
-					$zip->addFromString('Room_'.$rRoom->getComponentId().'.xml', $controller->getDebbXml($rRoom->getId(), true));
+					$debbXmlStr = $controller->getDebbXml($rRoom->getId(), true);
+					if($debbXmlStr !== false)
+					{
+						$zip->addFromString('Room_'.$rRoom->getComponentId().'.xml', $debbXmlStr);
+					}
 					if(count($rRoom->getReferences()) > 0)
 					{
 						foreach($rRoom->getReferences() as $reference)
 						{
-							$zip->addFile($reference->getFullPath(), 'objects/' . $reference->getName());
+							$zip->addFile($reference->getFullPath(), 'objects/' . $reference->getId() . '_' . $reference->getName());
 						}
 					}
 				}

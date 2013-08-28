@@ -48,7 +48,7 @@ class Transformation
 			$posZ = $connector->getPosZ() * 10;
 			$rotation = $connector->getRotation();
 			/** @var $children Rack */
-			$transform = self::generate_transform($posX, $posY, $posZ, $rotation, $children->getSizeX() * 1000, $children->getSizeY() * 1000);
+			$transform = self::generate_transform($posX, $posY, $posZ, $rotation, $children->getSizeX() * 1000, $children->getSizeZ() * 1000);
 		}
 		else if ($className == 'Node')
 		{
@@ -58,7 +58,7 @@ class Transformation
 			$posZ = $connector->getPosZ();
 			$rotation = $connector->getRotation();
 			/** @var $children Node */
-			$transform = self::generate_transform($posX, $posY, $posZ, $rotation, $children->getSizeX() * 1000, $children->getSizeY() * 1000);
+			$transform = self::generate_transform($posX, $posY, $posZ, $rotation, $children->getSizeX() * 1000, $children->getSizeZ() * 1000);
 		}
 		else if ($className == 'NodeGroup' && is_callable(array($connector, 'getRack')))
 		{

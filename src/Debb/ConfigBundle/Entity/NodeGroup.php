@@ -159,8 +159,13 @@ class NodeGroup extends Dimensions
     public function getDebbXmlArray()
     {
         $array['NodeGroup'] = parent::getDebbXmlArray();
+		foreach($this->getReferences() as $reference)
+		{
+			$array['NodeGroup'][] = array(array('Reference' => array('Type' => $reference->getFileEnding(), 'Location' => './object/' . $reference->getId() . '_' . $reference->getName())));
+		}
 		if($this->getDraft() != null && $this->getDraft()->getTypspecification() != null)
 		{
+			/** @var $typSpec \Debb\ManagementBundle\Entity\ChassisTypSpecification */
 			foreach($this->getDraft()->getTypspecification() as $slot => $typSpec)
 			{
 				/**
@@ -172,12 +177,8 @@ class NodeGroup extends Dimensions
 						</Slot>
 				 */
 				$slot++;
-				$array['NodeGroup'][] = array(array('Slot' => array('Number' => $slot, 'ConnectorType' => $typSpec, 'Label' => 'Slot_' . $slot)));
+				$array['NodeGroup'][] = array(array('Slot' => array('Number' => $slot, 'ConnectorType' => $typSpec->getTyp(), 'Label' => 'Slot_' . $slot)));
 			}
-		}
-		foreach($this->getReferences() as $reference)
-		{
-			$array['NodeGroup'][] = array(array('Reference' => array('Type' => $reference->getFileEnding(), 'Location' => './object/' . $reference->getName())));
 		}
         return $array;
     }

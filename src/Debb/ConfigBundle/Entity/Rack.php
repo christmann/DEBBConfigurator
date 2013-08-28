@@ -166,7 +166,7 @@ class Rack extends Dimensions
 		}
 		foreach($this->getReferences() as $reference)
 		{
-			$array['Rack'][] = array(array('Reference' => array('Type' => $reference->getFileEnding(), 'Location' => './object/' . $reference->getName())));
+			$array['Rack'][] = array(array('Reference' => array('Type' => $reference->getFileEnding(), 'Location' => './object/' . $reference->getId() . '_' . $reference->getName())));
 		}
 		return $array;
 	}

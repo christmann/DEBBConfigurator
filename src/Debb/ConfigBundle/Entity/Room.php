@@ -157,7 +157,7 @@ class Room extends Dimensions
 		$array['Room'] = parent::getDebbXmlArray();
 		foreach($this->getReferences() as $reference)
 		{
-			$array['Room'][] = array(array('Reference' => array('Type' => $reference->getFileEnding(), 'Location' => './object/' . $reference->getName())));
+			$array['Room'][] = array(array('Reference' => array('Type' => $reference->getFileEnding(), 'Location' => './object/' . $reference->getId() . '_' . $reference->getName())));
 		}
 		return $array;
 	}

@@ -5,6 +5,7 @@ namespace Debb\ConfigBundle\Entity;
 use Debb\ManagementBundle\Entity\Heatsink;
 use Doctrine\ORM\Mapping as ORM;
 use \Debb\ManagementBundle\Entity\Component;
+use Doctrine\ORM\PersistentCollection;
 
 /**
  * Node
@@ -96,10 +97,15 @@ class Node extends Dimensions
 	/**
 	 * Get components
 	 *
-	 * @return \Debb\ManagementBundle\Entity\Component[]
+	 * @return \Debb\ManagementBundle\Entity\Component[]|PersistentCollection
 	 */
-	public function getComponents()
+	public function getComponents($specific = false)
 	{
+		if($specific !== false)
+		{
+			$components = array_filter($this->components->toArray(), function($obj) use($specific) { return $obj instanceof Component && $obj->getType() === $specific; } );
+			return $components;
+		}
 		return $this->components;
 	}
 
@@ -136,42 +142,38 @@ class Node extends Dimensions
 		$array['Node'] = parent::getDebbXmlArray();
 		foreach($this->getReferences() as $reference)
 		{
-			$array['Node'][] = array(array('Reference' => array('Type' => $reference->getFileEnding(), 'Location' => './object/' . $reference->getName())));
+			$array['Node'][] = array(array('Reference' => array('Type' => $reference->getFileEnding(), 'Location' => './object/' . $reference->getId() . '_' . $reference->getName())));
 		}
-		// todo: use dynamic connector instead:
-		$array['Node']['Connector'] = array(
-			'ConnectorType' => ($this->getType() == 'CXP2' ? 'COMExpress Type 2' : ($this->getType() == 'CPX6' ? 'COMExpress Type 6' : 'Apalis')),
+		$array['Node'][] = array(array('Connector' => array(
+			'ConnectorType' => ($this->getType() == 'CXP2' ? 'COMExpress Type 2' : ($this->getType() == 'CPX6' ? 'COMExpress Type 6' : $this->getType())),
 			'Label' => 'COMExpress',
 			'Transform' => 'Transform'
-		);
-		$rest = array();
-		$firstAllowedWasInserted = false;
-		foreach ($this->getComponents() as $component)
+		)));
+
+		$baseboards = $this->getComponents(Component::TYPE_BASEBOARD); $baseboard = false;
+		$processors = $this->getComponents(Component::TYPE_PROCESSOR); $processor = false;
+		$memories = $this->getComponents(Component::TYPE_MEMORY); $memory = false;
+
+		foreach (array_merge(
+					 $baseboards,
+					 $processors,
+					 $memories
+				 ) as $component)
 		{
-			if ($component->getAmount() >= 1 && $component->getType() != Component::TYPE_NOTHING && $component->getType() != Component::TYPE_COOLING_DEVICE)
+			if ($component->getAmount() >= 1 && $component->getType() != Component::TYPE_NOTHING)
 			{
-				if(!in_array($component->getType(), array(Component::TYPE_PROCESSOR, Component::TYPE_MEMORY)) && !$firstAllowedWasInserted)
-				{
-					$rest[] = $component->getDebbXmlArray();
-				}
-				else
-				{
-					$firstAllowedWasInserted = true;
-					$array['Node'][] = $component->getDebbXmlArray();
-				}
+				if($component->getType() == Component::TYPE_BASEBOARD) { $baseboard = true; }
+				if($component->getType() == Component::TYPE_PROCESSOR) { $processor = true; }
+				if($component->getType() == Component::TYPE_MEMORY) { $memory = true; }
+				$array['Node'][] = $component->getDebbXmlArray();
 			}
 		}
-		if(count($rest) > 0 && count(array_filter($array['Node'], function($x) { return gettype($x) == 'array'; } )) < 1)
+
+		if(!$baseboard || !$processor || !$memory)
 		{
-			$array['Node'][] = array(array('Baseboard' => array()));
+			return false;
 		}
-		if(count($rest) > 0)
-		{
-			foreach($rest as $componentXml)
-			{
-				$array['Node'][] = $componentXml;
-			}
-		}
+
 		return $array;
 	}
 
