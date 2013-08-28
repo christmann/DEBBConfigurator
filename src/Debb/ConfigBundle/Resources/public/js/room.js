@@ -75,6 +75,12 @@ function setStyleOfRack()
     if(!newRack.is('[rotated]'))
     {
         var rotation = objToRot(newRack);
+        newRack.css('border-' + rotToClass(rotation) + '-width', '4px');
+        if(rotation == 90 || rotation == 270)
+        {
+            var rackHeight = newRack.height();
+            newRack.height(newRack.width()).width(rackHeight);
+        }
         if(rotation == 90 || rotation == 270)
         {
             newRack.width(newRack.width() - 3);
@@ -83,7 +89,6 @@ function setStyleOfRack()
         {
             newRack.height(newRack.height() - 3);
         }
-        newRack.css('border-' + rotToClass(rotation) + '-width', '4px');
         newRack.attr('rotated', true);
     }
     updateRackDimensions(newRack);
@@ -201,18 +206,25 @@ $(function()
         rack.css('border-' + rotToClass(rotation) + '-width', '1px');
         rotation += 90;
         if ( rotation > 270 ) { rotation = 0; }
+        rack.find('input[id$="_rotation"]').val(rotation);
+
+        var newRack = rack;
+        newRack.css('width', (parseFloat(newRack.attr('rackx')) <= 0 ? 99 : parseFloat(newRack.attr('rackx')) * 100 - 1) + 'px');
+        newRack.css('height', (parseFloat(newRack.attr('rackz')) <= 0 ? 99 : parseFloat(newRack.attr('rackz')) * 100 - 1) + 'px');
+        newRack.css('border-' + rotToClass(rotation) + '-width', '4px');
         if(rotation == 90 || rotation == 270)
         {
-            rack.height(rack.height() + 3);
-            rack.width(rack.width() - 3);
+            var rackHeight = newRack.height();
+            newRack.height(newRack.width()).width(rackHeight);
+        }
+        if(rotation == 90 || rotation == 270)
+        {
+            newRack.width(newRack.width() - 3);
         }
         else
         {
-            rack.height(rack.height() - 3);
-            rack.width(rack.width() + 3);
+            newRack.height(newRack.height() - 3);
         }
-        rack.css('border-' + rotToClass(rotation) + '-width', '4px');
-        rack.find('input[id$="_rotation"]').val(rotation);
     });
     $(document).on('click', '.rackG', function(e)
     {
