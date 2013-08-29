@@ -30,14 +30,14 @@ class Transformation
 	 *
 	 * @return string
 	 */
-	public static function generateTransform($children, $connector)
+	public static function generateTransform($children, $connector, $separator = ' ')
 	{
 		$className = XMLController::get_real_class($children);
 
 		if ((!is_callable(array($connector, 'getPosX')) || !is_callable(array($connector, 'getPosY')) || !is_callable(array($connector, 'getPosZ')) || !is_callable(array($connector, 'getRotation'))) && ($className == 'Rack' || $className == 'Node'))
 		{
 			var_dump(get_class($connector));
-			return self::generate_transform();
+			return self::generate_transform($separator);
 		}
 
 		if ($className == 'Rack')
@@ -48,7 +48,7 @@ class Transformation
 			$posZ = $connector->getPosZ() * 10;
 			$rotation = $connector->getRotation();
 			/** @var $children Rack */
-			$transform = self::generate_transform($posX, $posY, $posZ, $rotation, $children->getSizeX() * 1000, $children->getSizeZ() * 1000);
+			$transform = self::generate_transform($separator, $posX, $posY, $posZ, $rotation, $children->getSizeX() * 1000, $children->getSizeZ() * 1000);
 		}
 		else if ($className == 'Node')
 		{
@@ -58,7 +58,7 @@ class Transformation
 			$posZ = $connector->getPosZ();
 			$rotation = $connector->getRotation();
 			/** @var $children Node */
-			$transform = self::generate_transform($posX, $posY, $posZ, $rotation, $children->getSizeX() * 1000, $children->getSizeZ() * 1000);
+			$transform = self::generate_transform($separator, $posX, $posY, $posZ, $rotation, $children->getSizeX() * 1000, $children->getSizeZ() * 1000);
 		}
 		else if ($className == 'NodeGroup' && is_callable(array($connector, 'getRack')))
 		{
@@ -69,13 +69,13 @@ class Transformation
 			$posZ = $connector->getRack()->getSpaceBottom() + $connector->getField();
 			$posZ *= $ru;
 			/** @var $children NodeGroup */
-			$transform = self::generate_transform($posX, $posY, $posZ, 0, $children->getSizeX() * 1000, $children->getSizeZ() * 1000);
+			$transform = self::generate_transform($separator, $posX, $posY, $posZ, 0, $children->getSizeX() * 1000, $children->getSizeZ() * 1000);
 		}
 		else
 		{
 			/** @var $connector Room|mixed */
 			/** @var $children Transformation|mixed */
-			$transform = self::generate_transform();
+			$transform = self::generate_transform($separator);
 		}
 
 		return $transform;
@@ -93,7 +93,7 @@ class Transformation
 	 *
 	 * @return string the generated transformation
 	 */
-	public static function generate_transform($x = 0, $y = 0, $z = 0, $rotation = 0, $xSide = 0, $ySide = 0)
+	public static function generate_transform($separator = ' ', $x = 0, $y = 0, $z = 0, $rotation = 0, $xSide = 0, $ySide = 0)
 	{
 		$rotation = floatval($rotation);
 		$xSide = floatval($xSide);
@@ -129,6 +129,6 @@ class Transformation
 		$matrix[14] = (float) $z;
 		$matrix[15] = 1;
 
-		return implode(' ',$matrix);
+		return implode($separator, $matrix);
 	}
 }
