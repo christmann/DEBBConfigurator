@@ -58,6 +58,7 @@ Tdp: TDP [Watt]
 RackSize: Rack size [RU]
 upload image file: Upload image
 size: Size
+posy: Pos Y [mm]
 
 # form fields which not defined above
 Product: Product
