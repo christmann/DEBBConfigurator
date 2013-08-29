@@ -108,7 +108,7 @@ new: - Neu
 add new node type: Neuen Knoten-Typ hinzufügen
 Maxtemp: Maximale Temperatur
 Mintemp: Minimale Temperatur
-posy: Pos Y [mm]
+posz: Pos Z [mm]
 
 # help
 help:

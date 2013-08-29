@@ -23,7 +23,7 @@ function updateRackDimensions(rack)
             left = position.left,
             bottom = $('#rackContainer').height() - position.top - $(this).outerHeight(true);
         $(this).find('#debb_configbundle_roomtype_racks_' + id + '_posx').val(left);
-        $(this).find('#debb_configbundle_roomtype_racks_' + id + '_posz').val(parseInt(bottom) + 1);
+        $(this).find('#debb_configbundle_roomtype_racks_' + id + '_posy').val(parseInt(bottom) + 1);
     });
 }
 
@@ -67,10 +67,10 @@ function setStyleOfRack()
 		newRack.css('left', (parseInt(newRack.attr('posx')) < 0 ? 0 : parseInt(newRack.attr('posx'))) + 'px');
 		newRack.removeAttr('posx');
 	}
-	if(typeof newRack.attr('posz') != 'undefined')
+	if(typeof newRack.attr('posy') != 'undefined')
 	{
-		newRack.css('bottom', (parseInt(newRack.attr('posz')) < 0 ? $('#rackContainer').height() - newRack.outerHeight(true) : parseInt(newRack.attr('posz'))) + 'px');
-		newRack.removeAttr('posz');
+		newRack.css('bottom', (parseInt(newRack.attr('posy')) < 0 ? $('#rackContainer').height() - newRack.outerHeight(true) : parseInt(newRack.attr('posy'))) + 'px');
+		newRack.removeAttr('posy');
 	}
     if(!newRack.is('[rotated]'))
     {
@@ -134,17 +134,17 @@ function generateTipContent()
 {
     var obj = $(this),
         resObj = $('<div style="height: 300px;"></div>'),
-        posYForm = obj.find('input[type="hidden"][name$="[posy]"]').clone();
-    posYForm
+        posZForm = obj.find('input[type="hidden"][name$="[posz]"]').clone();
+    posZForm
         .attr('type', 'decimal')
-        .attr('syncwith', '#' + posYForm.attr('id')) // before id change!
+        .attr('syncwith', '#' + posZForm.attr('id')) // before id change!
         .attr('id', '').attr('name', '')
         .attr('class', 'syncwith')
         .attr('maxval', '#debb_configbundle_roomtype_sizeY')
         .width(124)
     ;
     resObj.append('<div>' + Translator.get('Size') + ': ' + obj.attr('rackx') + 'm /' + obj.attr('racky') + 'm /' + obj.attr('rackz') + 'm' + '</div>');
-    resObj.append($('<div>' + Translator.get('posy') + ': </div>').append(posYForm));
+    resObj.append($('<div>' + Translator.get('posz') + ': </div>').append(posZForm));
     return resObj;
 }
 
