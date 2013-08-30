@@ -99,7 +99,7 @@ abstract class XMLController extends BaseController
 						background: red;
 						opacity: 0.5;
 						color:white;
-						transform-origin: left bottom 0;
+						transform-origin: right bottom 0;
 						border-bottom: 30px solid #000;
 					}
 
@@ -108,10 +108,21 @@ abstract class XMLController extends BaseController
 						margin: 5px;
 						padding: 5px;
 						background: green;
-						opacity: 0.8;
+						opacity: 0.7;
 						color:white;
 						border-bottom: 10px solid #000;
-						transform-origin: left bottom 0;
+						transform-origin: right bottom 0;
+					}
+
+					.box-small-child-child {
+						position: absolute;
+						margin: 5px;
+						padding: 5px;
+						background: blue;
+						opacity: 0.9;
+						color:white;
+						border-bottom: 10px solid #000;
+						transform-origin: right bottom 0;
 					}
 				</style>
 			</head>
@@ -131,14 +142,20 @@ abstract class XMLController extends BaseController
 								$childrens = $node[0]->getChildrens();
 								if(is_array($childrens) && is_array($childrens[0]) && $childrens[0][0] instanceof NodeGroup)
 								{
+									echo '<div class="box-small-child" style="transform: matrix3d('
+										. /* matrix3d: */ Transformation::generateTransform($childrens[0][0], $childrens[0][1], ', ') . '); width: '
+										. /* width:    */ ($childrens[0][0]->getDraft()->getSizeX() * 1 - 10) . 'px; height: '
+										. /* height:   */ ($childrens[0][0]->getDraft()->getSizeY() * 1 - 10 - 30) . 'px;">'
+										. "\n";
 									foreach($childrens[0][0]->getChildrens() as $child)
 									{
-										echo '<div class="box-small-child" style="transform: matrix3d('
+										echo '<div class="box-small-child-child" style="transform: matrix3d('
 											. /* matrix3d: */ Transformation::generateTransform($child[0], $child[1], ', ') . '); width: '
 											. /* width:    */ ($child[0]->getSizeX() * 1000 - 10) . 'px; height: '
 											. /* height:   */ ($child[0]->getSizeZ() * 1000 - 10 - 10) . 'px;"></div>'
 											. "\n";
 									}
+									echo '</div>';
 								}
 							}
 							echo '</div>';
