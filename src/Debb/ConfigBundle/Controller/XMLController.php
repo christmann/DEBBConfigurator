@@ -104,7 +104,6 @@ abstract class XMLController extends BaseController
 				<div class="tr-box">
 					<?php
 						/** @var $node \Debb\ManagementBundle\Entity\NodeToNodegroup */
-						$GLOBALS['rRoom'] = $item;
 						foreach($item->getChildrens() as $node)
 						{
 							echo '<div class="tr-box-small" style="transform: matrix3d('

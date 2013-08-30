@@ -21,9 +21,9 @@ function updateRackDimensions(rack)
         var id = getExactId($(this).find('.rackGform').find('div[id]').attr('id')),
             position = $(this).position(),
             left = position.left,
-            bottom = $('#rackContainer').height() - position.top - $(this).outerHeight(true);
+            top = position.top;
         $(this).find('#debb_configbundle_roomtype_racks_' + id + '_posx').val(left);
-        $(this).find('#debb_configbundle_roomtype_racks_' + id + '_posy').val(parseInt(bottom) + 1);
+        $(this).find('#debb_configbundle_roomtype_racks_' + id + '_posy').val(top);
     });
 }
 
@@ -67,11 +67,11 @@ function setStyleOfRack()
 		newRack.css('left', (parseInt(newRack.attr('posx')) < 0 ? 0 : parseInt(newRack.attr('posx'))) + 'px');
 		newRack.removeAttr('posx');
 	}
-	if(typeof newRack.attr('posy') != 'undefined')
-	{
-		newRack.css('bottom', (parseInt(newRack.attr('posy')) < 0 ? $('#rackContainer').height() - newRack.outerHeight(true) : parseInt(newRack.attr('posy'))) + 'px');
-		newRack.removeAttr('posy');
-	}
+    if(typeof newRack.attr('posy') != 'undefined')
+    {
+        newRack.css('top', (parseInt(newRack.attr('posy')) < 0 ? 0 : parseInt(newRack.attr('posy'))) + 'px');
+        newRack.removeAttr('posy');
+    }
     if(!newRack.is('[rotated]'))
     {
         var rotation = objToRot(newRack);
@@ -245,6 +245,5 @@ $(function()
 	// a single rack which we could move in our room
 	$('.rackG').draggable(rackDragOpt).droppable(rackDropOpt);
 	$('.rackG').each(setStyleOfRack);
-    $('.rackG').each(function() { $(this).css('top', $(this).position().top + 1); });
     $('.rackG').popover({html: true, trigger: 'manual', content: generateTipContent});
 });

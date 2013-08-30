@@ -95,23 +95,13 @@ class Transformation
 	 */
 	public static function generate_transform($separator = ' ', $x = 0, $y = 0, $z = 0, $rotation = 0, $xSide = 0, $ySide = 0)
 	{
+		$x = floatval($x);
+		$y = floatval($y);
+		$z = floatval($z);
 		$rotation = floatval($rotation);
 		$xSide = floatval($xSide);
 		$ySide = floatval($ySide);
 
-		$matrix = array();
-		if ($rotation == 270 || $rotation == 90)
-		{
-			$xcenter = (float) $x + 0.5 * $ySide; // Centered on the x axis
-			$ycenter = (float) $y + 0.5 * $xSide; // Centered on the y axis
-		}
-		else
-		{
-			$xcenter = (float) $x + 0.5 * $xSide; // Centered on the x axis
-			$ycenter = (float) $y + 0.5 * $ySide; // Centered on the y axis
-		}
-		$radius = sqrt(pow($xSide*0.5,2) + pow($ySide*0.5,2)); // Radius of the object
-		$angle = rad2deg(atan($ySide != 0 ? $xSide / $ySide : 0)) + 90 + $rotation; // Angle in the unit circle (clockwise)
 		$matrix = array();
 
 		for ($i=0; $i < 4*4; $i++)
@@ -124,10 +114,29 @@ class Transformation
 		$matrix[4] = round(-sin(deg2rad($rotation)), 14);
 		$matrix[5] = round(cos(deg2rad($rotation)), 14);
 		$matrix[10] = 1;
-		$matrix[13] = round($xcenter + cos(deg2rad($angle)) * $radius, 9);
-		$matrix[12] = round($ycenter - sin(deg2rad($angle)) * $radius, 9);
-		$matrix[14] = (float) $z;
+		$matrix[14] = $z;
 		$matrix[15] = 1;
+
+		if ($rotation >= 270)
+		{
+			$matrix[12] = $x + $ySide;
+			$matrix[13] = $y;
+		}
+		elseif ($rotation >= 180)
+		{
+			$matrix[12] = $x + $xSide;
+			$matrix[13] = $y - $ySide;
+		}
+		elseif ($rotation >= 90)
+		{
+			$matrix[12] = $x;
+			$matrix[13] = $y - $xSide;
+		}
+		else
+		{
+			$matrix[12] = $x;
+			$matrix[13] = $y;
+		}
 
 		return implode($separator, $matrix);
 	}
