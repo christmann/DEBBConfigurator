@@ -58,6 +58,70 @@ abstract class XMLController extends BaseController
 	}
 
 	/**
+	 * Show entity as 3D document
+	 *
+	 * @Route("/3d/{id}.html", requirements={"id"="\d+"});
+	 *
+	 * @param int                                       $id       item id
+	 *
+	 * @return \Symfony\Component\HttpFoundation\Response
+	 */
+	public function as3dAction($id)
+	{
+		$response = new \Symfony\Component\HttpFoundation\Response();
+		$response->headers->set('Content-Type', 'text/html');
+		header('Content-Type: text/html');
+
+		$item = $this->getEntity($id);
+
+		?>
+			<!DOCTYPE html>
+			<html lang="de">
+			<head>
+				<meta charset="utf-8">
+				<title>3D example rack</title>
+				<style type="text/css" rel="stylesheet">
+					body {
+						transform: scale(0.1, 0.1);
+						transform-origin: left top 0;
+					}
+
+					.tr-box-small {
+						width: 100px;
+						height:100px;
+						position: absolute;
+						margin: 5px;
+						padding: 5px;
+						background: red;
+						opacity: 0.5;
+						color:white;
+						transform-origin: left bottom 0;
+						border-bottom: 30px solid #000;
+					}
+				</style>
+			</head>
+			<body>
+				<div class="tr-box">
+					<?php
+						/** @var $node \Debb\ManagementBundle\Entity\NodeToNodegroup */
+						$GLOBALS['rRoom'] = $item;
+						foreach($item->getChildrens() as $node)
+						{
+							echo '<div class="tr-box-small" style="transform: matrix3d('
+								. /* matrix3d: */ Transformation::generateTransform($node[0], $node[1], ', ') . '); width: '
+								. /* width:    */ ($node[0]->getSizeX() * 1000 - 10) . 'px; height: '
+								. /* height:   */ ($node[0]->getSizeZ() * 1000 - 10 - 30) . 'px;"></div>'
+								. "\n";
+						}
+					?>
+				</div>
+			</body>
+			</html>
+		<?php
+		return $response;
+	}
+
+	/**
 	 * Return entity as DEBBComponents.xml string
 	 *
 	 * @param int $id item id
