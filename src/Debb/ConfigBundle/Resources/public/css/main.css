@@ -869,6 +869,7 @@ select
 #rackScale
 {
     border:           1px solid #777777;
+    border-top-width: 0;
     height:           20px;
     margin-left:      0;
     position:         relative;
