@@ -120,22 +120,22 @@ class Transformation
 		if ($rotation >= 270)
 		{
 			$matrix[12] = $x + $ySide;
-			$matrix[13] = $y;
+			$matrix[13] = $y + $xSide;
 		}
 		elseif ($rotation >= 180)
 		{
 			$matrix[12] = $x + $xSide;
-			$matrix[13] = $y - $ySide;
+			$matrix[13] = $y;
 		}
 		elseif ($rotation >= 90)
 		{
 			$matrix[12] = $x;
-			$matrix[13] = $y - $xSide;
+			$matrix[13] = $y;
 		}
 		else
 		{
 			$matrix[12] = $x;
-			$matrix[13] = $y;
+			$matrix[13] = $y + $ySide;
 		}
 
 		return implode($separator, $matrix);
