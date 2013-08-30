@@ -86,9 +86,13 @@ abstract class XMLController extends BaseController
 						transform-origin: left top 0;
 					}
 
-					.tr-box-small {
-						width: 100px;
-						height:100px;
+					.box {
+						width: <?php echo $item->getFullX() * 10; ?>px;
+						height: <?php echo $item->getFullZ() * 10; ?>px;
+						background-color: #EDEDED;
+					}
+
+					.box-small {
 						position: absolute;
 						margin: 5px;
 						padding: 5px;
@@ -98,19 +102,46 @@ abstract class XMLController extends BaseController
 						transform-origin: left bottom 0;
 						border-bottom: 30px solid #000;
 					}
+
+					.box-small-child {
+						position: absolute;
+						margin: 5px;
+						padding: 5px;
+						background: green;
+						opacity: 0.8;
+						color:white;
+						border-bottom: 10px solid #000;
+						transform-origin: left bottom 0;
+					}
 				</style>
 			</head>
 			<body>
-				<div class="tr-box">
+				<div class="box">
 					<?php
 						/** @var $node \Debb\ManagementBundle\Entity\NodeToNodegroup */
 						foreach($item->getChildrens() as $node)
 						{
-							echo '<div class="tr-box-small" style="transform: matrix3d('
+							echo '<div class="box-small" style="transform: matrix3d('
 								. /* matrix3d: */ Transformation::generateTransform($node[0], $node[1], ', ') . '); width: '
 								. /* width:    */ ($node[0]->getSizeX() * 1000 - 10) . 'px; height: '
-								. /* height:   */ ($node[0]->getSizeZ() * 1000 - 10 - 30) . 'px;"></div>'
+								. /* height:   */ ($node[0]->getSizeZ() * 1000 - 10 - 30) . 'px;">'
 								. "\n";
+							if($node[0] instanceof Rack)
+							{
+								$childrens = $node[0]->getChildrens();
+								if(is_array($childrens) && is_array($childrens[0]) && $childrens[0][0] instanceof NodeGroup)
+								{
+									foreach($childrens[0][0]->getChildrens() as $child)
+									{
+										echo '<div class="box-small-child" style="transform: matrix3d('
+											. /* matrix3d: */ Transformation::generateTransform($child[0], $child[1], ', ') . '); width: '
+											. /* width:    */ ($child[0]->getSizeX() * 1000 - 10) . 'px; height: '
+											. /* height:   */ ($child[0]->getSizeZ() * 1000 - 10 - 10) . 'px;"></div>'
+											. "\n";
+									}
+								}
+							}
+							echo '</div>';
 						}
 					?>
 				</div>

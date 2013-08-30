@@ -137,6 +137,7 @@ class Transformation
 			$matrix[12] = $x;
 			$matrix[13] = $y + $ySide;
 		}
+		$matrix[13] -= $ySide;
 
 		return implode($separator, $matrix);
 	}
