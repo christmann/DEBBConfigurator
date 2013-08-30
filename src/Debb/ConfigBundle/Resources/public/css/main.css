@@ -871,11 +871,11 @@ select
     border:           1px solid #777777;
     border-top-width: 0;
     height:           20px;
-    margin-left:      0;
+    margin-left:      3px;
     position:         relative;
     text-align:       center;
     vertical-align:   middle;
-    width:            101px;
+    width:            98px;
 }
 
 #rackScale .icon-arrow-left
