@@ -64,12 +64,12 @@ class Transformation
 		{
 			$ru = 44.45; // 1 Rack Unit = 44.45mm
 			/** @var $connector NodegroupToRack */
-			$posX = $connector->getRack()->getSpaceLeft();
-			$posY = $connector->getRack()->getSpaceFront();
-			$posZ = $connector->getRack()->getSpaceBottom() + $connector->getField();
-			$posZ *= $ru;
 			/** @var $children NodeGroup */
-			$transform = self::generate_transform($separator, $posX, $posY, $posZ, 0, $children->getSizeX() * 1000, $children->getSizeZ() * 1000);
+			$posX = $connector->getRack()->getSpaceLeft() * 1000;
+			$posY = $connector->getRack()->getSpaceFront() * 1000;
+			$posZ = $connector->getField() * $ru;
+			$posZ -= $ru * ($children->getDraft()->getHeSize() - 1) + $connector->getRack()->getSpaceBottom() * 1000;
+			$transform = self::generate_transform($separator, $posX, $posY, $posZ, 180, $children->getSizeX() * 1000, $children->getSizeZ() * 1000);
 		}
 		else
 		{
@@ -109,6 +109,33 @@ class Transformation
 			$matrix[$i] = 0;
 		}
 
+		if ($rotation == 270)
+		{
+			$matrix[12] = $x + $ySide;
+			$matrix[13] = $y - $ySide;
+		}
+		elseif ($rotation == 180)
+		{
+			$rotation += 180;
+			$rotation = $rotation % 360;
+			$matrix[12] = $x + $xSide;
+			$matrix[13] = $y;
+		}
+		elseif ($rotation == 90)
+		{
+			$matrix[12] = $x;
+			$matrix[13] = $y - $ySide + $xSide;
+		}
+		else
+		{
+			$rotation += 180;
+			$rotation = $rotation % 360;
+			$matrix[12] = $x;
+			$matrix[13] = $y - $ySide;
+		}
+		$matrix[12] -= $xSide;
+		//$matrix[13] -= $ySide;
+
 		$matrix[0] = round(cos(deg2rad($rotation)), 14);
 		$matrix[1] = round(sin(deg2rad($rotation)), 14);
 		$matrix[4] = round(-sin(deg2rad($rotation)), 14);
@@ -116,28 +143,6 @@ class Transformation
 		$matrix[10] = 1;
 		$matrix[14] = $z;
 		$matrix[15] = 1;
-
-		if ($rotation >= 270)
-		{
-			$matrix[12] = $x + $ySide;
-			$matrix[13] = $y + $xSide;
-		}
-		elseif ($rotation >= 180)
-		{
-			$matrix[12] = $x + $xSide;
-			$matrix[13] = $y;
-		}
-		elseif ($rotation >= 90)
-		{
-			$matrix[12] = $x;
-			$matrix[13] = $y;
-		}
-		else
-		{
-			$matrix[12] = $x;
-			$matrix[13] = $y + $ySide;
-		}
-		$matrix[13] -= $ySide;
 
 		return implode($separator, $matrix);
 	}
