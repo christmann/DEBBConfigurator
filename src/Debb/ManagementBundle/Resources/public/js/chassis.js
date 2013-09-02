@@ -22,9 +22,9 @@ function updateNodeDimensions(node)
         var id = getExactId($(this).find('div[id]').attr('id')),
             position = $(this).position(),
             left = position.left,
-            top = position.top;
+            bottom = $('#nodegroupContainer').height() - position.top - $(this).outerHeight(true);
         $(this).find('#debb_managementbundle_chassistype_typspecification_' + id + '_posX').val(left);
-        $(this).find('#debb_managementbundle_chassistype_typspecification_' + id + '_posY').val(top);
+        $(this).find('#debb_managementbundle_chassistype_typspecification_' + id + '_posY').val(parseInt(bottom));
     });
 }
 
@@ -112,7 +112,7 @@ $(function ()
         }
         if(typeof $(this).attr('posy') != 'undefined')
         {
-            $(this).css('top', (parseInt($(this).attr('posy')) < 0 ? 0 : parseInt($(this).attr('posy'))) + 'px');
+            $(this).css('bottom', (parseInt($(this).attr('posy')) < 0 ? $('#nodegroupContainer').height() - $(this).outerHeight() : parseInt($(this).attr('posy'))) + 'px');
             $(this).removeAttr('posy');
         }
     });
