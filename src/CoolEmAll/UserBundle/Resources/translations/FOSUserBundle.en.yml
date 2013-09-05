@@ -1,0 +1,4 @@
+# Form field labels
+form:
+    password_confirmation: "Password verification:"
+    new_password_confirmation: "Password verification:"
