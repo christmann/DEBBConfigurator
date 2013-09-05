@@ -44,56 +44,55 @@ $(function () {
         e.preventDefault();
     });
     $('#debb_configbundle_nodegrouptype_draft').change(function () {
-        var obj = $(this).find('option:selected:first[typspecs]');
-        if (obj.length > 0) {
-            $('#nodegroup').css('background-image', 'url("' + obj.attr('image') + '")');
-            $('#nodegroup').width(parseInt(obj.attr('sizex')) + 50);
-            $('#nodegroup').height(parseInt(obj.attr('sizey')));
-            $('#content').width(parseInt($('#nodegroup').width()) + 430);
+        var obj = $(this).find('option:selected:first');
 
-            var typspecs = $.parseJSON(obj.attr('typspecs')),
-                nodeArr = $('#nodegroup').find('.node');
+        $('#nodegroup').css('background-image', typeof obj.attr('image') != 'undefined' ? 'url("' + obj.attr('image') + '")' : '');
+        $('#nodegroup').width(parseInt(typeof obj.attr('sizex') != 'undefined' ? obj.attr('sizex') : 420 ) + 50);
+        $('#nodegroup').height(parseInt(typeof obj.attr('sizey') != 'undefined' ? obj.attr('sizey') : 200));
+        $('#content').width(parseInt($('#nodegroup').width()) + 430);
 
-            if (nodeArr.length > typspecs.length) {
-                for (var x = typspecs.length; x < nodeArr.length; x++) {
-                    $(nodeArr[x]).remove();
-                }
-            }
-            else {
-                for (var x = nodeArr.length; x < typspecs.length; x++) {
-                    var id = getFreeId('debb_configbundle_nodegrouptype_nodes_', x);
-                    $('#nodegroup').append($('#nodegroup').attr('data-prototype').replace(/__name__/g, getExactId(id)));
-                    $('#' + id + '_nodeGroup').val(nodeGroupId);
-                }
-            }
-
-            var field = 0;
+        var typspecs = typeof obj.attr('typspecs') != 'undefined' ? $.parseJSON(obj.attr('typspecs')) : [],
             nodeArr = $('#nodegroup').find('.node');
 
-            nodeArr.each(function()
-            {
-                $(this).css('position', 'absolute').css('left', typspecs[field].posX).css('bottom', typspecs[field].posY).attr('specification', typspecs[field].typ).css('border', '').css('width', '').css('height', '');
-                if(typspecs[field].rotation > 270 || typspecs[field].rotation < 1)
-                {
-                    $(this).css('border-bottom-width', '4px').height($(this).height() - 3);
-                }
-                else if(typspecs[field].rotation > 180)
-                {
-                    $(this).css('border-right-width', '4px').width($(this).width() - 3);
-                }
-                else if(typspecs[field].rotation > 90)
-                {
-                    $(this).css('border-top-width', '4px').height($(this).height() - 3);
-                }
-                else if(typspecs[field].rotation > 0)
-                {
-                    $(this).css('border-left-width', '4px').width($(this).width() - 3);
-                }
-                $(this).find('[id$="_field"]').val(++field);
-            });
-
-            updateNodes();
+        if (nodeArr.length > typspecs.length) {
+            for (var x = typspecs.length; x < nodeArr.length; x++) {
+                $(nodeArr[x]).remove();
+            }
         }
+        else {
+            for (var x = nodeArr.length; x < typspecs.length; x++) {
+                var id = getFreeId('debb_configbundle_nodegrouptype_nodes_', x);
+                $('#nodegroup').append($('#nodegroup').attr('data-prototype').replace(/__name__/g, getExactId(id)));
+                $('#' + id + '_nodeGroup').val(nodeGroupId);
+            }
+        }
+
+        var field = 0;
+        nodeArr = $('#nodegroup').find('.node');
+
+        nodeArr.each(function()
+        {
+            $(this).css('position', 'absolute').css('left', typspecs[field].posX).css('bottom', typspecs[field].posY).attr('specification', typspecs[field].typ).css('border', '').css('width', '').css('height', '');
+            if(typspecs[field].rotation > 270 || typspecs[field].rotation < 1)
+            {
+                $(this).css('border-bottom-width', '4px').height($(this).height() - 3);
+            }
+            else if(typspecs[field].rotation > 180)
+            {
+                $(this).css('border-right-width', '4px').width($(this).width() - 3);
+            }
+            else if(typspecs[field].rotation > 90)
+            {
+                $(this).css('border-top-width', '4px').height($(this).height() - 3);
+            }
+            else if(typspecs[field].rotation > 0)
+            {
+                $(this).css('border-left-width', '4px').width($(this).width() - 3);
+            }
+            $(this).find('[id$="_field"]').val(++field);
+        });
+
+        updateNodes();
     });
     $('.adopt').on('click', function (e) {
         var field = $(this).attr('field');
