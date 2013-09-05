@@ -55,7 +55,7 @@
 
 			<div class="rackConfig">
 				<select id="selectedNodeGroup" disabled="disabled" style="margin-right: 15px; width: 232px;">
-					<option value="" disabled="disabled" selected="selected">- {{ 'choose.%person%.%what%' | trans({'%person%': 'your' | trans, '%what%': 'node.group' | trans}) }} -</option>
+					<option value="" disabled="disabled" selected="selected">- {{ 'Choose your node group' | trans }} -</option>
 					<option id="emptyval" value="0" style="display: none;">--- {{ 'empty' | trans }} ---</option>
 					{% for nodegroup in nodegroups|dSort %}
 							<option value="{{ nodegroup.id }}" size="{{ nodegroup.draft.heSize | default(1) }}">{{ nodegroup }}</option>
