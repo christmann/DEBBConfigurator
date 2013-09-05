@@ -20,7 +20,6 @@ class FlowStateType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('state')
             ->add('flow', null, array('required' => false))
             ->add('powerUsage', null, array('required' => false))
         ;
