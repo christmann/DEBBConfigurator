@@ -18,7 +18,7 @@ $(function ()
     var isSubmitted = false;
     var inputCache = {};
     var fieldName = 'data-input-check-id';
-    var selector = 'input,select';
+    var selector = 'input[type!="file"],select';
 
     // map fields
     $(selector).each(function ()
@@ -38,6 +38,7 @@ $(function ()
             }
         }
         else {
+            console.log(this);
             changed = true;
         }
     }

@@ -8,6 +8,7 @@
 
 namespace Debb\ConfigBundle\Entity;
 
+use Debb\ManagementBundle\Entity\NodegroupToRack;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -46,6 +47,7 @@ class Rack extends Dimensions
 	public function __construct()
 	{
 		$this->nodeGroups = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->nodeGroups[] = new NodegroupToRack();
 		$this->references = new \Doctrine\Common\Collections\ArrayCollection();
 	}
 
