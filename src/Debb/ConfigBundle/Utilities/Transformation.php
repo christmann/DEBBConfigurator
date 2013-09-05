@@ -47,7 +47,7 @@ class Transformation
 			/** @var $connector RackToRoom */
 			$posX = $connector->getPosX() * 10;
 			$posY = $connector->getPosY() * 10;
-			$posZ = $connector->getPosZ() * 10;
+			$posZ = $connector->getPosZ() * 1000;
 			$rotation = $connector->getRotation();
 			/** @var $children Rack */
 			$transform = self::generate_transform($separator, $posX, $posY, $posZ, $rotation, $children->getSizeX() * 1000, $children->getSizeZ() * 1000);

@@ -23,7 +23,7 @@ class DEBBSimpleType extends BaseType
             ->add('transform')
             ->add('references', 'plupload', array(
 		            'filter' => array('wrl,vrml' => 'VRML', 'stl' => 'STL'),
-		            'label' => 'upload model files',
+		            'label' => 'Upload model files',
 		            'bootstrap' => true,
 		            'multiple' => true
 	            )

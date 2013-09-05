@@ -35,24 +35,14 @@
 										{% block tbuttons %}
 											{% block tbuttons_base %}
 												{% spaceless %}
-													<a href="{{ path(localdev_admin_route("_form"), {"id":item.id}) }}" class="btn">
-														<span rel="tooltip" data-original-title="{{ 'edit' | trans }}"><i class="icon-edit"></i></span>
-													</a>
-													{% if exportasxml is defined and route_exists(localdev_admin_route("_asxml")) %}
-														<a target="_blank" href="{{ path(localdev_admin_route("_asxml"), {"id": item.id}) }}" class="btn">
-															<span rel="tooltip" data-original-title="{{ 'download.%what%.file' | trans({'%what%': 'DEBBComponents.xml' | trans}) }}"><i class="icon-file"></i></span>
-														</a>
-													{% endif %}
-													{% if exportasarchive is defined and route_exists(localdev_admin_route("_exportasarchive")) %}
-														<a target="_blank" href="{{ path(localdev_admin_route("_exportasarchive"), {"id": item.id}) }}" class="btn">
-															<span rel="tooltip" data-original-title="{{ 'download.%what%.file' | trans({'%what%': 'archive' | trans}) }}"><i class="icon-download-alt"></i></span>
-														</a>
-													{% endif %}
                                                     {% if route_exists(localdev_admin_route("_duplicate")) %}
                                                         <a href="{{ path(localdev_admin_route("_duplicate"), {"id": item.id}) }}" class="btn">
                                                             <span rel="tooltip" data-original-title="{{ 'duplicate' | trans }}"><i class="icon-plus-sign"></i></span>
                                                         </a>
                                                     {% endif %}
+													<a href="{{ path(localdev_admin_route("_form"), {"id":item.id}) }}" class="btn">
+														<span rel="tooltip" data-original-title="{{ 'edit' | trans }}"><i class="icon-edit"></i></span>
+													</a>
 													<a class="btn btn-danger" data-toggle="modal"
 													   href="#delete{{ item.id }}">
 														<span rel="tooltip" data-original-title="{{ 'delete' | trans }}"><i class="icon-remove icon-white"></i></span>
@@ -61,6 +51,18 @@
 											{% endblock %}
 										{% endblock %}
 									</div>
+                                    <div class="btn-group pull-right">
+                                        {% if exportasxml is defined and route_exists(localdev_admin_route("_asxml")) %}
+                                            <a target="_blank" href="{{ path(localdev_admin_route("_asxml"), {"id": item.id}) }}" class="btn">
+                                                <span rel="tooltip" data-original-title="{{ 'download.%what%.file' | trans({'%what%': 'DEBBComponents.xml' | trans}) }}"><i class="icon-file"></i></span>
+                                            </a>
+                                        {% endif %}
+                                        {% if exportasarchive is defined and route_exists(localdev_admin_route("_exportasarchive")) %}
+                                            <a target="_blank" href="{{ path(localdev_admin_route("_exportasarchive"), {"id": item.id}) }}" class="btn">
+                                                <span rel="tooltip" data-original-title="{{ 'download.%what%.file' | trans({'%what%': 'archive' | trans}) }}"><i class="icon-download-alt"></i></span>
+                                            </a>
+                                        {% endif %}
+                                    </div>
 								{% endblock %}
 								<div class="modal hide" id="delete{{ item.id }}">
 									<div class="modal-header">

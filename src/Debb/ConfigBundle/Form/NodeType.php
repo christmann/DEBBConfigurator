@@ -35,7 +35,7 @@ class NodeType extends BaseType
             ->add('image', 'plupload', array('required' => false, 'label' => 'upload node image', 'placeholder' => true, 'bootstrap' => true))
 			->add('references', 'plupload', array(
 					'filter' => array('wrl,vrml' => 'VRML', 'stl' => 'STL'),
-					'label' => 'upload model files',
+					'label' => 'Upload model files',
 					'bootstrap' => true,
 					'multiple' => true
 				)
