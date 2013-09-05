@@ -9,7 +9,9 @@ use Debb\ConfigBundle\Entity\Rack;
 use Debb\ConfigBundle\Entity\Room;
 use Debb\ManagementBundle\Entity\Base;
 use Debb\ManagementBundle\Entity\ChassisTypSpecification;
+use Debb\ManagementBundle\Entity\Component;
 use Debb\ManagementBundle\Entity\Connector;
+use Debb\ManagementBundle\Entity\Heatsink;
 use Debb\ManagementBundle\Entity\NodegroupToRack;
 use Debb\ManagementBundle\Entity\NodeToNodegroup;
 use Debb\ManagementBundle\Entity\RackToRoom;
@@ -58,7 +60,7 @@ class Transformation
 			$posZ = $connector->getPosZ();
 			$rotation = $connector->getRotation();
 			/** @var $children Node */
-			$transform = self::generate_transform($separator, $posX, $posY, $posZ, $rotation, $children->getSizeX() * 1000, $children->getSizeZ() * 1000);
+			$transform = self::generate_transform($separator, - $posX, -  $posY, 15, $rotation , $children->getSizeX() * 1000, $children->getSizeZ() * 1000);
 		}
 		else if ($className == 'NodeGroup' && is_callable(array($connector, 'getRack')))
 		{
@@ -69,7 +71,13 @@ class Transformation
 			$posY = $connector->getRack()->getSpaceFront() * 1000;
 			$posZ = $connector->getField() * $ru;
 			$posZ -= $ru * ($children->getDraft()->getHeSize() - 1) + $connector->getRack()->getSpaceBottom() * 1000;
-			$transform = self::generate_transform($separator, $posX, $posY, $posZ, 180, $children->getSizeX() * 1000, $children->getSizeZ() * 1000);
+			$transform = self::generate_transform($separator, $posX, $posY, $posZ, 0, $children->getSizeX() * 1000, $children->getSizeZ() * 1000);
+		}
+		else if ($className == 'Heatsink')
+		{
+			/** @var $children Heatsink */
+			/** @var $connector Component */
+			$transform = self::generate_transform($separator, 0, 0, 8, 0, 0, 0);
 		}
 		else
 		{
@@ -109,32 +117,29 @@ class Transformation
 			$matrix[$i] = 0;
 		}
 
+		$rotation = $rotation % 360;
 		if ($rotation == 270)
 		{
 			$matrix[12] = $x + $ySide;
-			$matrix[13] = $y - $ySide;
+			$matrix[13] = $y;
 		}
 		elseif ($rotation == 180)
 		{
-			$rotation += 180;
-			$rotation = $rotation % 360;
-			$matrix[12] = $x + $xSide;
+			$matrix[12] = $x;
 			$matrix[13] = $y;
 		}
 		elseif ($rotation == 90)
 		{
 			$matrix[12] = $x;
-			$matrix[13] = $y - $ySide + $xSide;
+			$matrix[13] = $y+ $xSide;
 		}
 		else
 		{
-			$rotation += 180;
-			$rotation = $rotation % 360;
-			$matrix[12] = $x;
-			$matrix[13] = $y - $ySide;
+			$matrix[12] = $x + $xSide;
+			$matrix[13] = $y + $ySide;
 		}
 		$matrix[12] -= $xSide;
-		//$matrix[13] -= $ySide;
+		$matrix[13] -= $ySide;
 
 		$matrix[0] = round(cos(deg2rad($rotation)), 14);
 		$matrix[1] = round(sin(deg2rad($rotation)), 14);
