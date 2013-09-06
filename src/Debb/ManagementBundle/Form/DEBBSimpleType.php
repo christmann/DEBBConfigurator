@@ -20,7 +20,7 @@ class DEBBSimpleType extends BaseType
     {
 	    parent::buildForm($builder, $options);
         $builder
-            ->add('transform')
+            ->add('transform', null, array('attr' => array('placeholder' => '1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1')))
             ->add('references', 'plupload', array(
 		            'filter' => array('wrl,vrml' => 'VRML', 'stl' => 'STL'),
 		            'label' => 'Upload model files',
