@@ -46,8 +46,7 @@
 						<xsd:simpleType>
 							<xsd:restriction base="xsd:string">
 								<xsd:enumeration value="Fan"></xsd:enumeration>
-								<xsd:enumeration value="Refrigeration">
-								</xsd:enumeration>
+								<xsd:enumeration value="Refrigeration"></xsd:enumeration>
 								<xsd:enumeration value="Heatpipe"></xsd:enumeration>
 								<xsd:enumeration value="ILC"></xsd:enumeration>
 								<xsd:enumeration value="LCU"></xsd:enumeration>
@@ -62,13 +61,32 @@
 						type="xsd:decimal" />
 					<xsd:element minOccurs="0" name="MaxWaterThroughput"
 						type="xsd:decimal" />
-					<xsd:element name="AirThroughputProfile" type="xsd_1:FlowProfileType"
-						maxOccurs="1" minOccurs="0"></xsd:element>
-					<xsd:element name="WaterThroughputProfile" type="xsd_1:FlowProfileType"
-						maxOccurs="1" minOccurs="0"></xsd:element>
+					<xsd:element name="AirThroughputProfile"
+						type="xsd_1:FlowProfileType" maxOccurs="1" minOccurs="0">
+					</xsd:element>
+					<xsd:element name="WaterThroughputProfile"
+						type="xsd_1:FlowProfileType" maxOccurs="1" minOccurs="0">
+					</xsd:element>
+					<xsd:element name="EnergyEfficiencyRatio" type="xsd_1:CoolingEERType" minOccurs="0" maxOccurs="1"></xsd:element>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="CoolingEEREntryType">
+		<xsd:sequence>
+			<xsd:element name="LWT" type="xsd:float" maxOccurs="1" minOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Water temperature entering the chiller</xsd:documentation>
+				</xsd:annotation></xsd:element>
+			<xsd:element name="CWT" type="xsd:float" maxOccurs="1" minOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Air temperature entering the condenser</xsd:documentation>
+				</xsd:annotation></xsd:element>
+			<xsd:element name="Capacity" type="xsd:int" maxOccurs="1" minOccurs="1"></xsd:element>
+			<xsd:element name="PowerUsage" type="xsd:int" maxOccurs="1" minOccurs="1"></xsd:element>
+			<xsd:element name="EER" type="xsd:float" maxOccurs="1" minOccurs="1"></xsd:element>
+		</xsd:sequence>
 	</xsd:complexType>
 
 	<xsd:complexType name="CStateType">
@@ -87,10 +105,10 @@
 		<xsd:complexContent>
 			<xsd:extension base="xsd_1:DEBBSimpleType">
 				<xsd:sequence>
-					<xsd:element name="Inlet" type="xsd_1:OutletType"
+					<xsd:element name="Inlet" type="xsd_1:FlowPumpType"
 						maxOccurs="unbounded" minOccurs="0">
 					</xsd:element>
-					<xsd:element name="Outlet" type="xsd_1:OutletType"
+					<xsd:element name="Outlet" type="xsd_1:FlowPumpType"
 						maxOccurs="unbounded" minOccurs="0">
 					</xsd:element>
 					<xsd:element name="Heatsink" type="xsd_1:HeatsinkType"
@@ -172,15 +190,10 @@
 					</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:choice>
-				<xsd:element name="PowerUsage" type="xsd:double" minOccurs="0" maxOccurs="1"></xsd:element>
-				<xsd:element name="PowerUsageState"
-					type="xsd_1:FlowStateType" minOccurs="0" maxOccurs="1">
-				</xsd:element>
-				<xsd:element name="PowerUsageProfile"
-					type="xsd_1:FlowProfileType" minOccurs="0" maxOccurs="1">
-				</xsd:element>
-			</xsd:choice>
+			<xsd:element name="PowerUsage" type="xsd:float" maxOccurs="1" minOccurs="0"></xsd:element>
+			<xsd:element name="PowerUsageProfile"
+				type="xsd_1:FlowProfileType" minOccurs="0" maxOccurs="1">
+			</xsd:element>
 			<xsd:element name="Type" type="xsd:string" minOccurs="0"
 				maxOccurs="1">
 				<xsd:annotation>
@@ -263,15 +276,25 @@
 			<xsd:element name="PowerUsage" type="xsd:double"
 				maxOccurs="1" minOccurs="0">
 			</xsd:element>
+			<xsd:element name="Description" type="xsd:string" maxOccurs="1" minOccurs="0"></xsd:element>
 		</xsd:sequence>
 	</xsd:complexType>
 
 	<xsd:complexType name="HeatsinkType">
-		<xsd:complexContent>
+        <xsd:annotation>
+        	<xsd:documentation>A heatsink is any type of device transfering heat betweeen two neighbour gas, fluids or solids like
+- heat exchanger in colling deviced transfering heat from one cooling circuit to another (i.e. air/liquid or liquid/liquid)
+- cpu cooler transfering heta from the cpu to the air or liquid  (solid/air or liquid)
+</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
 			<xsd:extension base="xsd_1:DEBBSimpleType">
 				<xsd:sequence>
 					<xsd:element name="TransferRate" type="xsd:float"
-						minOccurs="0" maxOccurs="1"></xsd:element>
+						minOccurs="0" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>Also called efficiency</xsd:documentation>
+						</xsd:annotation></xsd:element>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -332,12 +355,17 @@
 		</xsd:complexContent>
 	</xsd:complexType>
 
-	<xsd:complexType name="OutletType">
-		<xsd:complexContent>
+	<xsd:complexType name="FlowPumpType">
+        <xsd:annotation>
+        	<xsd:documentation>FlowPump includes all devices "moving" air or liquid like fans, water pumps etc.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
 			<xsd:extension base="xsd_1:DEBBSimpleType">
 				<xsd:sequence>
-					<xsd:element name="MaxRPM" type="xsd:int" minOccurs="0"
-						maxOccurs="1"></xsd:element>
+					<xsd:element name="MaxRPM" type="xsd:int"
+						minOccurs="0" maxOccurs="1">
+					</xsd:element>
+					<xsd:element name="Efficiency" type="xsd:float" maxOccurs="1" minOccurs="0"></xsd:element>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -389,13 +417,31 @@
 		</xsd:complexContent>
 	</xsd:complexType>
 
+    <xsd:complexType name="PStateLoadPowerUsageType">
+		<xsd:sequence>
+			<xsd:element name="Load" type="xsd:float" maxOccurs="1" minOccurs="1"></xsd:element>
+			<xsd:element name="PowerUsage" type="xsd:float" maxOccurs="1" minOccurs="1"></xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
 	<xsd:complexType name="PStateType">
 		<xsd:sequence>
 			<xsd:element name="State" type="xsd:int" />
 			<xsd:element name="Frequency" type="xsd:double" />
 			<xsd:element name="Voltage" type="xsd:double" />
-			<xsd:element name="PowerUsageMin" type="xsd:double" />
-			<xsd:element name="PowerUsageMax" type="xsd:double" />
+			<xsd:element name="PowerUsageMin" type="xsd:double" maxOccurs="1" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>No longer used, only for compatibility reasons.
+Replaced by LoadPwerUsage with more options</xsd:documentation>
+				</xsd:annotation></xsd:element>
+			<xsd:element name="PowerUsageMax" type="xsd:double" maxOccurs="1" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>No longer used, only for compatibility reasons.
+Replaced by LoadPwerUsage with more options</xsd:documentation></xsd:annotation></xsd:element>
+			<xsd:element name="LoadPowerUsage" type="xsd_1:PStateLoadPowerUsageType" maxOccurs="unbounded" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Replaces PowerUsageMin/Max and allows specifying PowerUsage for specific loads.</xsd:documentation>
+				</xsd:annotation></xsd:element>
 		</xsd:sequence>
 	</xsd:complexType>
 
@@ -491,13 +537,19 @@
 
 	<xsd:element name="Node" type="xsd_1:NodeType"></xsd:element>
 	<xsd:element name="NodeGroup" type="xsd_1:DEBBComponentType"></xsd:element>
-	<xsd:element name="ComputeBox1" type="xsd_1:DEBBComponentType"></xsd:element>
-	<xsd:element name="ComputeBox2" type="xsd_1:DEBBComponentType"></xsd:element>
+	<xsd:element name="Rack" type="xsd_1:DEBBComponentType"></xsd:element>
+	<xsd:element name="Room" type="xsd_1:DEBBComponentType"></xsd:element>
 	<xsd:element name="PowerSupply" type="xsd_1:PowerSupplyType"></xsd:element>
 	<xsd:element name="CoolingDevice" type="xsd_1:CoolingDeviceType"></xsd:element>
-	<xsd:element name="Inlet" type="xsd_1:OutletType"></xsd:element>
-	<xsd:element name="Outlet" type="xsd_1:OutletType"></xsd:element>
+	<xsd:element name="Inlet" type="xsd_1:FlowPumpType"></xsd:element>
+	<xsd:element name="Outlet" type="xsd_1:FlowPumpType"></xsd:element>
 	<xsd:element name="Heatsink" type="xsd_1:HeatsinkType"></xsd:element>
 	<xsd:element name="Sensor" type="xsd_1:SensorType"></xsd:element>
 
+
+	<xsd:complexType name="CoolingEERType">
+		<xsd:sequence>
+			<xsd:element name="Item" type="xsd_1:CoolingEEREntryType" maxOccurs="unbounded" minOccurs="1"></xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
 </xsd:schema>
