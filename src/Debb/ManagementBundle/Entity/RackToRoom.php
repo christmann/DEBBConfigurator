@@ -128,7 +128,7 @@ class RackToRoom extends Connector
 	 */
 	public function getPosX()
 	{
-		return $this->posX;
+		return (int) $this->posX;
 	}
 
 	/**
@@ -155,7 +155,7 @@ class RackToRoom extends Connector
 	 */
 	public function getPosY()
 	{
-		return $this->posY;
+		return (int) $this->posY;
 	}
 
 	/**
@@ -178,7 +178,7 @@ class RackToRoom extends Connector
 	 */
 	public function getPosZ()
 	{
-		return $this->posZ;
+		return (int) $this->posZ;
 	}
 
     /**
