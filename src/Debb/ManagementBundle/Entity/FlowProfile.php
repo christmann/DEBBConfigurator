@@ -13,7 +13,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="flow_profile")
  * @ORM\Entity(repositoryClass="Debb\ManagementBundle\Repository\BaseRepository")
- * @ORM\HasLifecycleCallbacks
  */
 class FlowProfile
 {
@@ -61,9 +60,10 @@ class FlowProfile
 		{
 			$array['Name'] = $this->getName();
 		}
+		$x = 1;
 		foreach($this->getFlowStates() as $flowState)
 		{
-			$array[] = array(array('FlowState' => $flowState->getDebbXmlArray()));
+			$array[] = array(array('FlowState' => $flowState->getDebbXmlArray($x++)));
 		}
 		return $array;
 	}
@@ -173,20 +173,5 @@ class FlowProfile
 	function __toString()
 	{
 		return $this->getName();
-	}
-
-	/**
-	 * Sets the states from the flow states
-	 *
-	 * @ORM\PrePersist()
-	 * @ORM\PreUpdate()
-	 */
-	public function preUpdate()
-	{
-		$x = 1;
-		foreach($this->flowStates as $flowState)
-		{
-			$flowState->setState($x++);
-		}
 	}
 }

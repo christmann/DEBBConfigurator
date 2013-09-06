@@ -20,11 +20,17 @@ class PStateType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('state')
             ->add('frequency')
             ->add('voltage')
-            ->add('powerUsageMin')
-            ->add('powerUsageMax')
+//			->add('loadPowerUsages', 'collection', array(
+//				'type' => new PStateLoadPowerUsageType(),
+//				'allow_add' => true,
+//				'allow_delete' => true,
+//				'by_reference' => false,
+//				'required' => false,
+//				'attr' => array('class' => 'noBreakAfterThis'),
+//				'label' => 'LoadPowerUsages',
+//			))
         ;
     }
 

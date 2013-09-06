@@ -38,7 +38,16 @@ $(function()
     $(document).on('click', 'a.addThing[data-prototype]', function(e)
     {
         e.preventDefault();
-        $($(this).attr('data-prototype').replace(/__name__/g, debbUtils.generateUniqueId())).hide().appendTo(eval($(this).attr('obj'))).show('slow');
+        var counter = $(eval($(this).attr('obj'))).find('div').length,
+            maxDefined = typeof $(this).attr('maxt') != 'undefined';
+        if(!maxDefined || counter < $(this).attr('maxt'))
+        {
+            $($(this).attr('data-prototype').replace(/__name__/g, debbUtils.generateUniqueId())).hide().appendTo(eval($(this).attr('obj'))).show('slow');
+        }
+        else
+        {
+            alert(Translator.get('Maximum reached!'));
+        }
     });
     $(document).on('click', 'a.trash[obj]', function(e)
     {

@@ -37,12 +37,6 @@ class Node extends Dimensions
 	private $references;
 
 	/**
-	 * Returns the name of this node for the table view or selections
-	 * 
-	 * @return string the name of this node
-	 */
-
-	/**
 	 * Constructor
 	 */
 	public function __construct()

@@ -23,14 +23,6 @@ class PState
     private $id;
 
     /**
-     * @var integer
-     *
-     * @Assert\NotNull()
-     * @ORM\Column(name="state", type="integer")
-     */
-    private $state;
-
-    /**
      * @var float
      *
      * @Assert\NotNull()
@@ -47,20 +39,11 @@ class PState
     private $voltage;
 
     /**
-     * @var float
+     * @var \Debb\ManagementBundle\Entity\PStateLoadPowerUsage[]
      *
-     * @Assert\NotNull()
-     * @ORM\Column(name="power_usage_min", type="decimal")
+	 * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\PStateLoadPowerUsage", mappedBy="pstate", cascade={"all"}, orphanRemoval=true)
      */
-    private $powerUsageMin;
-
-    /**
-     * @var float
-     *
-     * @Assert\NotNull()
-     * @ORM\Column(name="power_usage_max", type="decimal")
-     */
-    private $powerUsageMax;
+    private $loadPowerUsages;
 
 	/**
 	 * @var \Debb\ManagementBundle\Entity\Processor
@@ -70,17 +53,22 @@ class PState
 	private $processor;
 
 	/**
+	 * Constructor
+	 */
+	public function __construct()
+	{
+		$this->loadPowerUsages = new \Doctrine\Common\Collections\ArrayCollection();
+	}
+
+	/**
 	 * Returns a array for later converting
 	 *
 	 * @return array the array for later converting
 	 */
-	public function getDebbXmlArray()
+	public function getDebbXmlArray($state = 0)
 	{
 		$array = array();
-		if($this->getState() !== null)
-		{
-			$array['State'] = $this->getState();
-		}
+		$array['State'] = $state;
 		if($this->getFrequency() !== null)
 		{
 			$array['Frequency'] = $this->getFrequency();
@@ -89,13 +77,16 @@ class PState
 		{
 			$array['Voltage'] = $this->getVoltage();
 		}
-		if($this->getPowerUsageMin() !== null)
+		if($this->getLoadPowerUsages() !== null)
 		{
-			$array['PowerUsageMin'] = $this->getPowerUsageMin();
+			foreach($this->getLoadPowerUsages() as $loadPowerUsage)
+			{
+				$array[''] = $this->getPowerUsageMin();
+			}
 		}
-		if($this->getPowerUsageMax() !== null)
+		foreach($this->getLoadPowerUsages() as $loadPowerUsage)
 		{
-			$array['PowerUsageMax'] = $this->getPowerUsageMax();
+			$array[] = array(array('LoadPowerUsage' => $loadPowerUsage->get));
 		}
 		return $array;
 	}
@@ -108,29 +99,6 @@ class PState
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set state
-     *
-     * @param integer $state
-     * @return PState
-     */
-    public function setState($state)
-    {
-        $this->state = $state;
-    
-        return $this;
-    }
-
-    /**
-     * Get state
-     *
-     * @return integer 
-     */
-    public function getState()
-    {
-        return $this->state;
     }
 
     /**
@@ -180,52 +148,6 @@ class PState
     }
 
     /**
-     * Set powerUsageMin
-     *
-     * @param float $powerUsageMin
-     * @return PState
-     */
-    public function setPowerUsageMin($powerUsageMin)
-    {
-        $this->powerUsageMin = $powerUsageMin;
-    
-        return $this;
-    }
-
-    /**
-     * Get powerUsageMin
-     *
-     * @return float 
-     */
-    public function getPowerUsageMin()
-    {
-        return $this->powerUsageMin;
-    }
-
-    /**
-     * Set powerUsageMax
-     *
-     * @param float $powerUsageMax
-     * @return PState
-     */
-    public function setPowerUsageMax($powerUsageMax)
-    {
-        $this->powerUsageMax = $powerUsageMax;
-    
-        return $this;
-    }
-
-    /**
-     * Get powerUsageMax
-     *
-     * @return float 
-     */
-    public function getPowerUsageMax()
-    {
-        return $this->powerUsageMax;
-    }
-
-    /**
      * Set processor
      *
      * @param \Debb\ManagementBundle\Entity\Processor $processor
@@ -246,5 +168,40 @@ class PState
     public function getProcessor()
     {
         return $this->processor;
+    }
+    
+    /**
+     * Add loadPowerUsages
+     *
+     * @param \Debb\ManagementBundle\Entity\PStateLoadPowerUsage $loadPowerUsages
+     * @return PState
+     */
+    public function addLoadPowerUsage(\Debb\ManagementBundle\Entity\PStateLoadPowerUsage $loadPowerUsages)
+    {
+        $this->loadPowerUsages[] = $loadPowerUsages;
+		$loadPowerUsages->setPstate($this);
+    
+        return $this;
+    }
+
+    /**
+     * Remove loadPowerUsages
+     *
+     * @param \Debb\ManagementBundle\Entity\PStateLoadPowerUsage $loadPowerUsages
+     */
+    public function removeLoadPowerUsage(\Debb\ManagementBundle\Entity\PStateLoadPowerUsage $loadPowerUsages)
+    {
+		$loadPowerUsages->setPstate();
+        $this->loadPowerUsages->removeElement($loadPowerUsages);
+    }
+
+    /**
+     * Get loadPowerUsages
+     *
+     * @return \Debb\ManagementBundle\Entity\PStateLoadPowerUsage[]
+     */
+    public function getLoadPowerUsages()
+    {
+        return $this->loadPowerUsages;
     }
 }

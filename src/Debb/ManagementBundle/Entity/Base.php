@@ -90,6 +90,20 @@ class Base
 	private $maxPower;
 
 	/**
+	 * @var float
+	 *
+	 * @ORM\Column(name="power_usage", type="float", nullable=true)
+	 */
+	private $powerUsage;
+
+	/**
+	 * @var \Debb\ManagementBundle\Entity\FlowProfile[]
+	 *
+	 * @ORM\ManyToOne(targetEntity="Debb\ManagementBundle\Entity\FlowProfile")
+	 */
+	private $powerUsageProfile;
+
+	/**
 	 * Get id
 	 *
 	 * @return integer 
@@ -239,15 +253,14 @@ class Base
 		{
 			$array['MaxPower'] = $this->getMaxPower();
 		}
-		/**
-		 * <xsd:choice>
-		 *      <xsd:element name="PowerUsage" type="xsd:double" minOccurs="0" maxOccurs="1"></xsd:element>
-		 *   OR
-		 *      <xsd:element name="PowerUsageState" type="xsd_1:FlowStateType" minOccurs="0" maxOccurs="1"></xsd:element>
-		 *   OR
-		 *      <xsd:element name="PowerUsageProfile" type="xsd_1:FlowProfileType" minOccurs="0" maxOccurs="1"></xsd:element>
-		 * </xsd:choice>
-		 */
+		if ($this->getPowerUsage() != null)
+		{
+			$array['PowerUsage'] = $this->getPowerUsage();
+		}
+		if ($this->getPowerUsageProfile() != null)
+		{
+			$array['PowerUsageProfile'] = $this->getPowerUsageProfile()->getDebbXmlArray();
+		}
 		if ($this->getType() != null)
 		{
 			$array['Type'] = $this->getMaxPower();
@@ -420,5 +433,51 @@ class Base
     public function getMaxPower()
     {
         return $this->maxPower;
+    }
+
+    /**
+     * Set powerUsage
+     *
+     * @param float $powerUsage
+     * @return Base
+     */
+    public function setPowerUsage($powerUsage)
+    {
+        $this->powerUsage = $powerUsage;
+    
+        return $this;
+    }
+
+    /**
+     * Get powerUsage
+     *
+     * @return float 
+     */
+    public function getPowerUsage()
+    {
+        return $this->powerUsage;
+    }
+
+    /**
+     * Set powerUsageProfile
+     *
+     * @param \Debb\ManagementBundle\Entity\FlowProfile $powerUsageProfile
+     * @return Base
+     */
+    public function setPowerUsageProfile(\Debb\ManagementBundle\Entity\FlowProfile $powerUsageProfile = null)
+    {
+        $this->powerUsageProfile = $powerUsageProfile;
+    
+        return $this;
+    }
+
+    /**
+     * Get powerUsageProfile
+     *
+     * @return \Debb\ManagementBundle\Entity\FlowProfile 
+     */
+    public function getPowerUsageProfile()
+    {
+        return $this->powerUsageProfile;
     }
 }

@@ -27,26 +27,25 @@ class FlowState
     private $id;
 
     /**
-     * @var string
-     *
-     * @Assert\NotBlank()
-     * @ORM\Column(name="state", type="string", length=255, nullable=true)
-     */
-    private $state;
-
-    /**
      * @var float
      *
-     * @ORM\Column(name="flow", type="decimal")
+     * @ORM\Column(name="flow", type="decimal", nullable=true)
      */
     private $flow;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="power_usage", type="decimal")
+     * @ORM\Column(name="power_usage", type="decimal", nullable=true)
      */
     private $powerUsage;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="description", type="string", length=255, nullable=true)
+	 */
+	private $description;
 
 	/**
 	 * @var \Debb\ManagementBundle\Entity\FlowProfile
@@ -61,13 +60,10 @@ class FlowState
 	 *
 	 * @return array the array for later converting
 	 */
-	public function getDebbXmlArray()
+	public function getDebbXmlArray($state = 0)
 	{
 		$array = array();
-		if ($this->getState() !== null)
-		{
-			$array['State'] = $this->getState();
-		}
+		$array['State'] = $state;
 		if ($this->getFlow() !== null)
 		{
 			$array['Flow'] = $this->getFlow();
@@ -75,6 +71,10 @@ class FlowState
 		if ($this->getPowerUsage() !== null)
 		{
 			$array['PowerUsage'] = $this->getPowerUsage();
+		}
+		if ($this->getDescription() !== null)
+		{
+			$array['Description'] = $this->getDescription();
 		}
 		return $array;
 	}
@@ -179,5 +179,28 @@ class FlowState
     public function getFlowProfile()
     {
         return $this->flowProfile;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return FlowState
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }

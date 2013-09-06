@@ -68,13 +68,15 @@ class Processor extends Base
 		{
 			$array['Cores'] = $this->getCores();
 		}
+		$x = 1;
 		foreach($this->getPStates() as $pState)
 		{
-			$array[] = array(array('PState' => $pState->getDebbXmlArray()));
+			$array[] = array(array('PState' => $pState->getDebbXmlArray($x++)));
 		}
+		$x = 1;
 		foreach($this->getCStates() as $cState)
 		{
-			$array[] = array(array('CState' => $cState->getDebbXmlArray()));
+			$array[] = array(array('CState' => $cState->getDebbXmlArray($x++)));
 		}
 		if($this->getTDP() !== null)
 		{

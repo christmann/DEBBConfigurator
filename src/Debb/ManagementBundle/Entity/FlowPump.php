@@ -6,19 +6,28 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Outlet
+ * FlowPump
  *
- * @ORM\Table(name="outlet")
+ * FlowPump includes all devices "moving" air or liquid like fans, water pumps etc.
+ *
+ * @ORM\Table(name="flow_pump")
  * @ORM\Entity(repositoryClass="Debb\ManagementBundle\Repository\BaseRepository")
  */
-class Outlet extends DEBBSimple
+class FlowPump extends DEBBSimple
 {
     /**
      * @var integer|null
      *
-     * @ORM\Column(name="MaxRPM", type="integer", nullable=true)
+     * @ORM\Column(name="maxrpm", type="integer", nullable=true)
      */
     private $maxRPM;
+
+	/**
+	 * @var float|null
+	 *
+	 * @ORM\Column(name="efficiency", type="float", nullable=true)
+	 */
+	private $efficiency;
 
 	/**
 	 * Returns a array for later converting
@@ -32,6 +41,10 @@ class Outlet extends DEBBSimple
 		{
 			$array['MaxRPM'] = $this->getMaxRPM();
 		}
+		if ($this->getEfficiency() !== null)
+		{
+			$array['Efficiency'] = $this->getEfficiency();
+		}
 		return $array;
 	}
 
@@ -39,7 +52,7 @@ class Outlet extends DEBBSimple
      * Set maxRPM
      *
      * @param integer $maxRPM
-     * @return Outlet
+     * @return FlowPump
      */
     public function setMaxRPM($maxRPM)
     {
@@ -56,5 +69,28 @@ class Outlet extends DEBBSimple
     public function getMaxRPM()
     {
         return $this->maxRPM;
+    }
+
+    /**
+     * Set efficiency
+     *
+     * @param float $efficiency
+     * @return FlowPump
+     */
+    public function setEfficiency($efficiency)
+    {
+        $this->efficiency = $efficiency;
+    
+        return $this;
+    }
+
+    /**
+     * Get efficiency
+     *
+     * @return float 
+     */
+    public function getEfficiency()
+    {
+        return $this->efficiency;
     }
 }

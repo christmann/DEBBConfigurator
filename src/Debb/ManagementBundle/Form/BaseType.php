@@ -60,6 +60,8 @@ class BaseType extends AbstractType
 			->add('hostname', null, array('required' => false))
 			->add('type', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false))
 			->add('maxPower', null, array('required' => false))
+			->add('powerUsageProfile', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false))
+			->add('powerUsage', null, array('required' => false))
 		;
 	}
 

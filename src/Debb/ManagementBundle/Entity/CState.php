@@ -23,14 +23,6 @@ class CState
     private $id;
 
     /**
-     * @var integer
-     *
-     * @Assert\NotBlank()
-     * @ORM\Column(name="state", type="integer")
-     */
-    private $state;
-
-    /**
      * @var float
      *
      * @Assert\NotBlank()
@@ -50,13 +42,10 @@ class CState
 	 *
 	 * @return array the array for later converting
 	 */
-	public function getDebbXmlArray()
+	public function getDebbXmlArray($state = 0)
 	{
 		$array = array();
-		if($this->getState() !== null)
-		{
-			$array['State'] = $this->getState();
-		}
+		$array['State'] = $state;
 		if($this->getPowerUsage() !== null)
 		{
 			$array['PowerUsage'] = $this->getPowerUsage();
@@ -72,29 +61,6 @@ class CState
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set state
-     *
-     * @param integer $state
-     * @return CState
-     */
-    public function setState($state)
-    {
-        $this->state = $state;
-    
-        return $this;
-    }
-
-    /**
-     * Get state
-     *
-     * @return integer 
-     */
-    public function getState()
-    {
-        return $this->state;
     }
 
     /**

@@ -18,9 +18,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 class DEBBComplex extends DEBBSimple
 {
 	/**
-	 * @var \Debb\ManagementBundle\Entity\Outlet[]
+	 * @var \Debb\ManagementBundle\Entity\FlowPump[]
 	 *
-	 * @ORM\ManyToMany(targetEntity="Debb\ManagementBundle\Entity\Outlet")
+	 * @ORM\ManyToMany(targetEntity="Debb\ManagementBundle\Entity\FlowPump")
 	 * @ORM\JoinTable(name="debbcomplex_inlet",
 	 *   joinColumns={@ORM\JoinColumn(name="debbcomplex", referencedColumnName="id")},
 	 *   inverseJoinColumns={@ORM\JoinColumn(name="inlet", referencedColumnName="id")}
@@ -29,9 +29,9 @@ class DEBBComplex extends DEBBSimple
 	private $inlets;
 
 	/**
-	 * @var \Debb\ManagementBundle\Entity\Outlet[]
+	 * @var \Debb\ManagementBundle\Entity\FlowPump[]
 	 *
-	 * @ORM\ManyToMany(targetEntity="Debb\ManagementBundle\Entity\Outlet")
+	 * @ORM\ManyToMany(targetEntity="Debb\ManagementBundle\Entity\FlowPump")
 	 * @ORM\JoinTable(name="debbcomplex_outlet",
 	 *   joinColumns={@ORM\JoinColumn(name="debbcomplex", referencedColumnName="id")},
 	 *   inverseJoinColumns={@ORM\JoinColumn(name="outlet", referencedColumnName="id")}
@@ -86,10 +86,10 @@ class DEBBComplex extends DEBBSimple
     /**
      * Add inlets
      *
-     * @param \Debb\ManagementBundle\Entity\Outlet $inlets
+     * @param \Debb\ManagementBundle\Entity\FlowPump $inlets
      * @return DEBBComplex
      */
-    public function addInlet(\Debb\ManagementBundle\Entity\Outlet $inlets)
+    public function addInlet(\Debb\ManagementBundle\Entity\FlowPump $inlets)
     {
         $this->inlets[] = $inlets;
     
@@ -99,9 +99,9 @@ class DEBBComplex extends DEBBSimple
     /**
      * Remove inlets
      *
-     * @param \Debb\ManagementBundle\Entity\Outlet $inlets
+     * @param \Debb\ManagementBundle\Entity\FlowPump $inlets
      */
-    public function removeInlet(\Debb\ManagementBundle\Entity\Outlet $inlets)
+    public function removeInlet(\Debb\ManagementBundle\Entity\FlowPump $inlets)
     {
         $this->inlets->removeElement($inlets);
     }
@@ -109,7 +109,7 @@ class DEBBComplex extends DEBBSimple
     /**
      * Get inlets
      *
-     * @return \Debb\ManagementBundle\Entity\Outlet[]
+     * @return \Debb\ManagementBundle\Entity\FlowPump[]
      */
     public function getInlets()
     {
@@ -119,10 +119,10 @@ class DEBBComplex extends DEBBSimple
     /**
      * Add outlets
      *
-     * @param \Debb\ManagementBundle\Entity\Outlet $outlets
+     * @param \Debb\ManagementBundle\Entity\FlowPump $outlets
      * @return DEBBComplex
      */
-    public function addOutlet(\Debb\ManagementBundle\Entity\Outlet $outlets)
+    public function addOutlet(\Debb\ManagementBundle\Entity\FlowPump $outlets)
     {
         $this->outlets[] = $outlets;
     
@@ -132,9 +132,9 @@ class DEBBComplex extends DEBBSimple
     /**
      * Remove outlets
      *
-     * @param \Debb\ManagementBundle\Entity\Outlet $outlets
+     * @param \Debb\ManagementBundle\Entity\FlowPump $outlets
      */
-    public function removeOutlet(\Debb\ManagementBundle\Entity\Outlet $outlets)
+    public function removeOutlet(\Debb\ManagementBundle\Entity\FlowPump $outlets)
     {
         $this->outlets->removeElement($outlets);
     }
@@ -142,7 +142,7 @@ class DEBBComplex extends DEBBSimple
     /**
      * Get outlets
      *
-     * @return \Debb\ManagementBundle\Entity\Outlet[]
+     * @return \Debb\ManagementBundle\Entity\FlowPump[]
      */
     public function getOutlets()
     {

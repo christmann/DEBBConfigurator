@@ -22,6 +22,7 @@ class FlowStateType extends AbstractType
         $builder
             ->add('flow', null, array('required' => false))
             ->add('powerUsage', null, array('required' => false))
+            ->add('description', null, array('required' => false))
         ;
     }
 

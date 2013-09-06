@@ -57,6 +57,21 @@ class CoolingDevice extends DEBBComplex
 	private $waterThroughputProfile;
 
 	/**
+	 * @var \Debb\ManagementBundle\Entity\CoolingEER
+	 *
+	 * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\CoolingEER", mappedBy="coolingDevice", cascade={"all"}, orphanRemoval=true)
+	 */
+	private $energyEfficiencyRatio;
+
+	/**
+	 * Constructor
+	 */
+	function __construct()
+	{
+		$this->energyEfficiencyRatio = new \Doctrine\Common\Collections\ArrayCollection();
+	}
+
+	/**
 	 * Returns a array for later converting
 	 * 
 	 * @return array the array for later converting
@@ -87,6 +102,10 @@ class CoolingDevice extends DEBBComplex
 		if ($this->getWaterThroughputProfile() !== null)
 		{
 			$array['WaterThroughputProfile'] = $this->getWaterThroughputProfile()->getDebbXmlArray();
+		}
+		if ($this->getEnergyEfficiencyRatio() !== null)
+		{
+			$array['EnergyEfficiencyRatio'] = $this->getEnergyEfficiencyRatio()->getDebbXmlArray();
 		}
 		return $array;
 	}
@@ -227,5 +246,40 @@ class CoolingDevice extends DEBBComplex
     public function getWaterThroughputProfile()
     {
         return $this->waterThroughputProfile;
+    }
+
+    /**
+     * Add energyEfficiencyRatio
+     *
+     * @param \Debb\ManagementBundle\Entity\CoolingEER $energyEfficiencyRatio
+     * @return CoolingDevice
+     */
+    public function addEnergyEfficiencyRatio(\Debb\ManagementBundle\Entity\CoolingEER $energyEfficiencyRatio)
+    {
+        $this->energyEfficiencyRatio[] = $energyEfficiencyRatio;
+		$energyEfficiencyRatio->setCoolingDevice($this);
+    
+        return $this;
+    }
+
+    /**
+     * Remove energyEfficiencyRatio
+     *
+     * @param \Debb\ManagementBundle\Entity\CoolingEER $energyEfficiencyRatio
+     */
+    public function removeEnergyEfficiencyRatio(\Debb\ManagementBundle\Entity\CoolingEER $energyEfficiencyRatio)
+    {
+		$energyEfficiencyRatio->setCoolingDevice();
+        $this->energyEfficiencyRatio->removeElement($energyEfficiencyRatio);
+    }
+
+    /**
+     * Get energyEfficiencyRatio
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEnergyEfficiencyRatio()
+    {
+        return $this->energyEfficiencyRatio;
     }
 }
