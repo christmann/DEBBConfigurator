@@ -140,7 +140,6 @@ function generateTipContent()
         .attr('syncwith', '#' + posZForm.attr('id')) // before id change!
         .attr('id', '').attr('name', '')
         .attr('class', 'syncwith')
-        .attr('maxval', '#debb_configbundle_roomtype_sizeY')
         .width(124)
     ;
     resObj.append('<div>' + Translator.get('Size') + ': ' + obj.attr('rackx') + 'm /' + obj.attr('racky') + 'm /' + obj.attr('rackz') + 'm' + '</div>');

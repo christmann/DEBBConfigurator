@@ -16,7 +16,7 @@ add: Add
 select: Select
 save: Save
 choose.%person%.%what%: choose %person% %what%
-download.%what%.file: download %what%
+download.%what%.file: Download %what%
 node: node
 node.group: Node Group
 overview: Overview
@@ -94,7 +94,7 @@ He size: Height [RU]
 Draft: Draft
 nospace: Not enough space..
 Ziparchive: ZIP archive
-archive: Archive
+archive: archive
 Scale: Scale
 Node type: Node type
 upload node image: Upload node image
