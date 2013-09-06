@@ -19,8 +19,14 @@ class HeatsinkType extends DEBBSimpleType
 	public function buildForm(FormBuilderInterface $builder, array $options)
     {
 	    parent::buildForm($builder, $options);
+		$references = $builder->get('references');
+		$transform = $builder->get('transform');
         $builder
+			->remove('references')
+			->remove('transform')
+			->add('transform', null, array_merge_recursive($transform->getOptions(), array('attr' => array('class' => 'noBreakAfterThis'))))
             ->add('transferRate', null, array('required' => false))
+			->add($references)
         ;
     }
 
