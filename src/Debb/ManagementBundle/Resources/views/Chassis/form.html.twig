@@ -41,7 +41,7 @@
 	{{ parent() }}
 	<div id="chassiscontainer" class="row-fluid" style="width: {{ chassisSizeX + 10 }}px;">
 		<div>
-			<a href="#" class="addNode btn btn-small" style="border-bottom-width: 0px;">{{ 'Add node' | trans }}</a>
+			<a href="#" class="addNode btn btn-small" style="border-bottom-width: 0; border-bottom-left-radius: 0; border-bottom-right-radius: 0;">{{ 'Add node' | trans }}</a>
 		</div>
 		<div class="clear"></div>
 		<div id="chassisSize">{{ 'size' | trans }}: <span id="chassisSizeX">{{ (chassisSizeX / 1000.0) | number_format(2, '.', '') }}</span>m x <span id="chassisSizeY">{{ (chassisSizeY / 1000.0) | number_format(2, '.', '') }}</span>m</div>
