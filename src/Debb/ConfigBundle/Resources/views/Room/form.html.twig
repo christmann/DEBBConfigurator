@@ -44,7 +44,7 @@
 			{{ 'Add rack' | trans }}:
 			<ul class="hoz">
 				{% for rack in racks %}
-					<li class="hoz ui-state-default eDraftRack" style="margin-left: 0px; margin-right: 10px;"><div class="draftRack" rackId="{{ rack.id }}" rackX="{{ rack.fullx }}" rackY="{{ rack.fully }}" rackZ="{{ rack.fullz }}" title="{{ rack | e }}">{{ rack }}</div></li>
+					<li class="hoz ui-state-default eDraftRack" style="margin-left: 0px; margin-right: 10px;"><div class="draftRack" rackId="{{ rack.id }}" rackX="{{ rack.sizeX }}" rackY="{{ rack.sizeY }}" rackZ="{{ rack.sizeZ }}" title="{{ rack | e }}">{{ rack }}</div></li>
 				{% endfor %}
 			</ul>
 		</div>
@@ -53,7 +53,7 @@
 		<div id="rackContainer" style="position: relative; width: {{ rackSizeX }}px; height: {{ rackSizeZ }}px; border: 2px solid #000; background: url('{{ asset('bundles/debbconfig/img/room-grid.png') }}') repeat scroll 1px {{ rackSizeZ + 1 }}px transparent;" data-prototype="{{ form_row(form.racks.vars.prototype) | escape }}">
 			{% for rack in form.racks %}
 				<div class="rackG" posx="{{ rack.vars.data.posx }}" posy="{{ rack.vars.data.posy }}" posz="{{ rack.vars.data.posz }}"
-				     rackId="{{ rack.vars.data.id }}" title="{{ rack.vars.data.rack | e }}" rackx="{{ rack.vars.data.rack.fullx }}" racky="{{ rack.vars.data.rack.fully }}" rackz="{{ rack.vars.data.rack.fullz }}"><a href="#" class="removeRack"><i class="icon-trash"></i></a> - <a href="#" class="rotateRack"><i class="icon-repeat"></i></a><br />{{ rack.vars.data.rack }}
+				     rackId="{{ rack.vars.data.id }}" title="{{ rack.vars.data.rack | e }}" rackx="{{ rack.vars.data.rack.sizeX }}" racky="{{ rack.vars.data.rack.sizeY }}" rackz="{{ rack.vars.data.rack.sizeZ }}"><a href="#" class="removeRack"><i class="icon-trash"></i></a> - <a href="#" class="rotateRack"><i class="icon-repeat"></i></a><br />{{ rack.vars.data.rack }}
 					<div class="rackGform" style="display: none;">
 						{{ form_widget(rack) }}
 					</div>

@@ -98,8 +98,6 @@ class ChassisType extends BaseType
                 'choice',
                 array('choices' => array(0 => 'Top', 1 => 'Front'), 'empty_value' => false, 'label' => 'View')
             )
-			->add('spaceBottom', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis'), 'label' => 'SpaceBottom'))
-			->add('spaceLeft', null, array('required' => false, 'label' => 'SpaceLeft'))
             ->add(
                 'image',
                 'plupload',
