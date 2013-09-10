@@ -17,12 +17,12 @@ debb_management.chassis.nodegroup.message: <strong>Chassis is in use by the foll
 debb_management.chassis.rack.message: <strong>Chassis is in use by the following racks</strong>: %items%
 debb_management.chassis.message.title: Information
 debb_management.heatsink.plural: Heatsinks
-debb_management.heatsink.singular: Heatsink
+debb_management.heatsink.singular: heatsink
 debb_management.network.plural: Networks
-debb_management.network.singular: Network
+debb_management.network.singular: network
 debb_management.flowprofile.plural: Profiles
-debb_management.flowprofile.singular: Profile
+debb_management.flowprofile.singular: profile
 debb_management.sensor.plural: Sensors
-debb_management.sensor.singular: Sensor
+debb_management.sensor.singular: sensor
 debb_management.baseboard.plural: Baseboards
-debb_management.baseboard.singular: Baseboard
+debb_management.baseboard.singular: baseboard
