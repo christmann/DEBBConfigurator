@@ -38,7 +38,6 @@ $(function ()
             }
         }
         else {
-            console.log(this);
             changed = true;
         }
     }
