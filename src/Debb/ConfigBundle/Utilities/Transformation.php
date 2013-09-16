@@ -38,7 +38,6 @@ class Transformation
 
 		if ((!is_callable(array($connector, 'getPosX')) || !is_callable(array($connector, 'getPosY')) || !is_callable(array($connector, 'getPosZ')) || !is_callable(array($connector, 'getRotation'))) && ($className == 'Rack' || $className == 'Node'))
 		{
-			var_dump(get_class($connector));
 			return self::generate_transform($separator);
 		}
 
