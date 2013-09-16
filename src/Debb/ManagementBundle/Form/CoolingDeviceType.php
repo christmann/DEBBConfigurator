@@ -28,6 +28,7 @@ class CoolingDeviceType extends BaseType
             ->add('maxWaterThroughput', null, array('required' => false))
             ->add('airThroughputProfile', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis'), 'query_builder' => $this->userQueryBuilder))
             ->add('waterThroughputProfile', null, array('required' => false, 'query_builder' => $this->userQueryBuilder))
+	        ->add('coolingCapacityRated')
 			->add('energyEfficiencyRatio', 'collection', array(
 				'type' => new CoolingEERType(),
 				'allow_add' => true,

@@ -31,6 +31,14 @@ class CoolingDevice extends DEBBComplex
 	/**
 	 * @var float
 	 *
+	 * @Assert\NotBlank()
+	 * @ORM\Column(name="CoolingCapacityRated", type="decimal")
+	 */
+	private $coolingCapacityRated;
+
+	/**
+	 * @var float
+	 *
 	 * @ORM\Column(name="MaxAirThroughput", type="decimal", nullable=true)
 	 */
 	private $maxAirThroughput;
@@ -79,14 +87,12 @@ class CoolingDevice extends DEBBComplex
 	public function getDebbXmlArray()
 	{
 		$array = parent::getDebbXmlArray();
-		if ($this->getClass() !== null)
-		{
-			$array['Class'] = $this->getClass();
-		}
+		$array['Class'] = (string) $this->getClass();
 		if ($this->getMaxCoolingCapacity() !== null)
 		{
 			$array['MaxCoolingCapacity'] = $this->getMaxCoolingCapacity();
 		}
+		$array['CoolingCapacityRated'] = (string) $this->getCoolingCapacityRated();
 		if ($this->getMaxAirThroughput() !== null)
 		{
 			$array['MaxAirThroughput'] = $this->getMaxAirThroughput();
@@ -281,5 +287,28 @@ class CoolingDevice extends DEBBComplex
     public function getEnergyEfficiencyRatio()
     {
         return $this->energyEfficiencyRatio;
+    }
+
+    /**
+     * Set coolingCapacityRated
+     *
+     * @param float $coolingCapacityRated
+     * @return CoolingDevice
+     */
+    public function setCoolingCapacityRated($coolingCapacityRated)
+    {
+        $this->coolingCapacityRated = $coolingCapacityRated;
+    
+        return $this;
+    }
+
+    /**
+     * Get coolingCapacityRated
+     *
+     * @return float 
+     */
+    public function getCoolingCapacityRated()
+    {
+        return $this->coolingCapacityRated;
     }
 }
