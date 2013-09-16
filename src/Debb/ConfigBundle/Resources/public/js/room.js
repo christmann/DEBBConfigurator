@@ -178,7 +178,7 @@ $(function()
         }
 		obj.remove();
 	});
-    $(document).on('change, keyup, keydown', '.syncwith[syncwith]', function(e)
+    $(document).on('change, keyup', '.syncwith[syncwith]', function(e)
     {
         var obj = $($(this).attr('syncwith'));
         if(obj.length > 0)
