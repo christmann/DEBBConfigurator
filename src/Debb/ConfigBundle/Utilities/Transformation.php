@@ -25,10 +25,16 @@ use Debb\ManagementBundle\Entity\RackToRoom;
 class Transformation
 {
 	/**
+	 * @var array a array with all transformations
+	 */
+	public static $transformations = array();
+
+	/**
 	 * Generates a transformation matrix string from entity
 	 *
 	 * @param Base $children the base entity
 	 * @param Connector $connector a connector which have a connector as base
+	 * @param string $separator the separator for output
 	 *
 	 * @return string
 	 */
@@ -38,6 +44,7 @@ class Transformation
 
 		if ((!is_callable(array($connector, 'getPosX')) || !is_callable(array($connector, 'getPosY')) || !is_callable(array($connector, 'getPosZ')) || !is_callable(array($connector, 'getRotation'))) && ($className == 'Rack' || $className == 'Node'))
 		{
+			self::$transformations[] = array(0, 0, 0, 0, 0, 0, 0);
 			return self::generate_transform($separator);
 		}
 
@@ -49,6 +56,7 @@ class Transformation
 			$posZ = $connector->getPosZ();
 			$rotation = $connector->getRotation();
 			/** @var $children Rack */
+			self::$transformations[] = array($posX, $posY, $posZ, $rotation, $children->getSizeX() * 1000, $children->getSizeZ() * 1000, $children->getSizeY() * 1000);
 			$transform = self::generate_transform($separator, $posX, $posY, $posZ, $rotation, $children->getSizeX() * 1000, $children->getSizeZ() * 1000);
 		}
 		else if ($className == 'Node')
@@ -59,6 +67,7 @@ class Transformation
 			$posZ = $connector->getPosZ();
 			$rotation = $connector->getRotation();
 			/** @var $children Node */
+			self::$transformations[] = array($posX, $posY, 15, $rotation , $children->getSizeX() * 1000, $children->getSizeZ() * 1000, $children->getSizeY() * 1000);
 			$transform = self::generate_transform($separator, - $posX, -  $posY, 15, $rotation , $children->getSizeX() * 1000, $children->getSizeZ() * 1000);
 		}
 		else if ($className == 'NodeGroup' && is_callable(array($connector, 'getRack')))
@@ -70,18 +79,21 @@ class Transformation
 			$posY = $connector->getRack()->getSpaceFront() * 1000;
 			$posZ = $connector->getField() * $ru;
 			$posZ -= $ru * ($children->getDraft()->getHeSize() - 1) + $connector->getRack()->getSpaceBottom() * 1000;
+			self::$transformations[] = array($posX, $posY, $posZ, 0, $children->getSizeX() * 1000, $children->getSizeZ() * 1000, $children->getSizeY() * 1000);
 			$transform = self::generate_transform($separator, $posX, $posY, $posZ, 0, $children->getSizeX() * 1000, $children->getSizeZ() * 1000);
 		}
 		else if ($className == 'Heatsink')
 		{
 			/** @var $children Heatsink */
 			/** @var $connector Component */
+			self::$transformations[] = array(0, 0, 8, 0, 0, 0, 0);
 			$transform = self::generate_transform($separator, 0, 0, 8, 0, 0, 0);
 		}
 		else
 		{
 			/** @var $connector Room|mixed */
 			/** @var $children Transformation|mixed */
+			self::$transformations[] = array(0, 0, 0, 0, 0, 0, 0);
 			$transform = self::generate_transform($separator);
 		}
 
@@ -89,8 +101,41 @@ class Transformation
 	}
 
 	/**
+	 * Generates a transformation matrix string for bounding box
+	 *
+	 * @param string $separator the separator for output
+	 * @param $everything
+	 *
+	 * @return string the generated transformation
+	 */
+	public static function generateBoundingBox($separator = ' ')
+	{
+		$everything = self::$transformations;
+		$matrix = array(0, 0, 0, 0, 0, 0);
+		// Something magic happens here
+		return implode($separator, $matrix);
+	}
+
+	/**
+	 * Generates a transformation matrix string for location in mesh
+	 *
+	 * @param string $separator
+	 * @param $everything
+	 *
+	 * @return string the generated transformation
+	 */
+	public static function generateLocationInMesh($separator = ' ')
+	{
+		$everything = self::$transformations;
+		$matrix = array(0, 0, 0, 0, 0, 0);
+		// Something magic happens here
+		return implode($separator, $matrix);
+	}
+
+	/**
 	 * Generates a transformation matrix string
 	 *
+	 * @param string $separator the separator for output
 	 * @param float $x the x coordinate
 	 * @param float $y the y coordinate
 	 * @param float $z the z coordinate
