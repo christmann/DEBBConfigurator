@@ -81,6 +81,7 @@ Max air throughput: Max air throughput [m³/h]
 Max water throughput: Max water throughput [l/h]
 Total output power: Total output power [Watt]
 Capacity: Capacity [MByte]
+Capacity : Capacity
 processors: Processors
 mainboards: Mainboards
 memory: Memory

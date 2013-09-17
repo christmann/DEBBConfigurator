@@ -17,7 +17,7 @@ class CoolingEERType extends AbstractType
         $builder
             ->add('lWT', null, array('label' => 'LWT'))
             ->add('cWT', null, array('label' => 'CWT'))
-            ->add('capacity', null, array('label' => 'Capacity'))
+            ->add('capacity', null, array('label' => 'Capacity '))
             ->add('powerUsage', null, array('label' => 'Power usage'))
             ->add('eER', null, array('label' => 'EER'))
         ;
