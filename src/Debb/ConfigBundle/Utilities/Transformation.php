@@ -104,7 +104,6 @@ class Transformation
 	 * Generates a transformation matrix string for bounding box
 	 *
 	 * @param string $separator the separator for output
-	 * @param $everything
 	 *
 	 * @return string the generated transformation
 	 */
@@ -120,11 +119,25 @@ class Transformation
 	 * Generates a transformation matrix string for location in mesh
 	 *
 	 * @param string $separator
-	 * @param $everything
 	 *
 	 * @return string the generated transformation
 	 */
 	public static function generateLocationInMesh($separator = ' ')
+	{
+		$everything = self::$transformations;
+		$matrix = array(0, 0, 0, 0, 0, 0);
+		// Something magic happens here
+		return implode($separator, $matrix);
+	}
+
+	/**
+	 * Generates the mesh resolution
+	 *
+	 * @param string $separator
+	 *
+	 * @return string the generated transformation
+	 */
+	public static function generateMeshResolution($separator = ' ')
 	{
 		$everything = self::$transformations;
 		$matrix = array(0, 0, 0, 0, 0, 0);

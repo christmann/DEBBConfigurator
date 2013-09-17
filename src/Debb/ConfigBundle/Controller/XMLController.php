@@ -298,7 +298,9 @@ abstract class XMLController extends BaseController
 			$representations,                                                                                           // $representations
 			$entity->getComponentId(),                                                                                  // $DEBBComponentId
 			method_exists($entity, 'getDebbLevel') ? $entity->getDebbLevel() : $real_class_name,                        // $DEBBLevel
-			$real_class_name . '_'.$entity->getComponentId().'.xml'                                                     // $DEBBComponentsFile
+			$real_class_name . '_'.$entity->getComponentId().'.xml',                                                    // $DEBBComponentsFile
+			$real_class_name == 'Room' ? Transformation::generateMeshResolution() : null,                               // $meshResolution
+			$real_class_name == 'Room' ? Transformation::generateBoundingBox() : null                                   // $bound
 		);
 		$revisionViewAttr = $revisionView->attributes();
 
@@ -310,7 +312,7 @@ abstract class XMLController extends BaseController
 			$revisionViewAttr->id,                                                                                      // $partRef
 			$entity->getHostname(),                                                                                     // $hostname
 			$real_class_name == 'Room' ? null : Transformation::generateTransform($entity, $parent),                    // $transform
-			null,                                                                                                       // $locationInMesh
+			$real_class_name == 'Room' ? Transformation::generateLocationInMesh() : null,                               // $locationInMesh
 			$real_class_name == 'Room' ? $entity->getBuilding() : null                                                  // $location
 		);
 
@@ -450,9 +452,11 @@ abstract class XMLController extends BaseController
 	 * @param null|string optional $DEBBComponentId the ComponentID from DEBBComponents.xml file
 	 * @param null|string optional $DEBBLevel the type from DEBBComponents.xml file (Node, NodeGroup, Computebox1, ComputeBox2, Sensor, CoolingDevice, Powersupply, ...)
 	 * @param null|string optional $DEBBComponentFile the name of the DEBBComponents.xml file
+	 * @param null|string optional $meshResolution the mesh resolution
+	 * @param null|string optional $bound the boundary box
 	 * @return \SimpleXMLElement the SimpleXMLElement product revision view
 	 */
-	public function addPlmXmlProductRevisionView(\SimpleXMLElement &$xml, $id, $name = null, $instanceRefs = array(), $type = null, $representations = array(), $DEBBComponentId = null, $DEBBLevel = null, $DEBBComponentFile = null)
+	public function addPlmXmlProductRevisionView(\SimpleXMLElement &$xml, $id, $name = null, $instanceRefs = array(), $type = null, $representations = array(), $DEBBComponentId = null, $DEBBLevel = null, $DEBBComponentFile = null, $meshResolution = null, $bound = null)
 	{
 		$productRevisionView = $xml->addChild('ProductRevisionView');
 
@@ -512,6 +516,19 @@ abstract class XMLController extends BaseController
 				$userValue->addAttribute('value', $DEBBComponentFile); // example: Component_Nodegroup_RECS_Sirius_2.0.xml
 				$userValue->addAttribute('title', 'DEBBComponentFile'); // example: DEBBComponentFile
 			}
+			if ($meshResolution != null)
+			{
+				$userValue = $userData->addChild('UserValue');
+				$userValue->addAttribute('value', $meshResolution); // example: Component_Nodegroup_RECS_Sirius_2.0.xml
+				$userValue->addAttribute('title', 'MeshResolution'); // example: DEBBComponentFile
+			}
+		}
+
+		if ($bound != null)
+		{
+			$boundXML = $productRevisionView->addChild('Bound');
+			$boundXML->addAttribute('id', $id . '_bound'); // example: view_psnc_room_bound
+			$boundXML->addAttribute('values', $bound); // example: -100 -100 -100 16300 9700 3400
 		}
 
 		if (is_array($representations) && count($representations) > 0)
