@@ -16,7 +16,7 @@ class RoomController extends XMLController
 	/**
 	 * @var string type of debbcomponent
 	 */
-	public $debbType = 'ComputeBox2';
+	public $debbType = 'Room';
 
 	/**
 	 * @var string debb entity repository

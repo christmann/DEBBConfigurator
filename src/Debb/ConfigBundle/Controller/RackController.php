@@ -17,7 +17,7 @@ class RackController extends XMLController
 	/**
 	 * @var string type of debbcomponent
 	 */
-	public $debbType = 'ComputeBox1';
+	public $debbType = 'Rack';
 
 	/**
 	 * @var string debb entity repository
