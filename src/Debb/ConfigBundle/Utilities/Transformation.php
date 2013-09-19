@@ -96,7 +96,6 @@ class Transformation
 			self::$transformations[] = array(0, 0, 0, 0, 0, 0, 0);
 			$transform = self::generate_transform($separator);
 		}
-
 		return $transform;
 	}
 
@@ -109,10 +108,59 @@ class Transformation
 	 */
 	public static function generateBoundingBox($separator = ' ')
 	{
-		$everything = self::$transformations;
-		$matrix = array(0, 0, 0, 0, 0, 0);
-		// Something magic happens here
-		return implode($separator, $matrix);
+		$boundingBox = array(0, 0, 0, 0, 0, 0);
+		foreach (self::$transformations as list($xPos, $yPos, $zPos, $rotation, $xSize, $ySize, $zSize))
+		{
+			if ($xPos < $boundingBox[0])
+			{
+				$boundingBox[0] = $xPos;
+			}
+			if ($yPos < $boundingBox[1])
+			{
+				$boundingBox[1] = $xPos;
+			}
+			if ($zPos < $boundingBox[2])
+			{
+				$boundingBox[2] = $xPos;
+			}
+			if ($rotation == 90 || $rotation == 270)
+			{
+				if ($xPos + $ySize > $boundingBox[3])
+				{
+					$boundingBox[3] = $xPos + $ySize;
+				}
+				if ($yPos + $xSize > $boundingBox[4])
+				{
+					$boundingBox[4] = $yPos + $xSize;
+				}
+				if ($zPos + $zSize > $boundingBox[5])
+				{
+					$boundingBox[5] = $zPos + $zSize;
+				}
+			}
+			else
+			{
+				if ($xPos + $xSize > $boundingBox[3])
+				{
+					$boundingBox[3] = $xPos + $xSize;
+				}
+				if ($yPos + $ySize > $boundingBox[4])
+				{
+					$boundingBox[4] = $yPos + $ySize;
+				}
+				if ($zPos + $zSize > $boundingBox[5])
+				{
+					$boundingBox[5] = $zPos + $zSize;
+				}
+			}
+		}
+		$boundingBox[0] -= 100;
+		$boundingBox[1] -= 100;
+		$boundingBox[2] -= 100;
+		$boundingBox[3] += 100;
+		$boundingBox[4] += 100;
+		$boundingBox[5] += 100;
+		return implode($separator, $boundingBox);
 	}
 
 	/**
@@ -124,10 +172,73 @@ class Transformation
 	 */
 	public static function generateLocationInMesh($separator = ' ')
 	{
-		$everything = self::$transformations;
-		$matrix = array(0, 0, 0, 0, 0, 0);
-		// Something magic happens here
-		return implode($separator, $matrix);
+		$outerObject = array(0, 0, 0, 0, 0, 0);
+		array_push(self::$transformations, array(0,0,0,0,5000,5000,5000)); // Testwert, Zeile loeschen wenn Room in transformations Array
+		foreach (self::$transformations as list($xPos, $yPos, $zPos, $rotation, $xSize, $ySize, $zSize))
+		{
+			if ($xPos == 0 && $yPos == 0 && $zPos == 0 && $zSize > $outerObject[5])
+			{
+				$outerObject[0] = $xPos;
+				$outerObject[1] = $yPos;
+				$outerObject[2] = $zPos;
+				$outerObject[3] = $xSize;
+				$outerObject[4] = $ySize;
+				$outerObject[5] = $zSize;
+			}
+		}
+		$free = false;
+		$locationInMesh = array();
+		$space = 100;
+		while (!$free)
+		{
+			for ($z = $outerObject[5] - $space * 2; $z > $space * 2; $z -= $space)
+			{
+				for ($y = $space * 2; $y < $outerObject[4] - $space * 2; $y += $space)
+				{
+					for ($x = $space * 2; $x < $outerObject[3] - $space * 2; $x += $space)
+					{
+						$free = true;
+						foreach (self::$transformations as list($xPos, $yPos, $zPos, $rotation, $xSize, $ySize, $zSize))
+						{
+							if ($xPos != $outerObject[0] ||$yPos != $outerObject[1] ||$zPos != $outerObject[2] ||$xSize != $outerObject[3] ||$ySize != $outerObject[4] ||$zSize != $outerObject[5])
+							{
+								if ($rotation == 90 || $rotation == 270)
+								{
+									if ($x >= $xPos && $x <= $xPos + $ySize && $y >= $yPos && $y <= $yPos + $xSize && $z >= $zPos && $z <= $zPos + $zSize)
+									{
+										$free = false;
+										break;
+									}
+								}
+								else
+								{
+									if ($x >= $xPos && $x <= $xPos + $xSize && $y >= $yPos && $y <= $yPos + $ySize && $z >= $zPos && $z <= $zPos + $zSize)
+									{
+										$free = false;
+										break;
+									}
+								}
+							}
+						}
+						if ($free)
+						{
+							$locationInMesh = array($x, $y, $z);
+							break;
+						}
+					}
+					if ($free)
+					{
+						break;
+					}
+				}
+				if ($free)
+				{
+					break;
+				}
+			}
+			$space = $space / 4;
+		}
+		return implode($separator, $locationInMesh);
 	}
 
 	/**
@@ -140,7 +251,7 @@ class Transformation
 	public static function generateMeshResolution($separator = ' ')
 	{
 		$everything = self::$transformations;
-		$matrix = array(0, 0, 0, 0, 0, 0);
+		$matrix = array(0, 0, 0);
 		// Something magic happens here
 		return implode($separator, $matrix);
 	}
