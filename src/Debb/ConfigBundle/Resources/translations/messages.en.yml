@@ -111,6 +111,7 @@ Max bandwidth: Max bandwidth [bit/s]
 Voltage: Voltage [V]
 Frequency: Frequency [Watt]
 State: State [number]
+Transfer rate: Transfer rate [NTU]
 
 # help
 help:
