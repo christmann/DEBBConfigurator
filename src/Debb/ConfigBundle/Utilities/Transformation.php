@@ -244,21 +244,6 @@ class Transformation
 	}
 
 	/**
-	 * Generates the mesh resolution
-	 *
-	 * @param string $separator
-	 *
-	 * @return string the generated transformation
-	 */
-	public static function generateMeshResolution($separator = ' ')
-	{
-		$everything = self::$transformations;
-		$matrix = array(0, 0, 0);
-		// Something magic happens here
-		return implode($separator, $matrix);
-	}
-
-	/**
 	 * Generates a transformation matrix string
 	 *
 	 * @param string $separator the separator for output

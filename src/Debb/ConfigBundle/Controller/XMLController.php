@@ -299,7 +299,7 @@ abstract class XMLController extends BaseController
 			$entity->getComponentId(),                                                                                  // $DEBBComponentId
 			method_exists($entity, 'getDebbLevel') ? $entity->getDebbLevel() : $real_class_name,                        // $DEBBLevel
 			$real_class_name . '_'.$entity->getComponentId().'.xml',                                                    // $DEBBComponentsFile
-			$real_class_name == 'Room' ? Transformation::generateMeshResolution() : null,                               // $meshResolution
+			$real_class_name == 'Room' ? null : null,                                                                   // $meshResolution
 			$real_class_name == 'Room' ? Transformation::generateBoundingBox() : null                                   // $bound
 		);
 		$revisionViewAttr = $revisionView->attributes();
