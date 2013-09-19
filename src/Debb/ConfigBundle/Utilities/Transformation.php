@@ -93,7 +93,7 @@ class Transformation
 		{
 			/** @var $connector Room|mixed */
 			/** @var $children Transformation|mixed */
-			self::$transformations[] = array(0, 0, 0, 0, 0, 0, 0);
+			self::$transformations[] = array(0, 0, 0, 0, $children->getSizeX() * 1000, $children->getSizeZ() * 1000, $children->getSizeY() * 1000);
 			$transform = self::generate_transform($separator);
 		}
 		return $transform;
@@ -174,7 +174,6 @@ class Transformation
 	public static function generateLocationInMesh($separator = ' ')
 	{
 		$outerObject = array(0, 0, 0, 0, 0, 0);
-		self::$transformations[] = array(0, 0, 0, 0, 5000, 5000, 5000); // Testwert, Zeile loeschen wenn Room in transformations Array
 		foreach (self::$transformations as $transformation)
 		{
 			list($xPos, $yPos, $zPos, $rotation, $xSize, $ySize, $zSize) = $transformation;
