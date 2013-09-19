@@ -25,7 +25,8 @@ class DEBBSimpleType extends BaseType
 		            'filter' => array('wrl,vrml' => 'VRML', 'stl' => 'STL'),
 		            'label' => 'Upload model files',
 		            'bootstrap' => true,
-		            'multiple' => true
+		            'multiple' => true,
+			        'showMaxSize' => true
 	            )
             )
         ;
