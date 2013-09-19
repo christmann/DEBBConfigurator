@@ -112,6 +112,13 @@ class ChassisType extends BaseType
 		        'by_reference' => false,
 		        'required' => false
 	        ))
+	        ->add('references', 'plupload', array(
+			        'filter' => array('wrl,vrml' => 'VRML', 'stl' => 'STL'),
+			        'label' => 'Upload model files',
+			        'bootstrap' => true,
+			        'multiple' => true
+		        )
+	        )
         ;
     }
 

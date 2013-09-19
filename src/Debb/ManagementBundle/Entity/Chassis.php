@@ -55,12 +55,20 @@ class Chassis extends Dimensions
      */
     private $nodeGroups;
 
+	/**
+	 * @var \Debb\ManagementBundle\Entity\File[]
+	 *
+	 * @ORM\ManyToMany(targetEntity="Debb\ManagementBundle\Entity\File", cascade={"all"}, orphanRemoval=true)
+	 */
+	private $references;
+
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->nodeGroups = new ArrayCollection();
+	    $this->references = new ArrayCollection();
     }
 
     /**
@@ -262,5 +270,38 @@ class Chassis extends Dimensions
 			return 600;
 		}
 		return parent::getSizeY();
+	}
+
+	/**
+	 * Add references
+	 *
+	 * @param \Debb\ManagementBundle\Entity\File $references
+	 * @return Chassis
+	 */
+	public function addReference(\Debb\ManagementBundle\Entity\File $references)
+	{
+		$this->references[] = $references;
+
+		return $this;
+	}
+
+	/**
+	 * Remove references
+	 *
+	 * @param \Debb\ManagementBundle\Entity\File $references
+	 */
+	public function removeReference($reference)
+	{
+		$this->references->removeElement($reference);
+	}
+
+	/**
+	 * Get references
+	 *
+	 * @return \Debb\ManagementBundle\Entity\File[]
+	 */
+	public function getReferences()
+	{
+		return $this->references->getValues();
 	}
 }

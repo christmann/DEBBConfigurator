@@ -51,11 +51,13 @@
             {{ form_row(form.draft) }}
             {{ form_row(form.type) }}
             {{ form_row(form.maxPower) }}
-            {{ form_row(form.references) }}
+            {{ form_row(form.powerUsageProfile) }}
+            {{ form_row(form.powerUsage) }}
 			{% do form.sizeX.setRendered %}{% do form.sizeY.setRendered %}{% do form.sizeZ.setRendered %}
 			{% do form.spaceLeft.setRendered %}{% do form.spaceRight.setRendered %}{% do form.spaceTop.setRendered %}{% do form.spaceBottom.setRendered %}{% do form.spaceFront.setRendered %}{% do form.spaceBehind.setRendered %}
-            {% do form.references.setRendered %}
 			{% do form.nodes.setRendered %}
+			{% do form.powerUsageProfile.setRendered %}
+			{% do form.powerUsage.setRendered %}
 			<div class="clear"></div>
 		</div>
 		<div id="node-select-box">

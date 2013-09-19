@@ -42,20 +42,12 @@ class NodeGroup extends Dimensions
      */
     private $racks;
 
-	/**
-	 * @var \Debb\ManagementBundle\Entity\File[]
-	 *
-	 * @ORM\ManyToMany(targetEntity="Debb\ManagementBundle\Entity\File", cascade={"all"}, orphanRemoval=true)
-	 */
-	private $references;
-
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->nodes = new ArrayCollection();
-		$this->references = new ArrayCollection();
     }
 
     /**
@@ -242,36 +234,13 @@ class NodeGroup extends Dimensions
     }
 
 	/**
-	 * Add references
-	 *
-	 * @param \Debb\ManagementBundle\Entity\File $references
-	 * @return DEBBSimple
-	 */
-	public function addReference(\Debb\ManagementBundle\Entity\File $references)
-	{
-		$this->references[] = $references;
-
-		return $this;
-	}
-
-	/**
-	 * Remove references
-	 *
-	 * @param \Debb\ManagementBundle\Entity\File $references
-	 */
-	public function removeReference($reference)
-	{
-		$this->references->removeElement($reference);
-	}
-
-	/**
 	 * Get references
 	 *
 	 * @return \Debb\ManagementBundle\Entity\File[]
 	 */
 	public function getReferences()
 	{
-		return $this->references->getValues();
+		return $this->getDraft() != null ? $this->getDraft()->getReferences() : array();
 	}
 
 	/**
