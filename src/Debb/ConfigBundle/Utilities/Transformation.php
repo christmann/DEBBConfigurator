@@ -109,8 +109,9 @@ class Transformation
 	public static function generateBoundingBox($separator = ' ')
 	{
 		$boundingBox = array(0, 0, 0, 0, 0, 0);
-		foreach (self::$transformations as list($xPos, $yPos, $zPos, $rotation, $xSize, $ySize, $zSize))
+		foreach (self::$transformations as $transformation)
 		{
+			list($xPos, $yPos, $zPos, $rotation, $xSize, $ySize, $zSize) = $transformation;
 			if ($xPos < $boundingBox[0])
 			{
 				$boundingBox[0] = $xPos;
@@ -173,9 +174,10 @@ class Transformation
 	public static function generateLocationInMesh($separator = ' ')
 	{
 		$outerObject = array(0, 0, 0, 0, 0, 0);
-		array_push(self::$transformations, array(0,0,0,0,5000,5000,5000)); // Testwert, Zeile loeschen wenn Room in transformations Array
-		foreach (self::$transformations as list($xPos, $yPos, $zPos, $rotation, $xSize, $ySize, $zSize))
+		self::$transformations[] = array(0, 0, 0, 0, 5000, 5000, 5000); // Testwert, Zeile loeschen wenn Room in transformations Array
+		foreach (self::$transformations as $transformation)
 		{
+			list($xPos, $yPos, $zPos, $rotation, $xSize, $ySize, $zSize) = $transformation;
 			if ($xPos == 0 && $yPos == 0 && $zPos == 0 && $zSize > $outerObject[5])
 			{
 				$outerObject[0] = $xPos;
@@ -198,8 +200,9 @@ class Transformation
 					for ($x = $space * 2; $x < $outerObject[3] - $space * 2; $x += $space)
 					{
 						$free = true;
-						foreach (self::$transformations as list($xPos, $yPos, $zPos, $rotation, $xSize, $ySize, $zSize))
+						foreach (self::$transformations as $transformation)
 						{
+							list($xPos, $yPos, $zPos, $rotation, $xSize, $ySize, $zSize) = $transformation;
 							if ($xPos != $outerObject[0] ||$yPos != $outerObject[1] ||$zPos != $outerObject[2] ||$xSize != $outerObject[3] ||$ySize != $outerObject[4] ||$zSize != $outerObject[5])
 							{
 								if ($rotation == 90 || $rotation == 270)
