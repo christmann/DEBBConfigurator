@@ -24,7 +24,8 @@ class NodeType extends BaseType
         $builder
             ->add('sizeX', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis'), 'label' => 'SizeX'))
             ->add('sizeY', null, array('required' => false, 'label' => 'SizeY'))
-            ->add('sizeZ', null, array('required' => false, 'label' => 'SizeZ'))
+            ->add('sizeZ', null, array('required' => false, 'label' => 'SizeZ', 'attr' => array('class' => 'noBreakAfterThis')))
+            ->add('meshResolution', null, array('required' => false, 'attr' => array('placeholder' => '0 0 0')))
             ->add('components', 'collection', array(
 				'type' => new ComponentType($this->container),
 				'allow_add' => true,

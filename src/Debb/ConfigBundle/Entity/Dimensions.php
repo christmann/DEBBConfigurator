@@ -76,6 +76,13 @@ class Dimensions extends \Debb\ManagementBundle\Entity\Base
 	private $spaceBehind = 0;
 
 	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="mesh_resolution", type="string", length=30, nullable=true)
+	 */
+	private $meshResolution;
+
+	/**
 	 * Set sizeX
 	 *
 	 * @param float $sizeX
@@ -283,6 +290,29 @@ class Dimensions extends \Debb\ManagementBundle\Entity\Base
 	}
 
 	/**
+	 * Set MeshResolution
+	 *
+	 * @param string $meshResolution
+	 * @return Dimensions
+	 */
+	public function setMeshResolution($meshResolution)
+	{
+		$this->meshResolution = $meshResolution;
+
+		return $this;
+	}
+
+	/**
+	 * Get MeshResolution
+	 *
+	 * @return string|null
+	 */
+	public function getMeshResolution()
+	{
+		return $this->meshResolution;
+	}
+
+	/**
 	 * Get complete x size with space
 	 * 
 	 * @return float complete x size with space
@@ -331,5 +361,4 @@ class Dimensions extends \Debb\ManagementBundle\Entity\Base
 		}
 		return (float) $ret;
 	}
-
 }

@@ -250,7 +250,7 @@ abstract class XMLController extends BaseController
 	/**
 	 * @param mixed $entity
 	 */
-	public function addEntityToPLMXML(\SimpleXMLElement & $xml, $entity)
+	public function addEntityToPLMXML(\SimpleXMLElement & $xml, $entity, $first = true)
 	{
 		if(is_array($entity))
 		{
@@ -271,7 +271,7 @@ abstract class XMLController extends BaseController
 			{
 				foreach($childs as $children)
 				{
-					$childIds[] = $this->addEntityToPLMXML($xml, $children);
+					$childIds[] = $this->addEntityToPLMXML($xml, $children, false);
 				}
 			}
 			unset($childs);
@@ -299,7 +299,7 @@ abstract class XMLController extends BaseController
 			$entity->getComponentId(),                                                                                  // $DEBBComponentId
 			method_exists($entity, 'getDebbLevel') ? $entity->getDebbLevel() : $real_class_name,                        // $DEBBLevel
 			$real_class_name . '_'.$entity->getComponentId().'.xml',                                                    // $DEBBComponentsFile
-			$real_class_name == 'Room' ? null : null,                                                                   // $meshResolution
+			$first ? $entity->getMeshResolution() : null,                                                               // $meshResolution
 			$real_class_name == 'Room' ? Transformation::generateBoundingBox() : null                                   // $bound
 		);
 		$revisionViewAttr = $revisionView->attributes();
