@@ -23,10 +23,6 @@
 		<script src="{{ asset_url }}" type="text/javascript"></script>
 	{% endjavascripts %}
     <script type="text/javascript">
-        $(function()
-		{
-			$('label[data-title]').popover({html: true});
-		});
         var chassisId = {{ form.vars.data.id | default(0) }};
     </script>
 {% endblock %}

@@ -24,8 +24,9 @@
             {% endif %}
             <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
             <input type="{{ type|default('checkbox') }}" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
-            {{ label|trans({}, translation_domain) }}
+            	{{ label|trans({}, translation_domain) }}
             </label>
+			{% if label_attr['data-title'] is defined and label_attr['data-content'] is defined and label_attr['data-content']|length > 0 %} <i class="icon-info-sign" style="cursor: pointer;" data-typ="{{ label_attr['data-typ']|default('popover') }}" data-title="{{ label_attr['data-title'] }}" data-content="{{ label_attr['data-content'] }}"></i>{% endif %}
         </div>
     {% endspaceless %}
 {% endblock %}
@@ -36,7 +37,7 @@
     {{ block('checkbox_widget') }}
 {% endblock %}
 
-{% block _debb_managementbundle_chassistype_heSize_label %}
+{% block form_label %}
     {% spaceless %}
         {% if label is not sameas(false) %}
             {% if not compound %}
@@ -52,7 +53,7 @@
             {#{% if label_attr['data-original-title'] is defined %}#}
                 {#{% set original_title = "" %}#}
             {#{% endif %}#}
-            <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue|raw }}"{% endfor %}>{{ label|trans({}, translation_domain) }}{% if label_attr['data-title'] is defined %} <i class="icon-info-sign"></i>{% endif %}</label>
+            <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue|raw }}"{% endfor %}>{{ label|trans({}, translation_domain) }}{% if label_attr['data-title'] is defined and label_attr['data-content']|length > 0 %} <i class="icon-info-sign"></i>{% endif %}</label>
         {% endif %}
     {% endspaceless %}
 {% endblock %}

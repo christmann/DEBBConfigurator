@@ -35,6 +35,19 @@ var debbUtils = {
 $(function()
 {
 	$('[rel="tooltip"]').tooltip();
+	$('label[data-title]').popover({html: true});
+	$(document).on('click', 'label[data-title], [data-title][data-content][data-typ="popover"]', function()
+	{
+		var t = $(this);
+		if(t.is('[ispopover]'))
+		{
+			t.popover('toggle');
+		}
+		else
+		{
+			t.attr('ispopover', true).popover({html: true}).popover('show');
+		}
+	});
     $(document).on('click', 'a.addThing[data-prototype]', function(e)
     {
         e.preventDefault();

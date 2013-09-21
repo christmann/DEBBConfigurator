@@ -25,7 +25,12 @@ class HeatsinkType extends DEBBSimpleType
 			->remove('references')
 			->remove('transform')
 			->add('transform', null, array_merge_recursive($transform->getOptions(), array('attr' => array('class' => 'noBreakAfterThis'))))
-            ->add('transferRate', null, array('required' => false))
+            ->add('transferRate', null, array('required' => false,
+		        'label_attr' => array(
+			        'data-title' => 'Annotation',
+			        'data-content' => 'Also called efficiency',
+			        'data-toggle' => 'tooltip'
+		        ),))
 			->add($references)
         ;
     }

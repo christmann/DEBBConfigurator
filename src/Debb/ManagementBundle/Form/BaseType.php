@@ -58,8 +58,18 @@ class BaseType extends AbstractType
 			->add('product', null, array('required' => false))
 			->add('label', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false))
 			->add('hostname', null, array('required' => false))
-			->add('type', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false))
-			->add('maxPower', null, array('required' => false))
+			->add('type', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false,
+				'label_attr' => array(
+					'data-title' => 'Annotation',
+					'data-content' => 'The type element might be used to specify a type for the module, i.e. for memory DDR/DDR2, for CPU architecture name etc. It has only informational character.',
+					'data-toggle' => 'tooltip'
+				),))
+			->add('maxPower', null, array('required' => false,
+				'label_attr' => array(
+					'data-title' => 'Annotation',
+					'data-content' => 'MaxPowerUsage is the theoretical limit of power consumption and may used for designing',
+					'data-toggle' => 'tooltip'
+				),))
 			->add('powerUsageProfile', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false))
 			->add('powerUsage', null, array('required' => false))
 		;

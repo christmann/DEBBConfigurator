@@ -21,9 +21,24 @@ class NetworkType extends BaseType
     {
 	    parent::buildForm($builder, $options);
         $builder
-            ->add('interface', null, array('attr' => array('class' => 'noBreakAfterThis')))
-            ->add('technology')
-            ->add('maxBandwidth')
+            ->add('interface', null, array('attr' => array('class' => 'noBreakAfterThis'),
+		        'label_attr' => array(
+			        'data-title' => 'Annotation',
+			        'data-content' => 'Physical Interface description like fibre, twisted pair, etc.',
+			        'data-toggle' => 'tooltip'
+		        ),))
+            ->add('technology', null, array(
+		        'label_attr' => array(
+			        'data-title' => 'Annotation',
+			        'data-content' => '10GE, IB QDR etc.',
+			        'data-toggle' => 'tooltip'
+		        ),))
+            ->add('maxBandwidth', null, array(
+		        'label_attr' => array(
+			        'data-title' => 'Annotation',
+			        'data-content' => 'Bandwidth as number in bit/s',
+			        'data-toggle' => 'tooltip'
+		        ),))
         ;
     }
 

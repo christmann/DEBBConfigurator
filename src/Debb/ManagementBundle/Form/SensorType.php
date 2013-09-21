@@ -22,12 +22,32 @@ class SensorType extends BaseType
 	    parent::buildForm($builder, $options);
         $builder
             ->add('class', 'choice', array('choices' => $this->getClasses(true), 'attr' => array('class' => 'noBreakAfterThis')))
-            ->add('unit', 'choice', array('choices' => $this->getUnits(true)))
+            ->add('unit', 'choice', array('choices' => $this->getUnits(true), 'label_attr' => array(
+		        'data-title' => 'Annotation',
+		        'data-content' => 'Only basic units should be used. For later
+								development other units can be used then the Factor should be
+								added.',
+		        'data-toggle' => 'tooltip'
+	        ),))
             ->add('minValue', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis')))
             ->add('maxValue', null, array('required' => false))
-            ->add('factor', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis')))
+            ->add('factor', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis'), 'label_attr' => array(
+		        'data-title' => 'Annotation',
+		        'data-content' => 'Factor is just the multiplier between the
+								currently used unit and the basic unit (i.e. litre to cubic
+								meter)',
+		        'data-toggle' => 'tooltip'
+	        ),))
             ->add('accuracy', null, array('required' => false))
-            ->add('input', null, array('required' => false))
+            ->add('input', null, array('required' => false, 'label_attr' => array(
+		        'data-title' => 'Annotation',
+		        'data-content' => 'Input is a flag describing that a sensors is a
+								input value for the simulation or not. for example heat sources
+								can be seen an sources without any output afterwards. Other
+								sensors migth be added for extracting results at the end of the
+								simulation.',
+		        'data-toggle' => 'tooltip'
+	        ),))
         ;
     }
 

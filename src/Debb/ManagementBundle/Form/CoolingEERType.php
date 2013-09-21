@@ -15,8 +15,18 @@ class CoolingEERType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('lWT', null, array('label' => 'LWT'))
-            ->add('cWT', null, array('label' => 'CWT'))
+            ->add('lWT', null, array('label' => 'LWT',
+		        'label_attr' => array(
+			        'data-title' => 'Annotation',
+			        'data-content' => 'Water temperature entering the chiller',
+			        'data-toggle' => 'tooltip'
+		        ),))
+            ->add('cWT', null, array('label' => 'CWT',
+		        'label_attr' => array(
+			        'data-title' => 'Annotation',
+			        'data-content' => 'Air temperature entering the condenser',
+			        'data-toggle' => 'tooltip'
+		        ),))
             ->add('capacity', null, array('label' => 'Capacity '))
             ->add('powerUsage', null, array('label' => 'Power usage'))
             ->add('eER', null, array('label' => 'EER'))
