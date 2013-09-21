@@ -26,3 +26,5 @@ debb_management.sensor.plural: Sensors
 debb_management.sensor.singular: sensor
 debb_management.baseboard.plural: Baseboards
 debb_management.baseboard.singular: baseboard
+debb_management.flowpump.plural: Flow pumps
+debb_management.flowpump.singular: flow pump
