@@ -83,6 +83,13 @@ class Dimensions extends \Debb\ManagementBundle\Entity\Base
 	private $meshResolution;
 
 	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="location_in_mesh", type="string", length=60, nullable=true)
+	 */
+	private $locationInMesh;
+
+	/**
 	 * Set sizeX
 	 *
 	 * @param float $sizeX
@@ -310,6 +317,29 @@ class Dimensions extends \Debb\ManagementBundle\Entity\Base
 	public function getMeshResolution()
 	{
 		return $this->meshResolution;
+	}
+
+	/**
+	 * Set locationInMesh
+	 *
+	 * @param string $locationInMesh
+	 * @return Dimensions
+	 */
+	public function setLocationInMesh($locationInMesh)
+	{
+		$this->locationInMesh = $locationInMesh;
+
+		return $this;
+	}
+
+	/**
+	 * Get locationInMesh
+	 *
+	 * @return string|null
+	 */
+	public function getLocationInMesh()
+	{
+		return $this->locationInMesh;
 	}
 
 	/**

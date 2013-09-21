@@ -30,6 +30,7 @@ class RackType extends BaseType
 			->add('nodeGroupSize', 'choice', array('choices' => $this->getNodeGroupSizeChoices(), 'required' => false, 'label' => 'RackSize',
 				'empty_value' => false, 'attr' => array('class' => 'updateRackSize noBreakAfterThis')))
 	        ->add('meshResolution', null, array('required' => false, 'attr' => array('placeholder' => '0 0 0')))
+	        ->add('locationInMesh', null, array('required' => false, 'attr' => array('placeholder' => '0 0 0 0 0 0')))
 	        ->add('nodegroups', 'collection', array(
 		        'type' => new \Debb\ManagementBundle\Form\NodegroupToRackType(),
 		        'allow_add' => true,

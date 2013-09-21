@@ -300,7 +300,7 @@ abstract class XMLController extends BaseController
 			method_exists($entity, 'getDebbLevel') ? $entity->getDebbLevel() : $real_class_name,                        // $DEBBLevel
 			$real_class_name . '_'.$entity->getComponentId().'.xml',                                                    // $DEBBComponentsFile
 			$first ? $entity->getMeshResolution() : null,                                                               // $meshResolution
-			$real_class_name == 'Room' ? Transformation::generateBoundingBox() : null                                   // $bound
+			$first ? Transformation::generateBoundingBox() : null                                                       // $bound
 		);
 		$revisionViewAttr = $revisionView->attributes();
 
@@ -311,8 +311,8 @@ abstract class XMLController extends BaseController
 			'Def' . sprintf('%s%02d', $real_class_name, $entity->getId()),                                              // $name
 			$revisionViewAttr->id,                                                                                      // $partRef
 			$entity->getHostname(),                                                                                     // $hostname
-			$real_class_name == 'Room' ? null : Transformation::generateTransform($entity, $parent),                    // $transform
-			$real_class_name == 'Room' ? Transformation::generateLocationInMesh() : null,                               // $locationInMesh
+			$first ? null : Transformation::generateTransform($entity, $parent),                                        // $transform
+			$first ? $entity->getLocationInMesh() : null,                                                               // $locationInMesh
 			$real_class_name == 'Room' ? $entity->getBuilding() : null                                                  // $location
 		);
 
