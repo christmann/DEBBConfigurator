@@ -79,6 +79,7 @@
 				</div>
 			{% endfor %}
 		</div>
+		{% do form.racks.setRendered %}{% do form.flowPumps.setRendered %}
 		<div class="clear"></div>
 		<div id="rackScale"><i class="icon-arrow-left"></i> {{ 'Scale' | trans }} 1m <i class="icon-arrow-right"></i></div>
 
