@@ -42,24 +42,28 @@
         {{ form_row(form.meshResolution) }}
         {{ form_row(form.locationInMesh) }}
         {{ form_row(form.references) }}
-		<div>
-			{{ 'Add rack' | trans }}:
-			<ul class="hoz">
-				{% for rack in racks %}
-					<li class="hoz ui-state-default eDraftRack" style="margin-left: 0px; margin-right: 10px;"><div class="draftRack" rackId="{{ rack.id }}" rackX="{{ rack.sizeX }}" rackY="{{ rack.sizeY }}" rackZ="{{ rack.sizeZ }}" title="{{ rack | e }}">{{ rack }}</div></li>
-				{% endfor %}
-			</ul>
-		</div>
-		<div class="clear"></div>
-		<div>
-			{{ 'Add flow pump' | trans }}:
-			<ul class="hoz">
-				{% for flowPump in flowPumps %}
-					<li class="hoz ui-state-default eDraftRack" style="margin-left: 0px; margin-right: 10px;"><div class="draftRack" flowPumpId="{{ flowPump.id }}" rackX="{{ flowPump.sizeX }}" rackY="{{ flowPump.sizeY }}" rackZ="{{ flowPump.sizeZ }}" title="{{ flowPump | e }}">{{ flowPump }}</div></li>
-				{% endfor %}
-			</ul>
-		</div>
-		<div class="clear"></div>
+		{% if racks|length > 0 -%}
+			<div>
+				{{ 'Add rack' | trans }}:
+				<ul class="hoz">
+					{% for rack in racks %}
+						<li class="hoz ui-state-default eDraftRack" style="margin-left: 0px; margin-right: 10px;"><div class="draftRack" rackId="{{ rack.id }}" rackX="{{ rack.sizeX }}" rackY="{{ rack.sizeY }}" rackZ="{{ rack.sizeZ }}" title="{{ rack | e }}">{{ rack }}</div></li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="clear"></div>
+		{%- endif %}
+		{% if flowPumps|length > 0 -%}
+			<div>
+				{{ 'Add flow pump' | trans }}:
+				<ul class="hoz">
+					{% for flowPump in flowPumps %}
+						<li class="hoz ui-state-default eDraftRack" style="margin-left: 0px; margin-right: 10px;"><div class="draftRack" flowPumpId="{{ flowPump.id }}" rackX="{{ flowPump.sizeX }}" rackY="{{ flowPump.sizeY }}" rackZ="{{ flowPump.sizeZ }}" title="{{ flowPump | e }}">{{ flowPump }}</div></li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="clear"></div>
+		{%- endif %}
 		<div id="rackSize">{{ 'size' | trans }}: <span id="rackSizeX">{{ (rackSizeX / 100.0) | number_format(2, '.', '') }}</span>m x <span id="rackSizeZ">{{ (rackSizeZ / 100.0) | number_format(2, '.', '') }}</span>m</div>
 		<div id="rackContainer" style="position: relative; width: {{ rackSizeX }}px; height: {{ rackSizeZ }}px; border: 2px solid #000; background: url('{{ asset('bundles/debbconfig/img/room-grid.png') }}') repeat scroll 1px {{ rackSizeZ + 1 }}px transparent;" data-prototype-rack="{{ form_row(form.racks.vars.prototype) | escape }}" data-prototype-flowpump="{{ form_row(form.flowPumps.vars.prototype) | escape }}">
 			{% for rack in form.racks %}
