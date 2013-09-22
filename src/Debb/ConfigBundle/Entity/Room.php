@@ -12,13 +12,19 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Room extends Dimensions
 {
-
 	/**
 	 * @var \Debb\ManagementBundle\Entity\RackToRoom[]
 	 *
 	 * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\RackToRoom", cascade={"persist"}, mappedBy="room", orphanRemoval=true)
 	 */
 	private $racks;
+
+	/**
+	 * @var \Debb\ManagementBundle\Entity\FlowPumpToRoom[]
+	 *
+	 * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\FlowPumpToRoom", cascade={"persist"}, mappedBy="room", orphanRemoval=true)
+	 */
+	private $flowPumps;
 
     /**
      * @var string
@@ -47,6 +53,7 @@ class Room extends Dimensions
 	public function __construct()
 	{
 		$this->racks = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->flowPumps = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->references = new \Doctrine\Common\Collections\ArrayCollection();
 	}
 
@@ -124,7 +131,7 @@ class Room extends Dimensions
 
 	/**
 	 * Get the next free field in rack array
-	 * 
+	 *
 	 * @return int the next free field in rack array
 	 */
 	public function getFreeRack()
@@ -133,6 +140,103 @@ class Room extends Dimensions
 		foreach ($this->getRacks() as $rack)
 		{
 			$ids[] = $rack->getField();
+		}
+		ksort($ids);
+
+		$res = 0;
+		foreach ($ids as $id)
+		{
+			if ($id == $res)
+			{
+				$res++;
+			}
+		}
+		return $res;
+	}
+
+	/**
+	 * Add flowPump
+	 *
+	 * @param \Debb\ManagementBundle\Entity\RackToRoom $flowPump
+	 * @return Room
+	 */
+	public function addFlowPump(\Debb\ManagementBundle\Entity\FlowPumpToRoom $flowPump)
+	{
+		$flowPump->setRoom($this);
+		$this->flowPumps[] = $flowPump;
+
+		return $this;
+	}
+
+	/**
+	 * Set flowPumps
+	 *
+	 * @param \Debb\ManagementBundle\Entity\FlowPumpToRoom[] $flowPumps
+	 * @return Room
+	 */
+	public function setFlowPumps($flowPumps)
+	{
+		$this->flowPumps = $flowPumps;
+
+		foreach ($this->flowPumps as $flowPump)
+		{
+			$flowPump->setRoom($this);
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Remove flowPump
+	 *
+	 * @param \Debb\ManagementBundle\Entity\RackToRoom $flowPump
+	 */
+	public function removeFlowPump(\Debb\ManagementBundle\Entity\FlowPumpToRoom $flowPump)
+	{
+		$this->flowPumps->removeElement($flowPump);
+	}
+
+	/**
+	 * Get flowPumps
+	 *
+	 * @return \Debb\ManagementBundle\Entity\FlowPumpToRoom[]
+	 */
+	public function getFlowPumps()
+	{
+		return $this->flowPumps;
+	}
+
+	/**
+	 * Sort flowPumps (unused) (reverse)
+	 */
+	public function sortFlowPumps()
+	{
+		$ordered = new \Doctrine\Common\Collections\ArrayCollection();
+		for ($i = $this->flowPumps->count() - 1; $i >= 0; $i--)
+		{
+			$ordered->add($this->flowPumps[$i]);
+		}
+		$this->flowPumps = $ordered;
+
+		$x = 0;
+		foreach ($this->flowPumps as $flowPump)
+		{
+			$flowPump->setField($x);
+			$x++;
+		}
+	}
+
+	/**
+	 * Get the next free field in flowPump array
+	 *
+	 * @return int the next free field in flowPump array
+	 */
+	public function getFreeFlowPump()
+	{
+		$ids = array();
+		foreach ($this->getFlowPumps() as $flowPump)
+		{
+			$ids[] = $flowPump->getField();
 		}
 		ksort($ids);
 
@@ -261,7 +365,7 @@ class Room extends Dimensions
 	}
 
 	/**
-	 * @return \Debb\ConfigBundle\Entity\Rack[]
+	 * @return array
 	 */
 	public function getChildrens()
 	{
@@ -271,6 +375,13 @@ class Room extends Dimensions
 			if($rackToRoom->getRack() != null)
 			{
 				$childrens[] = array($rackToRoom->getRack(), $rackToRoom);
+			}
+		}
+		foreach($this->getFlowPumps() as $flowPumpToRoom)
+		{
+			if($flowPumpToRoom->getFlowPump() != null)
+			{
+				$childrens[] = array($flowPumpToRoom->getFlowPump(), $flowPumpToRoom);
 			}
 		}
 		return $childrens;

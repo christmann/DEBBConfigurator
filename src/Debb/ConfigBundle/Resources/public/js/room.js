@@ -21,9 +21,10 @@ function updateRackDimensions(rack)
         var id = getExactId($(this).find('.rackGform').find('div[id]').attr('id')),
             position = $(this).position(),
             left = position.left,
-            bottom = $('#rackContainer').height() - position.top - $(this).outerHeight(true);
-        $(this).find('#debb_configbundle_roomtype_racks_' + id + '_posx').val(left);
-        $(this).find('#debb_configbundle_roomtype_racks_' + id + '_posy').val(parseInt(bottom) + 1);
+            bottom = $('#rackContainer').height() - position.top - $(this).outerHeight(true),
+	        selector = $(this).is('[flowPumpId]') ? 'flowPumps' : 'racks';
+        $(this).find('#debb_configbundle_roomtype_' + selector + '_' + id + '_posx').val(left);
+        $(this).find('#debb_configbundle_roomtype_' + selector + '_' + id + '_posy').val(parseInt(bottom) + 1);
     });
 }
 
@@ -45,10 +46,10 @@ function setStyleOfRack()
 		});
 		id++;
 
-		var prototype = $('#rackContainer').attr('data-prototype'),
+		var prototype = $('#rackContainer').attr('data-prototype-' + (newRack.is('[flowPumpId]') ? 'flowpump' : 'rack')),
 			newForm = prototype.replace(/__name__/g, id),
 			newFormLi = $('<div class="rackGform" style="display: none;"></div>').append($(newForm).children('div'));
-		newFormLi.find('#debb_configbundle_roomtype_racks_' + id + '_rack').val(newRack.attr('rackId'));
+		newFormLi.find('#debb_configbundle_roomtype_' + (newRack.is('[flowPumpId]') ? 'flowPumps' : 'racks') + '_' + id + '_' + (newRack.is('[flowPumpId]') ? 'flowPump' : 'rack')).val(newRack.attr(newRack.is('[flowPumpId]') ? 'flowPumpId' : 'rackId'));
 		newRack.append(newFormLi);
 
 		newRack.appendTo('#rackContainer').draggable(rackDragOpt).droppable(rackDropOpt);

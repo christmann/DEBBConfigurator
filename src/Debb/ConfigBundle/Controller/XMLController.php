@@ -9,8 +9,10 @@ use Debb\ConfigBundle\Entity\Rack;
 use Debb\ConfigBundle\Entity\Room;
 use Debb\ConfigBundle\Utilities\Transformation;
 use Debb\ManagementBundle\Controller\BaseController;
+use Debb\ManagementBundle\Controller\FlowPumpController;
 use Debb\ManagementBundle\Entity\DEBBSimple;
 use Debb\ManagementBundle\Entity\File;
+use Debb\ManagementBundle\Entity\FlowPump;
 use Debb\ManagementBundle\Entity\Heatsink;
 use Debb\ManagementBundle\Entity\NodegroupToRack;
 use Debb\ManagementBundle\Entity\RackToRoom;
@@ -608,6 +610,7 @@ abstract class XMLController extends BaseController
 			$item = $this->getEntity($id);
 
 			/* Init the arrays for later generation of xml files */
+			$flowPumps = array();
 			$nodes = array();
 			$nodeGroups = array();
 			$racks = array(); // @ignore
@@ -621,12 +624,20 @@ abstract class XMLController extends BaseController
 			{
 				foreach($rooms as $room)
 				{
-					/* @var $room \Debb\ManagementBundle\Entity\RackToRoom */
+					/* @var $rack \Debb\ManagementBundle\Entity\RackToRoom */
 					foreach($item->getRacks() as $rack)
 					{
 						if($rack->getRack() != null)
 						{
 							$racks[$rack->getRack()->getId()] = $rack->getRack();
+						}
+					}
+					/* @var $flowPump \Debb\ManagementBundle\Entity\FlowPumpToRoom */
+					foreach($item->getFlowPumps() as $flowPump)
+					{
+						if($flowPump->getFlowPump() != null)
+						{
+							$flowPumps[$flowPump->getFlowPump()->getId()] = $flowPump->getFlowPump();
 						}
 					}
 				}
@@ -757,6 +768,20 @@ abstract class XMLController extends BaseController
 					if(count($rack->getReferences()) > 0)
 					{
 						foreach($rack->getReferences() as $reference)
+						{
+							$zip->addFile($reference->getFullPath(), 'objects/' . $reference->getId() . '_' . $reference->getName());
+						}
+					}
+				}
+			}
+			foreach($flowPumps as $flowPump)
+			{
+				if($flowPump instanceof FlowPump)
+				{
+					/* @var $flowPump FlowPump */
+					if(count($flowPump->getReferences()) > 0)
+					{
+						foreach($flowPump->getReferences() as $reference)
 						{
 							$zip->addFile($reference->getFullPath(), 'objects/' . $reference->getId() . '_' . $reference->getName());
 						}

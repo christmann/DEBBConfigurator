@@ -2,6 +2,7 @@
 
 namespace Debb\ManagementBundle\Entity;
 
+use Debb\ConfigBundle\Entity\Dimensions;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -15,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="typ", type="string")
  */
-class DEBBSimple extends Base
+class DEBBSimple extends Dimensions
 {
     /**
      * The Transform tag is necessary for all part which are located within a Component i.e. fans within a RECS or sensors or for the "root object of a DEBB it is not used.

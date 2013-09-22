@@ -48,7 +48,7 @@ class Transformation
 			return self::generate_transform($separator);
 		}
 
-		if ($className == 'Rack')
+		if ($className == 'Rack' || $className == 'FlowPump')
 		{
 			/** @var $connector RackToRoom */
 			$posX = $connector->getPosX() * 10;

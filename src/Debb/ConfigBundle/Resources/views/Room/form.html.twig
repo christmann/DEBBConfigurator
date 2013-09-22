@@ -51,13 +51,30 @@
 			</ul>
 		</div>
 		<div class="clear"></div>
+		<div>
+			{{ 'Add flow pump' | trans }}:
+			<ul class="hoz">
+				{% for flowPump in flowPumps %}
+					<li class="hoz ui-state-default eDraftRack" style="margin-left: 0px; margin-right: 10px;"><div class="draftRack" flowPumpId="{{ flowPump.id }}" rackX="{{ flowPump.sizeX }}" rackY="{{ flowPump.sizeY }}" rackZ="{{ flowPump.sizeZ }}" title="{{ flowPump | e }}">{{ flowPump }}</div></li>
+				{% endfor %}
+			</ul>
+		</div>
+		<div class="clear"></div>
 		<div id="rackSize">{{ 'size' | trans }}: <span id="rackSizeX">{{ (rackSizeX / 100.0) | number_format(2, '.', '') }}</span>m x <span id="rackSizeZ">{{ (rackSizeZ / 100.0) | number_format(2, '.', '') }}</span>m</div>
-		<div id="rackContainer" style="position: relative; width: {{ rackSizeX }}px; height: {{ rackSizeZ }}px; border: 2px solid #000; background: url('{{ asset('bundles/debbconfig/img/room-grid.png') }}') repeat scroll 1px {{ rackSizeZ + 1 }}px transparent;" data-prototype="{{ form_row(form.racks.vars.prototype) | escape }}">
+		<div id="rackContainer" style="position: relative; width: {{ rackSizeX }}px; height: {{ rackSizeZ }}px; border: 2px solid #000; background: url('{{ asset('bundles/debbconfig/img/room-grid.png') }}') repeat scroll 1px {{ rackSizeZ + 1 }}px transparent;" data-prototype-rack="{{ form_row(form.racks.vars.prototype) | escape }}" data-prototype-flowpump="{{ form_row(form.flowPumps.vars.prototype) | escape }}">
 			{% for rack in form.racks %}
 				<div class="rackG" posx="{{ rack.vars.data.posx }}" posy="{{ rack.vars.data.posy }}" posz="{{ rack.vars.data.posz }}"
 				     rackId="{{ rack.vars.data.id }}" title="{{ rack.vars.data.rack | e }}" rackx="{{ rack.vars.data.rack.sizeX }}" racky="{{ rack.vars.data.rack.sizeY }}" rackz="{{ rack.vars.data.rack.sizeZ }}"><a href="#" class="removeRack"><i class="icon-trash"></i></a> - <a href="#" class="rotateRack"><i class="icon-repeat"></i></a><br />{{ rack.vars.data.rack }}
 					<div class="rackGform" style="display: none;">
 						{{ form_widget(rack) }}
+					</div>
+				</div>
+			{% endfor %}
+			{% for flowPump in form.flowPumps %}
+				<div class="rackG" posx="{{ flowPump.vars.data.posx }}" posy="{{ flowPump.vars.data.posy }}" posz="{{ flowPump.vars.data.posz }}"
+					 flowPumpId="{{ flowPump.vars.data.id }}" title="{{ flowPump.vars.data.flowPump | e }}" rackx="{{ flowPump.vars.data.flowPump.sizeX }}" racky="{{ flowPump.vars.data.flowPump.sizeY }}" rackz="{{ flowPump.vars.data.flowPump.sizeZ }}"><a href="#" class="removeRack"><i class="icon-trash"></i></a> - <a href="#" class="rotateRack"><i class="icon-repeat"></i></a><br />{{ flowPump.vars.data.flowPump }}
+					<div class="rackGform" style="display: none;">
+						{{ form_widget(flowPump) }}
 					</div>
 				</div>
 			{% endfor %}

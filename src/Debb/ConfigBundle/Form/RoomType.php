@@ -34,6 +34,13 @@ class RoomType extends AbstractType
 				'by_reference' => false,
 				'required' => false,
 			))
+	        ->add('flowPumps', 'collection', array(
+		        'type' => new \Debb\ManagementBundle\Form\FlowPumpToRoomType(),
+		        'allow_add' => true,
+		        'allow_delete' => true,
+		        'by_reference' => false,
+		        'required' => false,
+	        ))
 			->add('references', 'plupload', array(
 					'filter' => array('wrl,vrml' => 'VRML', 'stl' => 'STL'),
 					'label' => 'Upload model files',

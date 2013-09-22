@@ -93,4 +93,12 @@ class FlowPump extends DEBBSimple
     {
         return $this->efficiency;
     }
+
+	/**
+	 * @return string the debb level
+	 */
+	public function getDebbLevel()
+	{
+		return 'Outlet';
+	}
 }

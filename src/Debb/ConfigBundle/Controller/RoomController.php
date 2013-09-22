@@ -38,6 +38,7 @@ class RoomController extends XMLController
 	{
 		$item = $this->getEntity($id);
 		$racks = $this->getEntities('DebbConfigBundle:Rack');
+		$flowPumps = $this->getEntities('DebbManagementBundle:FlowPump');
 
 		$form = $this->createForm($this->getFormType($item), $item);
 		if ($request->getMethod() == 'POST')
@@ -54,7 +55,8 @@ class RoomController extends XMLController
 		return $this->render($this->resolveTemplate(__METHOD__), array(
 				'form' => $form->createView(),
 				'item' => $item,
-				'racks' => $racks
+				'racks' => $racks,
+				'flowPumps' => $flowPumps
 		));
 	}
 
