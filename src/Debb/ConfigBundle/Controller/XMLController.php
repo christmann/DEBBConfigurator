@@ -418,7 +418,7 @@ abstract class XMLController extends BaseController
 		{
 			$locationInMeshXML = $userData->addChild('UserValue');
 			$locationInMeshXML->addAttribute('value', $locationInMesh); // example: 100 100 3100
-			$locationInMeshXML->addAttribute('title', 'LocationInMesh');
+			$locationInMeshXML->addAttribute('title', 'locationInMesh');
 		}
 
 		if ($location != null && is_string($location) && strlen(trim($location)) > 0)
