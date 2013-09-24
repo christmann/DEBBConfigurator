@@ -163,9 +163,17 @@ class Node extends Dimensions
 			}
 		}
 
-		if(!$baseboard || !$processor || !$memory)
+		if(!$baseboard)
 		{
-			return false;
+			$array['Node']['Baseboard'] = array('Label' => '');
+		}
+		if(!$processor)
+		{
+			$array['Node']['Processor'] = array('MaxClockSpeed' => 0);
+		}
+		if(!$memory)
+		{
+			$array['Node']['Memory'] = array('Capacity' => 0);
 		}
 
 		return $array;
