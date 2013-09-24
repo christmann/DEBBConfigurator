@@ -35,6 +35,7 @@
 {% block contentExtras %} style="width: {{ rackSizeX + 21 }}px;"{% endblock %}
 
 {% block content %}
+	{{ form_errors(form) }}
 	<div style="margin-left: 6px;">
         {{ form_row(form.name) }}
 		{{ form_row(form.building) }}
