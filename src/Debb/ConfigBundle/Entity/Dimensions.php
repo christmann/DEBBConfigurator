@@ -3,6 +3,7 @@
 namespace Debb\ConfigBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Dimensions
@@ -317,6 +318,16 @@ class Dimensions extends \Debb\ManagementBundle\Entity\Base
 	public function getMeshResolution()
 	{
 		return $this->meshResolution;
+	}
+
+	/**
+	 * Check if mesh resolution is correct
+	 *
+	 * @Assert\True(message = "Please use a mesh resolution like 3 3 3 or 1 2 3.")
+	 */
+	public function isMeshResolutionLegal()
+	{
+		return $this->meshResolution === null || preg_match('#^(\d+[ ]{0,1}){3}$#i', $this->meshResolution) === 1;
 	}
 
 	/**
