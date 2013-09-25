@@ -34,7 +34,7 @@
 {% block buttonbar %}
 	{% if exportasarchive is defined and route_exists(localdev_admin_route("_exportasarchive")) and item is defined and item.id is not null %}
 		<a href="{{ path(localdev_admin_route("_exportasarchive"), {"id": item.id}) }}" target="_blank" class="blue-button white" style="padding-right: 8px; margin-right: -4px;">
-			<span rel="tooltip" data-original-title="{{ 'download.%what%.file' | trans({'%what%': 'archive' | trans}) }}"><i class="icon-download-alt"></i></span>
+			<span rel="tooltip" data-original-title="{{ 'download.%what%.file' | trans({'%what%': 'archive' | trans}) }}"><i class="icon-download"></i></span>
 		</a>&nbsp;
 	{% endif %}
 	<a href="{% if ownbackhref is defined %}{{ ownbackhref }}{% else %}{{ path(localdev_admin_route('_index')) }}{% endif %}"
