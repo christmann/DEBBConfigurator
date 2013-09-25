@@ -32,7 +32,7 @@ class NodeGroupType extends BaseType
             ->add('spaceFront', null, array('required' => false))
             ->add('spaceBehind', null, array('required' => false))
 	        ->add('meshResolution', null, array('required' => false, 'attr' => array('placeholder' => '0 0 0')))
-	        ->add('locationInMesh', null, array('required' => false, 'attr' => array('placeholder' => '0 0 0 0 0 0')))
+	        ->add('locationInMesh', null, array('required' => false, 'attr' => array('placeholder' => '0 0 0')))
             ->add('nodes', 'collection', array(
 				'type' => new \Debb\ManagementBundle\Form\NodeToNodegroupType(),
 				'allow_add' => true,

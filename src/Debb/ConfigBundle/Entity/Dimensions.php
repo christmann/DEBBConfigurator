@@ -356,11 +356,11 @@ class Dimensions extends \Debb\ManagementBundle\Entity\Base
 	/**
 	 * Check if location in mesh is correct
 	 *
-	 * @Assert\True(message = "Please use a location in mesh like 0 0 0 3.3 3.3 3.3 or 3.3 3.3 3.3 3.3 3.3 3.3")
+	 * @Assert\True(message = "Please use a location in mesh like 3 3 3 or 3.3 3.3 3.3")
 	 */
 	public function isLocationInMeshLegal()
 	{
-		return $this->locationInMesh === null || preg_match('#^(\d+(\.\d+){0,1}[ ]{0,1}){6}$#i', $this->locationInMesh) === 1;
+		return $this->locationInMesh === null || preg_match('#^(\d+(\.\d+){0,1}[ ]{0,1}){3}$#i', $this->locationInMesh) === 1;
 	}
 
 	/**

@@ -25,7 +25,7 @@ class RoomType extends AbstractType
 			->add('sizeX', 'hidden', array('required' => false))
 			->add('sizeY', 'number', array('required' => false, 'label' => 'SizeY', 'attr' => array('class' => 'noBreakAfterThis')))
             ->add('meshResolution', null, array('required' => false, 'attr' => array('placeholder' => '0 0 0')))
-            ->add('locationInMesh', null, array('required' => false, 'attr' => array('placeholder' => '0 0 0 0 0 0')))
+            ->add('locationInMesh', null, array('required' => false, 'attr' => array('placeholder' => '0 0 0')))
 			->add('sizeZ', 'hidden', array('required' => false))
             ->add('racks', 'collection', array(
 				'type' => new \Debb\ManagementBundle\Form\RackToRoomType(),
