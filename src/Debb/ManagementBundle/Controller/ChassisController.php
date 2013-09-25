@@ -52,21 +52,4 @@ class ChassisController extends BaseController
             'duplicated' => $duplicated
 		));
 	}
-
-    /**
-     * Duplicate entity
-     *
-     * @Route("/duplicate/{id}", requirements={"id"="\d+"});
-     *
-     * @param int $id item id
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function duplicateAction($id)
-    {
-        $item = $this->getEntity($id);
-        $itemNew = clone $item;
-        $this->persistEntity($itemNew);
-        return $this->redirect($this->generateUrl('debb_management_chassis_form', array('id' => $itemNew->getId(), 'duplicated' => 1)));
-    }
 }
