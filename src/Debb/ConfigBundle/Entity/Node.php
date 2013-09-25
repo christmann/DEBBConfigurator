@@ -2,7 +2,10 @@
 
 namespace Debb\ConfigBundle\Entity;
 
+use Debb\ManagementBundle\Entity\Baseboard;
 use Debb\ManagementBundle\Entity\Heatsink;
+use Debb\ManagementBundle\Entity\Memory;
+use Debb\ManagementBundle\Entity\Processor;
 use Doctrine\ORM\Mapping as ORM;
 use \Debb\ManagementBundle\Entity\Component;
 use Doctrine\ORM\PersistentCollection;
@@ -148,6 +151,30 @@ class Node extends Dimensions
 		$processors = $this->getComponents(Component::TYPE_PROCESSOR); $processor = false;
 		$memories = $this->getComponents(Component::TYPE_MEMORY); $memory = false;
 
+		if(!count($baseboards) || reset($baseboards)->getAmount() < 1)
+		{
+			$comp = new Component();
+			$comp->setAmount(1);
+			$comp->setBaseboard(new Baseboard());
+			$baseboards[] = $comp;
+		}
+
+		if(!count($processors) || reset($baseboards)->getAmount() < 1)
+		{
+			$comp = new Component();
+			$comp->setAmount(1);
+			$comp->setBaseboard(new Processor());
+			$processors[] = $comp;
+		}
+
+		if(!count($memories) || reset($baseboards)->getAmount() < 1)
+		{
+			$comp = new Component();
+			$comp->setAmount(1);
+			$comp->setBaseboard(new Memory());
+			$memories[] = $comp;
+		}
+
 		foreach (array_merge(
 					 $baseboards,
 					 $processors,
@@ -161,19 +188,6 @@ class Node extends Dimensions
 				if($component->getType() == Component::TYPE_MEMORY) { $memory = true; }
 				$array['Node'][] = $component->getDebbXmlArray();
 			}
-		}
-
-		if(!$baseboard)
-		{
-			$array['Node']['Baseboard'] = array('Label' => '');
-		}
-		if(!$processor)
-		{
-			$array['Node']['Processor'] = array('MaxClockSpeed' => 0);
-		}
-		if(!$memory)
-		{
-			$array['Node']['Memory'] = array('Capacity' => 0);
 		}
 
 		return $array;
