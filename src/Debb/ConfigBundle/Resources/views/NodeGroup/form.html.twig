@@ -24,6 +24,7 @@
 {% endblock %}
 
 {% block content %}
+	{% if form.vars.errors|length %}<div class="alert alert-error">{{ form_errors(form) }}</div>{% endif %}
 	<div id="nodegroup"
 		 data-prototype="{{ ('<div class="node"><span class="nodeTitle">&nbsp;</span>' ~ form_widget(form.nodes.vars.prototype, {attr: {'style': 'display: none'} })
 		 ~ '<a href="#" class="selectNode">' ~  ('select.%what%' | trans({'%what%': 'node' | trans})) ~ '</a></div>') | e }}">

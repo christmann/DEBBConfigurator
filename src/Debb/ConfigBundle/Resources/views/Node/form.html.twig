@@ -63,6 +63,7 @@
 {% endblock %}
 
 {% block content %}
+	{% if form.vars.errors|length %}<div class="alert alert-error">{{ form_errors(form) }}</div>{% endif %}
 	<div class="row-fluid" style="position: relative; min-height: 320px;">
 		<div class="span3">
             <div class="row-fluid">{{ form_widget(form.image) }}</div>

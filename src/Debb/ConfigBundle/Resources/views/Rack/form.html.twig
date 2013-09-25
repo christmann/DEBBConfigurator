@@ -28,6 +28,7 @@
 {% endblock %}
 
 {% block content %}
+	{% if form.vars.errors|length %}<div style="margin: 28px 22px;" class="alert alert-error">{{ form_errors(form) }}</div>{% endif %}
 	<div class="rackTop">&nbsp;</div>
 	<div class="rack" data-prototype="{{ form_row(form.nodegroups.vars.prototype) | escape }}">
 		{% set formNodeGroups = form.nodegroups | reverse %}
