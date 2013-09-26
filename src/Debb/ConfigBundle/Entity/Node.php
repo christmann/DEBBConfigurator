@@ -163,7 +163,7 @@ class Node extends Dimensions
 		{
 			$comp = new Component();
 			$comp->setAmount(1);
-			$comp->setBaseboard(new Processor());
+			$comp->setProcessor(new Processor());
 			$processors[] = $comp;
 		}
 
@@ -171,7 +171,7 @@ class Node extends Dimensions
 		{
 			$comp = new Component();
 			$comp->setAmount(1);
-			$comp->setBaseboard(new Memory());
+			$comp->setMemory(new Memory());
 			$memories[] = $comp;
 		}
 
