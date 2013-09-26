@@ -77,16 +77,9 @@ class PState
 		{
 			$array['Voltage'] = $this->getVoltage();
 		}
-		if($this->getLoadPowerUsages() !== null)
-		{
-			foreach($this->getLoadPowerUsages() as $loadPowerUsage)
-			{
-				$array[''] = $this->getPowerUsageMin();
-			}
-		}
 		foreach($this->getLoadPowerUsages() as $loadPowerUsage)
 		{
-			$array[] = array(array('LoadPowerUsage' => $loadPowerUsage->get));
+			$array[] = array(array('LoadPowerUsage' => $loadPowerUsage->getDebbXmlArray()));
 		}
 		return $array;
 	}
