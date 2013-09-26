@@ -159,7 +159,7 @@ class Node extends Dimensions
 			$baseboards[] = $comp;
 		}
 
-		if(!count($processors) || reset($baseboards)->getAmount() < 1)
+		if(!count($processors) || reset($processors)->getAmount() < 1)
 		{
 			$comp = new Component();
 			$comp->setAmount(1);
@@ -167,7 +167,7 @@ class Node extends Dimensions
 			$processors[] = $comp;
 		}
 
-		if(!count($memories) || reset($baseboards)->getAmount() < 1)
+		if(!count($memories) || reset($memories)->getAmount() < 1)
 		{
 			$comp = new Component();
 			$comp->setAmount(1);
