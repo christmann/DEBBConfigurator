@@ -56,6 +56,7 @@ $(function()
         if(!maxDefined || counter < $(this).attr('maxt'))
         {
             $($(this).attr('data-prototype').replace(/__name__/g, debbUtils.generateUniqueId())).hide().appendTo(eval($(this).attr('obj'))).show('slow');
+	        $.event.trigger( { type: 'addedThing' } );
         }
         else
         {
@@ -68,12 +69,14 @@ $(function()
         if(typeof($(this).attr('slow')) !== 'undefined' && $(this).attr('slow').toLowerCase() === 'false')
         {
             eval($(this).attr('obj')).remove();
+	        $.event.trigger( { type: 'deletedThing' } );
         }
         else
         {
             eval($(this).attr('obj')).hide('slow', function()
             {
                 $(this).remove();
+	            $.event.trigger( { type: 'deletedThing' } );
             });
         }
     });
