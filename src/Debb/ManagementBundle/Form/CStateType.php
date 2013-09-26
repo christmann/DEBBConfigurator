@@ -20,6 +20,7 @@ class CStateType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+			->add('state', 'integer', array('mapped' => false, 'required' => false))
             ->add('powerUsage')
         ;
     }

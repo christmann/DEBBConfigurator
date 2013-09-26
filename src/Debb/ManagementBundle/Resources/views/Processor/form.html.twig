@@ -2,6 +2,11 @@
 {%- form_theme form "DebbManagementBundle::form_theme.html.twig" -%}
 {%- import _self as utils -%}
 
+{%- block javascripts -%}
+    {{- parent() -}}
+    <script type="text/javascript"
+{%- endblock -%}
+
 {% block p_c_states -%}
 	<div class="span6">
 		{{- utils.stateBlock(form.pstates) -}}
