@@ -676,6 +676,14 @@ abstract class XMLController extends BaseController
 							$nodes[$node->getNode()->getId()] = $node->getNode();
 						}
 					}
+					/* @var $flowPump \Debb\ManagementBundle\Entity\FlowPumpToRoom */
+					foreach($nodeGroup->getChassis()->getFlowPumps() as $flowPump)
+					{
+						if($flowPump->getFlowPump() != null)
+						{
+							$flowPumps[$flowPump->getFlowPump()->getId()] = $flowPump->getFlowPump();
+						}
+					}
 				}
 			}
 			if($item instanceof Node)

@@ -244,7 +244,7 @@ class NodeGroup extends Dimensions
 	}
 
 	/**
-	 * @return \Debb\ConfigBundle\Entity\Node[]
+	 * @return array
 	 */
 	public function getChildrens()
 	{
@@ -262,6 +262,14 @@ class NodeGroup extends Dimensions
 				if(array_key_exists($x, $nodes))
 				{
 					$childrens[] = array($nodes[$x]->getNode(), $typSpecs[$x]);
+				}
+			}
+
+			foreach($draft->getFlowPumps() as $flowPumpToChassis)
+			{
+				if($flowPumpToChassis->getFlowPump() != null)
+				{
+					$childrens[] = array($flowPumpToChassis->getFlowPump(), $flowPumpToChassis);
 				}
 			}
 		}

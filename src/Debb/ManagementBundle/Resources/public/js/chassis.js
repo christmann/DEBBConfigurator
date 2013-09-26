@@ -23,8 +23,8 @@ function updateNodeDimensions(node)
             position = $(this).position(),
             left = position.left,
             bottom = $('#nodegroupContainer').height() - position.top - $(this).outerHeight(true);
-        $(this).find('#debb_managementbundle_chassistype_typspecification_' + id + '_posX').val(left);
-        $(this).find('#debb_managementbundle_chassistype_typspecification_' + id + '_posY').val(parseInt(bottom));
+        $(this).find('[id$="_posX"], [id$="_posx"]').val(left);
+        $(this).find('[id$="_posY"], [id$="_posy"]').val(parseInt(bottom));
     });
 }
 
@@ -82,7 +82,7 @@ $(function ()
         }
     }).droppable({tolerance: 'fit'});
     $('.node').draggable(rackDragOpt).droppable(rackDropOpt);
-    $('.addNode').click(function(e)
+    $('.addNode, .addFlowPump').click(function(e)
     {
         e.preventDefault();
 
@@ -98,13 +98,31 @@ $(function ()
         id++;
 
         var container = $('#nodegroupContainer'),
-            newNode = $(container.attr('data-prototype').replace(/__name__/g, id));
+            newNode = $(container.attr('data-prototype' + ($(this).is('.addFlowPump') ? '-flowpump' : '')).replace(/__name__/g, id));
 
         newNode.appendTo(container).draggable(rackDragOpt).droppable(rackDropOpt);
         updateNodeDimensions(newNode);
+	    if($(this).is('.addFlowPump'))
+	    {
+		    newNode.find('span.pumpName').text($(this).find('[flowPumpId][title]').attr('title'));
+		    newNode.find('[id$="_flowPump"]').val($(this).find('[flowPumpId]').attr('flowPumpId'));
+		    var rackX = parseFloat($(this).find('[rackx]').attr('rackx')),
+			    rackZ = parseFloat($(this).find('[rackz]').attr('rackz'));
+		    newNode.css('width', (rackX <= 0 ? 99 : rackX * 100 - 1) + 'px');
+		    newNode.css('height', (rackZ <= 0 ? 99 : rackZ * 100 - 1) + 'px');
+	    }
     });
     $('.node').each(function()
     {
+	    var pump = $(this).find('[id$="_flowPump"]');
+	    console.log(pump);
+	    if(pump.length > 0)
+	    {
+		    var rackX = parseFloat($('[flowpumpid=' + pump.val() + '][rackx]').attr('rackx')),
+			    rackZ = parseFloat($('[flowpumpid=' + pump.val() + '][rackz]').attr('rackz'));
+		    $(this).css('width', (rackX <= 0 ? 99 : rackX * 100 - 1) + 'px');
+		    $(this).css('height', (rackZ <= 0 ? 99 : rackZ * 100 - 1) + 'px');
+	    }
         if(typeof $(this).attr('posx') != 'undefined')
         {
             $(this).css('left', (parseInt($(this).attr('posx')) < 0 ? 0 : parseInt($(this).attr('posx'))) + 'px');

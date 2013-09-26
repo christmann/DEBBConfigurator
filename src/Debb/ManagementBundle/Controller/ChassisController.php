@@ -29,6 +29,7 @@ class ChassisController extends BaseController
 	{
 		/* @var $item \Debb\ManagementBundle\Entity\Chassis */
 		$item = $this->getEntity($id);
+		$flowPumps = $this->getEntities('DebbManagementBundle:FlowPump');
 
 		$form = $this->createForm($this->getFormType($item), $item, array('attr' => array('duplicated' => $duplicated)));
 		if ($request->getMethod() == 'POST')
@@ -49,7 +50,8 @@ class ChassisController extends BaseController
 			'form' => $form->createView(),
 			'item' => $item,
 			'nodetypspecs' => $nodeController->getNodeTypesQuery()->execute(),
-            'duplicated' => $duplicated
+            'duplicated' => $duplicated,
+			'flowPumps' => $flowPumps
 		));
 	}
 }

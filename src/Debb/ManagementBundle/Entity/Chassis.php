@@ -62,6 +62,13 @@ class Chassis extends Dimensions
 	 */
 	private $references;
 
+	/**
+	 * @var \Debb\ManagementBundle\Entity\FlowPumpToRoom[]
+	 *
+	 * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\FlowPumpToChassis", cascade={"persist"}, mappedBy="chassis", orphanRemoval=true)
+	 */
+	private $flowPumps;
+
     /**
      * Constructor
      */
@@ -303,5 +310,102 @@ class Chassis extends Dimensions
 	public function getReferences()
 	{
 		return $this->references->getValues();
+	}
+
+	/**
+	 * Add flowPump
+	 *
+	 * @param \Debb\ManagementBundle\Entity\RackToChassis $flowPump
+	 * @return Chassis
+	 */
+	public function addFlowPump(\Debb\ManagementBundle\Entity\FlowPumpToChassis $flowPump)
+	{
+		$flowPump->setChassis($this);
+		$this->flowPumps[] = $flowPump;
+
+		return $this;
+	}
+
+	/**
+	 * Set flowPumps
+	 *
+	 * @param \Debb\ManagementBundle\Entity\FlowPumpToChassis[] $flowPumps
+	 * @return Chassis
+	 */
+	public function setFlowPumps($flowPumps)
+	{
+		$this->flowPumps = $flowPumps;
+
+		foreach ($this->flowPumps as $flowPump)
+		{
+			$flowPump->setChassis($this);
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Remove flowPump
+	 *
+	 * @param \Debb\ManagementBundle\Entity\RackToChassis $flowPump
+	 */
+	public function removeFlowPump(\Debb\ManagementBundle\Entity\FlowPumpToChassis $flowPump)
+	{
+		$this->flowPumps->removeElement($flowPump);
+	}
+
+	/**
+	 * Get flowPumps
+	 *
+	 * @return \Debb\ManagementBundle\Entity\FlowPumpToChassis[]
+	 */
+	public function getFlowPumps()
+	{
+		return $this->flowPumps;
+	}
+
+	/**
+	 * Sort flowPumps (unused) (reverse)
+	 */
+	public function sortFlowPumps()
+	{
+		$ordered = new \Doctrine\Common\Collections\ArrayCollection();
+		for ($i = $this->flowPumps->count() - 1; $i >= 0; $i--)
+		{
+			$ordered->add($this->flowPumps[$i]);
+		}
+		$this->flowPumps = $ordered;
+
+		$x = 0;
+		foreach ($this->flowPumps as $flowPump)
+		{
+			$flowPump->setField($x);
+			$x++;
+		}
+	}
+
+	/**
+	 * Get the next free field in flowPump array
+	 *
+	 * @return int the next free field in flowPump array
+	 */
+	public function getFreeFlowPump()
+	{
+		$ids = array();
+		foreach ($this->getFlowPumps() as $flowPump)
+		{
+			$ids[] = $flowPump->getField();
+		}
+		ksort($ids);
+
+		$res = 0;
+		foreach ($ids as $id)
+		{
+			if ($id == $res)
+			{
+				$res++;
+			}
+		}
+		return $res;
 	}
 }
