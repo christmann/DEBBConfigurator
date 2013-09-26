@@ -390,6 +390,7 @@ abstract class XMLController extends BaseController
 						list(, $id) = explode('_', $a);
 						return intval($id);
 					}, $ids)) + 1;
+			$iId = $id;
 			$id = $exId . '_' . $id;
 		}
 
