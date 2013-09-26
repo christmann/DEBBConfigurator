@@ -42,8 +42,15 @@
 {%- endmacro %}
 
 {% macro stateForm(f) -%}
+	{%- import _self as utils -%}
 	<div class="well">
-		<div class="toprightcorner"><a href="#" class="trash" obj="$(this).parents('.well')"><i class="icon-trash"></i></a></div>
-		{{ form_widget(f) }}
+		<div class="toprightcorner"><a href="#" class="trash" obj="$(this).parents('.well:first')"><i class="icon-trash"></i></a></div>
+		{% for ff in f %}
+			{% if ff.vars.unique_block_prefix == '_debb_managementbundle_processortype_pstates_entry_loadPowerUsages' %}
+				{{- utils.stateBlock(ff) -}}
+			{% else %}
+				{{ form_row(ff) }}
+			{% endif %}
+		{% endfor %}
 	</div>
 {%- endmacro %}

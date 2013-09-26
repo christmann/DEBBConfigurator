@@ -22,6 +22,14 @@ class PStateType extends AbstractType
         $builder
             ->add('frequency')
             ->add('voltage')
+	        ->add('loadPowerUsages', 'collection', array(
+		        'type' => new PStateLoadPowerUsageType(),
+		        'allow_add' => true,
+		        'allow_delete' => true,
+		        'by_reference' => false,
+		        'required' => false,
+		        'label' => 'Load power usages',
+	        ))
         ;
     }
 
