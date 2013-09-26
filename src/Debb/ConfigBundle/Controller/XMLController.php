@@ -677,7 +677,7 @@ abstract class XMLController extends BaseController
 						}
 					}
 					/* @var $flowPump \Debb\ManagementBundle\Entity\FlowPumpToRoom */
-					foreach($nodeGroup->getChassis()->getFlowPumps() as $flowPump)
+					foreach($nodeGroup->getDraft()->getFlowPumps() as $flowPump)
 					{
 						if($flowPump->getFlowPump() != null)
 						{
