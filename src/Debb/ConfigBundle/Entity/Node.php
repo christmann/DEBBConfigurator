@@ -147,9 +147,9 @@ class Node extends Dimensions
 			'Transform' => 'Transform'
 		)));
 
-		$baseboards = $this->getComponents(Component::TYPE_BASEBOARD); $baseboard = false;
-		$processors = $this->getComponents(Component::TYPE_PROCESSOR); $processor = false;
-		$memories = $this->getComponents(Component::TYPE_MEMORY); $memory = false;
+		$baseboards = $this->getComponents(Component::TYPE_BASEBOARD);
+		$processors = $this->getComponents(Component::TYPE_PROCESSOR);
+		$memories = $this->getComponents(Component::TYPE_MEMORY);
 
 		if(!count($baseboards) || reset($baseboards)->getAmount() < 1)
 		{
@@ -183,9 +183,6 @@ class Node extends Dimensions
 		{
 			if ($component->getAmount() >= 1 && $component->getType() != Component::TYPE_NOTHING)
 			{
-				if($component->getType() == Component::TYPE_BASEBOARD) { $baseboard = true; }
-				if($component->getType() == Component::TYPE_PROCESSOR) { $processor = true; }
-				if($component->getType() == Component::TYPE_MEMORY) { $memory = true; }
 				$array['Node'][] = $component->getDebbXmlArray();
 			}
 		}
