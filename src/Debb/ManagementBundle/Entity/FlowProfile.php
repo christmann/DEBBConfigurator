@@ -27,7 +27,7 @@ class FlowProfile
 
     /**
      * @var string
-     *
+     * @Assert\NotNull()
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
     private $name;
