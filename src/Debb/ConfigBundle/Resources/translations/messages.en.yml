@@ -109,7 +109,7 @@ Maxtemp: Maximum Temperatur
 Mintemp: Minimale Temperatur
 Max bandwidth: Max bandwidth [bit/s]
 Voltage: Voltage [V]
-Frequency: Frequency [Watt]
+Frequency: Frequency [MHz]
 State: State [number]
 Transfer rate: Transfer rate [NTU]
 
