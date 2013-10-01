@@ -72,6 +72,7 @@ class BaseType extends AbstractType
 				),))
 			->add('powerUsageProfile', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false))
 			->add('powerUsage', null, array('required' => false))
+			->add('xmlName', null, array('required' => false, 'label' => 'XML name'))
 		;
 	}
 

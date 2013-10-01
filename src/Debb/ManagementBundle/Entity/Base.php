@@ -38,6 +38,13 @@ class Base
 	/**
 	 * @var string
 	 *
+	 * @ORM\Column(name="xml_name", type="string", length=255, nullable=true)
+	 */
+	private $xmlName;
+
+	/**
+	 * @var string
+	 *
 	 * @ORM\Column(name="label", type="string", length=255, nullable=true)
 	 */
 	private $label;
@@ -479,5 +486,28 @@ class Base
     public function getPowerUsageProfile()
     {
         return $this->powerUsageProfile;
+    }
+
+    /**
+     * Set xmlName
+     *
+     * @param string $xmlName
+     * @return Base
+     */
+    public function setXmlName($xmlName)
+    {
+        $this->xmlName = $xmlName;
+    
+        return $this;
+    }
+
+    /**
+     * Get xmlName
+     *
+     * @return string 
+     */
+    public function getXmlName()
+    {
+        return $this->xmlName;
     }
 }
