@@ -155,6 +155,18 @@ class NodeGroup extends Dimensions
 		{
 			$array['NodeGroup'][] = array(array('Reference' => array('Type' => $reference->getFileEnding(), 'Location' => './object/' . $reference->getId() . '_' . $reference->getName())));
 		}
+	    $draft = $this->getDraft();
+	    if($draft !== null)
+	    {
+		    foreach($draft->getFlowPumps() as $flowPumpToChassis)
+		    {
+			    $flowPump = $flowPumpToChassis->getFlowPump();
+			    if($flowPump != null)
+			    {
+				    $array['NodeGroup'][] = array(array($flowPump->getDebbLevel() => $flowPump->getDebbXmlArray()));
+			    }
+		    }
+	    }
 		if($this->getDraft() != null && $this->getDraft()->getTypspecification() != null)
 		{
 			/** @var $typSpec \Debb\ManagementBundle\Entity\ChassisTypSpecification */
