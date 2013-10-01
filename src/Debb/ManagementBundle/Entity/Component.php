@@ -463,4 +463,13 @@ class Component
 		return $array;
 	}
 
+	/**
+	 * @param $method
+	 * @param array optional $args
+	 * @return mixed
+	 */
+	function __call($method, $args = array())
+	{
+		return call_user_func(array($this->getActive(), $method), $args);
+	}
 }

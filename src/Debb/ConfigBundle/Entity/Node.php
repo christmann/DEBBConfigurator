@@ -235,7 +235,7 @@ class Node extends Dimensions
 			{
 				for($x = 0; $x < $component->getAmount(); $x++)
 				{
-					$childrens[] = array($component->getActive(), $component);
+					$childrens[] = array($component, $this);
 				}
 			}
 		}
