@@ -30,6 +30,13 @@ class FlowPump extends DEBBSimple
 	private $efficiency;
 
 	/**
+	 * @var boolean
+	 *
+	 * @ORM\Column(name="inlet", type="boolean")
+	 */
+	private $inlet = false;
+
+	/**
 	 * Returns a array for later converting
 	 *
 	 * @return array the array for later converting
@@ -95,10 +102,41 @@ class FlowPump extends DEBBSimple
     }
 
 	/**
+	 * Set inlet
+	 *
+	 * @param boolean $inlet
+	 * @return FlowPump
+	 */
+	public function setInlet($inlet)
+	{
+		$this->inlet = $inlet;
+
+		return $this;
+	}
+
+	/**
+	 * Get inlet
+	 *
+	 * @return boolean
+	 */
+	public function isInlet()
+	{
+		return $this->inlet;
+	}
+
+	/**
+	 * @return string the name of this flow pump
+	 */
+	function __toString()
+	{
+		return parent::__toString() . ' - ' . $this->getDebbLevel();
+	}
+
+	/**
 	 * @return string the debb level
 	 */
 	public function getDebbLevel()
 	{
-		return 'Outlet';
+		return $this->isInlet() ? 'Inlet' : 'Outlet';
 	}
 }

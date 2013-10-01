@@ -21,6 +21,7 @@ class FlowPumpType extends DEBBSimpleType
 	        ->add('sizeZ', null, array('required' => false, 'label' => 'SizeZ'))
 	        ->add('maxRPM', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis')))
 	        ->add('efficiency', null, array('required' => false))
+			->add('inlet', 'choice', array('choices' => array(0 => 'Outlet', 1 => 'Inlet'), 'label' => 'Mode'))
         ;
     }
     
