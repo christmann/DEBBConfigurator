@@ -227,6 +227,10 @@ class Base
 				$name .= substr(sha1($this->getId()), strlen($name), 5 - strlen($name));
 				$name = preg_replace('#[^\d\w]#', '', $name);
 			}
+			if($name == 'da39a')
+			{
+				return null;
+			}
 			$this->setComponentId($name . '_' . $this->getId());
 		}
 		return $this->componentId;
