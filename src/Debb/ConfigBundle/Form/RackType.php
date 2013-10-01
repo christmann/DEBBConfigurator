@@ -22,11 +22,11 @@ class RackType extends BaseType
 	    parent::buildForm($builder, $options);
         $builder
             ->remove('maxPower')
-            ->add('sizeX', null, array('required' => false, 'label' => 'SizeX'))
-            ->add('sizeY', null, array('required' => false, 'label' => 'SizeY', 'attr' => array('class' => 'noBreakAfterThis')))
-            ->add('sizeZ', null, array('required' => false, 'label' => 'SizeZ'))
-			->add('spaceBottom', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis'), 'label' => 'SpaceBottom'))
-			->add('spaceLeft', null, array('required' => false, 'label' => 'SpaceLeft'))
+            ->add('sizeX', null, array('required' => false, 'label' => 'SizeX', 'attr' => array('class' => 'noBreakAfterThis')))
+            ->add('sizeY', null, array('required' => false, 'label' => 'SizeY'))
+            ->add('sizeZ', null, array('required' => false, 'label' => 'SizeZ', 'attr' => array('class' => 'noBreakAfterThis')))
+			->add('spaceBottom', null, array('required' => false, 'label' => 'SpaceBottom'))
+			->add('spaceLeft', null, array('required' => false, 'label' => 'SpaceLeft', 'attr' => array('class' => 'noBreakAfterThis')))
 			->add('nodeGroupSize', 'choice', array('choices' => $this->getNodeGroupSizeChoices(), 'required' => false, 'label' => 'RackSize',
 				'empty_value' => false, 'attr' => array('class' => 'updateRackSize noBreakAfterThis')))
 	        ->add('meshResolution', null, array('required' => false, 'attr' => array('placeholder' => '0 0 0')))

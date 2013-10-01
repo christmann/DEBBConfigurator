@@ -60,10 +60,7 @@ class Processor extends Base
 	public function getDebbXmlArray()
 	{
 		$array = parent::getDebbXmlArray();
-		if($this->getMaxClockSpeed() !== null)
-		{
-			$array['MaxClockSpeed'] = $this->getMaxClockSpeed();
-		}
+		$array['MaxClockSpeed'] = (int) $this->getMaxClockSpeed();
 		if($this->getCores() !== null)
 		{
 			$array['Cores'] = $this->getCores();

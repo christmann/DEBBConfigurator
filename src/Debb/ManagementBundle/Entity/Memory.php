@@ -84,10 +84,7 @@ class Memory extends Base
 	public function getDebbXmlArray()
 	{
 		$array = parent::getDebbXmlArray();
-		if ($this->getCapacity() !== null)
-		{
-			$array['Capacity'] = $this->getCapacity();
-		}
+		$array['Capacity'] = (int) $this->getCapacity();
 		if ($this->getInterface() !== null)
 		{
 			$array['Interface'] = $this->getInterface();

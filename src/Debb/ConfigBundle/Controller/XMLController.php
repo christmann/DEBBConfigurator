@@ -265,60 +265,67 @@ abstract class XMLController extends BaseController
 		}
 		$real_class_name = $this->get_real_class($entity);
 
-		$childIds = array();
-		if(method_exists($entity, 'getChildrens'))
+		if($entity !== null)
 		{
-			$childs = $entity->getChildrens();
-			if(is_array($childs))
+			$childIds = array();
+			if(method_exists($entity, 'getChildrens'))
 			{
-				foreach($childs as $children)
+				$childs = $entity->getChildrens();
+				if(is_array($childs))
 				{
-					$childIds[] = $this->addEntityToPLMXML($xml, $children, false);
+					foreach($childs as $children)
+					{
+						$childIds[] = $this->addEntityToPLMXML($xml, $children, false);
+					}
+				}
+				unset($childs);
+			}
+
+			/** $representations array generation */
+			$representations = array();
+			if(method_exists($entity, 'getReferences') && count($entity->getReferences()) > 0)
+			{
+				/** @var $entity DEBBSimple */
+				foreach($entity->getReferences() as $reference)
+				{
+					$representations[] = array('format' => $reference->getFileEnding(), 'location' => './objects/' . $reference->getId() . '_' . $reference->getName());
 				}
 			}
-			unset($childs);
+
+			/** ProductRevisionView */
+			$revisionView = $this->addPlmXmlProductRevisionView(
+				$xml,                                                                                                                            // $xml
+				'iview' . sprintf('%02d', $entity->getId()) . '_1',                                                                              // $id
+				sprintf('%s%02d', $entity->getXmlName() != null ? $entity->getXmlName() : 'Def' . $real_class_name . 'View', $entity->getId()),  // $name
+				$childIds,                                                                                                                       // $instanceRefs
+				null,                                                                                                                            // $type
+				$representations,                                                                                                                // $representations
+				$entity->getComponentId(),                                                                                                       // $DEBBComponentId
+				method_exists($entity, 'getDebbLevel') ? $entity->getDebbLevel() : $real_class_name,                                             // $DEBBLevel
+				$real_class_name . '_'.$entity->getComponentId().'.xml',                                                                         // $DEBBComponentsFile
+				$first ? $entity->getMeshResolution() : null,                                                                                    // $meshResolution
+				$first ? Transformation::generateBoundingBox() : null,                                                                           // $bound
+				$entity                                                                                                                          // $entity
+			);
+			$revisionViewAttr = $revisionView->attributes();
+
+			/** ProductInstance */
+			$instance = $this->addPlmXmlProductInstance(
+				$xml,                                                                                                                            // $xml
+				'inst' . sprintf('%02d', $entity->getId()) . '_1',                                                                               // $id
+				sprintf('%s%02d', $entity->getXmlName() != null ? $entity->getXmlName() : 'Def' . $real_class_name, $entity->getId()),           // $name
+				$revisionViewAttr->id,                                                                                                           // $partRef
+				$entity->getHostname(),                                                                                                          // $hostname
+				$first ? null : Transformation::generateTransform($entity, $parent),                                                             // $transform
+				$first ? $entity->getLocationInMesh() : null,                                                                                    // $locationInMesh
+				$real_class_name == 'Room' ? $entity->getBuilding() : null,                                                                      // $location
+				$entity                                                                                                                          // $entity
+			);
+
+			return $instance[1];
 		}
 
-		/** $representations array generation */
-		$representations = array();
-		if(method_exists($entity, 'getReferences') && count($entity->getReferences()) > 0)
-		{
-			/** @var $entity DEBBSimple */
-			foreach($entity->getReferences() as $reference)
-			{
-				$representations[] = array('format' => $reference->getFileEnding(), 'location' => './objects/' . $reference->getId() . '_' . $reference->getName());
-			}
-		}
-
-		/** ProductRevisionView */
-		$revisionView = $this->addPlmXmlProductRevisionView(
-			$xml,                                                                                                       // $xml
-			'iview' . sprintf('%02d', $entity->getId()) . '_1',                                                         // $id
-			'Def' . $real_class_name . 'View' . sprintf('%02d', $entity->getId()),                                      // $name
-			$childIds,                                                                                                  // $instanceRefs
-			null,                                                                                                       // $type
-			$representations,                                                                                           // $representations
-			$entity->getComponentId(),                                                                                  // $DEBBComponentId
-			method_exists($entity, 'getDebbLevel') ? $entity->getDebbLevel() : $real_class_name,                        // $DEBBLevel
-			$real_class_name . '_'.$entity->getComponentId().'.xml',                                                    // $DEBBComponentsFile
-			$first ? $entity->getMeshResolution() : null,                                                               // $meshResolution
-			$first ? Transformation::generateBoundingBox() : null                                                       // $bound
-		);
-		$revisionViewAttr = $revisionView->attributes();
-
-		/** ProductInstance */
-		$instance = $this->addPlmXmlProductInstance(
-			$xml,                                                                                                       // $xml
-			'inst' . sprintf('%02d', $entity->getId()) . '_1',                                                          // $id
-			'Def' . sprintf('%s%02d', $real_class_name, $entity->getId()),                                              // $name
-			$revisionViewAttr->id,                                                                                      // $partRef
-			$entity->getHostname(),                                                                                     // $hostname
-			$first ? null : Transformation::generateTransform($entity, $parent),                                        // $transform
-			$first ? $entity->getLocationInMesh() : null,                                                               // $locationInMesh
-			$real_class_name == 'Room' ? $entity->getBuilding() : null                                                  // $location
-		);
-
-		return $instance[1];
+		return null;
 	}
 
 	/**
@@ -369,9 +376,10 @@ abstract class XMLController extends BaseController
 	 * @param null|string optional $transform the position of this product instance
 	 * @param null|string optional $locationInMesh the location in mesh
 	 * @param null|string optional $location the location
+	 * @param mixed optional $entity the entity of this instance
 	 * @return array the SimpleXMLElement product instance (0) and the generated id (1)
 	 */
-	public function addPlmXmlProductInstance(\SimpleXMLElement &$xml, $id, $name = null, $partRef = null, $hostname = null, $transform = null, $locationInMesh = null, $location = null)
+	public function addPlmXmlProductInstance(\SimpleXMLElement &$xml, $id, $name = null, $partRef = null, $hostname = null, $transform = null, $locationInMesh = null, $location = null, $entity = null)
 	{
 		$productInstance = $xml->addChild('ProductInstance');
 
@@ -429,6 +437,23 @@ abstract class XMLController extends BaseController
 			$locationXML->addAttribute('title', 'location');
 		}
 
+		$real_class_name = $this->get_real_class($entity);
+		if($real_class_name == 'Heatsink')
+		{
+			$userValue = $userData->addChild('UserValue');
+			$userValue->addAttribute('title', 'power-sensor');
+			$userValue->addAttribute('value', 'power');
+		}
+		else if($real_class_name == 'FlowPump')
+		{
+			foreach(array('airflowvolume', 'airflowspeed', 'temperature') as $sensor)
+			{
+				$userValue = $userData->addChild('UserValue');
+				$userValue->addAttribute('title', $sensor . '-sensor');
+				$userValue->addAttribute('value', $sensor);
+			}
+		}
+
 		$label = $userData->addChild('UserValue');
 		$label->addAttribute('value', $name . '_' . $iId);
 		$label->addAttribute('title', 'label');
@@ -457,9 +482,10 @@ abstract class XMLController extends BaseController
 	 * @param null|string optional $DEBBComponentFile the name of the DEBBComponents.xml file
 	 * @param null|string optional $meshResolution the mesh resolution
 	 * @param null|string optional $bound the boundary box
+	 * @param mixed optional $entity the entity of this instance
 	 * @return \SimpleXMLElement the SimpleXMLElement product revision view
 	 */
-	public function addPlmXmlProductRevisionView(\SimpleXMLElement &$xml, $id, $name = null, $instanceRefs = array(), $type = null, $representations = array(), $DEBBComponentId = null, $DEBBLevel = null, $DEBBComponentFile = null, $meshResolution = null, $bound = null)
+	public function addPlmXmlProductRevisionView(\SimpleXMLElement &$xml, $id, $name = null, $instanceRefs = array(), $type = null, $representations = array(), $DEBBComponentId = null, $DEBBLevel = null, $DEBBComponentFile = null, $meshResolution = null, $bound = null, $entity = null)
 	{
 		$productRevisionView = $xml->addChild('ProductRevisionView');
 

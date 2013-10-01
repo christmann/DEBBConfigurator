@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "59d7483d90c94a9d449ed7ecf16faf82",
+    "hash": "22c9481a7ce29726d6da6ec3872f349f",
     "packages": [
         {
             "name": "avalanche123/imagine-bundle",
@@ -33,7 +33,7 @@
                     "Avalanche\\Bundle\\ImagineBundle": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -58,8 +58,8 @@
             "target-dir": "CIM/PluploadBundle",
             "source": {
                 "type": "git",
-                "url": "ssh://git@git.christmann.info/bundles/PluploadBundle.git",
-                "reference": "ba76d814ca44a9f5e7e955e7c690e10bbb2e0af7"
+                "url": "git@git.christmann.info:bundles/PluploadBundle.git",
+                "reference": "aeed804f93407e23fe42f0f06ce4c20cc03f679c"
             },
             "require": {
                 "avalanche123/imagine-bundle": "v2.1",
@@ -80,7 +80,7 @@
             ],
             "description": "plupload for symfony",
             "homepage": "http://christmann.info",
-            "time": "2013-07-23 12:19:54"
+            "time": "2013-09-19 16:36:00"
         },
         {
             "name": "doctrine/annotations",
@@ -392,7 +392,7 @@
                     "Doctrine\\DBAL": "lib/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -468,7 +468,7 @@
                     "Doctrine\\Bundle\\DoctrineBundle": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -649,7 +649,7 @@
                     "Doctrine\\ORM": "lib/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -688,12 +688,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "1ee84a86a5e82420c6459705110b1804dd9063b8"
+                "reference": "b4840d8b3293386dba685d91169559eb20f2d767"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/1ee84a86a5e82420c6459705110b1804dd9063b8",
-                "reference": "1ee84a86a5e82420c6459705110b1804dd9063b8",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/b4840d8b3293386dba685d91169559eb20f2d767",
+                "reference": "b4840d8b3293386dba685d91169559eb20f2d767",
                 "shasum": ""
             },
             "require": {
@@ -748,7 +748,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2013-09-16 22:05:58"
+            "time": "2013-09-23 12:09:51"
         },
         {
             "name": "imagine/imagine",
@@ -776,7 +776,7 @@
                     "Imagine": "lib/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -830,7 +830,7 @@
                     "Incenteev\\ParameterHandler": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -878,7 +878,7 @@
                     "lib"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1021,12 +1021,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kriswallsmith/assetic.git",
-                "reference": "735cffd3982c6e8cdebe292d5db39d077f65890f"
+                "reference": "v1.1.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kriswallsmith/assetic/zipball/735cffd3982c6e8cdebe292d5db39d077f65890f",
-                "reference": "735cffd3982c6e8cdebe292d5db39d077f65890f",
+                "url": "https://api.github.com/repos/kriswallsmith/assetic/zipball/v1.1.2",
+                "reference": "v1.1.2",
                 "shasum": ""
             },
             "require": {
@@ -1151,12 +1151,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "f72392d0e6eb855118f5a84e89ac2d257c704abd"
+                "reference": "1.6.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/f72392d0e6eb855118f5a84e89ac2d257c704abd",
-                "reference": "f72392d0e6eb855118f5a84e89ac2d257c704abd",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/1.6.0",
+                "reference": "1.6.0",
                 "shasum": ""
             },
             "require": {
@@ -1291,7 +1291,7 @@
                     "File/"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "include-path": [
                 ""
             ],
@@ -1336,7 +1336,7 @@
                     "Text/"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "include-path": [
                 ""
             ],
@@ -1363,12 +1363,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-timer.git",
-                "reference": "19689d4354b295ee3d8c54b4f42c3efb69cbc17c"
+                "reference": "1.0.5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-timer/zipball/19689d4354b295ee3d8c54b4f42c3efb69cbc17c",
-                "reference": "19689d4354b295ee3d8c54b4f42c3efb69cbc17c",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-timer/zipball/1.0.5",
+                "reference": "1.0.5",
                 "shasum": ""
             },
             "require": {
@@ -1552,7 +1552,7 @@
                     "PHPUnit/"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "include-path": [
                 ""
             ],
@@ -1594,7 +1594,7 @@
                     "Psr\\Log\\": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1845,7 +1845,7 @@
                     "Symfony\\Bundle\\AsseticBundle": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1872,18 +1872,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Icu.git",
-                "reference": "7299cd3d8d6602103d1ebff5d0a9917b7bc6de72"
+                "reference": "v1.2.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Icu/zipball/7299cd3d8d6602103d1ebff5d0a9917b7bc6de72",
-                "reference": "7299cd3d8d6602103d1ebff5d0a9917b7bc6de72",
+                "url": "https://api.github.com/repos/symfony/Icu/zipball/v1.2.0",
+                "reference": "v1.2.0",
                 "shasum": ""
             },
             "require": {
                 "lib-icu": ">=4.4",
                 "php": ">=5.3.3",
-                "symfony/intl": "~2.3"
+                "symfony/intl": ">=2.3,<3.0"
             },
             "type": "library",
             "autoload": {
@@ -1949,7 +1949,7 @@
                     "Symfony\\Bundle\\MonologBundle": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2162,7 +2162,7 @@
                     "Twig_Extensions_": "lib/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2187,12 +2187,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig.git",
-                "reference": "6d6a1009427d1f398c9d40904147bf9f723d5755"
+                "reference": "v1.13.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/6d6a1009427d1f398c9d40904147bf9f723d5755",
-                "reference": "6d6a1009427d1f398c9d40904147bf9f723d5755",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/v1.13.2",
+                "reference": "v1.13.2",
                 "shasum": ""
             },
             "require": {
@@ -2237,22 +2237,22 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/willdurand/BazingaExposeTranslationBundle.git",
-                "reference": "6df1246d89d1eb36242c8ee12d57f46a6a43f195"
+                "reference": "72f6567cdb6cf4b8cd20570d45ad8aaf3c311c79"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/willdurand/BazingaExposeTranslationBundle/zipball/6df1246d89d1eb36242c8ee12d57f46a6a43f195",
-                "reference": "6df1246d89d1eb36242c8ee12d57f46a6a43f195",
+                "url": "https://api.github.com/repos/willdurand/BazingaExposeTranslationBundle/zipball/72f6567cdb6cf4b8cd20570d45ad8aaf3c311c79",
+                "reference": "72f6567cdb6cf4b8cd20570d45ad8aaf3c311c79",
                 "shasum": ""
             },
             "require": {
-                "symfony/console": ">=2.0,<2.4-dev",
-                "symfony/finder": ">=2.0,<2.4-dev",
-                "symfony/framework-bundle": ">=2.0,<2.4-dev"
+                "symfony/console": "~2.0",
+                "symfony/finder": "~2.0",
+                "symfony/framework-bundle": "~2.0"
             },
             "require-dev": {
-                "symfony/browser-kit": ">=2.0,<2.4-dev",
-                "symfony/yaml": ">=2.0,<2.4-dev"
+                "symfony/browser-kit": "~2.0",
+                "symfony/yaml": "~2.0"
             },
             "type": "symfony-bundle",
             "extra": {
@@ -2281,7 +2281,7 @@
                 "javascript",
                 "translation"
             ],
-            "time": "2013-06-20 15:42:20"
+            "time": "2013-09-18 08:13:56"
         }
     ],
     "packages-dev": [
@@ -2291,12 +2291,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/Behat.git",
-                "reference": "6219feccf5b5741ced2e7a16c47afbc14e10c27e"
+                "reference": "013b707abbf54ce589d565681e7f229a5bceb7e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/Behat/zipball/6219feccf5b5741ced2e7a16c47afbc14e10c27e",
-                "reference": "6219feccf5b5741ced2e7a16c47afbc14e10c27e",
+                "url": "https://api.github.com/repos/Behat/Behat/zipball/013b707abbf54ce589d565681e7f229a5bceb7e3",
+                "reference": "013b707abbf54ce589d565681e7f229a5bceb7e3",
                 "shasum": ""
             },
             "require": {
@@ -2345,7 +2345,7 @@
                 "Behat",
                 "Symfony2"
             ],
-            "time": "2013-09-16 15:40:15"
+            "time": "2013-09-26 07:32:18"
         },
         {
             "name": "behat/gherkin",
@@ -2524,28 +2524,24 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/MinkExtension.git",
-                "reference": "0b7223826341fad69b4600afe27722d2a2f9a306"
+                "reference": "ff87f2abe3ea89c280280ea33a7070140bb66652"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/MinkExtension/zipball/0b7223826341fad69b4600afe27722d2a2f9a306",
-                "reference": "0b7223826341fad69b4600afe27722d2a2f9a306",
+                "url": "https://api.github.com/repos/Behat/MinkExtension/zipball/ff87f2abe3ea89c280280ea33a7070140bb66652",
+                "reference": "ff87f2abe3ea89c280280ea33a7070140bb66652",
                 "shasum": ""
             },
             "require": {
                 "behat/behat": "~2.5.0",
                 "behat/mink": ">=1.4.3,<1.6-dev",
-                "php": ">=5.3.2"
+                "php": ">=5.3.2",
+                "symfony/config": "~2.2"
             },
             "require-dev": {
                 "behat/mink-goutte-driver": "~1.0"
             },
             "type": "behat-extension",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.1.x-dev"
-                }
-            },
             "autoload": {
                 "psr-0": {
                     "Behat\\MinkExtension": "src/"
@@ -2570,7 +2566,7 @@
                 "test",
                 "web"
             ],
-            "time": "2013-08-17 19:01:06"
+            "time": "2013-09-25 12:32:58"
         },
         {
             "name": "behat/mink-selenium2-driver",
@@ -2578,12 +2574,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/MinkSelenium2Driver.git",
-                "reference": "926edfba127b21a0cea85d144092557e0dc0ce63"
+                "reference": "96329a0728dbdd2c20d3c4b8376205a5a87e4af5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/MinkSelenium2Driver/zipball/926edfba127b21a0cea85d144092557e0dc0ce63",
-                "reference": "926edfba127b21a0cea85d144092557e0dc0ce63",
+                "url": "https://api.github.com/repos/Behat/MinkSelenium2Driver/zipball/96329a0728dbdd2c20d3c4b8376205a5a87e4af5",
+                "reference": "96329a0728dbdd2c20d3c4b8376205a5a87e4af5",
                 "shasum": ""
             },
             "require": {
@@ -2628,7 +2624,7 @@
                 "testing",
                 "webdriver"
             ],
-            "time": "2013-09-17 13:01:53"
+            "time": "2013-09-18 13:53:04"
         },
         {
             "name": "behat/symfony2-extension",
@@ -2691,12 +2687,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/instaclick/php-webdriver.git",
-                "reference": "10dcea308e5cf4c182c8fd0ca7f8381aefc4a416"
+                "reference": "1.0.16"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/instaclick/php-webdriver/zipball/10dcea308e5cf4c182c8fd0ca7f8381aefc4a416",
-                "reference": "10dcea308e5cf4c182c8fd0ca7f8381aefc4a416",
+                "url": "https://api.github.com/repos/instaclick/php-webdriver/zipball/1.0.16",
+                "reference": "1.0.16",
                 "shasum": ""
             },
             "require": {
