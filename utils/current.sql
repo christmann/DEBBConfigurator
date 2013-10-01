@@ -180,7 +180,7 @@ CREATE TABLE `chassis` (
 
 LOCK TABLES `chassis` WRITE;
 /*!40000 ALTER TABLE `chassis` DISABLE KEYS */;
-INSERT INTO `chassis` VALUES (1,NULL,1,NULL,NULL,'Christmann','RECS | Box Compute Unit',NULL,'v2.0 (Sirius) Case A',NULL,NULL,420,1090,0,0,0,0,0,0,0,1,0,NULL,NULL,NULL,NULL),(2,NULL,2,NULL,NULL,'Christmann','RECS | Box Power Unit',NULL,'v2.0 (Sirius)',NULL,NULL,449.88333,409.88333,0,0,0,0,0,0,0,6,1,NULL,NULL,NULL,NULL),(7,NULL,NULL,NULL,NULL,'Test','ChassisWithInletAndOutlet',NULL,NULL,NULL,NULL,900,600,0,0,0,0,0,0,0,1,0,NULL,NULL,NULL,NULL);
+INSERT INTO `chassis` VALUES (1,NULL,1,NULL,NULL,'Christmann','RECS | Box Compute Unit',NULL,'v2.0 (Sirius) Case A',NULL,NULL,420,1090,0,0,0,0,0,0,0,1,0,NULL,NULL,NULL,NULL),(2,NULL,2,NULL,NULL,'Christmann','RECS | Box Power Unit',NULL,'v2.0 (Sirius)',NULL,NULL,449.88333,409.88333,0,0,0,0,0,0,0,6,1,NULL,NULL,NULL,NULL),(7,NULL,NULL,NULL,NULL,'Test','ChassisWithInletAndOutlet',NULL,NULL,NULL,NULL,900,600,0,0,0,0,0,0,0,1,0,NULL,NULL,NULL,'test');
 /*!40000 ALTER TABLE `chassis` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -421,7 +421,7 @@ CREATE TABLE `debb_simple` (
   KEY `IDX_F93B9079FADE768C` (`powerUsageProfile_id`),
   CONSTRAINT `FK_F93B9079A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
   CONSTRAINT `FK_F93B9079FADE768C` FOREIGN KEY (`powerUsageProfile_id`) REFERENCES `flow_profile` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -430,7 +430,7 @@ CREATE TABLE `debb_simple` (
 
 LOCK TABLES `debb_simple` WRITE;
 /*!40000 ALTER TABLE `debb_simple` DISABLE KEYS */;
-INSERT INTO `debb_simple` VALUES (1,NULL,NULL,NULL,'Congatec','COM Express Heatsink',NULL,'COM Express Heatsink',NULL,NULL,NULL,NULL,'heatsink',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2,NULL,NULL,NULL,'Congatec','COM Express Heatspreader Heatsink BM45',NULL,'conga-BM45/HSP-HP-T',NULL,NULL,NULL,NULL,'heatsink',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(3,NULL,NULL,NULL,'Congatec','COM Express Heatspreader Heatsink',NULL,'conga-TCA/HSP-T',NULL,NULL,NULL,NULL,'heatsink',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(4,NULL,NULL,NULL,'Congatec','COM Express Passive Heatsink BAF',NULL,'conga-BAF/CSP-T',NULL,NULL,NULL,NULL,'heatsink',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(5,NULL,NULL,NULL,'Congatec','COM Express Passive Heatsink',NULL,'conga-TCA/CSP-T',NULL,NULL,NULL,NULL,'heatsink',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(6,NULL,NULL,NULL,'Kontron','COM Express Passive',NULL,'Heatpipe',NULL,NULL,NULL,NULL,'heatsink',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(7,NULL,NULL,NULL,'Scythe','KATANA',NULL,'3 SCKTN-3000A',NULL,NULL,NULL,NULL,'heatsink',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(8,NULL,NULL,NULL,'Toradex','Woodpacker Passive Heatspreader',NULL,NULL,NULL,NULL,NULL,NULL,'heatsink',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(9,NULL,NULL,'40x40x28 FAN','AVC','DB04028B12U',NULL,'40x40x28mm Fan 13000RPM',7.92,6.6,NULL,2,'flowpump',0.04,0.028,0.04,0,0,0,0,0,0,NULL,NULL,NULL),(10,NULL,NULL,NULL,'Air Inlet Raised Floor','60x60cm',NULL,NULL,NULL,NULL,NULL,NULL,'flowpump',0.6,0.02,0.6,0,0,0,0,0,0,NULL,NULL,NULL),(11,NULL,NULL,NULL,'Air Outlet Raised Floor','60x60cm',NULL,NULL,NULL,NULL,NULL,NULL,'flowpump',0.6,0.02,0.6,0,0,0,0,0,0,NULL,NULL,NULL),(14,NULL,NULL,NULL,'Kontron','COM Express Passive Heatsink i7',NULL,'Heatsink',NULL,NULL,NULL,NULL,'heatsink',0,0,0,0,0,0,0,0,0,NULL,NULL,NULL),(15,NULL,NULL,NULL,'Congatec','COM Express Heatspreader Atom',NULL,'Heatspreader for Intel Atom',NULL,NULL,NULL,NULL,'heatsink',0,0,0,0,0,0,0,0,0,NULL,NULL,NULL);
+INSERT INTO `debb_simple` VALUES (1,NULL,NULL,NULL,'Congatec','COM Express Heatsink',NULL,'COM Express Heatsink',NULL,NULL,NULL,NULL,'heatsink',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2,NULL,NULL,NULL,'Congatec','COM Express Heatspreader Heatsink BM45',NULL,'conga-BM45/HSP-HP-T',NULL,NULL,NULL,NULL,'heatsink',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(3,NULL,NULL,NULL,'Congatec','COM Express Heatspreader Heatsink',NULL,'conga-TCA/HSP-T',NULL,NULL,NULL,NULL,'heatsink',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(4,NULL,NULL,NULL,'Congatec','COM Express Passive Heatsink BAF',NULL,'conga-BAF/CSP-T',NULL,NULL,NULL,NULL,'heatsink',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(5,NULL,NULL,NULL,'Congatec','COM Express Passive Heatsink',NULL,'conga-TCA/CSP-T',NULL,NULL,NULL,NULL,'heatsink',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(6,NULL,NULL,NULL,'Kontron','COM Express Passive',NULL,'Heatpipe',NULL,NULL,NULL,NULL,'heatsink',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(7,NULL,NULL,NULL,'Scythe','KATANA',NULL,'3 SCKTN-3000A',NULL,NULL,NULL,NULL,'heatsink',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(8,NULL,NULL,NULL,'Toradex','Woodpacker Passive Heatspreader',NULL,NULL,NULL,NULL,NULL,NULL,'heatsink',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(9,NULL,NULL,'40x40x28 FAN','AVC','DB04028B12U',NULL,'40x40x28mm Fan 13000RPM',7.92,6.6,NULL,2,'flowpump',0.04,0.028,0.04,0,0,0,0,0,0,NULL,NULL,NULL),(10,NULL,NULL,NULL,'Air Inlet Raised Floor','60x60cm',NULL,NULL,NULL,NULL,NULL,NULL,'flowpump',0.6,0.02,0.6,0,0,0,0,0,0,NULL,NULL,NULL),(11,NULL,NULL,NULL,'Air Outlet Raised Floor','60x60cm',NULL,NULL,NULL,NULL,NULL,NULL,'flowpump',0.6,0.02,0.6,0,0,0,0,0,0,NULL,NULL,NULL),(14,NULL,NULL,NULL,'Kontron','COM Express Passive Heatsink i7',NULL,'Heatsink',NULL,NULL,NULL,NULL,'heatsink',0,0,0,0,0,0,0,0,0,NULL,NULL,NULL),(15,NULL,NULL,NULL,'Congatec','COM Express Heatspreader Atom',NULL,'Heatspreader for Intel Atom',NULL,NULL,NULL,NULL,'heatsink',0,0,0,0,0,0,0,0,0,NULL,NULL,NULL),(16,NULL,NULL,'40x40x28 FAN','AVC','DB04028B12U',NULL,'40x40x28mm Fan 13000RPM',7.92,6.6,NULL,2,'flowpump',0.04,0.028,0.04,0,0,0,0,0,0,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `debb_simple` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -643,7 +643,7 @@ CREATE TABLE `debbsimple_file` (
 
 LOCK TABLES `debbsimple_file` WRITE;
 /*!40000 ALTER TABLE `debbsimple_file` DISABLE KEYS */;
-INSERT INTO `debbsimple_file` VALUES (2,58),(2,59),(4,60),(4,61),(9,66),(9,67),(14,51),(14,52),(15,53),(15,54);
+INSERT INTO `debbsimple_file` VALUES (2,58),(2,59),(4,60),(4,61),(9,66),(9,67),(14,51),(14,52),(15,53),(15,54),(16,68),(16,69);
 /*!40000 ALTER TABLE `debbsimple_file` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -661,7 +661,7 @@ CREATE TABLE `file` (
   `mimeType` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `size` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -670,7 +670,7 @@ CREATE TABLE `file` (
 
 LOCK TABLES `file` WRITE;
 /*!40000 ALTER TABLE `file` DISABLE KEYS */;
-INSERT INTO `file` VALUES (1,'RECS v2.0 (Sirius).png','52317fdabacf3.png','image/png',263109),(2,'RECS v2.0 Netzteil.jpeg','523180e609cb8.jpeg','image/jpeg',483675),(3,'Block RECS v2.0 Netzteil.jpeg','52318b3493cf0.jpeg','image/jpeg',139575),(4,'Sirius_Netzteil_Node.wrl','52318b70412d7.wrl','model/vrml',592),(5,'Sirius_Netzteil_Node.stl','52318b75a2dd4.txt','text/plain',3308),(6,'AMD T40N.jpeg','52318c326786e.jpeg','image/jpeg',67618),(7,'AMD_board_00.stl','52318d6c947b6.txt','text/plain',1171914),(8,'AMD_board_00.wrl','52318d7510b45.wrl','model/vrml',134950),(9,'AMD_board_00.stl','52318d82e3ba1.txt','text/plain',1171914),(10,'conga-BAF.jpeg','52318e6d07885.jpeg','image/jpeg',67618),(11,'AMD_board_00.wrl','52318eb9235f1.wrl','model/vrml',134950),(12,'AMD_board_00.stl','52318ec786165.txt','text/plain',1171914),(13,'Intel_Core2Duo_00.wrl','5231909dd24c6.wrl','model/vrml',134950),(14,'Intel_Core2Duo_00.stl','523190ab42d53.txt','text/plain',1171914),(15,'conga-BM45-rep.png','523190c241ff2.png','image/png',1576732),(16,'conga-CCA.jpeg','5231917773002.jpeg','image/jpeg',52608),(17,'Intel_Atom_00.wrl','5231919936aa8.wrl','model/vrml',81541),(18,'Intel_Atom_00.stl','523191ac5be64.txt','text/plain',736924),(19,'Intel_I7_00.wrl','52319783cde18.wrl','model/vrml',206633),(20,'Intel_I7_00.stl','5231979bc732d.txt','text/plain',1764788),(21,'COMe-bSC2.jpeg','523197edba0ad.jpeg','image/jpeg',30344),(22,'COMe-bSC2.jpeg','52319846bf7bb.jpeg','image/jpeg',30344),(23,'Intel_I7_00.wrl','5231987991e91.wrl','model/vrml',206633),(24,'Intel_I7_00.stl','5231988ab1442.txt','text/plain',1764788),(25,'conga-BAF.jpeg','523199549733e.jpeg','image/jpeg',67618),(26,'woodpecker-z510.jpg','52319ae52487a.jpeg','image/jpeg',82299),(27,'woodpecker-z530.jpg','52319b724e6f9.jpeg','image/jpeg',81650),(28,'Schrank.wrl','5231aa0f36352.wrl','model/vrml',2091),(29,'Schrank.stl','5231aa16ce996.txt','text/plain',19777),(30,'Sirius_Netzteil.wrl','5232f7ae12bc2.wrl','model/vrml',2778),(31,'Sirius_Netzteil.stl','5232f7b265c31.txt','text/plain',25280),(34,'Schrank_Kuehlung.wrl','523b0d1a999ad.wrl','model/vrml',1083),(35,'Schrank_Kuehlung.stl','523b0d2fdd052.txt','text/plain',8810),(36,'Schrank_2m_hoch.wrl','523b0d6cbb1d5.wrl','model/vrml',2092),(37,'Schrank_2m_hoch.stl','523b0d75cc452.txt','text/plain',19765),(38,'Container.wrl','523b1097642fc.wrl','model/vrml',1004),(39,'Container.stl','523b109c88476.txt','text/plain',6659),(40,'RECS20_Case_A.stl','523bf2239e8a1.txt','text/plain',31241306),(41,'RECS20_Case_A.stl','523bf5a0d5c13.txt','text/plain',31241306),(42,'RECS20_Case_A.stl','523bf5b0de534.txt','text/plain',31241306),(43,'RECS20_Case_A.wrl','523c568c1427b.wrl','model/vrml',3987996),(44,'RECS20_Case_A.wrl','523c56ba3612c.wrl','model/vrml',3987996),(45,'RECS20_Case_A.wrl','523c56c3a20bf.wrl','model/vrml',3987996),(51,'Intel_I7_heatsink_00.wrl','524952b40865c.wrl','model/vrml',64714),(52,'Intel_I7_heatsink_00.stl','524952bd02e54.txt','text/plain',589917),(53,'Intel_Atom_Heatspreader_00.wrl','524953faa0363.wrl','model/vrml',1441),(54,'Intel_Atom_Heatspreader_00.stl','524953ffe641d.txt','text/plain',12124),(55,'Intel_Atom_00.wrl','5249548e44cf5.wrl','model/vrml',81541),(56,'Intel_Atom_00.stl','5249549b1726c.txt','text/plain',736924),(57,'conga-CCA.jpeg','524954c662108.jpeg','image/jpeg',52608),(58,'Intel_Core2Duo_heatsink_00.wrl','52495666c393d.wrl','model/vrml',12857),(59,'Intel_Core2Duo_heatsink_00.stl','5249566a82867.txt','text/plain',121788),(60,'AMD_heatsink_00.wrl','524957f18d1f1.wrl','model/vrml',12846),(61,'AMD_heatsink_00.stl','524957fdace80.txt','text/plain',121788),(62,'Sirius_Netzteil.wrl','52495a46d949c.wrl','model/vrml',2778),(63,'Sirius_Netzteil.stl','52495a51061ac.txt','text/plain',25280),(64,'RECS20_Case_A.wrl','52495acceb5d7.wrl','model/vrml',3987996),(65,'RECS20_Case_A.stl','52495bd76741f.txt','text/plain',31241306),(66,'Luefter_40x40x28.wrl','524965f5ef6b4.wrl','model/vrml',103048),(67,'Luefter_40x40x28.stl','52496606a972a.txt','text/plain',914168);
+INSERT INTO `file` VALUES (1,'RECS v2.0 (Sirius).png','52317fdabacf3.png','image/png',263109),(2,'RECS v2.0 Netzteil.jpeg','523180e609cb8.jpeg','image/jpeg',483675),(3,'Block RECS v2.0 Netzteil.jpeg','52318b3493cf0.jpeg','image/jpeg',139575),(4,'Sirius_Netzteil_Node.wrl','52318b70412d7.wrl','model/vrml',592),(5,'Sirius_Netzteil_Node.stl','52318b75a2dd4.txt','text/plain',3308),(6,'AMD T40N.jpeg','52318c326786e.jpeg','image/jpeg',67618),(7,'AMD_board_00.stl','52318d6c947b6.txt','text/plain',1171914),(8,'AMD_board_00.wrl','52318d7510b45.wrl','model/vrml',134950),(9,'AMD_board_00.stl','52318d82e3ba1.txt','text/plain',1171914),(10,'conga-BAF.jpeg','52318e6d07885.jpeg','image/jpeg',67618),(11,'AMD_board_00.wrl','52318eb9235f1.wrl','model/vrml',134950),(12,'AMD_board_00.stl','52318ec786165.txt','text/plain',1171914),(13,'Intel_Core2Duo_00.wrl','5231909dd24c6.wrl','model/vrml',134950),(14,'Intel_Core2Duo_00.stl','523190ab42d53.txt','text/plain',1171914),(15,'conga-BM45-rep.png','523190c241ff2.png','image/png',1576732),(16,'conga-CCA.jpeg','5231917773002.jpeg','image/jpeg',52608),(17,'Intel_Atom_00.wrl','5231919936aa8.wrl','model/vrml',81541),(18,'Intel_Atom_00.stl','523191ac5be64.txt','text/plain',736924),(19,'Intel_I7_00.wrl','52319783cde18.wrl','model/vrml',206633),(20,'Intel_I7_00.stl','5231979bc732d.txt','text/plain',1764788),(21,'COMe-bSC2.jpeg','523197edba0ad.jpeg','image/jpeg',30344),(22,'COMe-bSC2.jpeg','52319846bf7bb.jpeg','image/jpeg',30344),(23,'Intel_I7_00.wrl','5231987991e91.wrl','model/vrml',206633),(24,'Intel_I7_00.stl','5231988ab1442.txt','text/plain',1764788),(25,'conga-BAF.jpeg','523199549733e.jpeg','image/jpeg',67618),(26,'woodpecker-z510.jpg','52319ae52487a.jpeg','image/jpeg',82299),(27,'woodpecker-z530.jpg','52319b724e6f9.jpeg','image/jpeg',81650),(28,'Schrank.wrl','5231aa0f36352.wrl','model/vrml',2091),(29,'Schrank.stl','5231aa16ce996.txt','text/plain',19777),(30,'Sirius_Netzteil.wrl','5232f7ae12bc2.wrl','model/vrml',2778),(31,'Sirius_Netzteil.stl','5232f7b265c31.txt','text/plain',25280),(34,'Schrank_Kuehlung.wrl','523b0d1a999ad.wrl','model/vrml',1083),(35,'Schrank_Kuehlung.stl','523b0d2fdd052.txt','text/plain',8810),(36,'Schrank_2m_hoch.wrl','523b0d6cbb1d5.wrl','model/vrml',2092),(37,'Schrank_2m_hoch.stl','523b0d75cc452.txt','text/plain',19765),(38,'Container.wrl','523b1097642fc.wrl','model/vrml',1004),(39,'Container.stl','523b109c88476.txt','text/plain',6659),(40,'RECS20_Case_A.stl','523bf2239e8a1.txt','text/plain',31241306),(41,'RECS20_Case_A.stl','523bf5a0d5c13.txt','text/plain',31241306),(42,'RECS20_Case_A.stl','523bf5b0de534.txt','text/plain',31241306),(43,'RECS20_Case_A.wrl','523c568c1427b.wrl','model/vrml',3987996),(44,'RECS20_Case_A.wrl','523c56ba3612c.wrl','model/vrml',3987996),(45,'RECS20_Case_A.wrl','523c56c3a20bf.wrl','model/vrml',3987996),(51,'Intel_I7_heatsink_00.wrl','524952b40865c.wrl','model/vrml',64714),(52,'Intel_I7_heatsink_00.stl','524952bd02e54.txt','text/plain',589917),(53,'Intel_Atom_Heatspreader_00.wrl','524953faa0363.wrl','model/vrml',1441),(54,'Intel_Atom_Heatspreader_00.stl','524953ffe641d.txt','text/plain',12124),(55,'Intel_Atom_00.wrl','5249548e44cf5.wrl','model/vrml',81541),(56,'Intel_Atom_00.stl','5249549b1726c.txt','text/plain',736924),(57,'conga-CCA.jpeg','524954c662108.jpeg','image/jpeg',52608),(58,'Intel_Core2Duo_heatsink_00.wrl','52495666c393d.wrl','model/vrml',12857),(59,'Intel_Core2Duo_heatsink_00.stl','5249566a82867.txt','text/plain',121788),(60,'AMD_heatsink_00.wrl','524957f18d1f1.wrl','model/vrml',12846),(61,'AMD_heatsink_00.stl','524957fdace80.txt','text/plain',121788),(62,'Sirius_Netzteil.wrl','52495a46d949c.wrl','model/vrml',2778),(63,'Sirius_Netzteil.stl','52495a51061ac.txt','text/plain',25280),(64,'RECS20_Case_A.wrl','52495acceb5d7.wrl','model/vrml',3987996),(65,'RECS20_Case_A.stl','52495bd76741f.txt','text/plain',31241306),(66,'Luefter_40x40x28.wrl','524965f5ef6b4.wrl','model/vrml',103048),(67,'Luefter_40x40x28.stl','52496606a972a.txt','text/plain',914168),(68,'Luefter_40x40x28.wrl','524ac836d9be8.wrl','model/vrml',103048),(69,'Luefter_40x40x28.stl','524ac845bca9f.txt','text/plain',914168);
 /*!40000 ALTER TABLE `file` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -724,7 +724,7 @@ CREATE TABLE `flow_pump` (
 
 LOCK TABLES `flow_pump` WRITE;
 /*!40000 ALTER TABLE `flow_pump` DISABLE KEYS */;
-INSERT INTO `flow_pump` VALUES (9,13000,60,0),(10,0,100,0),(11,0,100,0);
+INSERT INTO `flow_pump` VALUES (9,13000,60,0),(10,0,100,1),(11,0,100,0),(16,13000,60,1);
 /*!40000 ALTER TABLE `flow_pump` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -778,7 +778,7 @@ CREATE TABLE `flowpumptochassis` (
   KEY `IDX_7D7C88A763EE729` (`chassis_id`),
   CONSTRAINT `FK_7D7C88A763EE729` FOREIGN KEY (`chassis_id`) REFERENCES `chassis` (`id`) ON DELETE CASCADE,
   CONSTRAINT `FK_7D7C88A719689C8E` FOREIGN KEY (`flowpump_id`) REFERENCES `flow_pump` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -787,7 +787,7 @@ CREATE TABLE `flowpumptochassis` (
 
 LOCK TABLES `flowpumptochassis` WRITE;
 /*!40000 ALTER TABLE `flowpumptochassis` DISABLE KEYS */;
-INSERT INTO `flowpumptochassis` VALUES (7,10,7,NULL,200,300,0,NULL),(8,11,7,NULL,400,300,0,NULL),(9,9,1,NULL,0,910,0,NULL);
+INSERT INTO `flowpumptochassis` VALUES (7,10,7,NULL,200,300,0,0),(8,11,7,NULL,400,300,0,0),(10,9,1,NULL,400,910,0,NULL),(11,16,1,NULL,0,110,0,NULL),(12,16,1,NULL,0,610,0,NULL),(13,16,1,NULL,0,910,0,NULL),(14,16,1,NULL,0,810,0,NULL),(15,16,1,NULL,0,710,0,NULL),(16,16,1,NULL,0,410,0,NULL),(17,16,1,NULL,0,310,0,NULL),(18,16,1,NULL,0,210,0,NULL),(19,16,1,NULL,0,510,0,NULL),(20,9,1,NULL,400,810,0,NULL),(21,9,1,NULL,400,710,0,NULL),(22,9,1,NULL,400,610,0,NULL),(23,9,1,NULL,400,510,0,NULL),(24,9,1,NULL,400,410,0,NULL),(25,9,1,NULL,400,310,0,NULL),(26,9,1,NULL,400,210,0,NULL),(27,9,1,NULL,400,110,0,NULL);
 /*!40000 ALTER TABLE `flowpumptochassis` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1024,7 +1024,7 @@ CREATE TABLE `nodegroup` (
   CONSTRAINT `FK_F741B948A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
   CONSTRAINT `FK_F741B948E2F3C5D1` FOREIGN KEY (`draft_id`) REFERENCES `chassis` (`id`) ON DELETE SET NULL,
   CONSTRAINT `FK_F741B948FADE768C` FOREIGN KEY (`powerUsageProfile_id`) REFERENCES `flow_profile` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1112,7 +1112,7 @@ CREATE TABLE `nodetonodegroup` (
   KEY `IDX_A3331D142C147D48` (`nodegroup_id`),
   CONSTRAINT `FK_A3331D142C147D48` FOREIGN KEY (`nodegroup_id`) REFERENCES `nodegroup` (`id`) ON DELETE CASCADE,
   CONSTRAINT `FK_A3331D14460D9FD7` FOREIGN KEY (`node_id`) REFERENCES `node` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1566,4 +1566,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-10-01 13:34:01
+-- Dump completed on 2013-10-02  0:00:03
