@@ -61,6 +61,20 @@ function rotToClass(rot)
     return rot > 0 && rot < 91 ? 'left' : (rot > 90 && rot < 181 ? 'top' : (rot > 180 && rot < 271 ? 'right' : 'bottom'));
 }
 
+/**
+ * Generates the content of a node or flow pump popover (per click on node or flow pump)
+ *
+ * @returns {string} the data-content
+ */
+function generateTipContent()
+{
+    var obj = $(this),
+        resObj = $('<div style="height: 300px;"></div>');
+    resObj.append('<div>' + Translator.get('Size') + ': ' + obj.attr('sizex') + 'm /' + obj.attr('sizey') + 'm /' + obj.attr('sizez') + 'm' + '</div>');
+    resObj.append($('<div>' + Translator.get('Actions') + ': </div>').append('<a href="#" class="removeNode"><i class="icon-trash"></i></a> - <a class="rotateNode" href="#"><i class="icon-repeat" style="transform: rotateZ(' + (objToRot(obj) + 90) + 'deg);"></i></a>'));
+    return resObj;
+}
+
 $(function ()
 {
     $('#nodegroupContainer').resizable({
@@ -104,18 +118,22 @@ $(function ()
         updateNodeDimensions(newNode);
 	    if($(this).is('.addFlowPump'))
 	    {
-		    newNode.find('span.pumpName').text($(this).find('[flowPumpId][title]').attr('title'));
+            var flowPumpTitle = $(this).find('[flowPumpId][title]').attr('title');
+		    newNode.find('span.pumpName').text(flowPumpTitle);
+		    newNode.attr('data-original-title', flowPumpTitle);
 		    newNode.find('[id$="_flowPump"]').val($(this).find('[flowPumpId]').attr('flowPumpId'));
 		    var rackX = parseFloat($(this).find('[rackx]').attr('rackx')),
+		        rackY = parseFloat($(this).find('[racky]').attr('racky')),
 			    rackZ = parseFloat($(this).find('[rackz]').attr('rackz'));
 		    newNode.css('width', (rackX <= 0 ? 99 : rackX * 100 - 1) + 'px');
 		    newNode.css('height', (rackZ <= 0 ? 99 : rackZ * 100 - 1) + 'px');
+            newNode.attr('sizex', rackX).attr('sizey', rackY).attr('sizez', rackZ);
+            newNode.find('.rotateNode .icon-repeat').css('transform', 'rotateZ(' + (objToRot(newNode) + 90) + 'deg)');
 	    }
     });
     $('.node').each(function()
     {
 	    var pump = $(this).find('[id$="_flowPump"]');
-	    console.log(pump);
 	    if(pump.length > 0)
 	    {
 		    var rackX = parseFloat($('[flowpumpid=' + pump.val() + '][rackx]').attr('rackx')),
@@ -137,23 +155,54 @@ $(function ()
     $(document).on('click', '.removeNode', function(e)
     {
         e.preventDefault();
-        $(this).parents('.node:first').remove();
+        var obj = $(this).parents('.node:first, .popover:first');
+        if(obj.is('.popover'))
+        {
+            obj = obj.prev('.node');
+        }
+        if(typeof(obj.data('popover')) != 'undefined')
+        {
+            obj.popover('destroy');
+        }
+        obj.remove();
     });
     $(document).on('click', '.rotateNode', function(e)
     {
         e.preventDefault();
-        var node = $(this).parents('.node'),
+        var obj = $(this).parents('.node:first, .popover:first'),
+            node = obj.is('.popover') ? obj.prev('.node') : obj,
             rotation = objToRot(node);
         node.removeClass('node' + rotation + 'Deg');
         rotation += 90;
         if ( rotation > 270 ) { rotation = 0; }
         node.addClass('node' + rotation + 'Deg');
         node.find('input[id$="_rotation"]').val(rotation);
+        node.find('.rotateNode .icon-repeat').css('transform', 'rotateZ(' + (rotation + 90) + 'deg)');
+        if(node.next().is('.popover'))
+        {
+            node.next('.popover').find('.rotateNode .icon-repeat').css('transform', 'rotateZ(' + (rotation + 90) + 'deg)');
+        }
     });
-
+    $(document).on('click', '.node', function(e)
+    {
+        if($(e.target).is('div.node, span.pumpName'))
+        {
+            e.preventDefault();
+            var mainObj = $(this);
+            if(typeof(mainObj.data('popover')) == 'undefined')
+            {
+                mainObj.popover({html: true, trigger: 'manual', content: generateTipContent}).popover('show');
+            }
+            else
+            {
+                mainObj.popover(mainObj.next('div').is('.popover.in:visible') ? 'hide' : 'show');
+            }
+        }
+    });
 
 	updateNodes();
     $('.node').each(function() { $(this).css('top', $(this).position().top); });
+    $('.node').popover({html: true, trigger: 'manual', content: generateTipContent});
 });
 
 function updateNodes() {

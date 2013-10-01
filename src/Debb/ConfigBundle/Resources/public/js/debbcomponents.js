@@ -7,8 +7,3 @@ function getExactId(str)
 	}
 	return 0;
 }
-
-$(function()
-{
-	
-});

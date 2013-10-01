@@ -70,7 +70,7 @@
 		<div id="rackContainer" style="position: relative; width: {{ rackSizeX }}px; height: {{ rackSizeZ }}px; border: 2px solid #000; background: url('{{ asset('bundles/debbconfig/img/room-grid.png') }}') repeat scroll 1px {{ rackSizeZ + 1 }}px transparent;" data-prototype-rack="{{ form_row(form.racks.vars.prototype) | escape }}" data-prototype-flowpump="{{ form_row(form.flowPumps.vars.prototype) | escape }}">
 			{% for rack in form.racks %}
 				<div class="rackG" posx="{{ rack.vars.data.posx }}" posy="{{ rack.vars.data.posy }}" posz="{{ rack.vars.data.posz }}"
-				     rackId="{{ rack.vars.data.id }}" title="{{ rack.vars.data.rack | e }}" rackx="{{ rack.vars.data.rack.sizeX }}" racky="{{ rack.vars.data.rack.sizeY }}" rackz="{{ rack.vars.data.rack.sizeZ }}"><a href="#" class="removeRack"><i class="icon-trash"></i></a> - <a href="#" class="rotateRack"><i class="icon-repeat"></i></a><br />{{ rack.vars.data.rack }}
+				     rackId="{{ rack.vars.data.id }}" title="{{ rack.vars.data.rack | e }}" rackx="{{ rack.vars.data.rack.sizeX }}" racky="{{ rack.vars.data.rack.sizeY }}" rackz="{{ rack.vars.data.rack.sizeZ }}"><a href="#" class="removeRack"><i class="icon-trash"></i></a> - <a href="#" class="rotateRack"><i class="icon-repeat" style="transform: rotateZ({{ rack.vars.data.rotation | default(0) + 90 }}deg);"></i></a><br />{{ rack.vars.data.rack }}
 					<div class="rackGform" style="display: none;">
 						{{ form_widget(rack) }}
 					</div>
@@ -78,7 +78,7 @@
 			{% endfor %}
 			{% for flowPump in form.flowPumps %}
 				<div class="rackG" posx="{{ flowPump.vars.data.posx }}" posy="{{ flowPump.vars.data.posy }}" posz="{{ flowPump.vars.data.posz }}"
-					 flowPumpId="{{ flowPump.vars.data.id }}" title="{{ flowPump.vars.data.flowPump | e }}" rackx="{{ flowPump.vars.data.flowPump.sizeX }}" racky="{{ flowPump.vars.data.flowPump.sizeY }}" rackz="{{ flowPump.vars.data.flowPump.sizeZ }}"><a href="#" class="removeRack"><i class="icon-trash"></i></a> - <a href="#" class="rotateRack"><i class="icon-repeat"></i></a><br />{{ flowPump.vars.data.flowPump }}
+					 flowPumpId="{{ flowPump.vars.data.id }}" title="{{ flowPump.vars.data.flowPump | e }}" rackx="{{ flowPump.vars.data.flowPump.sizeX }}" racky="{{ flowPump.vars.data.flowPump.sizeY }}" rackz="{{ flowPump.vars.data.flowPump.sizeZ }}"><a href="#" class="removeRack"><i class="icon-trash"></i></a> - <a href="#" class="rotateRack"><i class="icon-repeat" style="transform: rotateZ({{ flowPump.vars.data.rotation | default(0) + 90 }}deg);"></i></a><br />{{ flowPump.vars.data.flowPump }}
 					<div class="rackGform" style="display: none;">
 						{{ form_widget(flowPump) }}
 					</div>

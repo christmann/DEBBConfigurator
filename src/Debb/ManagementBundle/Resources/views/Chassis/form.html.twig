@@ -44,7 +44,7 @@
 				{{ 'Add flow pump' | trans }}:
 				<ul class="hoz">
 					{% for flowPump in flowPumps %}
-						<li class="hoz ui-state-default eDraftRack addFlowPump" style="margin-left: 0px; margin-right: 10px;"><div class="draftRack" flowPumpId="{{ flowPump.id }}" rackX="{{ flowPump.sizeX }}" rackY="{{ flowPump.sizeY }}" rackZ="{{ flowPump.sizeZ }}" title="{{ flowPump | e }}">{{ flowPump }}</div></li>
+						<li class="hoz ui-state-default eDraftRack addFlowPump" style="margin-left: 0px; margin-right: 10px;"><div class="draftRack" flowPumpId="{{ flowPump.id }}" rackx="{{ flowPump.sizeX }}" racky="{{ flowPump.sizeY }}" rackz="{{ flowPump.sizeZ }}" title="{{ flowPump | e }}">{{ flowPump }}</div></li>
 					{% endfor %}
 				</ul>
 			</div>
@@ -78,7 +78,7 @@
 	{% if nodeContainer is null or nodeContainer == true -%}
 		<div class="node node{{ nodeForm.vars.data.rotation | default(0) }}Deg" posx="{{ nodeForm.vars.data.posX|default('') }}" posy="{{ nodeForm.vars.data.posY|default('') }}" posz="{{ nodeForm.vars.data.posZ|default('') }}">
 	{%- endif %}
-	<a href="#" class="removeNode"><i class="icon-trash"></i></a> - <a class="rotateNode" href="#"><i class="icon-repeat"></i></a>
+	<a href="#" class="removeNode"><i class="icon-trash"></i></a> - <a class="rotateNode" href="#"><i class="icon-repeat" style="transform: rotateZ({{ nodeForm.vars.data.rotation | default(0) + 90 }}deg);"></i></a>
 	{%- if nodetypspecs is not null %}
 		<select name="{{ nodeForm.typ.vars.full_name }}" id="{{ nodeForm.typ.vars.id }}" style="margin-left: -7px; width: 63px; margin-top: 25px;">
 			{% for value in nodetypspecs|default({}) %}

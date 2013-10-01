@@ -54,7 +54,7 @@ function setStyleOfRack()
 
 		newRack.appendTo('#rackContainer').draggable(rackDragOpt).droppable(rackDropOpt);
 
-        newRack.prepend('<a href="#" class="removeRack"><i class="icon-trash"></i></a> - <a class="rotateRack" href="#"><i class="icon-repeat"></i></a><br />');
+        newRack.prepend('<a href="#" class="removeRack"><i class="icon-trash"></i></a> - <a class="rotateRack" href="#"><i class="icon-repeat" style="transform: rotateZ(' + (objToRot(newRack) + 90) + 'deg);"></i></a><br />');
         newRack.addClass('rack0Deg');
 	}
     else
@@ -145,6 +145,7 @@ function generateTipContent()
     ;
     resObj.append('<div>' + Translator.get('Size') + ': ' + obj.attr('rackx') + 'm /' + obj.attr('racky') + 'm /' + obj.attr('rackz') + 'm' + '</div>');
     resObj.append($('<div>' + Translator.get('posz') + ': </div>').append(posZForm));
+    resObj.append($('<div>' + Translator.get('Actions') + ': </div>').append('<a href="#" class="removeRack"><i class="icon-trash"></i></a> - <a class="rotateRack" href="#"><i class="icon-repeat" style="transform: rotateZ(' + (objToRot(obj) + 90) + 'deg);"></i></a>'));
     return resObj;
 }
 
@@ -172,12 +173,16 @@ $(function()
 	$(document).on('click', '.removeRack', function(e)
 	{
 		e.preventDefault();
-        var obj = $(this).parent('.rackG');
+        var obj = $(this).parents('.rackG:first, .popover:first');
+        if(obj.is('.popover'))
+        {
+            obj = obj.prev('.rackG');
+        }
         if(typeof(obj.data('popover')) != 'undefined')
         {
             obj.popover('destroy');
         }
-		obj.remove();
+        obj.remove();
 	});
     $(document).on('change, keyup', '.syncwith[syncwith]', function(e)
     {
@@ -201,7 +206,8 @@ $(function()
     $(document).on('click', '.rotateRack', function(e)
     {
         e.preventDefault();
-        var rack = $(this).parents('.rackG'),
+        var obj = $(this).parents('.rackG:first, .popover:first'),
+            rack = obj.is('.popover') ? obj.prev('.rackG') : obj,
             rotation = objToRot(rack);
         rack.css('border-' + rotToClass(rotation) + '-width', '1px');
         rotation += 90;
@@ -224,6 +230,11 @@ $(function()
         else
         {
             newRack.height(newRack.height() - 3);
+        }
+        newRack.find('.rotateRack .icon-repeat').css('transform', 'rotateZ(' + (rotation + 90) + 'deg)');
+        if(newRack.next().is('.popover'))
+        {
+            newRack.next('.popover').find('.rotateRack .icon-repeat').css('transform', 'rotateZ(' + (rotation + 90) + 'deg)');
         }
     });
     $(document).on('click', '.rackG', function(e)
