@@ -24,7 +24,7 @@ function updateRackDimensions(rack)
             bottom = $('#rackContainer').height() - position.top - $(this).outerHeight(true),
 	        selector = $(this).is('[flowPumpId]') ? 'flowPumps' : 'racks';
         $(this).find('#debb_configbundle_roomtype_' + selector + '_' + id + '_posx').val(left);
-        $(this).find('#debb_configbundle_roomtype_' + selector + '_' + id + '_posy').val(parseInt(bottom) + 1);
+        $(this).find('#debb_configbundle_roomtype_' + selector + '_' + id + '_posy').val(parseInt(bottom));
     });
 }
 
