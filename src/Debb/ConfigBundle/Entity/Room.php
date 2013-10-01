@@ -263,6 +263,14 @@ class Room extends Dimensions
 		{
 			$array['Room'][] = array(array('Reference' => array('Type' => $reference->getFileEnding(), 'Location' => './object/' . $reference->getId() . '_' . $reference->getName())));
 		}
+		foreach($this->getFlowPumps() as $flowPumpToRoom)
+		{
+			$flowPump = $flowPumpToRoom->getFlowPump();
+			if($flowPump != null)
+			{
+				$array['Room'][] = array(array($flowPump->getDebbLevel() => $flowPump->getDebbXmlArray()));
+			}
+		}
 		return $array;
 	}
 
