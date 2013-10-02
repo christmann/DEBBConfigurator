@@ -115,10 +115,13 @@ class FlowProfile
      * @param \Debb\ManagementBundle\Entity\FlowState $flowStates
      * @return FlowProfile
      */
-    public function addFlowState(\Debb\ManagementBundle\Entity\FlowState $flowStates)
+    public function addFlowState($flowStates)
     {
-        $this->flowStates[] = $flowStates;
-	    $flowStates->setFlowProfile($this);
+		if($flowStates instanceof \Debb\ManagementBundle\Entity\FlowState)
+		{
+			$this->flowStates[] = $flowStates;
+			$flowStates->setFlowProfile($this);
+		}
     
         return $this;
     }
