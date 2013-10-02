@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * another (i.e. air/liquid or liquid/liquid) cpu cooler transfering heta from the cpu to the air
  * or liquid (solid/air or liquid)
  *
- * @ORM\Table()
+ * @ORM\Table(name="heatsink")
  * @ORM\Entity(repositoryClass="Debb\ManagementBundle\Repository\BaseRepository")
  */
 class Heatsink extends DEBBSimple
