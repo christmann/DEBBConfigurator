@@ -169,10 +169,13 @@ class PState
      * @param \Debb\ManagementBundle\Entity\PStateLoadPowerUsage $loadPowerUsages
      * @return PState
      */
-    public function addLoadPowerUsage(\Debb\ManagementBundle\Entity\PStateLoadPowerUsage $loadPowerUsages)
+    public function addLoadPowerUsage($loadPowerUsages)
     {
-        $this->loadPowerUsages[] = $loadPowerUsages;
-		$loadPowerUsages->setPstate($this);
+		if($loadPowerUsages instanceof \Debb\ManagementBundle\Entity\PStateLoadPowerUsage)
+		{
+			$this->loadPowerUsages[] = $loadPowerUsages;
+			$loadPowerUsages->setPstate($this);
+		}
     
         return $this;
     }

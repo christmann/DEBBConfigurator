@@ -143,10 +143,13 @@ class Processor extends Base
      * @param \Debb\ManagementBundle\Entity\PState $pStates
      * @return Processor
      */
-    public function addPState(\Debb\ManagementBundle\Entity\PState $pStates)
+    public function addPState($pStates)
     {
-        $this->pStates[] = $pStates;
-	    $pStates->setProcessor($this);
+		if($pStates instanceof \Debb\ManagementBundle\Entity\PState)
+		{
+			$this->pStates[] = $pStates;
+			$pStates->setProcessor($this);
+		}
     
         return $this;
     }
@@ -178,10 +181,13 @@ class Processor extends Base
 	 * @param \Debb\ManagementBundle\Entity\CState $cStates
 	 * @return Processor
 	 */
-	public function addCState(\Debb\ManagementBundle\Entity\CState $cStates)
+	public function addCState($cStates)
 	{
-		$this->cStates[] = $cStates;
-		$cStates->setProcessor($this);
+		if($cStates instanceof \Debb\ManagementBundle\Entity\CState)
+		{
+			$this->cStates[] = $cStates;
+			$cStates->setProcessor($this);
+		}
 
 		return $this;
 	}

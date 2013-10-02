@@ -260,10 +260,13 @@ class CoolingDevice extends DEBBComplex
      * @param \Debb\ManagementBundle\Entity\CoolingEER $energyEfficiencyRatio
      * @return CoolingDevice
      */
-    public function addEnergyEfficiencyRatio(\Debb\ManagementBundle\Entity\CoolingEER $energyEfficiencyRatio)
+    public function addEnergyEfficiencyRatio($energyEfficiencyRatio)
     {
-        $this->energyEfficiencyRatio[] = $energyEfficiencyRatio;
-		$energyEfficiencyRatio->setCoolingDevice($this);
+		if($energyEfficiencyRatio instanceof \Debb\ManagementBundle\Entity\CoolingEER)
+		{
+			$this->energyEfficiencyRatio[] = $energyEfficiencyRatio;
+			$energyEfficiencyRatio->setCoolingDevice($this);
+		}
     
         return $this;
     }
