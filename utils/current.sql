@@ -16,31 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `Heatsink`
---
-
-DROP TABLE IF EXISTS `Heatsink`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Heatsink` (
-  `id` int(11) NOT NULL,
-  `transfer_rate` double DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `FK_96BCFEA7BF396750` FOREIGN KEY (`id`) REFERENCES `debb_simple` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Heatsink`
---
-
-LOCK TABLES `Heatsink` WRITE;
-/*!40000 ALTER TABLE `Heatsink` DISABLE KEYS */;
-INSERT INTO `Heatsink` VALUES (1,NULL),(2,NULL),(3,NULL),(4,NULL),(5,NULL),(6,NULL),(7,NULL),(8,NULL),(14,NULL),(15,NULL);
-/*!40000 ALTER TABLE `Heatsink` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `baseboard`
 --
 
@@ -273,7 +248,7 @@ CREATE TABLE `component` (
   CONSTRAINT `FK_49FEA15737BAC19A` FOREIGN KEY (`processor_id`) REFERENCES `processor` (`id`) ON DELETE CASCADE,
   CONSTRAINT `FK_49FEA157460D9FD7` FOREIGN KEY (`node_id`) REFERENCES `node` (`id`),
   CONSTRAINT `FK_49FEA157524B8BF0` FOREIGN KEY (`coolingdevice_id`) REFERENCES `coolingdevice` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `FK_49FEA15774023200` FOREIGN KEY (`heatsink_id`) REFERENCES `Heatsink` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `FK_49FEA15774023200` FOREIGN KEY (`heatsink_id`) REFERENCES `heatsink` (`id`) ON DELETE CASCADE,
   CONSTRAINT `FK_49FEA157889B163B` FOREIGN KEY (`powersupply_id`) REFERENCES `powersupply` (`id`) ON DELETE CASCADE,
   CONSTRAINT `FK_49FEA157A7A20F9C` FOREIGN KEY (`baseboard_id`) REFERENCES `baseboard` (`id`) ON DELETE CASCADE,
   CONSTRAINT `FK_49FEA157CCC80CB3` FOREIGN KEY (`memory_id`) REFERENCES `memory` (`id`) ON DELETE CASCADE
@@ -471,7 +446,7 @@ CREATE TABLE `debbcomplex_heatsink` (
   KEY `IDX_B756DC0812E739B9` (`debbcomplex`),
   KEY `IDX_B756DC086FCA9CF1` (`heatsink`),
   CONSTRAINT `FK_B756DC0812E739B9` FOREIGN KEY (`debbcomplex`) REFERENCES `debbcomplex` (`id`),
-  CONSTRAINT `FK_B756DC086FCA9CF1` FOREIGN KEY (`heatsink`) REFERENCES `Heatsink` (`id`)
+  CONSTRAINT `FK_B756DC086FCA9CF1` FOREIGN KEY (`heatsink`) REFERENCES `heatsink` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -823,6 +798,31 @@ LOCK TABLES `flowpumptoroom` WRITE;
 /*!40000 ALTER TABLE `flowpumptoroom` DISABLE KEYS */;
 INSERT INTO `flowpumptoroom` VALUES (2,10,2,NULL,30,0,1,0),(3,11,2,NULL,30,510,2200,0),(4,11,3,NULL,190,160,2200,0),(5,10,3,NULL,10,160,0,0);
 /*!40000 ALTER TABLE `flowpumptoroom` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `heatsink`
+--
+
+DROP TABLE IF EXISTS `heatsink`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `heatsink` (
+  `id` int(11) NOT NULL,
+  `transfer_rate` double DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `FK_96BCFEA7BF396750` FOREIGN KEY (`id`) REFERENCES `debb_simple` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `heatsink`
+--
+
+LOCK TABLES `heatsink` WRITE;
+/*!40000 ALTER TABLE `heatsink` DISABLE KEYS */;
+INSERT INTO `heatsink` VALUES (1,NULL),(2,NULL),(3,NULL),(4,NULL),(5,NULL),(6,NULL),(7,NULL),(8,NULL),(14,NULL),(15,NULL);
+/*!40000 ALTER TABLE `heatsink` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1566,4 +1566,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-10-02  0:00:03
+-- Dump completed on 2013-10-02 16:27:01
