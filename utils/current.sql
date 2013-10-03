@@ -346,7 +346,7 @@ CREATE TABLE `cstate` (
   PRIMARY KEY (`id`),
   KEY `IDX_5A13F9B137BAC19A` (`processor_id`),
   CONSTRAINT `FK_5A13F9B137BAC19A` FOREIGN KEY (`processor_id`) REFERENCES `processor` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -355,6 +355,7 @@ CREATE TABLE `cstate` (
 
 LOCK TABLES `cstate` WRITE;
 /*!40000 ALTER TABLE `cstate` DISABLE KEYS */;
+INSERT INTO `cstate` VALUES (7,9,13),(8,8,11),(9,4,11),(10,3,11),(11,1,11);
 /*!40000 ALTER TABLE `cstate` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1566,4 +1567,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-10-02 16:34:33
+-- Dump completed on 2013-10-04  0:00:07
