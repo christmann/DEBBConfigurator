@@ -90,3 +90,7 @@ fos_user:
     profile:
         form:
             type: coolemall_user_profile
+
+debb_config:
+    svn_path: %debb_svn_path%
+    svn_url: %debb_svn_url%

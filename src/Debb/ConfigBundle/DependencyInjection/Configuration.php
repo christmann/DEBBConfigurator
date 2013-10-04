@@ -24,6 +24,20 @@ class Configuration implements ConfigurationInterface
         // configure your bundle. See the documentation linked above for
         // more information on that topic.
 
+		// svn_path
+		$rootNode
+			->children()
+			->scalarNode('svn_path')
+			->defaultFalse()
+			->end();
+
+		// svn_url
+		$rootNode
+			->children()
+			->scalarNode('svn_url')
+			->defaultNull()
+			->end();
+
         return $treeBuilder;
     }
 }

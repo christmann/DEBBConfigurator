@@ -24,5 +24,8 @@ class DebbConfigExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+
+		$container->setParameter('debb.configbundle.svn_path', realpath($config['svn_path']));
+		$container->setParameter('debb.configbundle.svn_url', $config['svn_url']);
     }
 }

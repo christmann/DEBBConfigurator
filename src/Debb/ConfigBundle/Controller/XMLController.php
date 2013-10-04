@@ -7,6 +7,7 @@ use Debb\ConfigBundle\Entity\Node;
 use Debb\ConfigBundle\Entity\NodeGroup;
 use Debb\ConfigBundle\Entity\Rack;
 use Debb\ConfigBundle\Entity\Room;
+use Debb\ConfigBundle\Utilities\Subversion;
 use Debb\ConfigBundle\Utilities\Transformation;
 use Debb\ManagementBundle\Controller\BaseController;
 use Debb\ManagementBundle\Controller\FlowPumpController;
@@ -21,6 +22,7 @@ use Debb\ManagementBundle\Entity\Component;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -57,6 +59,24 @@ abstract class XMLController extends BaseController
 		header('Content-Type: text/xml');
 		echo $this->getDebbXml($id, true);
 		return $response;
+	}
+
+	/**
+	 * Upload entity to svn
+	 *
+	 * @Route("/svn/{id}", requirements={"id"="\d+"});
+	 *
+	 * @param int	$id		item id
+	 *
+	 * @return \Symfony\Component\HttpFoundation\Response
+	 */
+	public function asSVNAction($id)
+	{
+		$svn = new Subversion($this->container->getParameter('debb.configbundle.svn_path'), $this->container->getParameter('debb.configbundle.svn_url'));
+		$key =  str_replace('.', '', $this->getUser()) . '/' . time() . '/';
+		$svn->setMasterKey($key);
+		$this->exportAsArchiveAction($id, $svn);
+		return RedirectResponse::create($svn->url($key));
 	}
 
 	/**
@@ -623,20 +643,26 @@ abstract class XMLController extends BaseController
 	 *
 	 * @Route("/download/{id}.zip", defaults={"id"=0}, requirements={"id"="\d+|"});
 	 * @param string $id the id of entity to generate plm xml and DEBBComponents.xml
+	 * @param Subversion|null $toSvn the subversion object or null
 	 * @param boolean $debug only for testing / output to browser
 	 * @throws error 404
 	 */
-	public function exportAsArchiveAction($id, $debug = false)
+	public function exportAsArchiveAction($id, $toSvn = null, $debug = false)
 	{
-		$fileName = tempnam(sys_get_temp_dir(), 'zip');
-
 		if($debug)
 		{
 			header('Content-type: text/plain');
 		}
-		$zip = new \ZipArchive;
-		$res = $zip->open($fileName, \ZipArchive::CREATE);
-		if ($res == true)
+
+		if($toSvn === null)
+		{
+			$fileName = tempnam(sys_get_temp_dir(), 'zip');
+
+			$zip = new \ZipArchive;
+			$res = $zip->open($fileName, \ZipArchive::CREATE);
+		}
+
+		if ($toSvn !== null || $res === true)
 		{
 			$item = $this->getEntity($id);
 
@@ -723,8 +749,13 @@ abstract class XMLController extends BaseController
 			}
 
 			/* loop every array (which we need!) and generate files */
-			$zip->addEmptyDir('pics');
-			$zip->addEmptyDir('objects');
+			if($toSvn === null)
+			{
+				$zip->addEmptyDir('pics');
+				$zip->addEmptyDir('objects');
+			}
+			$basePath = $this->getRequest()->server->get('DOCUMENT_ROOT') . DIRECTORY_SEPARATOR;
+
 			foreach($nodes as $node)
 			{
 				if($node instanceof Node)
@@ -735,17 +766,38 @@ abstract class XMLController extends BaseController
 					$debbXmlStr = $controller->getDebbXml($node->getId(), true);
 					if($debbXmlStr !== false)
 					{
-						$zip->addFromString('Node_'.$node->getComponentId().'.xml', $debbXmlStr);
+						if($toSvn === null)
+						{
+							$zip->addFromString('Node_'.$node->getComponentId().'.xml', $debbXmlStr);
+						}
+						else
+						{
+							$toSvn->set('Node_'.$node->getComponentId().'.xml', $debbXmlStr, false, false);
+						}
 					}
 					if ($node->getImage() != null && file_exists($node->getImage()->getFullPath()))
 					{
-						$zip->addFile($node->getImage()->getFullPath(), 'pics/' . $node->getComponentId() . '.' . $node->getImage()->getExtension());
+						if($toSvn === null)
+						{
+							$zip->addFile($node->getImage()->getFullPath(), 'pics/' . $node->getComponentId() . '.' . $node->getImage()->getExtension());
+						}
+						else
+						{
+							$toSvn->set('pics/' . $node->getComponentId() . '.' . $node->getImage()->getExtension(), $basePath . $node->getImage()->getFullPath(), true, false);
+						}
 					}
 					if(count($node->getReferences()) > 0)
 					{
 						foreach($node->getReferences() as $reference)
 						{
-							$zip->addFile($reference->getFullPath(), 'objects/' . $reference->getId() . '_' . $reference->getName());
+							if($toSvn === null)
+							{
+								$zip->addFile($reference->getFullPath(), 'objects/' . $reference->getId() . '_' . $reference->getName());
+							}
+							else
+							{
+								$toSvn->set('objects/' . $reference->getId() . '_' . $reference->getName(), $basePath . $reference->getFullPath(), true, false);
+							}
 						}
 					}
 					$heatsinks = $node->getComponents(Component::TYPE_HEATSINK);
@@ -763,7 +815,14 @@ abstract class XMLController extends BaseController
 								{
 									foreach($heatsink->getReferences() as $reference)
 									{
-										$zip->addFile($reference->getFullPath(), 'objects/' . $reference->getId() . '_' . $reference->getName());
+										if($toSvn === null)
+										{
+											$zip->addFile($reference->getFullPath(), 'objects/' . $reference->getId() . '_' . $reference->getName());
+										}
+										else
+										{
+											$toSvn->set('objects/' . $reference->getId() . '_' . $reference->getName(), $basePath . $reference->getFullPath(), true, false);
+										}
 									}
 								}
 							}
@@ -781,13 +840,27 @@ abstract class XMLController extends BaseController
 					$debbXmlStr = $controller->getDebbXml($nodeGroup->getId(), true);
 					if($debbXmlStr !== false)
 					{
-						$zip->addFromString('NodeGroup_'.$nodeGroup->getComponentId().'.xml', $debbXmlStr);
+						if($toSvn === null)
+						{
+							$zip->addFromString('NodeGroup_'.$nodeGroup->getComponentId().'.xml', $debbXmlStr);
+						}
+						else
+						{
+							$toSvn->set('NodeGroup_'.$nodeGroup->getComponentId().'.xml', $debbXmlStr, false, false);
+						}
 					}
 					if(count($nodeGroup->getReferences()) > 0)
 					{
 						foreach($nodeGroup->getReferences() as $reference)
 						{
-							$zip->addFile($reference->getFullPath(), 'objects/' . $reference->getId() . '_' . $reference->getName());
+							if($toSvn === null)
+							{
+								$zip->addFile($reference->getFullPath(), 'objects/' . $reference->getId() . '_' . $reference->getName());
+							}
+							else
+							{
+								$toSvn->set('objects/' . $reference->getId() . '_' . $reference->getName(), $basePath . $reference->getFullPath(), true, false);
+							}
 						}
 					}
 				}
@@ -802,13 +875,27 @@ abstract class XMLController extends BaseController
 					$debbXmlStr = $controller->getDebbXml($rack->getId(), true);
 					if($debbXmlStr !== false)
 					{
-						$zip->addFromString('Rack_'.$rack->getComponentId().'.xml', $debbXmlStr);
+						if($toSvn === null)
+						{
+							$zip->addFromString('Rack_'.$rack->getComponentId().'.xml', $debbXmlStr);
+						}
+						else
+						{
+							$toSvn->set('Rack_'.$rack->getComponentId().'.xml', $debbXmlStr, false, false);
+						}
 					}
 					if(count($rack->getReferences()) > 0)
 					{
 						foreach($rack->getReferences() as $reference)
 						{
-							$zip->addFile($reference->getFullPath(), 'objects/' . $reference->getId() . '_' . $reference->getName());
+							if($toSvn === null)
+							{
+								$zip->addFile($reference->getFullPath(), 'objects/' . $reference->getId() . '_' . $reference->getName());
+							}
+							else
+							{
+								$toSvn->set('objects/' . $reference->getId() . '_' . $reference->getName(), $basePath . $reference->getFullPath(), true, false);
+							}
 						}
 					}
 				}
@@ -822,7 +909,14 @@ abstract class XMLController extends BaseController
 					{
 						foreach($flowPump->getReferences() as $reference)
 						{
-							$zip->addFile($reference->getFullPath(), 'objects/' . $reference->getId() . '_' . $reference->getName());
+							if($toSvn === null)
+							{
+								$zip->addFile($reference->getFullPath(), 'objects/' . $reference->getId() . '_' . $reference->getName());
+							}
+							else
+							{
+								$toSvn->set('objects/' . $reference->getId() . '_' . $reference->getName(), $basePath . $reference->getFullPath(), true, false);
+							}
 						}
 					}
 				}
@@ -837,25 +931,53 @@ abstract class XMLController extends BaseController
 					$debbXmlStr = $controller->getDebbXml($rRoom->getId(), true);
 					if($debbXmlStr !== false)
 					{
-						$zip->addFromString('Room_'.$rRoom->getComponentId().'.xml', $debbXmlStr);
+						if($toSvn === null)
+						{
+							$zip->addFromString('Room_'.$rRoom->getComponentId().'.xml', $debbXmlStr);
+						}
+						else
+						{
+							$toSvn->set('Room_'.$rRoom->getComponentId().'.xml', $debbXmlStr, false, false);
+						}
 					}
 					if(count($rRoom->getReferences()) > 0)
 					{
 						foreach($rRoom->getReferences() as $reference)
 						{
-							$zip->addFile($reference->getFullPath(), 'objects/' . $reference->getId() . '_' . $reference->getName());
+							if($toSvn === null)
+							{
+								$zip->addFile($reference->getFullPath(), 'objects/' . $reference->getId() . '_' . $reference->getName());
+							}
+							else
+							{
+								$toSvn->set('objects/' . $reference->getId() . '_' . $reference->getName(), $basePath . $reference->getFullPath(), true, false);
+							}
 						}
 					}
 				}
 			}
 
 			$plmXml = $this->asPlmXmlAction($id, true);
-			$zip->addFromString('PLMXML_'.$item->getComponentId().'.xml', $plmXml);
+			if($toSvn === null)
+			{
+				$zip->addFromString('PLMXML_'.$item->getComponentId().'.xml', $plmXml);
+			}
+			else
+			{
+				$toSvn->set('PLMXML_'.$item->getComponentId().'.xml', $plmXml, false, false);
+			}
 			$room = new \Debb\ConfigBundle\Controller\RoomController();
 			$room->setContainer($this->getContainer());
 			$room->valide($plmXml, file_get_contents('../utils/PLMXMLSchema.xsd'), 'PLMXML');
-			$zip->close();
-			if(!$debug)
+			if($toSvn === null)
+			{
+				$zip->close();
+			}
+			else
+			{
+				$toSvn->commit();
+			}
+			if(!$debug && $toSvn === null)
 			{
 				header('Content-Disposition: attachment; filename=' . date('Y-m-d-H-i-s') . '.zip');
 				header('Content-type: application/zip');
@@ -869,7 +991,14 @@ abstract class XMLController extends BaseController
 		{
 			throw $this->createNotFoundException($this->get('translator')->trans('could not create zip archive'));
 		}
-		return new Response();
+		if($toSvn === null)
+		{
+			return new Response();
+		}
+		else
+		{
+			return true;
+		}
 	}
 
 	/**
