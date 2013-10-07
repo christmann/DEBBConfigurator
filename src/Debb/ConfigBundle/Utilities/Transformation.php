@@ -56,8 +56,13 @@ class Transformation
 			$posZ = $connector->getPosZ();
 			$rotation = $connector->getRotation();
 			/** @var $children Rack */
-			self::$transformations[] = array($posX, $posY, $posZ, $rotation, $children->getSizeX() * 1000, $children->getSizeZ() * 1000, $children->getSizeY() * 1000);
-			$transform = self::generate_transform($separator, $posX, $posY, $posZ, $rotation, $children->getSizeX() * 1000, $children->getSizeZ() * 1000);
+			$multiplicand = 1000; // room
+			if($className == 'FlowPump' && XMLController::get_real_class($connector) == 'FlowPumpToChassis')
+			{
+				$multiplicand = 100;
+			}
+			self::$transformations[] = array($posX, $posY, $posZ, $rotation, $children->getSizeX() * $multiplicand, $children->getSizeZ() * $multiplicand, $children->getSizeY() * $multiplicand);
+			$transform = self::generate_transform($separator, $posX, $posY, $posZ, $rotation, $children->getSizeX() * $multiplicand, $children->getSizeZ() * $multiplicand, $children->getSizeY() * $multiplicand);
 		}
 		else if ($className == 'Node')
 		{
@@ -88,8 +93,8 @@ class Transformation
 			/** @var $connector mixed */ /* Node for example */
 			if($children->getActive() instanceof Heatsink)
 			{
-				self::$transformations[] = array(0, 0, $connector->getFullZ() * 1000, 0, 0, 0, 0);
-				$transform = self::generate_transform($separator, 0, 0, $connector->getFullZ() * 1000, 0, 0, 0);
+				self::$transformations[] = array(0, 0, $connector->getFullY() * 1000, 0, 0, 0, 0);
+				$transform = self::generate_transform($separator, 0, 0, $connector->getFullY() * 1000, 0, 0, 0);
 			}
 		}
 		else
