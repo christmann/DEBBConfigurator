@@ -333,7 +333,7 @@ class Base
 	}
 
     /**
-     * @Assert\True(message = "You have to fill in one of these fields: Manufacturer or Product")
+     * @Assert\True(message = "You have to fill in one of these fields: Manufacturer or product")
      */
     public function isThisCorrect()
     {

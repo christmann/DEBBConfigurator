@@ -2,6 +2,7 @@
 
 namespace Debb\ConfigBundle\Controller;
 
+use Localdev\AdminBundle\Util\ControllerUtils;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
@@ -49,6 +50,7 @@ class RoomController extends XMLController
 			{
 				$this->persistEntity($item);
 				$this->addSuccessMsg("localdev_admin.messages.saved");
+				return $this->redirect($this->generateUrl(ControllerUtils::getRouteName($this->getRequest(), '_form'), array('id' => $item->getId())));
 			}
 		}
 
