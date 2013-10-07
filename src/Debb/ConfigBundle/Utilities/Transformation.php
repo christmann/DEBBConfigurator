@@ -96,8 +96,8 @@ class Transformation
 		{
 			/** @var $connector Room|mixed */
 			/** @var $children Transformation|mixed */
-			self::$transformations[] = array(0, 0, 0, 0, $children->getSizeX() * 1000, $children->getSizeZ() * 1000, $children->getSizeY() * 1000);
-			$transform = self::generate_transform($separator);
+			self::$transformations[] = array(0, 0, 0, 0, round($children->getSizeX()) * 10, round($children->getSizeZ()) * 10, $children->getSizeY() * 1000);
+			$transform = self::generate_transform($separator, 0, 0, 0, 0, round($children->getSizeX()) * 10, round($children->getSizeZ()) * 10, $children->getSizeY() * 1000);
 		}
 		return $transform;
 	}

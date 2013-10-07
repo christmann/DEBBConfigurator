@@ -156,8 +156,8 @@ $(function()
 	$('#rackContainer').resizable({
 		grid: 10,
 		stop: function( event, ui ) {
-			$('#debb_configbundle_roomtype_sizeX').val(ui.helper.width());
-			$('#debb_configbundle_roomtype_sizeZ').val(ui.helper.height());
+			$('#debb_configbundle_roomtype_sizeX').val(ui.helper.width().toFixed(0));
+			$('#debb_configbundle_roomtype_sizeZ').val(ui.helper.height().toFixed(0));
             updateRackDimensions();
 		},
 		resize: function ( event, ui ) {
