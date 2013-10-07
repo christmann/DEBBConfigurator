@@ -3,11 +3,23 @@
 {% block title %}{{ ((item is not defined or item.id == null) ? 'localdev_admin.title.add' : 'localdev_admin.title.edit') | trans({"%name%":localdev_admin_name(false)}, 'crud') }}{% endblock %}
 {% form_theme form _self %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='cssrewrite'
+                                        'bundles/debbconfig/css/jquery-ui.min.css'
+    %}
+        <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
+    {% endstylesheets %}
+{% endblock %}
+
 {% block javascripts %}
 	{{ parent() }}
 	{% javascripts
+                        '@DebbConfigBundle/Resources/public/js/jquery-ui.min.js'
 						'@DebbManagementBundle/Resources/public/js/form.js'
 						'@DebbManagementBundle/Resources/public/js/global.js'
+                        '@DebbConfigBundle/Resources/public/js/jquery.fileDownload.js'
+                        '@DebbManagementBundle/Resources/public/js/fileDownload.js'
 	%}
 		<script src="{{ asset_url }}" type="text/javascript"></script>
 	{% endjavascripts %}
@@ -52,7 +64,7 @@
 
 {% block buttonbar %}
 	{% if exportasarchive is defined and route_exists(localdev_admin_route("_exportasarchive")) and item is defined and item.id is not null %}
-		<a href="{{ path(localdev_admin_route("_exportasarchive"), {"id": item.id}) }}" target="_blank" class="blue-button white" style="padding-right: 8px; margin-right: -4px;">
+		<a href="{{ path(localdev_admin_route("_exportasarchive"), {"id": item.id}) }}" target="_blank" class="blue-button white filedownload" style="padding-right: 8px; margin-right: -4px;">
 			<span rel="tooltip" data-original-title="{{ 'download.%what%.file' | trans({'%what%': 'archive' | trans}) }}"><i class="icon-download"></i></span>
 		</a>&nbsp;
 	{% endif %}
