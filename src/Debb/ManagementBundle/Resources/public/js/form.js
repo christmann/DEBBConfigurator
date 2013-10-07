@@ -31,14 +31,17 @@ $(function ()
     // funny function, store all input values into an associative array
     var checkField = function ()
     {
-        var uid = $(this).attr(fieldName);
-        if (uid && typeof inputCache[uid] != "undefined") {
-            if (inputCache[uid] != $(this).val()) {
+        if($(this).attr('ignoreform') == 'undefined')
+        {
+            var uid = $(this).attr(fieldName);
+            if (uid && typeof inputCache[uid] != "undefined") {
+                if (inputCache[uid] != $(this).val()) {
+                    changed = true;
+                }
+            }
+            else {
                 changed = true;
             }
-        }
-        else {
-            changed = true;
         }
     }
 
