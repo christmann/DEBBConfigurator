@@ -49,7 +49,7 @@
             {{ form_row(form.product) }}
             {{ form_row(form.label) }}
             {{ form_row(form.hostname) }}
-            {{ form_row(form.draft) }}
+            {% form_theme form.draft _self %}{{ form_row(form.draft) }}
             {{ form_row(form.type) }}
             {{ form_row(form.maxPower) }}
             {{ form_row(form.powerUsageProfile) }}
