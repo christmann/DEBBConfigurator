@@ -419,18 +419,8 @@ abstract class XMLController extends BaseController
 		$exId = implode('_', $isId);
 		$id = $exId . '_' . $iId;
 
-		$ids = $xml->xpath('*[@id="' . $id . '"]/@id');
-		if(count($ids) > 0)
-		{
-			$ids = $xml->xpath('*[starts-with(@id, "' . $exId . '_")]/@id');
-			$id = max(array_map(
-					function($a) {
-						list(, $id) = explode('_', $a);
-						return intval($id);
-					}, $ids)) + 1;
-			$iId = $id;
-			$id = $exId . '_' . $id;
-		}
+		$iId = $id;
+		$id = $exId . '_' . (int) @++$GLOBALS['productinstance'];
 
 		$productInstance->addAttribute('id', $id); // example: inst71_01_7
 		if ($name != null)
@@ -526,17 +516,8 @@ abstract class XMLController extends BaseController
 		$exId = implode('_', $isId);
 		$id = $exId . '_' . $iId;
 
-		$ids = $xml->xpath('*[@id="' . $id . '"]/@id');
-		if(count($ids) > 0)
-		{
-			$ids = $xml->xpath('*[starts-with(@id, "' . $exId . '_")]/@id');
-			$id = max(array_map(
-					function($a) {
-						list(, $id) = explode('_', $a);
-						return intval($id);
-					}, $ids)) + 1;
-			$id = $exId . '_' . $id;
-		}
+		$iId = $id;
+		$id = $exId . '_' . (int) @++$GLOBALS['revisionview'];
 
 		$productRevisionView->addAttribute('id', $id); // example: id84_04_1
 		if ($name != null)
