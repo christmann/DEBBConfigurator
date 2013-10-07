@@ -57,6 +57,11 @@
                                                 <span rel="tooltip" data-original-title="{{ 'download.%what%.file' | trans({'%what%': 'DEBBComponents.xml' | trans}) }}"><i class="icon-file"></i></span>
                                             </a>
                                         {% endif %}
+                                        {% if svnEnabled() and exportasarchive is defined and route_exists(localdev_admin_route("_assvn")) %}{# If you can export something as archive you can add it to svn! #}
+                                            <a target="_blank" href="{{ path(localdev_admin_route("_assvn"), {"id": item.id}) }}" class="btn">
+                                                <span rel="tooltip" data-original-title="{{ 'Add to svn' | trans }}"><img src="{{ asset('bundles/debbconfig/img/svn-icon.png') }}" /></span>
+                                            </a>
+                                        {% endif %}
                                         {% if exportasarchive is defined and route_exists(localdev_admin_route("_exportasarchive")) %}
                                             <a target="_blank" href="{{ path(localdev_admin_route("_exportasarchive"), {"id": item.id}) }}" class="btn">
                                                 <span rel="tooltip" data-original-title="{{ 'download.%what%.file' | trans({'%what%': 'archive' | trans}) }}"><i class="icon-download"></i></span>

@@ -155,7 +155,7 @@ class Subversion
 		if($isPath ? copy($file, $destination) : file_put_contents($destination, $file))
 		{
 			$result = exec('cd ' . escapeshellarg($this->getSvnPath())
-			 . ' && svn add *');
+			 . ' && svn add --force *');
 			$commitMsg = array_merge(array('Added "' . $key . '"'), $extraMessage);
 			if($commit)
 			{
@@ -197,12 +197,14 @@ class Subversion
 
 	/**
 	 * @param array|string $extraMessage an array with more information's about the commit (for example the user name etc.)
+	 * @param bool $onlyExtraMessage should we only use the $extraMessage parameter for the commit message?
 	 * @return bool true if the file was uploaded to svn or false if not
 	 */
-	public function commit($extraMessage = array())
+	public function commit($extraMessage = array(), $onlyExtraMessage = false)
 	{
+		$messages = $onlyExtraMessage ? $extraMessage : array_merge($extraMessage, $this->getCommitMessages());
 		$result = exec('cd ' . escapeshellarg($this->getSvnPath())
-		. ' && svn commit ' . escapeshellarg($this->getSvnPath()) . ' -m ' . escapeshellarg(implode("\n", array_merge($extraMessage, $this->getCommitMessages()))));
+		. ' && svn commit ' . escapeshellarg($this->getSvnPath()) . ' -m ' . escapeshellarg(implode("\n", $messages)));
 		$this->setCommitMessages();
 		return (bool) preg_match('#Committed revision [0-9]+.#i', $result);
 	}
