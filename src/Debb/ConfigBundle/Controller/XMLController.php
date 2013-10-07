@@ -316,6 +316,12 @@ abstract class XMLController extends BaseController
 				}
 			}
 
+			$transformation = Transformation::generateTransform($entity, $parent);
+			if($first)
+			{
+				$transformation = null;
+			}
+
 			/** ProductRevisionView */
 			$revisionView = $this->addPlmXmlProductRevisionView(
 				$xml,                                                                                                                            // $xml
@@ -340,7 +346,7 @@ abstract class XMLController extends BaseController
 				sprintf('%s%02d', $entity->getXmlName() != null ? $entity->getXmlName() : 'Def' . $real_class_name, $entity->getId()),           // $name
 				$revisionViewAttr->id,                                                                                                           // $partRef
 				$entity->getHostname(),                                                                                                          // $hostname
-				$first ? null : Transformation::generateTransform($entity, $parent),                                                             // $transform
+				$transformation,                                                         													     // $transform
 				$first ? $entity->getLocationInMesh() : null,                                                                                    // $locationInMesh
 				$real_class_name == 'Room' ? $entity->getBuilding() : null,                                                                      // $location
 				$entity                                                                                                                          // $entity
