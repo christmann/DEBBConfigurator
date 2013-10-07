@@ -51,18 +51,13 @@ class Transformation
 		if ($className == 'Rack' || $className == 'FlowPump')
 		{
 			/** @var $connector RackToRoom */
-			$posX = $connector->getPosX() * 10;
-			$posY = $connector->getPosY() * 10;
+			$posX = $connector->getPosX() * ($className == 'FlowPump' && XMLController::get_real_class($connector) == 'FlowPumpToChassis' ? 1 : 10);
+			$posY = $connector->getPosY() * ($className == 'FlowPump' && XMLController::get_real_class($connector) == 'FlowPumpToChassis' ? 1 : 10);
 			$posZ = $connector->getPosZ();
 			$rotation = $connector->getRotation();
 			/** @var $children Rack */
-			$multiplicand = 1000; // room
-			if($className == 'FlowPump' && XMLController::get_real_class($connector) == 'FlowPumpToChassis')
-			{
-				$multiplicand = 100;
-			}
-			self::$transformations[] = array($posX, $posY, $posZ, $rotation, $children->getSizeX() * $multiplicand, $children->getSizeZ() * $multiplicand, $children->getSizeY() * $multiplicand);
-			$transform = self::generate_transform($separator, $posX, $posY, $posZ, $rotation, $children->getSizeX() * $multiplicand, $children->getSizeZ() * $multiplicand, $children->getSizeY() * $multiplicand);
+			self::$transformations[] = array($posX, $posY, $posZ, $rotation, $children->getSizeX() * 1000, $children->getSizeZ() * 1000, $children->getSizeY() * 1000);
+			$transform = self::generate_transform($separator, $posX, $posY, $posZ, $rotation, $children->getSizeX() * 1000, $children->getSizeZ() * 1000, $children->getSizeY() * 1000);
 		}
 		else if ($className == 'Node')
 		{
