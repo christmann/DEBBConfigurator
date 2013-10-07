@@ -35,7 +35,7 @@
 {% block contentExtras %} style="width: {{ rackSizeX + 21 }}px;"{% endblock %}
 
 {% block content %}
-	{% if form.vars.errors|length %}<div class="alert alert-error">{{ form_errors(form) }}</div>{% endif %}
+    {{ form_errors(form) }}
 	<div style="margin-left: 6px;">
         {{ form_row(form.name) }}
 		{{ form_row(form.building) }}
