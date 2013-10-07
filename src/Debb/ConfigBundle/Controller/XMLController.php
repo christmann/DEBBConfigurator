@@ -57,6 +57,7 @@ abstract class XMLController extends BaseController
 		$response = new \Symfony\Component\HttpFoundation\Response();
 		$response->headers->set('Content-Type', 'text/xml');
 		header('Content-Type: text/xml');
+		header('Set-Cookie: fileDownload=true; path=/');
 		echo $this->getDebbXml($id, true);
 		return $response;
 	}
@@ -968,6 +969,7 @@ abstract class XMLController extends BaseController
 			{
 				header('Content-Disposition: attachment; filename=' . date('Y-m-d-H-i-s') . '.zip');
 				header('Content-type: application/zip');
+				header('Set-Cookie: fileDownload=true; path=/');
 				$deleteThisFiles = $this->getSession()->has('deletefile') ? (array) $this->getSession()->get('deletefile') : array();
 				$deleteThisFiles[] = $fileName;
 				$this->getSession()->set('deletefile', $deleteThisFiles);

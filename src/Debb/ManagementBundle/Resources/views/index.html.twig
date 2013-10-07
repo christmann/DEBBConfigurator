@@ -2,9 +2,23 @@
 {% extends "::base.html.twig" %}
 {% block title %}{{ localdev_admin_name(true) }}{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='cssrewrite'
+                                        'bundles/debbconfig/css/jquery-ui.min.css'
+    %}
+        <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
+    {% endstylesheets %}
+{% endblock %}
+
 {% block javascripts %}
 	{{ parent() }}
-	{% javascripts '@DebbManagementBundle/Resources/public/js/global.js' %}
+	{% javascripts
+                    '@DebbConfigBundle/Resources/public/js/jquery-ui.min.js'
+                    '@DebbManagementBundle/Resources/public/js/global.js'
+                    '@DebbConfigBundle/Resources/public/js/jquery.fileDownload.js'
+                    '@DebbManagementBundle/Resources/public/js/fileDownload.js'
+    %}
 		<script src="{{ asset_url }}" type="text/javascript"></script>
 	{% endjavascripts %}
 {% endblock %}
@@ -53,7 +67,7 @@
 									</div>
                                     <div class="btn-group pull-right">
                                         {% if exportasxml is defined and route_exists(localdev_admin_route("_asxml")) %}
-                                            <a target="_blank" href="{{ path(localdev_admin_route("_asxml"), {"id": item.id}) }}" class="btn">
+                                            <a target="_blank" href="{{ path(localdev_admin_route("_asxml"), {"id": item.id}) }}" class="btn filedownload">
                                                 <span rel="tooltip" data-original-title="{{ 'download.%what%.file' | trans({'%what%': 'DEBBComponents.xml' | trans}) }}"><i class="icon-file"></i></span>
                                             </a>
                                         {% endif %}
@@ -63,7 +77,7 @@
                                             </a>
                                         {% endif %}
                                         {% if exportasarchive is defined and route_exists(localdev_admin_route("_exportasarchive")) %}
-                                            <a target="_blank" href="{{ path(localdev_admin_route("_exportasarchive"), {"id": item.id}) }}" class="btn">
+                                            <a target="_blank" href="{{ path(localdev_admin_route("_exportasarchive"), {"id": item.id}) }}" class="btn filedownload">
                                                 <span rel="tooltip" data-original-title="{{ 'download.%what%.file' | trans({'%what%': 'archive' | trans}) }}"><i class="icon-download"></i></span>
                                             </a>
                                         {% endif %}
