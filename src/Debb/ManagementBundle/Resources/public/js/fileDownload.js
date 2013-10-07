@@ -5,7 +5,7 @@ $(function()
         e.preventDefault();
         $.fileDownload($(this).prop('href'),
         {
-            preparingMessageHtml: Translator.get('preparing file'),
+            preparingMessageHtml: Translator.get('preparing file') + '<br /><img src="/bundles/debbconfig/img/ajax-loader.gif" />',
             failMessageHtml: Translator.get('failed file')
         });
     });
