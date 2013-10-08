@@ -426,7 +426,7 @@ abstract class XMLController extends BaseController
 		$productInstance->addAttribute('id', $id); // example: inst71_01_7
 		if ($name != null)
 		{
-			$productInstance->addAttribute('name', $name . '_' . $iId); // example: Node7
+			$productInstance->addAttribute('name', $name . '_' . $iId . (int) @++$GLOBALS['namecount']); // example: Node7
 		}
 
 		if($partRef != null)
@@ -523,7 +523,7 @@ abstract class XMLController extends BaseController
 		$productRevisionView->addAttribute('id', $id); // example: id84_04_1
 		if ($name != null)
 		{
-			$productRevisionView->addAttribute('name', $name); // example: NodeGeometry
+			$productRevisionView->addAttribute('name', $name . (int) @++$GLOBALS['namecount']); // example: NodeGeometry
 		}
 		if (is_array($instanceRefs) && count($instanceRefs) > 0)
 		{
