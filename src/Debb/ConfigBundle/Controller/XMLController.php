@@ -74,7 +74,7 @@ abstract class XMLController extends BaseController
 	public function asSVNAction($id)
 	{
 		$svn = new Subversion($this->container->getParameter('debb.configbundle.svn_path'), $this->container->getParameter('debb.configbundle.svn_url'));
-		$key = str_replace('.', '', $this->getUser()) . '/' . time() . '/';
+		$key = str_replace('.', '', $this->getUser()) . '/' . date('Y_m_d__H_i_s') . '/';
 		$svn->setMasterKey($key);
 		$this->exportAsArchiveAction($id, $svn);
 		return RedirectResponse::create($svn->url($key));
