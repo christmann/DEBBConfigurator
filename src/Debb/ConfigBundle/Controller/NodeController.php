@@ -3,6 +3,7 @@
 namespace Debb\ConfigBundle\Controller;
 
 use CoolEmAll\UserBundle\Entity\User;
+use Debb\ConfigBundle\Entity\Node;
 use Localdev\AdminBundle\Util\ControllerUtils;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -38,7 +39,14 @@ class NodeController extends XMLController
 	 */
 	public function formAction(Request $request, $id = 0)
 	{
+		/** @var $item Node */
 		$item = $this->getEntity($id);
+
+		$typSpecsInUse = $this->getRepository('DebbManagementBundle:NodeToNodegroup')->findOneBy(array('node' => $item));
+		if(count($typSpecsInUse) > 0)
+		{
+			$item->lockType();
+		}
 
 		if ($request->getMethod() != 'POST')
 		{
@@ -98,7 +106,8 @@ class NodeController extends XMLController
 		return $this->render($this->resolveTemplate(__METHOD__), array(
 				'form' => $form->createView(),
 				'nodeTypes' => $this->getNodeTypesQuery()->execute(),
-				'item' => $item
+				'item' => $item,
+				'isTypInUse' => count($typSpecsInUse) > 0
 			));
 	}
 

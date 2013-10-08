@@ -40,6 +40,11 @@ class Node extends Dimensions
 	private $references;
 
 	/**
+	 * @var bool true if the type is locked or false if not
+	 */
+	private $isTypeLocked = false;
+
+	/**
 	 * Constructor
 	 */
 	public function __construct()
@@ -221,6 +226,23 @@ class Node extends Dimensions
 	public function getReferences()
 	{
 		return $this->references->getValues();
+	}
+
+	/**
+	 * @return bool lock the type
+	 */
+	public function lockType()
+	{
+		$this->isTypeLocked = true;
+		return $this->isTypeLocked;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function isTypeLocked()
+	{
+		return $this->isTypeLocked;
 	}
 
 	/**
