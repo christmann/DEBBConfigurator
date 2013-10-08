@@ -1084,3 +1084,8 @@ div[class*="noBreakAfterThis"]
 {
 	position: relative;
 }
+
+.alert ul
+{
+    margin-bottom: 0px;
+}
