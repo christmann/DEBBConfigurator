@@ -22,6 +22,10 @@
 {% block topForm %}
     <div style="width: 100%; border-bottom: 1px dashed #DFDFDF; height: 1px;"></div>
 
+    <div id="componentErrorBox" style="display: none; margin-top: 10px; margin-bottom: 5px;" class="alert alert-error">
+        {{- 'Please select components for the red marked select boxes or delete them.' | trans -}}
+    </div>
+
     <div class="row-fluid">
         <div class="span6">
             <div class="componentBox" style="border-left: 1px solid #DFDFDF; padding-left: 5px;" data-prototype="{{ form_row(form.components.vars.prototype) | escape }}">
@@ -57,9 +61,6 @@
                 {% endfor %}
             </div>
         </div>
-    </div>
-    <div id="componentErrorBox" style="display: none; margin-top: 20px; margin-bottom: 0px;" class="alert alert-error">
-        {{- 'Please select components for the red market select boxes or delete them.' | trans -}}
     </div>
     <div class="clear"></div>
     {{ form_widget(form._token) }}
