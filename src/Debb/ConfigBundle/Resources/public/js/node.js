@@ -43,6 +43,10 @@ $(function()
 			}
 			e.preventDefault();
 		});
+        $(document).on('change', 'select:visible[name*="component"]', function()
+        {
+            $(this).css('border-color', $(this).val() < 1 ? '#FF0000' : '');
+        });
 		$(document).on('click', '.delComponent', function(e)
 		{
 			var type = $(this).parents('.component:first').find('[id$="_type"]').attr('value');
@@ -98,6 +102,24 @@ $(function()
 			}
 			e.preventDefault();
 		});
+        $('button[type="submit"]').click(function(e)
+        {
+            var form = $(this).parents('form:first'),
+                components = form.find('select:visible[name*="component"]').css('border-color', ''),
+                emptyComponents = components.filter(function() { return $(this).val() < 1; });
+            if(emptyComponents.length > 0)
+            {
+                e.preventDefault();
+                emptyComponents.css('border-color', '#FF0000');
+                $('#componentErrorBox').show('slow');
+                return false;
+            }
+            else
+            {
+                $('#componentErrorBox').hide('slow');
+            }
+            return true;
+        });
         $('#debb_configbundle_nodetype_type').change(function()
         {
             if($(this).val() == -1)

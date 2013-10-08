@@ -58,6 +58,9 @@
             </div>
         </div>
     </div>
+    <div id="componentErrorBox" style="display: none; margin-top: 20px; margin-bottom: 0px;" class="alert alert-error">
+        {{- 'Please select components for the red market select boxes or delete them.' | trans -}}
+    </div>
     <div class="clear"></div>
     {{ form_widget(form._token) }}
 {% endblock %}
