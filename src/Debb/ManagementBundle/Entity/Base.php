@@ -111,6 +111,11 @@ class Base
 	private $powerUsageProfile;
 
 	/**
+	 * @var bool true if we can ignore our "isThisCorrect" function or false if not
+	 */
+	protected $isCorrect = false;
+
+	/**
 	 * Get id
 	 *
 	 * @return integer 
@@ -337,7 +342,7 @@ class Base
      */
     public function isThisCorrect()
     {
-        return !empty($this->manufacturer) || !empty($this->product);
+        return $this->isCorrect || !empty($this->manufacturer) || !empty($this->product);
     }
 
     /**
@@ -348,7 +353,6 @@ class Base
         $this->id = null;
         return $this;
     }
-
 
     /**
      * Set label

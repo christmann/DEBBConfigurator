@@ -3,6 +3,7 @@
 namespace Debb\ConfigBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Room
@@ -55,6 +56,14 @@ class Room extends Dimensions
 		$this->racks = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->flowPumps = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->references = new \Doctrine\Common\Collections\ArrayCollection();
+	}
+
+	/**
+	 * Wake up this room - Ignore the base "isThisCorrect" function!
+	 */
+	function __wakeup()
+	{
+		$this->isCorrect = true; // ignore the base function!
 	}
 
 	/**
@@ -401,5 +410,13 @@ class Room extends Dimensions
 	public function getDebbLevel()
 	{
 		return 'Room';
+	}
+
+	/**
+	 * @Assert\True(message = "You have to fill in one of these fields: Name or building")
+	 */
+	public function isThisRoomCorrect()
+	{
+		return !empty($this->name) || !empty($this->building);
 	}
 }
