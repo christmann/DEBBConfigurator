@@ -57,9 +57,17 @@
 													<a href="{{ path(localdev_admin_route("_form"), {"id":item.id}) }}" class="btn">
 														<span rel="tooltip" data-original-title="{{ 'edit' | trans }}"><i class="icon-edit"></i></span>
 													</a>
-													<a class="btn btn-danger" data-toggle="modal"
+													<a class="btn btn-danger{% if item.getParents() | default([]) | length > 0 %} disabled{% endif %}" data-toggle="modal"
 													   href="#delete{{ item.id }}">
-														<span rel="tooltip" data-original-title="{{ 'delete' | trans }}"><i class="icon-remove icon-white"></i></span>
+														<span rel="tooltip" data-original-title="
+														{%- if item.getParents() | default([]) | length > 0 -%}
+														    {{- 'This is used by...' | trans -}}{%- set listOfUsed = [] -%}
+														    <ul>{%- for entity in item.getParents() | default([]) if entity.__toString() | default(entity) not in listOfUsed -%}
+    														    <li>{{- entity.__toString() | default(entity) -}}</li>
+														    {% set listOfUsed = listOfUsed | merge([entity.__toString() | default(entity)]) %}{%- endfor -%}</ul>
+														{%- else -%}
+														    {{- 'delete' | trans -}}
+														{%- endif %}"><i class="icon-remove icon-white"></i></span>
 													</a>
 												{% endspaceless %}
 											{% endblock %}
@@ -82,24 +90,26 @@
                                             </a>
                                         {% endif %}
                                     </div>
-								{% endblock %}
-								<div class="modal hide" id="delete{{ item.id }}">
-									<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal">×</button>
-										<h3>{{ 'localdev_admin.delete.header'|trans({'%name%':item}, 'crud') }}</h3>
-									</div>
-									<div class="modal-body">
-										<p>{{ 'localdev_admin.delete.message'|trans({'%name%':item}, 'crud')|nl2br }}</p>
-									</div>
-									<div class="modal-footer">
-										<a href="#" class="btn" data-dismiss="modal">
-											{{ 'localdev_admin.actions.close'|trans({}, 'crud') }}
-										</a>
-										<a href="{{ path(localdev_admin_route("_remove"), {"id":item.id}) }}" class="btn btn-danger">
-											{{ 'localdev_admin.delete.confirm'|trans({'%name%':item}, 'crud') }}
-										</a>
-									</div>
-								</div>
+								{%- endblock -%}
+                                {%- if item.getParents() | default([]) | length < 1 -%}
+                                    <div class="modal hide" id="delete{{ item.id }}">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">×</button>
+                                            <h3>{{ 'localdev_admin.delete.header'|trans({'%name%':item}, 'crud') }}</h3>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>{{ 'localdev_admin.delete.message'|trans({'%name%':item}, 'crud')|nl2br }}</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="#" class="btn" data-dismiss="modal">
+                                                {{ 'localdev_admin.actions.close'|trans({}, 'crud') }}
+                                            </a>
+                                            <a href="{{ path(localdev_admin_route("_remove"), {"id":item.id}) }}" class="btn btn-danger">
+                                                {{ 'localdev_admin.delete.confirm'|trans({'%name%':item}, 'crud') }}
+                                            </a>
+                                        </div>
+                                    </div>
+                                {%- endif -%}
 							</td>
 						</tr>
 					{% endblock %}

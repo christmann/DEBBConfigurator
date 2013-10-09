@@ -141,7 +141,7 @@ class Component
 	/**
 	 * @var \Debb\ManagementBundle\Entity\Heatsink
 	 *
-	 * @ORM\ManyToOne(targetEntity="Heatsink")
+	 * @ORM\ManyToOne(targetEntity="Heatsink", inversedBy="components")
 	 * @ORM\JoinColumn(name="heatsink_id", referencedColumnName="id", onDelete="cascade")
 	 */
 	private $heatsink;
@@ -200,6 +200,16 @@ class Component
 	public function getNode()
 	{
 		return $this->node;
+	}
+
+	/**
+	 * Get the parent of this
+	 *
+	 * @return \Debb\ConfigBundle\Entity\Node the parent node
+	 */
+	public function getParents()
+	{
+		return $this->getNode();
 	}
 
 	/**

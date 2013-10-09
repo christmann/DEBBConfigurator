@@ -3,6 +3,7 @@
 namespace Debb\ManagementBundle\Controller;
 
 use Debb\ConfigBundle\Controller\NodeController;
+use Localdev\AdminBundle\Util\ControllerUtils;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use \Debb\ConfigBundle\Entity\Node;
@@ -40,6 +41,7 @@ class ChassisController extends BaseController
 			{
 				$this->persistEntity($item);
 				$this->addSuccessMsg("localdev_admin.messages.saved");
+				return $this->redirect($this->generateUrl(ControllerUtils::getRouteName($this->getRequest(), '_form'), array('id' => $item->getId())));
 			}
 		}
 

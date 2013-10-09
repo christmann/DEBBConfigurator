@@ -28,7 +28,7 @@ class Node extends Dimensions
 	/**
 	 * @var Image
 	 *
-	 * @ORM\ManyToOne(targetEntity="Debb\ManagementBundle\Entity\File", cascade={"all"})
+	 * @ORM\ManyToOne(targetEntity="Debb\ManagementBundle\Entity\File", cascade={"remove"})
 	 */
 	private $image;
 
@@ -38,6 +38,15 @@ class Node extends Dimensions
 	 * @ORM\ManyToMany(targetEntity="Debb\ManagementBundle\Entity\File", cascade={"all"}, orphanRemoval=true)
 	 */
 	private $references;
+
+	/**
+	 * Node groups
+	 *
+	 * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\NodeToNodegroup", cascade={"persist"}, mappedBy="node", orphanRemoval=true)
+	 *
+	 * @var \Debb\ManagementBundle\Entity\NodeToNodegroup[]
+	 */
+	private $nodeGroups;
 
 	/**
 	 * @var bool true if the type is locked or false if not
@@ -51,6 +60,7 @@ class Node extends Dimensions
 	{
 		$this->components = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->references = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->nodeGroups = new \Doctrine\Common\Collections\ArrayCollection();
 	}
 
 	/**
@@ -270,5 +280,48 @@ class Node extends Dimensions
 	public function getDebbLevel()
 	{
 		return 'Node';
+	}
+
+    /**
+     * Add nodeGroups
+     *
+     * @param \Debb\ManagementBundle\Entity\NodeToNodegroup $nodeGroups
+     * @return Node
+     */
+    public function addNodeGroup(\Debb\ManagementBundle\Entity\NodeToNodegroup $nodeGroups)
+    {
+        $this->nodeGroups[] = $nodeGroups;
+    
+        return $this;
+    }
+
+    /**
+     * Remove nodeGroups
+     *
+     * @param \Debb\ManagementBundle\Entity\NodeToNodegroup $nodeGroups
+     */
+    public function removeNodeGroup(\Debb\ManagementBundle\Entity\NodeToNodegroup $nodeGroups)
+    {
+        $this->nodeGroups->removeElement($nodeGroups);
+    }
+
+    /**
+     * Get nodeGroups
+     *
+     * @return \Debb\ManagementBundle\Entity\NodeToNodegroup[]
+     */
+    public function getNodeGroups()
+    {
+        return $this->nodeGroups;
+    }
+
+	/**
+	 * Get the parents
+	 *
+	 * @return \Debb\ManagementBundle\Entity\NodeToNodegroup[]
+	 */
+	public function getParents()
+	{
+		return $this->getNodeGroups();
 	}
 }

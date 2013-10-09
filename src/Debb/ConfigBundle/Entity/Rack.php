@@ -9,6 +9,7 @@
 namespace Debb\ConfigBundle\Entity;
 
 use Debb\ManagementBundle\Entity\NodegroupToRack;
+use Debb\ManagementBundle\Entity\RackToRoom;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -19,7 +20,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Rack extends Dimensions
 {
-
 	/**
 	 * @var \Debb\ManagementBundle\Entity\NodeGroupToRack[]
 	 *
@@ -42,6 +42,15 @@ class Rack extends Dimensions
 	private $references;
 
 	/**
+	 * Rooms
+	 *
+	 * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\RackToRoom", mappedBy="rack")
+	 *
+	 * @var RackToRoom[]
+	 */
+	private $rooms;
+
+	/**
 	 * Constructor
 	 */
 	public function __construct()
@@ -49,6 +58,7 @@ class Rack extends Dimensions
 		$this->nodeGroups = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->nodeGroups[] = new NodegroupToRack();
 		$this->references = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->rooms = new \Doctrine\Common\Collections\ArrayCollection();
 	}
 
 	/**
@@ -228,5 +238,48 @@ class Rack extends Dimensions
 	public function getDebbLevel()
 	{
 		return 'Rack';
+	}
+
+    /**
+     * Add rooms
+     *
+     * @param \Debb\ManagementBundle\Entity\RackToRoom $rooms
+     * @return Rack
+     */
+    public function addRoom(\Debb\ManagementBundle\Entity\RackToRoom $rooms)
+    {
+        $this->rooms[] = $rooms;
+    
+        return $this;
+    }
+
+    /**
+     * Remove rooms
+     *
+     * @param \Debb\ManagementBundle\Entity\RackToRoom $rooms
+     */
+    public function removeRoom(\Debb\ManagementBundle\Entity\RackToRoom $rooms)
+    {
+        $this->rooms->removeElement($rooms);
+    }
+
+    /**
+     * Get rooms
+     *
+     * @return RackToRoom[]
+     */
+    public function getRooms()
+    {
+        return $this->rooms;
+    }
+
+	/**
+	 * Get the parents
+	 *
+	 * @return RackToRoom[]
+	 */
+	public function getParents()
+	{
+		return $this->getRooms();
 	}
 }

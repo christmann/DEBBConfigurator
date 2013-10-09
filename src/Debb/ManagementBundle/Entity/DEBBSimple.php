@@ -3,7 +3,9 @@
 namespace Debb\ManagementBundle\Entity;
 
 use Debb\ConfigBundle\Entity\Dimensions;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 
 /**
  * DEBBSimple
@@ -78,6 +80,7 @@ class DEBBSimple extends Dimensions
     {
         return $this->transform;
     }
+
     /**
      * Constructor
      */
@@ -116,6 +119,6 @@ class DEBBSimple extends Dimensions
      */
     public function getReferences()
     {
-        return $this->references->getValues();
+        return $this->references instanceof PersistentCollection ? $this->references->getValues() : array();
     }
 }

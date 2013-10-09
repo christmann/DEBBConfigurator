@@ -8,6 +8,24 @@
     {% endspaceless %}
 {% endblock form_row %}
 
+{% block form_errors %}
+    {% spaceless %}
+        {% if errors|length > 0 %}
+            {% if form.children | length > 0 %}
+                <div class="alert alert-error">
+            {% endif %}
+            <ul>
+                {% for error in errors %}
+                    <li>{{ error.message }}</li>
+                {% endfor %}
+            </ul>
+            {% if form.children | length > 0 %}
+                </div>
+            {% endif %}
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_errors %}
+
 {% block checkbox_label %}{% endblock %}
 {% block checkbox_widget %}
     {% spaceless %}

@@ -34,7 +34,7 @@ var debbUtils = {
 
 $(function()
 {
-	$('[rel="tooltip"]').tooltip();
+	$('[rel="tooltip"]').tooltip({html: true});
 	$('label[data-title]').popover({html: true});
 	$(document).on('click', 'label[data-title], [data-title][data-content][data-typ="popover"]', function()
 	{

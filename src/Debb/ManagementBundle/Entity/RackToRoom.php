@@ -203,4 +203,9 @@ class RackToRoom extends Connector
     {
         return (float) $this->rotation;
     }
+
+	function __toString()
+	{
+		return (string) $this->getRoom();
+	}
 }

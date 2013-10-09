@@ -75,4 +75,9 @@ class NodegroupToRack extends Connector
     {
         return $this->rack;
     }
+
+	function __toString()
+	{
+		return (string) $this->getRack();
+	}
 }

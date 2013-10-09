@@ -204,11 +204,8 @@ class FlowPumpToChassis extends Connector
         return (float) $this->rotation;
     }
 
-	/**
-	 * Return the flow pump name if possible
-	 */
 	function __toString()
 	{
-		return $this->getFlowPump() == null ? '' : (string) $this->getFlowPump();
+		return (string) $this->getChassis();
 	}
 }

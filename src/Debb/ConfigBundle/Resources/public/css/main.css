@@ -1089,3 +1089,14 @@ div[class*="noBreakAfterThis"]
 {
     margin-bottom: 0px;
 }
+
+.tooltip-inner ul
+{
+    margin-left: 5px;
+}
+
+.tooltip-inner
+{
+    max-width: 1000px;
+    width: 100%;
+}

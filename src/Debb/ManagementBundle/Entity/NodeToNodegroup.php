@@ -17,7 +17,7 @@ class NodeToNodegroup extends Connector
 	/**
 	 * @var Node
 	 *
-	 * @ORM\ManyToOne(targetEntity="Debb\ConfigBundle\Entity\Node")
+	 * @ORM\ManyToOne(targetEntity="Debb\ConfigBundle\Entity\Node", inversedBy="nodeGroups")
 	 * @ORM\JoinColumn(name="node_id", referencedColumnName="id", onDelete="cascade")
 	 */
 	private $node;
@@ -89,7 +89,7 @@ class NodeToNodegroup extends Connector
 		/**
 		 * getPosX, getPosY, getPosZ and getRotation
 		 */
-		if(preg_match('#^(getPos(X|Y|Z)|getRotation)$#i', $name))
+		if(preg_match('#^(getPos(X|Y|Z)|getRotation)$#i', $name) && $this->getNodeGroup() != null)
 		{
 			$draft = $this->getNodeGroup()->getDraft();
 			if($draft)
@@ -104,5 +104,10 @@ class NodeToNodegroup extends Connector
 			}
 		}
 		return null;
+	}
+
+	function __toString()
+	{
+		return (string) $this->getNodeGroup();
 	}
 }

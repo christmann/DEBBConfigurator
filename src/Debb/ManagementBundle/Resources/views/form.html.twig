@@ -1,7 +1,7 @@
 {% set showTitle = true %}
 {% extends "::base.html.twig" %}
 {% block title %}{{ ((item is not defined or item.id == null) ? 'localdev_admin.title.add' : 'localdev_admin.title.edit') | trans({"%name%":localdev_admin_name(false)}, 'crud') }}{% endblock %}
-{% form_theme form _self %}
+{% form_theme form "DebbManagementBundle::form_theme.html.twig" %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -24,24 +24,6 @@
 		<script src="{{ asset_url }}" type="text/javascript"></script>
 	{% endjavascripts %}
 {% endblock %}
-
-{% block form_errors %}
-    {% spaceless %}
-        {% if errors|length > 0 %}
-            {% if form.children | length > 0 %}
-                <div class="alert alert-error">
-            {% endif %}
-                <ul>
-                    {% for error in errors %}
-                        <li>{{ error.message }}</li>
-                    {% endfor %}
-                </ul>
-            {% if form.children | length > 0 %}
-                </div>
-            {% endif %}
-        {% endif %}
-    {% endspaceless %}
-{% endblock form_errors %}
 
 {% block form_header %}
 	{%- set action -%}

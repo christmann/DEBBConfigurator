@@ -721,12 +721,15 @@ abstract class XMLController extends BaseController
 							$nodes[$node->getNode()->getId()] = $node->getNode();
 						}
 					}
-					/* @var $flowPump \Debb\ManagementBundle\Entity\FlowPumpToRoom */
-					foreach($nodeGroup->getDraft()->getFlowPumps() as $flowPump)
+					if($nodeGroup->getDraft() != null)
 					{
-						if($flowPump->getFlowPump() != null)
+						/* @var $flowPump \Debb\ManagementBundle\Entity\FlowPumpToRoom */
+						foreach($nodeGroup->getDraft()->getFlowPumps() as $flowPump)
 						{
-							$flowPumps[$flowPump->getFlowPump()->getId()] = $flowPump->getFlowPump();
+							if($flowPump->getFlowPump() != null)
+							{
+								$flowPumps[$flowPump->getFlowPump()->getId()] = $flowPump->getFlowPump();
+							}
 						}
 					}
 				}

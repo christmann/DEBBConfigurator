@@ -16,7 +16,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class NodeGroup extends Dimensions
 {
-
     /**
      * Nodes
      * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\NodeToNodegroup", cascade={"persist"}, mappedBy="nodeGroup", orphanRemoval=true)
@@ -238,12 +237,22 @@ class NodeGroup extends Dimensions
     /**
      * Get racks
      *
-     * @return \Doctrine\Common\Collections\Collection|NodegroupToRack[]
+     * @return NodegroupToRack[]
      */
     public function getRacks()
     {
         return $this->racks;
     }
+
+	/**
+	 * Get the parents
+	 *
+	 * @return NodegroupToRack[]
+	 */
+	public function getParents()
+	{
+		return $this->getRacks();
+	}
 
 	/**
 	 * Get references

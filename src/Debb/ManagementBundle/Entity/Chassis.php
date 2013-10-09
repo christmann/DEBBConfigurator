@@ -187,12 +187,22 @@ class Chassis extends Dimensions
     /**
      * Get nodeGroups
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return NodeGroup[]
      */
     public function getNodeGroups()
     {
         return $this->nodeGroups;
     }
+
+	/**
+	 * Get the parents
+	 *
+	 * @return NodeGroup[]
+	 */
+	public function getParents()
+	{
+		return $this->getNodeGroups();
+	}
 
     /**
      * Add typspecification
