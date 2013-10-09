@@ -56,6 +56,7 @@ class Room extends Dimensions
 		$this->racks = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->flowPumps = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->references = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->isCorrect = true; // ignore the base function!
 	}
 
 	/**
