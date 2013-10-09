@@ -327,7 +327,7 @@ abstract class XMLController extends BaseController
 			$revisionView = $this->addPlmXmlProductRevisionView(
 				$xml,                                                                                                                            // $xml
 				'iview' . sprintf('%02d', $entity->getId()) . '_1',                                                                              // $id
-				sprintf('%s%02d', $entity->getXmlName() != null ? $entity->getXmlName() : 'Def' . $real_class_name . 'View', $entity->getId()),  // $name
+				$entity->getXmlName() != null ? $entity->getXmlName() : $real_class_name,         												 // $name
 				$childIds,                                                                                                                       // $instanceRefs
 				null,                                                                                                                            // $type
 				$representations,                                                                                                                // $representations
@@ -344,7 +344,7 @@ abstract class XMLController extends BaseController
 			$instance = $this->addPlmXmlProductInstance(
 				$xml,                                                                                                                            // $xml
 				'inst' . sprintf('%02d', $entity->getId()) . '_1',                                                                               // $id
-				sprintf('%s%02d', $entity->getXmlName() != null ? $entity->getXmlName() : 'Def' . $real_class_name, $entity->getId()),           // $name
+				$entity->getXmlName() != null ? $entity->getXmlName() : $real_class_name,         												 // $name
 				$revisionViewAttr->id,                                                                                                           // $partRef
 				$entity->getHostname(),                                                                                                          // $hostname
 				$transformation,                                                         													     // $transform
@@ -426,7 +426,7 @@ abstract class XMLController extends BaseController
 		$productInstance->addAttribute('id', $id); // example: inst71_01_7
 		if ($name != null)
 		{
-			$productInstance->addAttribute('name', $name . '_' . $iId . (int) @++$GLOBALS['namecount']); // example: Node7
+			$productInstance->addAttribute('name', $name . (int) @++$GLOBALS['plmxmlcounterinst_' . md5($name)]); // example: Node7
 		}
 
 		if($partRef != null)
@@ -523,7 +523,7 @@ abstract class XMLController extends BaseController
 		$productRevisionView->addAttribute('id', $id); // example: id84_04_1
 		if ($name != null)
 		{
-			$productRevisionView->addAttribute('name', $name . (int) @++$GLOBALS['namecount']); // example: NodeGeometry
+			$productRevisionView->addAttribute('name', $name . (int) @++$GLOBALS['plmxmlcounterrevview_' . md5($name)]); // example: NodeGeometry
 		}
 		if (is_array($instanceRefs) && count($instanceRefs) > 0)
 		{
