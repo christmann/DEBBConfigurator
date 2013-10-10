@@ -11,6 +11,7 @@ use Debb\ConfigBundle\Utilities\Subversion;
 use Debb\ConfigBundle\Utilities\Transformation;
 use Debb\ManagementBundle\Controller\BaseController;
 use Debb\ManagementBundle\Controller\FlowPumpController;
+use Debb\ManagementBundle\Controller\HeatsinkController;
 use Debb\ManagementBundle\Entity\DEBBSimple;
 use Debb\ManagementBundle\Entity\File;
 use Debb\ManagementBundle\Entity\FlowPump;
@@ -36,7 +37,7 @@ abstract class XMLController extends BaseController
 	/**
 	 * @var string type of debbcomponent
 	 */
-	public $debbType = 'Node';
+	public $debbType = null;
 
 	/**
 	 * @var string debb entity repository
@@ -203,24 +204,35 @@ abstract class XMLController extends BaseController
 	{
 		$item = $this->getEntity($id);
 
+		if($this->debbType == null)
+		{
+			$this->debbType = XMLController::get_real_class($item);
+			if($this->debbType == 'Component')
+			{
+				$this->debbType = XMLController::get_real_class($item->getActive());
+			}
+			else if($this->debbType == 'FlowPump')
+			{
+				$this->debbType = $item->getDebbLevel();
+			}
+		}
+
 		$xml = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><'.$this->debbType.' />');
 		$info = $item->getDebbXmlArray();
 		if($info === false)
 		{
 			return false;
 		}
+
 		if(array_key_exists($this->debbType, $info))
 		{
 			$info = $info[$this->debbType];
 		}
-		else
+
+		if(is_array($info))
 		{
-			foreach($info as $key => $val)
-			{
-				$info = $val;
-			}
+			\Debb\ManagementBundle\Entity\Base::array_to_xml($info, $xml);
 		}
-		\Debb\ManagementBundle\Entity\Base::array_to_xml($info, $xml);
 
 		if ($pretty)
 		{
@@ -807,6 +819,8 @@ abstract class XMLController extends BaseController
 					$heatsinks = $node->getComponents(Component::TYPE_HEATSINK);
 					if(count($heatsinks) > 0)
 					{
+						$controller = new HeatsinkController();
+						$controller->setContainer($this->getContainer());
 						foreach($heatsinks as $heatsink)
 						{
 							if($heatsink instanceof Component)
@@ -815,6 +829,18 @@ abstract class XMLController extends BaseController
 							}
 							if($heatsink instanceof Heatsink)
 							{
+								$debbXmlStr = $controller->getDebbXml($heatsink->getId(), true);
+								if($debbXmlStr !== false)
+								{
+									if($toSvn === null)
+									{
+										$zip->addFromString('Heatsink_'.$node->getComponentId().'.xml', $debbXmlStr);
+									}
+									else
+									{
+										$toSvn->set('Heatsink_'.$node->getComponentId().'.xml', $debbXmlStr, false, false);
+									}
+								}
 								if(count($heatsink->getReferences()) > 0)
 								{
 									foreach($heatsink->getReferences() as $reference)
@@ -909,6 +935,20 @@ abstract class XMLController extends BaseController
 				if($flowPump instanceof FlowPump)
 				{
 					/* @var $flowPump FlowPump */
+					$controller = new FlowPumpController();
+					$controller->setContainer($this->getContainer());
+					$debbXmlStr = $controller->getDebbXml($flowPump->getId(), true);
+					if($debbXmlStr !== false)
+					{
+						if($toSvn === null)
+						{
+							$zip->addFromString('FlowPump_'.$nodeGroup->getComponentId().'.xml', $debbXmlStr);
+						}
+						else
+						{
+							$toSvn->set('FlowPump_'.$nodeGroup->getComponentId().'.xml', $debbXmlStr, false, false);
+						}
+					}
 					if(count($flowPump->getReferences()) > 0)
 					{
 						foreach($flowPump->getReferences() as $reference)

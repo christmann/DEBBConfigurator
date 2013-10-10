@@ -70,14 +70,14 @@ class FlowPump extends DEBBSimple
 	 */
 	public function getDebbXmlArray()
 	{
-		$array = parent::getDebbXmlArray();
+		$array[$this->getDebbLevel()] = parent::getDebbXmlArray();
 		if ($this->getMaxRPM() !== null)
 		{
-			$array['MaxRPM'] = $this->getMaxRPM();
+			$array[$this->getDebbLevel()]['MaxRPM'] = $this->getMaxRPM();
 		}
 		if ($this->getEfficiency() !== null)
 		{
-			$array['Efficiency'] = $this->getEfficiency();
+			$array[$this->getDebbLevel()]['Efficiency'] = $this->getEfficiency();
 		}
 		return $array;
 	}

@@ -273,14 +273,29 @@ class Room extends Dimensions
 		{
 			$array['Room'][] = array(array('Reference' => array('Type' => $reference->getFileEnding(), 'Location' => './object/' . $reference->getId() . '_' . $reference->getName())));
 		}
+
+		$afterThis = array();
 		foreach($this->getFlowPumps() as $flowPumpToRoom)
 		{
 			$flowPump = $flowPumpToRoom->getFlowPump();
 			if($flowPump != null)
 			{
-				$array['Room'][] = array(array($flowPump->getDebbLevel() => $flowPump->getDebbXmlArray()));
+				$arr = array($flowPump->getDebbXmlArray());
+				if($flowPump->isInlet())
+				{
+					$array['NodeGroup'][] = $arr;
+				}
+				else
+				{
+					$afterThis[] = $arr;
+				}
 			}
 		}
+		foreach($afterThis as $flowPump)
+		{
+			$array['NodeGroup'][] = $flowPump;
+		}
+
 		return $array;
 	}
 

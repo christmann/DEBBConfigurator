@@ -157,14 +157,27 @@ class NodeGroup extends Dimensions
 	    $draft = $this->getDraft();
 	    if($draft !== null)
 	    {
+			$afterThis = array();
 		    foreach($draft->getFlowPumps() as $flowPumpToChassis)
 		    {
 			    $flowPump = $flowPumpToChassis->getFlowPump();
 			    if($flowPump != null)
 			    {
-				    $array['NodeGroup'][] = array(array($flowPump->getDebbLevel() => $flowPump->getDebbXmlArray()));
+					$arr = array($flowPump->getDebbXmlArray());
+					if($flowPump->isInlet())
+					{
+						$array['NodeGroup'][] = $arr;
+					}
+					else
+					{
+						$afterThis[] = $arr;
+					}
 			    }
 		    }
+			foreach($afterThis as $flowPump)
+			{
+				$array['NodeGroup'][] = $flowPump;
+			}
 	    }
 		if($this->getDraft() != null && $this->getDraft()->getTypspecification() != null)
 		{
