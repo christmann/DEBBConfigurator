@@ -834,11 +834,11 @@ abstract class XMLController extends BaseController
 								{
 									if($toSvn === null)
 									{
-										$zip->addFromString('Heatsink_'.$node->getComponentId().'.xml', $debbXmlStr);
+										$zip->addFromString('Heatsink_'.$heatsink->getComponentId().'.xml', $debbXmlStr);
 									}
 									else
 									{
-										$toSvn->set('Heatsink_'.$node->getComponentId().'.xml', $debbXmlStr, false, false);
+										$toSvn->set('Heatsink_'.$heatsink->getComponentId().'.xml', $debbXmlStr, false, false);
 									}
 								}
 								if(count($heatsink->getReferences()) > 0)
@@ -942,11 +942,11 @@ abstract class XMLController extends BaseController
 					{
 						if($toSvn === null)
 						{
-							$zip->addFromString('FlowPump_'.$nodeGroup->getComponentId().'.xml', $debbXmlStr);
+							$zip->addFromString('FlowPump_'.$flowPump->getComponentId().'.xml', $debbXmlStr);
 						}
 						else
 						{
-							$toSvn->set('FlowPump_'.$nodeGroup->getComponentId().'.xml', $debbXmlStr, false, false);
+							$toSvn->set('FlowPump_'.$flowPump->getComponentId().'.xml', $debbXmlStr, false, false);
 						}
 					}
 					if(count($flowPump->getReferences()) > 0)
