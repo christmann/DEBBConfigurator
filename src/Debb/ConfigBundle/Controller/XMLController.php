@@ -446,7 +446,8 @@ abstract class XMLController extends BaseController
 		$productInstance->addAttribute('id', $id); // example: inst71_01_7
 		if ($name != null)
 		{
-			$productInstance->addAttribute('name', $name . (int) @++$GLOBALS['plmxmlcounterinst_' . md5($name . $round)]); // example: Node7
+			$number = XMLController::get_real_class($entity) == 'Node' ? sprintf('%02s', @++$GLOBALS['plmxmlcounterinst_' . md5($name . $round)]) : (int) @++$GLOBALS['plmxmlcounterinst_' . md5($name . $round)];
+			$productInstance->addAttribute('name', $name . $number); // example: Node07
 		}
 
 		if($partRef != null)
@@ -548,7 +549,8 @@ abstract class XMLController extends BaseController
 		$productRevisionView->addAttribute('id', $id); // example: id84_04_1
 		if ($name != null)
 		{
-			$productRevisionView->addAttribute('name', $name . (int) @++$GLOBALS['plmxmlcounterrevview_' . md5($name . $round)]); // example: NodeGeometry
+			$number = XMLController::get_real_class($entity) == 'Node' ? sprintf('%02s', @++$GLOBALS['plmxmlcounterrevview_' . md5($name . $round)]) : (int) @++$GLOBALS['plmxmlcounterrevview_' . md5($name . $round)];
+			$productRevisionView->addAttribute('name', $name . $number); // example: Node07
 		}
 		if (is_array($instanceRefs) && count($instanceRefs) > 0)
 		{
