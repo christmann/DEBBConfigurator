@@ -279,7 +279,7 @@ class Base
 		}
 		if ($this->getType() != null)
 		{
-			$array['Type'] = $this->getMaxPower();
+			$array['Type'] = $this->getType();
 		}
 		return $array;
 	}
