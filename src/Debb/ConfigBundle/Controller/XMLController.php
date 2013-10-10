@@ -304,7 +304,7 @@ abstract class XMLController extends BaseController
 				{
 					foreach($childs as $children)
 					{
-						$childIds[] = $this->addEntityToPLMXML($xml, $children, false, $round);
+						$childIds[] = $this->addEntityToPLMXML($xml, $children, false, $round . '/' . (int) @++$GLOBALS['plmxmlcentity']);
 					}
 				}
 				unset($childs);
