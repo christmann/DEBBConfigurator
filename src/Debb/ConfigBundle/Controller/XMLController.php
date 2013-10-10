@@ -467,6 +467,11 @@ abstract class XMLController extends BaseController
 		}
 
 		$real_class_name = $this->get_real_class($entity);
+		if($real_class_name == 'Component')
+		{
+			$real_class_name = $this->get_real_class($entity->getActive());
+		}
+
 		if($real_class_name == 'Heatsink')
 		{
 			$userValue = $userData->addChild('UserValue');
