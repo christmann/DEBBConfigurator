@@ -304,7 +304,7 @@ abstract class XMLController extends BaseController
 				{
 					foreach($childs as $children)
 					{
-						$childIds[] = $this->addEntityToPLMXML($xml, $children, false, $round . '/' . (int) @++$GLOBALS['plmxmlcentity' . $children[1]->getHigherElement()->getId()]);
+						$childIds[] = $this->addEntityToPLMXML($xml, $children, false, $round);
 					}
 				}
 				unset($childs);
@@ -389,7 +389,7 @@ abstract class XMLController extends BaseController
 		$instanceGraph = $productDef->addChild('InstanceGraph');
 		$instanceGraph->addAttribute('id', 'id2');
 
-		$instanceGraph->addAttribute('rootRefs', $this->addEntityToPLMXML($instanceGraph, $item));//die();
+		$instanceGraph->addAttribute('rootRefs', $this->addEntityToPLMXML($instanceGraph, $item));
 
 		if ($pretty)
 		{
