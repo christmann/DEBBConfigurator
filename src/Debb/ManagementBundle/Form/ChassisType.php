@@ -59,7 +59,10 @@ class ChassisType extends BaseType
                     $nodeGroups[$nodeGroup->getId()] = $nodeGroup;
                     foreach ($nodeGroup->getRacks() as $nodeRack) {
                         $rack = $nodeRack->getRack();
-                        $racks[$rack->getId()] = $rack;
+						if($rack != null)
+						{
+							$racks[$rack->getId()] = $rack;
+						}
                     }
                 }
 
