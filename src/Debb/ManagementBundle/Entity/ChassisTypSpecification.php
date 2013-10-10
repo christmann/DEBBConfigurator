@@ -209,4 +209,12 @@ class ChassisTypSpecification extends Connector
 		);
 		return $json ? json_encode($array) : $array;
 	}
+
+	/**
+	 * @return Chassis
+	 */
+	public function getHigherElement()
+	{
+		return $this->getChassis();
+	}
 }

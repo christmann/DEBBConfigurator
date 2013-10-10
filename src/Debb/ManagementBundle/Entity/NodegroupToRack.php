@@ -80,4 +80,12 @@ class NodegroupToRack extends Connector
 	{
 		return (string) $this->getRack();
 	}
+
+	/**
+	 * @return \Debb\ConfigBundle\Entity\Rack
+	 */
+	public function getHigherElement()
+	{
+		return $this->getRack();
+	}
 }

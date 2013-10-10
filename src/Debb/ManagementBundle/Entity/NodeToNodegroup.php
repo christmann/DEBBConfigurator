@@ -110,4 +110,12 @@ class NodeToNodegroup extends Connector
 	{
 		return (string) $this->getNodeGroup();
 	}
+
+	/**
+	 * @return \Debb\ConfigBundle\Entity\NodeGroup
+	 */
+	public function getHigherElement()
+	{
+		return $this->getNodeGroup();
+	}
 }

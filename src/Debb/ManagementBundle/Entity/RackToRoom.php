@@ -208,4 +208,12 @@ class RackToRoom extends Connector
 	{
 		return (string) $this->getRoom();
 	}
+
+	/**
+	 * @return \Debb\ConfigBundle\Entity\Room
+	 */
+	public function getHigherElement()
+	{
+		return $this->getRoom();
+	}
 }

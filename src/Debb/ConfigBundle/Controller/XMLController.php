@@ -251,6 +251,10 @@ abstract class XMLController extends BaseController
 	 * @author http://www.php.net/manual/de/function.get-class.php#112159 <emmanuel.antico@gmail.com>
 	 */
 	public static function get_real_class($obj) {
+		if(!is_object($obj))
+		{
+			return null;
+		}
 		$classname = get_class($obj);
 
 		if (preg_match('@\\\\([\w]+)$@', $classname, $matches)) {
@@ -273,7 +277,7 @@ abstract class XMLController extends BaseController
 	/**
 	 * @param mixed $entity
 	 */
-	public function addEntityToPLMXML(\SimpleXMLElement & $xml, $entity, $first = true)
+	public function addEntityToPLMXML(\SimpleXMLElement & $xml, $entity, $first = true, $round = '')
 	{
 		if(is_array($entity))
 		{
@@ -300,7 +304,7 @@ abstract class XMLController extends BaseController
 				{
 					foreach($childs as $children)
 					{
-						$childIds[] = $this->addEntityToPLMXML($xml, $children, false);
+						$childIds[] = $this->addEntityToPLMXML($xml, $children, false, $round . '/' . (int) @++$GLOBALS['plmxmlcentity' . $children[1]->getHigherElement()->getId()]);
 					}
 				}
 				unset($childs);
@@ -323,6 +327,8 @@ abstract class XMLController extends BaseController
 				$transformation = null;
 			}
 
+			$round = preg_replace('#\/[0-9]+$#i', '', $round); // we need the parent not the current
+
 			/** ProductRevisionView */
 			$revisionView = $this->addPlmXmlProductRevisionView(
 				$xml,                                                                                                                            // $xml
@@ -336,7 +342,8 @@ abstract class XMLController extends BaseController
 				$real_class_name . '_'.$entity->getComponentId().'.xml',                                                                         // $DEBBComponentsFile
 				$first ? $entity->getMeshResolution() : null,                                                                                    // $meshResolution
 				$first ? Transformation::generateBoundingBox() : null,                                                                           // $bound
-				$entity                                                                                                                          // $entity
+				$entity,                                                                                                                         // $entity
+				$round
 			);
 			$revisionViewAttr = $revisionView->attributes();
 
@@ -350,7 +357,8 @@ abstract class XMLController extends BaseController
 				$transformation,                                                         													     // $transform
 				$first ? $entity->getLocationInMesh() : null,                                                                                    // $locationInMesh
 				$real_class_name == 'Room' ? $entity->getBuilding() : null,                                                                      // $location
-				$entity                                                                                                                          // $entity
+				$entity,                                                                                                                         // $entity
+				$round
 			);
 
 			return $instance[1];
@@ -381,7 +389,7 @@ abstract class XMLController extends BaseController
 		$instanceGraph = $productDef->addChild('InstanceGraph');
 		$instanceGraph->addAttribute('id', 'id2');
 
-		$instanceGraph->addAttribute('rootRefs', $this->addEntityToPLMXML($instanceGraph, $item));
+		$instanceGraph->addAttribute('rootRefs', $this->addEntityToPLMXML($instanceGraph, $item));//die();
 
 		if ($pretty)
 		{
@@ -410,7 +418,7 @@ abstract class XMLController extends BaseController
 	 * @param mixed optional $entity the entity of this instance
 	 * @return array the SimpleXMLElement product instance (0) and the generated id (1)
 	 */
-	public function addPlmXmlProductInstance(\SimpleXMLElement &$xml, $id, $name = null, $partRef = null, $hostname = null, $transform = null, $locationInMesh = null, $location = null, $entity = null)
+	public function addPlmXmlProductInstance(\SimpleXMLElement &$xml, $id, $name = null, $partRef = null, $hostname = null, $transform = null, $locationInMesh = null, $location = null, $entity = null, $round = '')
 	{
 		$productInstance = $xml->addChild('ProductInstance');
 
@@ -426,7 +434,7 @@ abstract class XMLController extends BaseController
 		$productInstance->addAttribute('id', $id); // example: inst71_01_7
 		if ($name != null)
 		{
-			$productInstance->addAttribute('name', $name . (int) @++$GLOBALS['plmxmlcounterinst_' . md5($name)]); // example: Node7
+			$productInstance->addAttribute('name', $name . (int) @++$GLOBALS['plmxmlcounterinst_' . md5($name . $round)]); // example: Node7
 		}
 
 		if($partRef != null)
@@ -506,7 +514,7 @@ abstract class XMLController extends BaseController
 	 * @param mixed optional $entity the entity of this instance
 	 * @return \SimpleXMLElement the SimpleXMLElement product revision view
 	 */
-	public function addPlmXmlProductRevisionView(\SimpleXMLElement &$xml, $id, $name = null, $instanceRefs = array(), $type = null, $representations = array(), $DEBBComponentId = null, $DEBBLevel = null, $DEBBComponentFile = null, $meshResolution = null, $bound = null, $entity = null)
+	public function addPlmXmlProductRevisionView(\SimpleXMLElement &$xml, $id, $name = null, $instanceRefs = array(), $type = null, $representations = array(), $DEBBComponentId = null, $DEBBLevel = null, $DEBBComponentFile = null, $meshResolution = null, $bound = null, $entity = null, $round = '')
 	{
 		$productRevisionView = $xml->addChild('ProductRevisionView');
 
@@ -523,7 +531,7 @@ abstract class XMLController extends BaseController
 		$productRevisionView->addAttribute('id', $id); // example: id84_04_1
 		if ($name != null)
 		{
-			$productRevisionView->addAttribute('name', $name . (int) @++$GLOBALS['plmxmlcounterrevview_' . md5($name)]); // example: NodeGeometry
+			$productRevisionView->addAttribute('name', $name . (int) @++$GLOBALS['plmxmlcounterrevview_' . md5($name . $round)]); // example: NodeGeometry
 		}
 		if (is_array($instanceRefs) && count($instanceRefs) > 0)
 		{

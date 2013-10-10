@@ -208,4 +208,12 @@ class FlowPumpToChassis extends Connector
 	{
 		return (string) $this->getChassis();
 	}
+
+	/**
+	 * @return Chassis
+	 */
+	public function getHigherElement()
+	{
+		return $this->getChassis();
+	}
 }
