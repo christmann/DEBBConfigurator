@@ -283,7 +283,7 @@ class Room extends Dimensions
 				$arr = array($flowPump->getDebbXmlArray());
 				if($flowPump->isInlet())
 				{
-					$array['NodeGroup'][] = $arr;
+					$array['Room'][] = $arr;
 				}
 				else
 				{
@@ -293,7 +293,7 @@ class Room extends Dimensions
 		}
 		foreach($afterThis as $flowPump)
 		{
-			$array['NodeGroup'][] = $flowPump;
+			$array['Room'][] = $flowPump;
 		}
 
 		return $array;
