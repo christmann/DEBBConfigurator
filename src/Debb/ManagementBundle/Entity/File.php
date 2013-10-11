@@ -3,6 +3,8 @@
 namespace Debb\ManagementBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -57,4 +59,26 @@ class File extends \CIM\PluploadBundle\Entity\File
 		return !$upper ? : str_replace('WRL', 'VRML', strtoupper($ending));
 	}
 
+	function __clone()
+	{
+		if($this->id > 0)
+		{
+			$this->id = null;
+
+			$guesser = ExtensionGuesser::getInstance();
+			$newPath = uniqid() . '.' . $guesser->guess($this->getMimeType());
+			if(file_exists($this->getFullPath()) && copy($this->getFullPath(), $this->getUploadRoot() . DIRECTORY_SEPARATOR . $newPath))
+			{
+				$this->setPath($newPath);
+			}
+		}
+	}
+
+	/*
+	 * {@inheritdoc}
+	 */
+	private function getUploadRoot()
+	{
+		return __DIR__ . '/../../../../web/' . parent::getUploadRootDir();
+	}
 }
