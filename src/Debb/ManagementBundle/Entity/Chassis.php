@@ -418,4 +418,28 @@ class Chassis extends Dimensions
 		}
 		return $res;
 	}
+
+	public function __clone()
+	{
+		if ($this->getId() > 0)
+		{
+			parent::__clone();
+
+			$this->setProduct($this->getProduct() . ' - 2');
+
+			$flowPumps = new ArrayCollection();
+			foreach($this->flowPumps as $flowPump)
+			{
+				$flowPumps->add(clone $flowPump);
+			}
+			$this->setFlowPumps($flowPumps);
+
+			$typSpecifications = new ArrayCollection();
+			foreach($this->typspecification as $typSpecification)
+			{
+				$typSpecifications->add(clone $typSpecification);
+			}
+			$this->setTypspecification($typSpecifications);
+		}
+	}
 }

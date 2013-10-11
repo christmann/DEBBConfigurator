@@ -350,8 +350,10 @@ class Base
      */
     public function __clone()
     {
-        $this->id = null;
-        return $this;
+		if ($this->getId() > 0)
+		{
+        	$this->id = null;
+		}
     }
 
     /**
