@@ -427,6 +427,18 @@ class Chassis extends Dimensions
 
 			$this->setProduct($this->getProduct() . ' - 2');
 
+			if($this->getImage() != null)
+			{
+				$this->image = clone $this->image;
+			}
+
+			$references = new ArrayCollection();
+			foreach($this->references as $reference)
+			{
+				$references->add(clone $reference);
+			}
+			$this->references = $references;
+
 			$flowPumps = new ArrayCollection();
 			foreach($this->flowPumps as $flowPump)
 			{
