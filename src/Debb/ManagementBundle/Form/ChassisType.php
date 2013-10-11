@@ -104,7 +104,7 @@ class ChassisType extends BaseType
             ->add(
                 'image',
                 'plupload',
-                array('placeholder' => true, 'label' => 'upload chassis image', 'bootstrap' => true)
+                array('placeholder' => true, 'label' => 'upload chassis image', 'bootstrap' => true, 'showMaxSize' => true)
             )
 	        ->add('sizeX', 'hidden', array('required' => false))
 	        ->add('sizeY', 'hidden', array('required' => false))
@@ -126,7 +126,8 @@ class ChassisType extends BaseType
 			        'filter' => array('wrl,vrml' => 'VRML', 'stl' => 'STL'),
 			        'label' => 'Upload model files',
 			        'bootstrap' => true,
-			        'multiple' => true
+			        'multiple' => true,
+					'showMaxSize' => true,
 		        )
 	        )
         ;

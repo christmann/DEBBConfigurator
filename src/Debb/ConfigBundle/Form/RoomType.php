@@ -46,7 +46,8 @@ class RoomType extends AbstractType
 					'filter' => array('wrl,vrml' => 'VRML', 'stl' => 'STL'),
 					'label' => 'Upload model files',
 					'bootstrap' => true,
-					'multiple' => true
+					'multiple' => true,
+					'showMaxSize' => true,
 				)
 			)
 			->add('coolingDevices', 'entity', array('class' => 'DebbManagementBundle:CoolingDevice', 'multiple' => true, 'expanded' => true))

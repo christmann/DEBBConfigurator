@@ -39,7 +39,7 @@ class DEBBSimpleType extends BaseType
 		            'label' => 'Upload model files',
 		            'bootstrap' => true,
 		            'multiple' => true,
-			        'showMaxSize' => true
+			        'showMaxSize' => true,
 	            )
             )
         ;
