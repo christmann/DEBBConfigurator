@@ -31,7 +31,7 @@ $(function ()
     // funny function, store all input values into an associative array
     var checkField = function ()
     {
-        if($(this).attr('ignoreform') == 'undefined')
+        if(typeof $(this).attr('ignoreform') == 'undefined')
         {
             var uid = $(this).attr(fieldName);
             if (uid && typeof inputCache[uid] != "undefined") {
@@ -53,6 +53,16 @@ $(function ()
     {
         changed = false;
         $(selector).each(checkField);
+        if(!changed)
+        {
+            $.each(inputCache, function(key, value)
+            {
+                if(!changed && $('[' + fieldName + '="' + key + '"]').length < 1)
+                {
+                    changed = true;
+                }
+            });
+        }
         if (!isSubmitted && changed) {
             return 'The change are NOT yet saved. Click OK to continue or CANCEL to stay on the site.';
         }
