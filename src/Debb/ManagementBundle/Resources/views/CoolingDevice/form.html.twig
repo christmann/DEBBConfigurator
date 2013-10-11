@@ -2,10 +2,13 @@
 {% form_theme form "DebbManagementBundle::form_theme.html.twig" %}
 {%- import _self as utils -%}
 
+{% block stylesheets -%}
+    {{- parent() -}}
+    <style type="text/css">#content .well:nth-child(2n) { margin-left: 0px; }</style>
+{%- endblock %}
+
 {% block cooling_eer -%}
-    <div class="span6">
-        {{- utils.stateBlock(form.energyEfficiencyRatio) -}}
-    </div>
+    {{- utils.stateBlock(form.energyEfficiencyRatio) -}}
     {%- do form.energyEfficiencyRatio.setRendered() -%}
 {%- endblock %}
 
@@ -29,8 +32,8 @@
 {%- endmacro %}
 
 {% macro stateForm(f) -%}
-    <div class="well">
-        <div class="toprightcorner"><a href="#" class="trash" obj="$(this).parents('.well')"><i class="icon-trash"></i></a></div>
+    <div class="well span6" style="float: left;">
+        <div class="toprightcorner"><a href="#" class="trash" obj="$(this).parents('.well')" slow="false"><i class="icon-trash"></i></a></div>
         {{ form_widget(f) }}
     </div>
 {%- endmacro %}
