@@ -30,7 +30,12 @@ class NodegroupToRack extends Connector
 	 */
 	private $rack;
 
-    /**
+	function __construct()
+	{
+		$this->setField((int) $this->getField());
+	}
+
+	/**
      * Set nodegroup
      *
      * @param \Debb\ConfigBundle\Entity\NodeGroup $nodegroup
