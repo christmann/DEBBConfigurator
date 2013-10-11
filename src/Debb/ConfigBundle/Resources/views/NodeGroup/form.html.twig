@@ -3,6 +3,13 @@
 {#% form_theme form "DebbManagementBundle::form_theme.html.twig" %#}
 {% form_theme form _self %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <style type="text/css">
+        label { display: block; }
+    </style>
+{% endblock %}
+
 {% block _debb_configbundle_nodegrouptype_draft_widget %}
 	<select {% if required %}required="required" {% endif %}name="{{ full_name }}" id="{{ id }}">
         <option value="0">- {{ 'Choose an draft' | trans }} -</option>

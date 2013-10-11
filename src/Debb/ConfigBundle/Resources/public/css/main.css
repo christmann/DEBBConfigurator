@@ -706,6 +706,8 @@ label, input, button, select, textarea
 label
 {
 	margin-bottom: 0px;
+    width: 370px;
+    display: table;
 }
 
 .component
@@ -1099,4 +1101,9 @@ div[class*="noBreakAfterThis"]
 {
     max-width: 1000px;
     width: 100%;
+}
+
+.popover-content
+{
+    line-height: 20px;
 }

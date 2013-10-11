@@ -23,12 +23,7 @@ class CoolingDeviceType extends BaseType
 	    parent::buildForm($builder, $options);
         $builder
             ->add('class', 'choice', array('choices' => $this->getClasses(true), 'attr' => array('class' => 'noBreakAfterThis')))
-            ->add('maxCoolingCapacity', null, array('required' => false,
-		        'label_attr' => array(
-			        'data-title' => 'a',
-			        'data-content' => 'b',
-			        'data-toggle' => 'tooltip'
-		        ),))
+            ->add('maxCoolingCapacity', null, array('required' => false))
             ->add('maxAirThroughput', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis')))
             ->add('maxWaterThroughput', null, array('required' => false))
             ->add('airThroughputProfile', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis'), 'query_builder' => $this->userQueryBuilder))

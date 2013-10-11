@@ -72,6 +72,7 @@ class Heatsink extends DEBBSimple
     {
         return $this->transferRate;
     }
+
     /**
      * Constructor
      */
