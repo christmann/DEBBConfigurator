@@ -121,9 +121,10 @@ class CoolingDevice extends DEBBComplex
 		}
 		if ($this->getEnergyEfficiencyRatio() !== null && count($this->getEnergyEfficiencyRatio()) > 0)
 		{
+			$array['EnergyEfficiencyRatio'] = array();
 			foreach($this->getEnergyEfficiencyRatio() as $eer)
 			{
-				$array[] = array('EnergyEfficiencyRatio' => $eer->getDebbXmlArray());
+				$array['EnergyEfficiencyRatio'][] = array($eer->getDebbXmlArray());
 			}
 		}
 		return $array;

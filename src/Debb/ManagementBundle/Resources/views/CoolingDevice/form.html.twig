@@ -21,7 +21,7 @@
 {% macro stateBlock(f) -%}
     {%- import _self as utils -%}
     {%- form_theme f _self -%}
-    <h4>{{- f.vars.label }} <a class="addThing" maxt="1" data-prototype="{{ utils.stateForm(f.vars.prototype) | e }}" obj="$(this).parents('div:first')" href="#"><i class="icon-plus"></i></a></h4>
+    <h4>{{- f.vars.label }} <a class="addThing" data-prototype="{{ utils.stateForm(f.vars.prototype) | e }}" obj="$(this).parents('div:first')" href="#"><i class="icon-plus"></i></a></h4>
     {%- for children in f.children -%}
         {%- form_theme children _self -%}
         {{- utils.stateForm(children) -}}
