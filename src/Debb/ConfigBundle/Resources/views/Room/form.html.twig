@@ -12,6 +12,8 @@
 	<style>
 		ul.hoz { list-style-type: none; margin: 0; padding: 0; margin-bottom: 10px; }
 		li.hoz { margin: 5px; padding: 5px; width: 150px; }
+        div.hoz div { float: left; margin-right: 10px; }
+        input[type="radio"], input[type="checkbox"] { margin: -2px 0 0; }
 	</style>
 {% endblock %}
 
@@ -44,6 +46,7 @@
         {{ form_row(form.meshResolution) }}
         {{ form_row(form.locationInMesh) }}
         {{ form_row(form.references) }}
+        <div class="hoz" style="margin-bottom: 10px;">{{ form_row(form.coolingDevices) }}</div><div class="clear" style="height: 4px;"></div>
 		{% if racks|length > 0 -%}
 			<div>
 				{{ 'Add rack' | trans }}:

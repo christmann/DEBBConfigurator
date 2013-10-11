@@ -10,8 +10,10 @@ use Debb\ConfigBundle\Entity\Room;
 use Debb\ConfigBundle\Utilities\Subversion;
 use Debb\ConfigBundle\Utilities\Transformation;
 use Debb\ManagementBundle\Controller\BaseController;
+use Debb\ManagementBundle\Controller\CoolingDeviceController;
 use Debb\ManagementBundle\Controller\FlowPumpController;
 use Debb\ManagementBundle\Controller\HeatsinkController;
+use Debb\ManagementBundle\Entity\CoolingDevice;
 use Debb\ManagementBundle\Entity\DEBBSimple;
 use Debb\ManagementBundle\Entity\File;
 use Debb\ManagementBundle\Entity\FlowPump;
@@ -491,7 +493,7 @@ abstract class XMLController extends BaseController
 			$userValue->addAttribute('title', 'power-sensor');
 			$userValue->addAttribute('value', 'power');
 		}
-		else if($real_class_name == 'FlowPump')
+		else if($real_class_name == 'FlowPump' || $real_class_name == 'CoolingDevice')
 		{
 			foreach(array('airflowvolume', 'airflowspeed', 'temperature') as $sensor)
 			{
@@ -997,6 +999,30 @@ abstract class XMLController extends BaseController
 							else
 							{
 								$toSvn->set('objects/' . $reference->getId() . '_' . $reference->getName(), $basePath . $reference->getFullPath(), true, false);
+							}
+						}
+					}
+					$coolingDevices = $rRoom->getCoolingDevices();
+					if(count($coolingDevices) > 0)
+					{
+						$controller = new CoolingDeviceController();
+						$controller->setContainer($this->getContainer());
+						foreach($coolingDevices as $coolingDevice)
+						{
+							if($coolingDevice instanceof CoolingDevice)
+							{
+								$debbXmlStr = $controller->getDebbXml($coolingDevice->getId(), true);
+								if($debbXmlStr !== false)
+								{
+									if($toSvn === null)
+									{
+										$zip->addFromString('CoolingDevice_'.$coolingDevice->getComponentId().'.xml', $debbXmlStr);
+									}
+									else
+									{
+										$toSvn->set('CoolingDevice_'.$coolingDevice->getComponentId().'.xml', $debbXmlStr, false, false);
+									}
+								}
 							}
 						}
 					}

@@ -49,6 +49,13 @@ class Room extends Dimensions
 	private $references;
 
 	/**
+	 * @var \Debb\ManagementBundle\Entity\CoolingDevice[]
+	 *
+	 * @ORM\ManyToMany(targetEntity="Debb\ManagementBundle\Entity\CoolingDevice", cascade={"persist"})
+	 */
+	private $coolingDevices;
+
+	/**
 	 * Constructor
 	 */
 	public function __construct()
@@ -56,6 +63,7 @@ class Room extends Dimensions
 		$this->racks = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->flowPumps = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->references = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->coolingDevices = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->isCorrect = true; // ignore the base function!
 	}
 
@@ -417,6 +425,10 @@ class Room extends Dimensions
 				$childrens[] = array($flowPumpToRoom->getFlowPump(), $flowPumpToRoom);
 			}
 		}
+		foreach($this->getCoolingDevices() as $coolingDevice)
+		{
+			$childrens[] = $coolingDevice;
+		}
 		return $childrens;
 	}
 
@@ -435,4 +447,37 @@ class Room extends Dimensions
 	{
 		return !empty($this->name) || !empty($this->building);
 	}
+
+    /**
+     * Add coolingDevices
+     *
+     * @param \Debb\ManagementBundle\Entity\CoolingDevice $coolingDevices
+     * @return Room
+     */
+    public function addCoolingDevice(\Debb\ManagementBundle\Entity\CoolingDevice $coolingDevices)
+    {
+        $this->coolingDevices[] = $coolingDevices;
+    
+        return $this;
+    }
+
+    /**
+     * Remove coolingDevices
+     *
+     * @param \Debb\ManagementBundle\Entity\CoolingDevice $coolingDevices
+     */
+    public function removeCoolingDevice(\Debb\ManagementBundle\Entity\CoolingDevice $coolingDevices)
+    {
+        $this->coolingDevices->removeElement($coolingDevices);
+    }
+
+    /**
+     * Get coolingDevices
+     *
+     * @return \Debb\ManagementBundle\Entity\CoolingDevice[]
+     */
+    public function getCoolingDevices()
+    {
+        return $this->coolingDevices;
+    }
 }

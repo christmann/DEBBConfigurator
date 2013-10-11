@@ -49,6 +49,7 @@ class RoomType extends AbstractType
 					'multiple' => true
 				)
 			)
+			->add('coolingDevices', 'entity', array('class' => 'DebbManagementBundle:CoolingDevice', 'multiple' => true, 'expanded' => true))
         ;
     }
 

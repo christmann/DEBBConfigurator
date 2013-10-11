@@ -46,7 +46,9 @@
 						<xsd:simpleType>
 							<xsd:restriction base="xsd:string">
 								<xsd:enumeration value="Fan"></xsd:enumeration>
-								<xsd:enumeration value="Refrigeration"></xsd:enumeration>
+								<xsd:enumeration
+									value="Refrigeration">
+								</xsd:enumeration>
 								<xsd:enumeration value="Heatpipe"></xsd:enumeration>
 								<xsd:enumeration value="ILC"></xsd:enumeration>
 								<xsd:enumeration value="LCU"></xsd:enumeration>
@@ -57,6 +59,7 @@
 					</xsd:element>
 					<xsd:element minOccurs="0" name="MaxCoolingCapacity"
 						type="xsd:decimal" />
+					<xsd:element name="CoolingCapacityRated" type="xsd:decimal"></xsd:element>
 					<xsd:element minOccurs="0" name="MaxAirThroughput"
 						type="xsd:decimal" />
 					<xsd:element minOccurs="0" name="MaxWaterThroughput"
@@ -67,7 +70,9 @@
 					<xsd:element name="WaterThroughputProfile"
 						type="xsd_1:FlowProfileType" maxOccurs="1" minOccurs="0">
 					</xsd:element>
-					<xsd:element name="EnergyEfficiencyRatio" type="xsd_1:CoolingEERType" minOccurs="0" maxOccurs="1"></xsd:element>
+					<xsd:element name="EnergyEfficiencyRatio"
+						type="xsd_1:CoolingEERType" minOccurs="0" maxOccurs="1">
+					</xsd:element>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>

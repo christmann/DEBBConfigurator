@@ -119,9 +119,12 @@ class CoolingDevice extends DEBBComplex
 		{
 			$array['WaterThroughputProfile'] = $this->getWaterThroughputProfile()->getDebbXmlArray();
 		}
-		if ($this->getEnergyEfficiencyRatio() !== null)
+		if ($this->getEnergyEfficiencyRatio() !== null && count($this->getEnergyEfficiencyRatio()) > 0)
 		{
-			$array['EnergyEfficiencyRatio'] = $this->getEnergyEfficiencyRatio()->getDebbXmlArray();
+			foreach($this->getEnergyEfficiencyRatio() as $eer)
+			{
+				$array[] = array('EnergyEfficiencyRatio' => $eer->getDebbXmlArray());
+			}
 		}
 		return $array;
 	}
