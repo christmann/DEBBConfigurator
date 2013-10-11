@@ -2,6 +2,7 @@
 
 namespace Debb\ConfigBundle\Entity;
 
+use Debb\ManagementBundle\Entity\Base;
 use Debb\ManagementBundle\Entity\Baseboard;
 use Debb\ManagementBundle\Entity\Heatsink;
 use Debb\ManagementBundle\Entity\Memory;
@@ -327,5 +328,13 @@ class Node extends Dimensions
 	public function getParents()
 	{
 		return $this->getNodeGroups();
+	}
+
+	/*
+	 * {@inheritdoc}
+	 */
+	public function setType($type)
+	{
+		return $this->isTypeLocked() ? $this : parent::setType($type);
 	}
 }

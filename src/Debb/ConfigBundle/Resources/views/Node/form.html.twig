@@ -79,9 +79,13 @@
 	            {{ form.type.setRendered() | default() }}
 	            {{ form_rest(form) }}
 	            <div>
-		            <label for="{{ form.type.vars.id }}">Type</label>
+		            <label for="{{ form.type.vars.id }}"
+                            {%- if isTypeInUse | default([]) | length > 0 %}
+                                 data-toggle="tooltip" data-title="{{ 'This is used by...' | trans | e }}" data-content="<ul>{%- for entity in isTypeInUse | default([]) -%}
+    														    <li>{{- entity -}}</li>{%- endfor -%}</ul>"
+                            {%- endif -%}>Type{%- if isTypeInUse | default([]) | length > 0 %} <i class="icon-info-sign"></i>{% endif %}</label>
 		            {{ form_errors(form.type) }}
-		            <select name="{{ form.type.vars.full_name }}" id="{{ form.type.vars.id }}">
+		            <select name="{{ form.type.vars.full_name }}" id="{{ form.type.vars.id }}"{% if isTypeInUse | default([]) | length > 0 %} disabled="disabled"{% endif %}>
 			            <option value="">&nbsp;</option>
 			            {% for nodeType in nodeTypes %}
 				            <option value="{{ nodeType.type }}"{% if form.type.vars.data == nodeType.type %} selected="selected"{% endif %}>{{ nodeType.type }}</option>

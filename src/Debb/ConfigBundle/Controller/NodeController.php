@@ -42,7 +42,7 @@ class NodeController extends XMLController
 		/** @var $item Node */
 		$item = $this->getEntity($id);
 
-		$typSpecsInUse = $this->getRepository('DebbManagementBundle:NodeToNodegroup')->findOneBy(array('node' => $item));
+		$typSpecsInUse = $this->getRepository('DebbManagementBundle:NodeToNodegroup')->findBy(array('node' => $item));
 		if(count($typSpecsInUse) > 0)
 		{
 			$item->lockType();
@@ -103,11 +103,19 @@ class NodeController extends XMLController
 			}
 		}
 
+		$typeUse = array();
+		foreach($typSpecsInUse as $typeInUse)
+		{
+			$typeUse[] = (string) $typeInUse;
+		}
+		$typeUse = array_unique($typeUse);
+		unset($typSpecsInUse);
+
 		return $this->render($this->resolveTemplate(__METHOD__), array(
 				'form' => $form->createView(),
 				'nodeTypes' => $this->getNodeTypesQuery()->execute(),
 				'item' => $item,
-				'isTypInUse' => count($typSpecsInUse) > 0
+				'isTypeInUse' => $typeUse
 			));
 	}
 

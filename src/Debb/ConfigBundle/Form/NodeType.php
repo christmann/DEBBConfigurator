@@ -46,7 +46,7 @@ class NodeType extends BaseType
 				)
 			)
             ->remove('type')
-			->add('type', 'hidden', array('required' => false))
+			->add('type', 'hidden', array('required' => false, 'disabled' => (bool) $options['data']->isTypeLocked()))
         ;
     }
 

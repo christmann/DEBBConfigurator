@@ -217,4 +217,12 @@ class ChassisTypSpecification extends Connector
 	{
 		return $this->getChassis();
 	}
+
+	/**
+	 * @return string
+	 */
+	function __toString()
+	{
+		return (string) $this->getChassis();
+	}
 }
