@@ -445,11 +445,17 @@ abstract class XMLController extends BaseController
 		$iId = $id;
 		$id = $exId . '_' . (int) @++$GLOBALS['productinstance'];
 
+		$real_class_name = $this->get_real_class($entity);
+		if($real_class_name == 'Component')
+		{
+			$real_class_name = $this->get_real_class($entity->getActive());
+		}
+
 		$productInstance->addAttribute('id', $id); // example: inst71_01_7
 		if ($name != null)
 		{
-			$number = XMLController::get_real_class($entity) == 'Node' ? sprintf('%02s', @++$GLOBALS['plmxmlcounterinst_' . md5($name . $round)]) : (int) @++$GLOBALS['plmxmlcounterinst_' . md5($name . $round)];
-			$productInstance->addAttribute('name', $name . $number); // example: Node07
+			$number = $real_class_name == 'Node' ? sprintf('%02s', @++$GLOBALS['plmxmlcounterinst_' . md5($name . $round)]) : (int) @++$GLOBALS['plmxmlcounterinst_' . md5($name . $round)];
+			$productInstance->addAttribute('name', $name . ($real_class_name == 'Heatsink' ? '_' : '') . $number); // example: Node07
 		}
 
 		if($partRef != null)
@@ -479,12 +485,6 @@ abstract class XMLController extends BaseController
 			$locationXML = $userData->addChild('UserValue');
 			$locationXML->addAttribute('value', $location); // example: Room Nr. xxxx, Street, Toulouse, France
 			$locationXML->addAttribute('title', 'location');
-		}
-
-		$real_class_name = $this->get_real_class($entity);
-		if($real_class_name == 'Component')
-		{
-			$real_class_name = $this->get_real_class($entity->getActive());
 		}
 
 		if($real_class_name == 'Heatsink')
