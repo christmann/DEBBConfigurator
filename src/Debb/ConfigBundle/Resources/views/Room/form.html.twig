@@ -48,6 +48,8 @@
         {{ form_row(form.references) }}
         {%- if form.coolingDevices.vars.choices | length > 0 -%}
             <div class="hoz" style="margin-bottom: 10px;">{{ form_row(form.coolingDevices) }}</div><div class="clear" style="height: 4px;"></div>
+        {%- else -%}
+            {%- do form.coolingDevices.setRendered -%}
         {%- endif -%}
 		{%- if racks|length > 0 -%}
 			<div>
