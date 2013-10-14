@@ -46,10 +46,12 @@
         {{ form_row(form.meshResolution) }}
         {{ form_row(form.locationInMesh) }}
         {{ form_row(form.references) }}
-        <div class="hoz" style="margin-bottom: 10px;">{{ form_row(form.coolingDevices) }}</div><div class="clear" style="height: 4px;"></div>
-		{% if racks|length > 0 -%}
+        {%- if form.coolingDevices.vars.choices | length > 0 -%}
+            <div class="hoz" style="margin-bottom: 10px;">{{ form_row(form.coolingDevices) }}</div><div class="clear" style="height: 4px;"></div>
+        {%- endif -%}
+		{%- if racks|length > 0 -%}
 			<div>
-				{{ 'Add rack' | trans }}:
+				{{ 'Add rack' | trans }}
 				<ul class="hoz">
 					{% for rack in racks %}
 						<li class="hoz ui-state-default eDraftRack" style="margin-left: 0px; margin-right: 10px;"><div class="draftRack" rackId="{{ rack.id }}" rackX="{{ rack.sizeX }}" rackY="{{ rack.sizeY }}" rackZ="{{ rack.sizeZ }}" title="{{ rack | e }}">{{ rack }}</div></li>
@@ -57,10 +59,10 @@
 				</ul>
 			</div>
 			<div class="clear"></div>
-		{%- endif %}
-		{% if flowPumps|length > 0 -%}
+		{%- endif -%}
+		{%- if flowPumps|length > 0 -%}
 			<div>
-				{{ 'Add flow pump' | trans }}:
+				{{ 'Add flow pump' | trans }}
 				<ul class="hoz">
 					{% for flowPump in flowPumps %}
 						<li class="hoz ui-state-default eDraftRack" style="margin-left: 0px; margin-right: 10px;"><div class="draftRack" flowPumpId="{{ flowPump.id }}" rackX="{{ flowPump.sizeX }}" rackY="{{ flowPump.sizeY }}" rackZ="{{ flowPump.sizeZ }}" title="{{ flowPump | e }}">{{ flowPump }}</div></li>

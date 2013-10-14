@@ -70,7 +70,7 @@ class BaseType extends AbstractType
 					'data-content' => 'MaxPowerUsage is the theoretical limit of power consumption and may used for designing',
 					'data-toggle' => 'tooltip'
 				),))
-			->add('powerUsageProfile', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false))
+			->add('powerUsageProfile', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false, 'query_builder' => $this->userQueryBuilder))
 			->add('powerUsage', null, array('required' => false))
 			->add('xmlName', null, array('required' => false, 'label' => 'XML name'))
 		;

@@ -2,6 +2,7 @@
 
 namespace Debb\ConfigBundle\Form;
 
+use Debb\ManagementBundle\Form\BaseType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -11,7 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  * @package Debb\ConfigBundle\Form
  * @author Patrick Bußmann <patrick.bussmann@christmann.info>
  */
-class RoomType extends AbstractType
+class RoomType extends BaseType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -50,7 +51,7 @@ class RoomType extends AbstractType
 					'showMaxSize' => true,
 				)
 			)
-			->add('coolingDevices', 'entity', array('class' => 'DebbManagementBundle:CoolingDevice', 'multiple' => true, 'expanded' => true))
+			->add('coolingDevices', 'entity', array('class' => 'DebbManagementBundle:CoolingDevice', 'multiple' => true, 'expanded' => true, 'query_builder' => $this->userQueryBuilder))
         ;
     }
 
