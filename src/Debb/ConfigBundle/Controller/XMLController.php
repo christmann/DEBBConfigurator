@@ -548,11 +548,17 @@ abstract class XMLController extends BaseController
 		$iId = $id;
 		$id = $exId . '_' . (int) @++$GLOBALS['revisionview'];
 
+		$real_class_name = $this->get_real_class($entity);
+		if($real_class_name == 'Component')
+		{
+			$real_class_name = $this->get_real_class($entity->getActive());
+		}
+
 		$productRevisionView->addAttribute('id', $id); // example: id84_04_1
 		if ($name != null)
 		{
-			$number = XMLController::get_real_class($entity) == 'Node' ? sprintf('%02s', @++$GLOBALS['plmxmlcounterrevview_' . md5($name . $round)]) : (int) @++$GLOBALS['plmxmlcounterrevview_' . md5($name . $round)];
-			$productRevisionView->addAttribute('name', $name . $number); // example: Node07
+			$number = $real_class_name == 'Node' ? sprintf('%02s', @++$GLOBALS['plmxmlcounterrevview_' . md5($name . $round)]) : (int) @++$GLOBALS['plmxmlcounterrevview_' . md5($name . $round)];
+			$productRevisionView->addAttribute('name', $name . ($real_class_name == 'Heatsink' ? '_' : '') . $number); // example: Node07
 		}
 		if (is_array($instanceRefs) && count($instanceRefs) > 0)
 		{
