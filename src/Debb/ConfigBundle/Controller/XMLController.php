@@ -495,7 +495,7 @@ abstract class XMLController extends BaseController
 		}
 		else if($real_class_name == 'FlowPump' || $real_class_name == 'CoolingDevice')
 		{
-			foreach(array('airflowvolume', 'airflowspeed', 'temperature') as $sensor)
+			foreach(array('airflow_volume', 'airflow_speed', 'temperature') as $sensor)
 			{
 				$userValue = $userData->addChild('UserValue');
 				$userValue->addAttribute('title', $sensor . '-sensor');
