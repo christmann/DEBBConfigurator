@@ -37,6 +37,7 @@ class RoomController extends XMLController
 	 */
 	public function formAction(Request $request, $id = 0)
 	{
+		$GLOBALS['user_bypass'] = $this->getUser();
 		$item = $this->getEntity($id);
 		$racks = $this->getEntities('DebbConfigBundle:Rack');
 		$flowPumps = $this->getEntities('DebbManagementBundle:FlowPump');

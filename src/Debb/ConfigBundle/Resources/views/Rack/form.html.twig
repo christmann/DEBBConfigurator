@@ -9,7 +9,7 @@
 		select { width: 302px; }
 		#content { padding: 0 0 0 0 !important; }
 		.buttonbar { margin-right: -1px; margin-top: 15px; }
-        label { width: 300px; }
+        {% if isCoolEmAllGui is not defined or isCoolEmAllGui == true %}label { width: 300px; }{% endif %}
 	</style>
 {% endblock %}
 
