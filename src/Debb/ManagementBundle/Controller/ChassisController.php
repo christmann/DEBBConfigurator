@@ -29,7 +29,6 @@ class ChassisController extends BaseController
 	public function formAction(Request $request, $id = 0, $duplicated = 0)
 	{
 		/* @var $item \Debb\ManagementBundle\Entity\Chassis */
-		$GLOBALS['user_bypass'] = $this->getUser();
 		$item = $this->getEntity($id);
 		$flowPumps = $this->getEntities('DebbManagementBundle:FlowPump');
 

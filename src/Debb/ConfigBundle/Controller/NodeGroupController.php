@@ -37,7 +37,6 @@ class NodeGroupController extends XMLController
 	 */
 	public function formAction(Request $request, $id = 0)
 	{
-		$GLOBALS['user_bypass'] = $this->getUser();
 		$item = $this->getEntity($id);
 		$nodes = $this->getEntities('DebbConfigBundle:Node');
 		$nodeGroups = array();

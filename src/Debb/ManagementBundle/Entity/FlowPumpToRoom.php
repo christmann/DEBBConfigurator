@@ -17,7 +17,7 @@ class FlowPumpToRoom extends Connector
 	/**
 	 * @var FlowPump
 	 *
-	 * @ORM\ManyToOne(targetEntity="Debb\ManagementBundle\Entity\FlowPump", inversedBy="flowPumpToRooms")
+	 * @ORM\ManyToOne(targetEntity="Debb\ManagementBundle\Entity\FlowPump")
 	 * @ORM\JoinColumn(name="flowpump_id", referencedColumnName="id", onDelete="cascade")
 	 */
 	private $flowPump;

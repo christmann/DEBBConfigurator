@@ -88,7 +88,7 @@ $(function ()
             $('#chassisSizeX').html((parseInt(ui.size.width) / 1000).toFixed(2));
             $('#chassisSizeY').html((parseInt(ui.size.height) / 1000).toFixed(2));
             $('#chassiscontainer').width(parseInt(ui.size.width) + 10);
-            $('#content').width(parseInt($('#chassiscontainer').outerWidth(true)) + (typeof isCoolEmAllGui == 'undefined' || isCoolEmAllGui == true ? 7 : 16));
+            $('#content').width(parseInt($('#chassiscontainer').outerWidth(true)) + 16);
             ui.helper.css('background-position', '1px ' + parseInt(parseInt(ui.size.height) + 1) + 'px');
         },
         start: function ( event, ui ) {

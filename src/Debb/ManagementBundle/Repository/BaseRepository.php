@@ -32,7 +32,7 @@ class BaseRepository extends EntityRepository
 	{
 		if($this->property_exists_depth($this->getEntityName(), 'user'))
 		{
-			return $this->findBy(array('user' => array_key_exists('user_bypass', $GLOBALS) ? $GLOBALS['user_bypass'] : null));
+			return $this->findBy(array('user' => null));
 		}
 		return parent::findAll();
 	}
