@@ -41,15 +41,6 @@ class Network extends Base
     private $maxBandwidth;
 
 	/**
-	 * Components
-	 *
-	 * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\Component", cascade={"persist"}, mappedBy="network", orphanRemoval=true)
-	 *
-	 * @var \Debb\ManagementBundle\Entity\Component[]
-	 */
-	private $components;
-
-	/**
 	 * Returns a array for later converting
 	 *
 	 * @return array the array for later converting
@@ -140,55 +131,4 @@ class Network extends Base
     {
         return $this->maxBandwidth;
     }
-
-	/**
-	 * Constructor
-	 */
-	public function __construct()
-	{
-		$this->components = new \Doctrine\Common\Collections\ArrayCollection();
-	}
-
-	/**
-	 * Add components
-	 *
-	 * @param \Debb\ManagementBundle\Entity\Component $components
-	 * @return Heatsink
-	 */
-	public function addComponent(\Debb\ManagementBundle\Entity\Component $components)
-	{
-		$this->components[] = $components;
-
-		return $this;
-	}
-
-	/**
-	 * Remove components
-	 *
-	 * @param \Debb\ManagementBundle\Entity\Component $components
-	 */
-	public function removeComponent(\Debb\ManagementBundle\Entity\Component $components)
-	{
-		$this->components->removeElement($components);
-	}
-
-	/**
-	 * Get components
-	 *
-	 * @return Component[]
-	 */
-	public function getComponents()
-	{
-		return $this->components;
-	}
-
-	/**
-	 * Get the parents
-	 *
-	 * @return Component[]
-	 */
-	public function getParents()
-	{
-		return $this->getComponents();
-	}
 }

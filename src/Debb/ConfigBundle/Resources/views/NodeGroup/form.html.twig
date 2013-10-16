@@ -6,7 +6,7 @@
 {% block stylesheets %}
     {{ parent() }}
     <style type="text/css">
-        label { display: block; }
+    {% if isCoolEmAllGui is not defined or isCoolEmAllGui == true %}.span9 {% endif %}label { display: block; }
     </style>
 {% endblock %}
 
