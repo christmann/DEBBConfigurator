@@ -8,16 +8,19 @@
 .pageTitle
 {
 	margin-left: 19px;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 .span9 label
 {
 	display: table;
+	font-size: 12px;
 }
 
 .component label
 {
 	display: inline-block;
+	font-size: 12px;
 }
 
 select
@@ -28,6 +31,7 @@ select
 .container
 {
 	margin-left: 17px;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 #content .row:first-child
