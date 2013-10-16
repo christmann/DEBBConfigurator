@@ -17,7 +17,7 @@ class RackToRoom extends Connector
 	/**
 	 * @var Rack
 	 *
-	 * @ORM\ManyToOne(targetEntity="Debb\ConfigBundle\Entity\Rack")
+	 * @ORM\ManyToOne(targetEntity="Debb\ConfigBundle\Entity\Rack", inversedBy="rooms")
 	 * @ORM\JoinColumn(name="rack_id", referencedColumnName="id", onDelete="cascade")
 	 */
 	private $rack;

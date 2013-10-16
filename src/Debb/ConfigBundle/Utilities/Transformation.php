@@ -75,7 +75,7 @@ class Transformation
 			$ru = 44.45; // 1 Rack Unit = 44.45mm
 			/** @var $connector NodegroupToRack */
 			/** @var $children NodeGroup */
-			$posX = $connector->getRack()->getSpaceLeft() * 1000;
+			$posX = -$connector->getRack()->getSpaceLeft() * 1000;
 			$posY = $connector->getRack()->getSpaceFront() * 1000;
 			$posZ = $connector->getField() * $ru;
 			$posZ -= $ru * (($children->getDraft() != null ? $children->getDraft()->getHeSize() : 1) - 1) + $connector->getRack()->getSpaceBottom() * 1000;
