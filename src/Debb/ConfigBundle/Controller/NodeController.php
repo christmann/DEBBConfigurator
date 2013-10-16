@@ -40,6 +40,7 @@ class NodeController extends XMLController
 	public function formAction(Request $request, $id = 0)
 	{
 		/** @var $item Node */
+		$GLOBALS['user_bypass'] = $this->getUser();
 		$item = $this->getEntity($id);
 
 		$typSpecsInUse = $this->getRepository('DebbManagementBundle:NodeToNodegroup')->findBy(array('node' => $item));

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{% set isCoolEmAllGui = false %}<!DOCTYPE html>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -16,6 +16,7 @@
 		{% endstylesheets %}
 	{% endblock %}
 	{% block javascripts %}
+        {% if isCoolEmAllGui is defined and isCoolEmAllGui == false %}<script type="text/javascript">var isCoolEmAllGui = false;</script>{% endif %}
 		{% javascripts
 		'@DebbConfigBundle/Resources/public/js/jquery.min.js'
 		'@DebbConfigBundle/Resources/public/js/bootstrap.min.js'
@@ -62,11 +63,13 @@
 <div class="container">
     <div class="row-fluid">
         <div class="span3" style="max-width: 174px;">
-            <div id="config-menu">
-                {% block menu %}
-                    {{ knp_menu_render('main') }}
-                {% endblock %}
-            </div>
+            {% block menu_left %}
+                <div id="config-menu">
+                    {% block menu %}
+                        {{ knp_menu_render('main') }}
+                    {% endblock %}
+                </div>
+            {% endblock %}
         </div>
         <div class="span9" style="">
             {% block form_header %}{% endblock %}

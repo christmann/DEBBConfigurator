@@ -1,5 +1,5 @@
 {% set showTitle = true %}
-{% extends "::base.html.twig" %}
+{% extends "DebbManagementBundle::debb.html.twig" %}
 {% block title %}{{ ((item is not defined or item.id == null) ? 'localdev_admin.title.add' : 'localdev_admin.title.edit') | trans({"%name%":localdev_admin_name(false)}, 'crud') }}{% endblock %}
 {% form_theme form "DebbManagementBundle::form_theme.html.twig" %}
 

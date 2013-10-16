@@ -39,6 +39,7 @@ class RackController extends XMLController
 	public function formAction(Request $request, $id = 0)
 	{
 		/* @var $item \Debb\ConfigBundle\Entity\Rack */
+		$GLOBALS['user_bypass'] = $this->getUser();
 		$item = $this->getEntity($id);
 		$nodegroups = $this->getEntities('DebbConfigBundle:NodeGroup');
 
