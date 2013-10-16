@@ -7,7 +7,7 @@
 	<style type="text/css">
 		input[type="text"] { width: 285px; }
 		select { width: 302px; }
-		#content { padding: 0 0 0 0 !important; }
+		#content { padding: 0 0 0 0 !important; min-width: {% if isCoolEmAllGui is not defined or isCoolEmAllGui == true %}961{% else %}982{% endif %}px; }
 		.buttonbar { margin-right: -1px; margin-top: 15px; }
         label { width: 300px; }
 	</style>
