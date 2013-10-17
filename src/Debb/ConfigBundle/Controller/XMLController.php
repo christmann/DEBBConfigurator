@@ -332,7 +332,7 @@ abstract class XMLController extends BaseController
 				/** @var $entity DEBBSimple */
 				foreach($entity->getReferences() as $reference)
 				{
-					$representations[] = array('format' => $reference->getFileEnding(), 'location' => './objects/' . $reference->getId() . '_' . $reference->getName());
+					$representations[] = array('format' => $reference->getFileEnding(), 'location' => './objects/X' . $reference->getId() . '_' . $reference->getName());
 				}
 			}
 
@@ -615,7 +615,7 @@ abstract class XMLController extends BaseController
 				$representation = $productRevisionView->addChild('Representation');
 				$representation->addAttribute('id', $this->convertLocationToId($id . $rep['location'])); // example: id1084_04_1
 				$representation->addAttribute('format', $rep['format']); // example: VRML
-				$representation->addAttribute('location', $rep['location']); // example: ./objects/NodeBoard.wrl
+				$representation->addAttribute('location', $rep['location']); // example: ./objects/XNodeBoard.wrl
 			}
 		}
 
@@ -654,7 +654,7 @@ abstract class XMLController extends BaseController
 	/**
 	 * Converts a location to a id
 	 *
-	 * @param string $location the location to convert (example: ./objects/NodeGroup_recscase.stl)
+	 * @param string $location the location to convert (example: ./objects/XNodeGroup_recscase.stl)
 	 * @return mixed the id of the location (example: _objects_NodeGroup_recscase_stl)
 	 */
 	public function convertLocationToId($location)
@@ -819,11 +819,11 @@ abstract class XMLController extends BaseController
 						{
 							if($toSvn === null)
 							{
-								$zip->addFile($reference->getFullPath(), 'objects/' . $reference->getId() . '_' . $reference->getName());
+								$zip->addFile($reference->getFullPath(), 'objects/X' . $reference->getId() . '_' . $reference->getName());
 							}
 							else
 							{
-								$toSvn->set('objects/' . $reference->getId() . '_' . $reference->getName(), $basePath . $reference->getFullPath(), true, false);
+								$toSvn->set('objects/X' . $reference->getId() . '_' . $reference->getName(), $basePath . $reference->getFullPath(), true, false);
 							}
 						}
 					}
@@ -858,11 +858,11 @@ abstract class XMLController extends BaseController
 									{
 										if($toSvn === null)
 										{
-											$zip->addFile($reference->getFullPath(), 'objects/' . $reference->getId() . '_' . $reference->getName());
+											$zip->addFile($reference->getFullPath(), 'objects/X' . $reference->getId() . '_' . $reference->getName());
 										}
 										else
 										{
-											$toSvn->set('objects/' . $reference->getId() . '_' . $reference->getName(), $basePath . $reference->getFullPath(), true, false);
+											$toSvn->set('objects/X' . $reference->getId() . '_' . $reference->getName(), $basePath . $reference->getFullPath(), true, false);
 										}
 									}
 								}
@@ -896,11 +896,11 @@ abstract class XMLController extends BaseController
 						{
 							if($toSvn === null)
 							{
-								$zip->addFile($reference->getFullPath(), 'objects/' . $reference->getId() . '_' . $reference->getName());
+								$zip->addFile($reference->getFullPath(), 'objects/X' . $reference->getId() . '_' . $reference->getName());
 							}
 							else
 							{
-								$toSvn->set('objects/' . $reference->getId() . '_' . $reference->getName(), $basePath . $reference->getFullPath(), true, false);
+								$toSvn->set('objects/X' . $reference->getId() . '_' . $reference->getName(), $basePath . $reference->getFullPath(), true, false);
 							}
 						}
 					}
@@ -931,11 +931,11 @@ abstract class XMLController extends BaseController
 						{
 							if($toSvn === null)
 							{
-								$zip->addFile($reference->getFullPath(), 'objects/' . $reference->getId() . '_' . $reference->getName());
+								$zip->addFile($reference->getFullPath(), 'objects/X' . $reference->getId() . '_' . $reference->getName());
 							}
 							else
 							{
-								$toSvn->set('objects/' . $reference->getId() . '_' . $reference->getName(), $basePath . $reference->getFullPath(), true, false);
+								$toSvn->set('objects/X' . $reference->getId() . '_' . $reference->getName(), $basePath . $reference->getFullPath(), true, false);
 							}
 						}
 					}
@@ -966,11 +966,11 @@ abstract class XMLController extends BaseController
 						{
 							if($toSvn === null)
 							{
-								$zip->addFile($reference->getFullPath(), 'objects/' . $reference->getId() . '_' . $reference->getName());
+								$zip->addFile($reference->getFullPath(), 'objects/X' . $reference->getId() . '_' . $reference->getName());
 							}
 							else
 							{
-								$toSvn->set('objects/' . $reference->getId() . '_' . $reference->getName(), $basePath . $reference->getFullPath(), true, false);
+								$toSvn->set('objects/X' . $reference->getId() . '_' . $reference->getName(), $basePath . $reference->getFullPath(), true, false);
 							}
 						}
 					}
@@ -1001,11 +1001,11 @@ abstract class XMLController extends BaseController
 						{
 							if($toSvn === null)
 							{
-								$zip->addFile($reference->getFullPath(), 'objects/' . $reference->getId() . '_' . $reference->getName());
+								$zip->addFile($reference->getFullPath(), 'objects/X' . $reference->getId() . '_' . $reference->getName());
 							}
 							else
 							{
-								$toSvn->set('objects/' . $reference->getId() . '_' . $reference->getName(), $basePath . $reference->getFullPath(), true, false);
+								$toSvn->set('objects/X' . $reference->getId() . '_' . $reference->getName(), $basePath . $reference->getFullPath(), true, false);
 							}
 						}
 					}

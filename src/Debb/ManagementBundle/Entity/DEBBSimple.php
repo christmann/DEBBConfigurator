@@ -53,7 +53,7 @@ class DEBBSimple extends Dimensions
 		}
 		foreach($this->getReferences() as $reference)
 		{
-			$array[] = array(array('Reference' => array('Type' => $reference->getFileEnding(), 'Location' => './object/' . $reference->getId() . '_' . $reference->getName())));
+			$array[] = array(array('Reference' => array('Type' => $reference->getFileEnding(), 'Location' => './objects/X' . $reference->getId() . '_' . $reference->getName())));
 		}
 		return $array;
 	}
