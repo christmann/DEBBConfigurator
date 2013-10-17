@@ -1,10 +1,10 @@
-{% extends "::gui_base.html.twig" %}
+{%- extends "::gui_base.html.twig" -%}
 
-{% block menu_left %}
+{%- block menu_left -%}
     <div id="config-menu">
         {{ knp_menu_render('main') }}
     </div>
-{% endblock %}
+{%- endblock -%}
 
 {%- block stylesheets -%}
     {{- parent() -}}
@@ -16,7 +16,7 @@
     {%- endif -%}
 {%- endblock -%}
 
-{% block javascripts %}
+{%- block javascripts -%}
     {{ parent() }}
     {% javascripts
                     '@DebbConfigBundle/Resources/public/js/debbcomponents.js'
@@ -25,4 +25,21 @@
         <script src="{{ asset_url }}" type="text/javascript"></script>
     {% endjavascripts %}
     <script src="{{ url('bazinga_exposetranslation_js') }}" type="text/javascript"></script>
-{% endblock %}
+{%- endblock -%}
+
+{%- block body -%}
+    {%- block flashes -%}
+        {%- for key, flashes in app.session.flashbag -%}
+            <div class="{{ key }}">
+                {%- for flash in flashes -%}
+                    {%- if flash | trans({}, 'crud') != flash -%}
+                        {{ flash | trans({}, 'crud') }}
+                    {%- else -%}
+                        {{ flash | trans({}) }}
+                    {%- endif -%}
+                {%- endfor -%}
+            </div>
+        {%- endfor -%}
+    {%- endblock -%}
+    {{ parent() }}
+{%- endblock -%}
