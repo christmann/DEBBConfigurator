@@ -69,10 +69,42 @@ function rotToClass(rot)
 function generateTipContent()
 {
     var obj = $(this),
-        resObj = $('<div style="height: 300px;"></div>');
-    resObj.append('<div>' + Translator.get('Size') + ': ' + obj.attr('sizex') + 'm /' + obj.attr('sizey') + 'm /' + obj.attr('sizez') + 'm' + '</div>');
+        resObj = $('<div style="height: 300px;"></div>'),
+		isSize = false;
+	if(typeof obj.attr('sizex') == 'undefined')
+	{
+		var flowPump = $('[flowPumpId="' + obj.find('[id$="_flowPump"]').val() + '"]');
+		if(flowPump.length > 0)
+		{
+			obj.attr('sizex', flowPump.attr('rackx'));
+			obj.attr('sizey', flowPump.attr('racky'));
+			obj.attr('sizez', flowPump.attr('rackz'));
+			isSize = true;
+		}
+	}
+	else
+	{
+		isSize = true;
+	}
+	if(isSize == true)
+	{
+		resObj.append('<div>' + Translator.get('Size') + ': ' + obj.attr('sizex') + 'm /' + obj.attr('sizey') + 'm /' + obj.attr('sizez') + 'm' + '</div>');
+	}
     resObj.append($('<div>' + Translator.get('Actions') + ': </div>').append('<a href="#" class="removeNode"><i class="icon-trash"></i></a> - <a class="rotateNode" href="#"><i class="icon-repeat" style="transform: rotateZ(' + (objToRot(obj) + 90) + 'deg);"></i></a>'));
     return resObj;
+}
+
+/**
+ * Converts metres to pixels
+ *
+ * @param m the metres
+ * @returns {number} the pixels
+ */
+function unitToPixel(m)
+{
+	m = parseInt(m * 100);
+	var pixels =  parseInt((m - 3) + "0") + 9;
+	return pixels <= 0 ? 0 : pixels;
 }
 
 $(function ()
@@ -125,8 +157,8 @@ $(function ()
 		    var rackX = parseFloat($(this).find('[rackx]').attr('rackx')),
 		        rackY = parseFloat($(this).find('[racky]').attr('racky')),
 			    rackZ = parseFloat($(this).find('[rackz]').attr('rackz'));
-		    newNode.css('width', (rackX <= 0 ? 99 : rackX * 100 - 1) + 'px');
-		    newNode.css('height', (rackZ <= 0 ? 99 : rackZ * 100 - 1) + 'px');
+		    newNode.css('width', unitToPixel(rackX) + 'px');
+		    newNode.css('height', unitToPixel(rackZ) + 'px');
             newNode.attr('sizex', rackX).attr('sizey', rackY).attr('sizez', rackZ);
             newNode.find('.rotateNode .icon-repeat').css('transform', 'rotateZ(' + (objToRot(newNode) + 90) + 'deg)');
 	    }
@@ -138,8 +170,8 @@ $(function ()
 	    {
 		    var rackX = parseFloat($('[flowpumpid=' + pump.val() + '][rackx]').attr('rackx')),
 			    rackZ = parseFloat($('[flowpumpid=' + pump.val() + '][rackz]').attr('rackz'));
-		    $(this).css('width', (rackX <= 0 ? 99 : rackX * 100 - 1) + 'px');
-		    $(this).css('height', (rackZ <= 0 ? 99 : rackZ * 100 - 1) + 'px');
+		    $(this).css('width', unitToPixel(rackX) + 'px');
+		    $(this).css('height', unitToPixel(rackZ) + 'px');
 	    }
         if(typeof $(this).attr('posx') != 'undefined')
         {
