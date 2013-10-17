@@ -43,3 +43,16 @@ select
 {
 	width: 1183px;
 }
+
+#config-menu > ul:not(.menu_level_1) > li > a.first
+{
+	background-color: #0489B1;
+	border-left: 1px solid #04759D;
+	border-right: 1px solid #04759D;
+	border-top: 1px solid #04759D;
+}
+
+#config-menu > ul:not(.menu_level_1) > li > a.first:hover
+{
+	background-color: #046991;
+}
