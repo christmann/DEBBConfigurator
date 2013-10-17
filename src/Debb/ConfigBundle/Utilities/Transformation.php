@@ -164,6 +164,12 @@ class Transformation
 		$boundingBox[3] += 100;
 		$boundingBox[4] += 100;
 		$boundingBox[5] += 100;
+
+		for($x = 0; $x <= 5; $x++)
+		{
+			$boundingBox[$x] /= 1000;
+		}
+
 		return implode($separator, $boundingBox);
 	}
 
