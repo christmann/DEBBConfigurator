@@ -305,7 +305,8 @@ abstract class XMLController extends BaseController
 		$real_class_name = $this->get_real_class($entity);
 		if($real_class_name == 'Component')
 		{
-			$real_class_name = $this->get_real_class($entity->getActive());
+			$entity = $entity->getActive();
+			$real_class_name = $this->get_real_class($entity);
 		}
 
 		if($entity !== null)
