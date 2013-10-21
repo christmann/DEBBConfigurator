@@ -30,6 +30,11 @@ class Transformation
 	public static $transformations = array();
 
 	/**
+	 * @var int the multiplicand for the calculations - 1 = m, 100 = cm, 1000 = mm, etc.
+	 */
+	private static $sizeMulti = 1;
+
+	/**
 	 * Generates a transformation matrix string from entity
 	 *
 	 * @param Base $children the base entity
@@ -167,7 +172,7 @@ class Transformation
 
 		for($x = 0; $x <= 5; $x++)
 		{
-			$boundingBox[$x] /= 1000;
+			$boundingBox[$x] = $boundingBox[$x] / 1000 * self::$sizeMulti;
 		}
 
 		return implode($separator, $boundingBox);
@@ -233,6 +238,10 @@ class Transformation
 		$matrix[10] = 1;
 		$matrix[14] = $z;
 		$matrix[15] = 1;
+
+		$matrix[12] = $matrix[12] / 1000 * self::$sizeMulti;
+		$matrix[13] = $matrix[13] / 1000 * self::$sizeMulti;
+		$matrix[14] = $matrix[14] / 1000 * self::$sizeMulti;
 
 		return implode($separator, $matrix);
 	}
