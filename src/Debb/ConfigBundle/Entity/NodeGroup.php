@@ -41,6 +41,13 @@ class NodeGroup extends Dimensions
      */
     private $racks;
 
+	/**
+	 * @var \Debb\ManagementBundle\Entity\Network[]
+	 *
+	 * @ORM\ManyToMany(targetEntity="Debb\ManagementBundle\Entity\Network", cascade={"persist"})
+	 */
+	private $networks;
+
     /**
      * Constructor
      */
@@ -179,6 +186,10 @@ class NodeGroup extends Dimensions
 				$array['NodeGroup'][] = $flowPump;
 			}
 	    }
+		foreach($this->getNetworks() as $network)
+		{
+			$array['NodeGroup'][] = array('Network' => $network->getDebbXmlArray());
+		}
 		if($this->getDraft() != null && $this->getDraft()->getTypspecification() != null)
 		{
 			/** @var $typSpec \Debb\ManagementBundle\Entity\ChassisTypSpecification */
@@ -317,4 +328,37 @@ class NodeGroup extends Dimensions
 	{
 		return 'NodeGroup';
 	}
+
+    /**
+     * Add networks
+     *
+     * @param \Debb\ManagementBundle\Entity\Network $networks
+     * @return NodeGroup
+     */
+    public function addNetwork(\Debb\ManagementBundle\Entity\Network $networks)
+    {
+        $this->networks[] = $networks;
+    
+        return $this;
+    }
+
+    /**
+     * Remove networks
+     *
+     * @param \Debb\ManagementBundle\Entity\Network $networks
+     */
+    public function removeNetwork(\Debb\ManagementBundle\Entity\Network $networks)
+    {
+        $this->networks->removeElement($networks);
+    }
+
+    /**
+     * Get networks
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getNetworks()
+    {
+        return $this->networks;
+    }
 }

@@ -47,7 +47,7 @@ class Network extends Base
 	 */
 	public function getDebbXmlArray()
 	{
-		$array = array();
+		$array = parent::getDebbXmlArray();
 		if($this->getInterface() !== null)
 		{
 			$array['Interface'] = $this->getInterface();

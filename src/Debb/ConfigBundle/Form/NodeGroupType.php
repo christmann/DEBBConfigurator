@@ -45,6 +45,7 @@ class NodeGroupType extends BaseType
 				'label' => 'Chassis',
 	            'choices' => $this->container->get('doctrine')->getRepository('DebbManagementBundle:Chassis')->findAllFromUser($this->container->get('security.context')->getToken()->getUser())
 			))
+			->add('networks', 'entity', array('class' => 'DebbManagementBundle:Network', 'multiple' => true, 'expanded' => true, 'query_builder' => $this->userQueryBuilder))
         ;
     }
 
