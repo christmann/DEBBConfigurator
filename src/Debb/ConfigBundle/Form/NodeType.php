@@ -48,6 +48,7 @@ class NodeType extends BaseType
 			)
             ->remove('type')
 			->add('type', 'hidden', array('required' => false, 'disabled' => (bool) $options['data']->isTypeLocked()))
+			->add('networks', 'entity', array('class' => 'DebbManagementBundle:Network', 'multiple' => true, 'expanded' => true, 'query_builder' => $this->userQueryBuilder))
         ;
     }
 

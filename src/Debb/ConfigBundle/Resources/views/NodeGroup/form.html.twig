@@ -7,6 +7,8 @@
     {{ parent() }}
     <style type="text/css">
     {% if isCoolEmAllGui is not defined or isCoolEmAllGui == true %}.span9 {% endif %}label { display: block; }
+    div.hoz div { float: left; margin-right: 10px; }
+    input[type="radio"], input[type="checkbox"] { margin: 0; }
     </style>
 {% endblock %}
 
@@ -64,6 +66,11 @@
             {{ form_row(form.meshResolution) }}
             {{ form_row(form.locationInMesh) }}
             {{ form_row(form.xmlName) }}
+            {%- if form.networks.vars.choices | length > 0 -%}
+                <div class="hoz" style="margin-bottom: 10px;">{{ form_row(form.networks) }}</div><div class="clear" style="height: 4px;"></div>
+            {%- else -%}
+                {%- do form.networks.setRendered -%}
+            {%- endif -%}
 			{% do form.sizeX.setRendered %}{% do form.sizeY.setRendered %}{% do form.sizeZ.setRendered %}
 			{% do form.spaceLeft.setRendered %}{% do form.spaceRight.setRendered %}{% do form.spaceTop.setRendered %}{% do form.spaceBottom.setRendered %}{% do form.spaceFront.setRendered %}{% do form.spaceBehind.setRendered %}
 			{% do form.nodes.setRendered %}

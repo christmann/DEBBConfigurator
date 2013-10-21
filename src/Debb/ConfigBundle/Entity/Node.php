@@ -55,6 +55,13 @@ class Node extends Dimensions
 	private $isTypeLocked = false;
 
 	/**
+	 * @var \Debb\ManagementBundle\Entity\Network[]
+	 *
+	 * @ORM\ManyToMany(targetEntity="Debb\ManagementBundle\Entity\Network", cascade={"persist"})
+	 */
+	private $networks;
+
+	/**
 	 * Constructor
 	 */
 	public function __construct()
@@ -160,6 +167,10 @@ class Node extends Dimensions
 		foreach($this->getComponents(Component::TYPE_HEATSINK) as $heatsink)
 		{
 			$array['Node'][] = array($heatsink->getDebbXmlArray());
+		}
+		foreach($this->getNetworks() as $network)
+		{
+			$array['Node'][] = array('Network' => $network->getDebbXmlArray());
 		}
 		$array['Node'][] = array(array('Connector' => array(
 			'ConnectorType' => ($this->getType() == 'CXP2' ? 'COMExpress Type 2' : ($this->getType() == 'CPX6' ? 'COMExpress Type 6' : $this->getType())),
@@ -337,4 +348,37 @@ class Node extends Dimensions
 	{
 		return $this->isTypeLocked() ? $this : parent::setType($type);
 	}
+
+    /**
+     * Add networks
+     *
+     * @param \Debb\ManagementBundle\Entity\Network $networks
+     * @return Node
+     */
+    public function addNetwork(\Debb\ManagementBundle\Entity\Network $networks)
+    {
+        $this->networks[] = $networks;
+    
+        return $this;
+    }
+
+    /**
+     * Remove networks
+     *
+     * @param \Debb\ManagementBundle\Entity\Network $networks
+     */
+    public function removeNetwork(\Debb\ManagementBundle\Entity\Network $networks)
+    {
+        $this->networks->removeElement($networks);
+    }
+
+    /**
+     * Get networks
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getNetworks()
+    {
+        return $this->networks;
+    }
 }

@@ -8,6 +8,8 @@
 		input[type="text"] { width: 300px; }
         label { width: 320px; }
 		select { width: 317px; }
+        div.hoz div { float: left; margin-right: 10px; }
+        input[type="radio"], input[type="checkbox"] { margin: 0; }
 	</style>
 {% endblock %}
 
@@ -21,6 +23,14 @@
 {% endblock %}
 
 {% block topForm %}
+    <div style="margin-left: 6px;">
+        {%- if form.networks.vars.choices | length > 0 -%}
+            <div class="hoz" style="margin-bottom: 10px;">{{ form_row(form.networks) }}</div><div class="clear" style="height: 4px;"></div>
+        {%- else -%}
+            {%- do form.networks.setRendered -%}
+        {%- endif -%}
+    </div>
+
     <div style="width: 100%; border-bottom: 1px dashed #DFDFDF; height: 1px;"></div>
 
     <div id="componentErrorBox" style="display: none; margin-top: 10px; margin-bottom: 5px;" class="alert alert-error">
