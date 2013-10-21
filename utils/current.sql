@@ -991,6 +991,33 @@ INSERT INTO `node_file` VALUES (1,4),(1,5),(2,79),(2,80),(3,11),(3,12),(4,13),(4
 UNLOCK TABLES;
 
 --
+-- Table structure for table `node_network`
+--
+
+DROP TABLE IF EXISTS `node_network`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `node_network` (
+  `node_id` int(11) NOT NULL,
+  `network_id` int(11) NOT NULL,
+  PRIMARY KEY (`node_id`,`network_id`),
+  KEY `IDX_C68CC2CE460D9FD7` (`node_id`),
+  KEY `IDX_C68CC2CE34128B91` (`network_id`),
+  CONSTRAINT `FK_C68CC2CE34128B91` FOREIGN KEY (`network_id`) REFERENCES `network` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `FK_C68CC2CE460D9FD7` FOREIGN KEY (`node_id`) REFERENCES `node` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `node_network`
+--
+
+LOCK TABLES `node_network` WRITE;
+/*!40000 ALTER TABLE `node_network` DISABLE KEYS */;
+/*!40000 ALTER TABLE `node_network` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `nodegroup`
 --
 
@@ -1068,6 +1095,33 @@ LOCK TABLES `nodegroup_file` WRITE;
 /*!40000 ALTER TABLE `nodegroup_file` DISABLE KEYS */;
 INSERT INTO `nodegroup_file` VALUES (1,40),(1,43),(2,41),(2,45),(3,42),(3,44),(4,30),(4,31);
 /*!40000 ALTER TABLE `nodegroup_file` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `nodegroup_network`
+--
+
+DROP TABLE IF EXISTS `nodegroup_network`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `nodegroup_network` (
+  `nodegroup_id` int(11) NOT NULL,
+  `network_id` int(11) NOT NULL,
+  PRIMARY KEY (`nodegroup_id`,`network_id`),
+  KEY `IDX_6549E06E2C147D48` (`nodegroup_id`),
+  KEY `IDX_6549E06E34128B91` (`network_id`),
+  CONSTRAINT `FK_6549E06E34128B91` FOREIGN KEY (`network_id`) REFERENCES `network` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `FK_6549E06E2C147D48` FOREIGN KEY (`nodegroup_id`) REFERENCES `nodegroup` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `nodegroup_network`
+--
+
+LOCK TABLES `nodegroup_network` WRITE;
+/*!40000 ALTER TABLE `nodegroup_network` DISABLE KEYS */;
+/*!40000 ALTER TABLE `nodegroup_network` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1600,4 +1654,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-10-19  0:00:02
+-- Dump completed on 2013-10-22  0:00:02
