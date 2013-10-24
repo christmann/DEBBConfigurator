@@ -8,3 +8,7 @@ services:
             - "@service_container"
         tags:
             - { name: twig.extension }
+    debbconfig.form.type.decimal:
+        class: Debb\ManagementBundle\Form\DecimalType
+        tags:
+            - { name: form.type, alias: decimal }
