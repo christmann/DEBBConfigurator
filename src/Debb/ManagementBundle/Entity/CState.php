@@ -26,7 +26,7 @@ class CState
      * @var float
      *
      * @Assert\NotBlank()
-     * @ORM\Column(name="power_usage", type="decimal")
+     * @ORM\Column(name="power_usage", type="decimal", scale=3)
      */
     private $powerUsage;
 
