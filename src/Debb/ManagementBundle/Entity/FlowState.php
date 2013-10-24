@@ -29,14 +29,14 @@ class FlowState
     /**
      * @var float
      *
-     * @ORM\Column(name="flow", type="float", scale=3, nullable=true)
+     * @ORM\Column(name="flow", type="decimal", precision=18, scale=9, nullable=true)
      */
     private $flow;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="power_usage", type="float", scale=3, nullable=true)
+     * @ORM\Column(name="power_usage", type="decimal", precision=18, scale=9, nullable=true)
      */
     private $powerUsage;
 
