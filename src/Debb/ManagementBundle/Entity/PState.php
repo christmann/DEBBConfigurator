@@ -26,7 +26,7 @@ class PState
      * @var float
      *
      * @Assert\NotNull()
-     * @ORM\Column(name="frequency", type="decimal", scale=3)
+     * @ORM\Column(name="frequency", type="decimal", precision=18, scale=9)
      */
     private $frequency;
 
@@ -34,7 +34,7 @@ class PState
      * @var float
      *
      * @Assert\NotNull()
-     * @ORM\Column(name="voltage", type="decimal", scale=3)
+     * @ORM\Column(name="voltage", type="decimal", precision=18, scale=9)
      */
     private $voltage;
 
