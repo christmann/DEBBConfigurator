@@ -21,7 +21,7 @@ class PowerSupplyType extends BaseType
 	    parent::buildForm($builder, $options);
         $builder
             ->add('class', 'choice', array('choices' => $this->getClasses(true), 'attr' => array('class' => 'noBreakAfterThis')))
-            ->add('totalOutputPower')
+            ->add('totalOutputPower', 'decimal')
             ->add('efficiency', null, array('attr' => array('class' => 'noBreakAfterThis')))
             ->add('powerProfile', null, array('required' => false, 'query_builder' => $this->userQueryBuilder))
         ;

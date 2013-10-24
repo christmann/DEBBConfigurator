@@ -20,8 +20,8 @@ class PStateType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('frequency')
-            ->add('voltage')
+            ->add('frequency', 'decimal')
+            ->add('voltage', 'decimal')
 	        ->add('loadPowerUsages', 'collection', array(
 		        'type' => new PStateLoadPowerUsageType(),
 		        'allow_add' => true,

@@ -22,7 +22,7 @@ class ProcessorType extends BaseType
         $builder
 			->add('MaxClockSpeed', 'text')
 			->add('cores', 'text', array('attr' => array('class' => 'noBreakAfterThis')))
-            ->add('tdp', 'text')
+            ->add('tdp', 'decimal')
 	        ->add('pstates', 'collection', array(
 		        'type' => new PStateType(),
 		        'allow_add' => true,
