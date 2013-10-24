@@ -48,7 +48,7 @@ class Processor extends Base
 	/**
 	 * @var decimal
 	 *
-	 * @ORM\Column(name="tdp", type="decimal", nullable=true)
+	 * @ORM\Column(name="tdp", type="decimal", scale=3, nullable=true)
 	 */
 	private $tdp;
 

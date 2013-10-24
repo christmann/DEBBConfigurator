@@ -27,7 +27,7 @@ class PowerSupply extends Base /* extends DEBBComplexType */
 	 * @var float
 	 *
 	 * @Assert\NotBlank()
-	 * @ORM\Column(name="total_output_power", type="decimal")
+	 * @ORM\Column(name="total_output_power", type="decimal", scale=3)
 	 */
 	private $totalOutputPower;
 
