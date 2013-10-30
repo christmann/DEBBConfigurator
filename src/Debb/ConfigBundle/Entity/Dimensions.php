@@ -360,7 +360,7 @@ class Dimensions extends \Debb\ManagementBundle\Entity\Base
 	 */
 	public function isLocationInMeshLegal()
 	{
-		return $this->locationInMesh === null || preg_match('#^(\d+(\.\d+){0,1}[ ]{0,1}){3}$#i', $this->locationInMesh) === 1;
+		return $this->locationInMesh === null || preg_match('#^([-]{0,1}\d+(\.\d+){0,1}[ ]{0,1}){3}$#i', $this->locationInMesh) === 1;
 	}
 
 	/**
