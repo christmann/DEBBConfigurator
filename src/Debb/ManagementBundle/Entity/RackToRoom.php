@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="racktoroom")
  * @ORM\Entity
  */
-class RackToRoom extends Connector
+class RackToRoom extends ConnectorExtended
 {
 
 	/**

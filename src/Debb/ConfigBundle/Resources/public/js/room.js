@@ -21,10 +21,20 @@ function updateRackDimensions(rack)
         var id = getExactId($(this).find('.rackGform').find('div[id]').attr('id')),
             position = $(this).position(),
             left = position.left,
-            bottom = $('#rackContainer').height() - position.top - $(this).outerHeight(true),
+            bottom = parseInt($('#rackContainer').height() - position.top - $(this).outerHeight(true)) + 1,
+			oldPosX = parseInt($(this).find('[id$="_posX"], [id$="_posx"]').val()),
+			oldPosY = parseInt($(this).find('[id$="_posY"], [id$="_posy"]').val()),
 	        selector = $(this).is('[flowPumpId]') ? 'flowPumps' : 'racks';
-        $(this).find('#debb_configbundle_roomtype_' + selector + '_' + id + '_posx').val(left);
-        $(this).find('#debb_configbundle_roomtype_' + selector + '_' + id + '_posy').val(parseInt(bottom));
+		if(oldPosX != left && oldPosY != bottom)
+		{
+			clearCustomPos(this);
+		}
+		else if(oldPosX != left || oldPosY != bottom)
+		{
+			clearCustomPos(this, oldPosX != left ? 'X' : 'Y');
+		}
+        $(this).find('#debb_configbundle_roomtype_' + selector + '_' + id + '_posX').val(left);
+        $(this).find('#debb_configbundle_roomtype_' + selector + '_' + id + '_posY').val(bottom);
     });
 }
 
@@ -127,6 +137,18 @@ function rotToClass(rot)
 }
 
 /**
+ * Clears the custom position of object
+ * @param obj
+ * @returns {jQuery}
+ */
+function clearCustomPos(obj, mode)
+{
+	var obj = typeof obj == 'undefined' ? $(this) : $(obj);
+	obj.find('[name*="customPos' + (typeof mode == 'undefined' ? '' : mode) + '"]').val('');
+	return obj;
+}
+
+/**
  * Generates the content of a rack popover (per click on rack)
  *
  * @returns {string} the data-content
@@ -135,18 +157,19 @@ function generateTipContent()
 {
     var obj = $(this),
         resObj = $('<div style="height: 300px;"></div>'),
-        posZForm = obj.find('input[type="hidden"][name$="[posz]"]').clone();
-    posZForm
-        .attr('type', 'decimal')
-        .attr('syncwith', '#' + posZForm.attr('id')) // before id change!
-        .attr('id', '').attr('name', '')
-        .attr('class', 'syncwith')
-        .width(124)
-    ;
+		posX = obj.find('[name*="posX"]'),
+		posY = obj.find('[name*="posY"]'),
+		posZ = obj.find('[name*="posZ"]'),
+		customPosX = obj.find('[name*="customPosX"]'),
+		customPosY = obj.find('[name*="customPosY"]'),
+		customPosZ = obj.find('[name*="customPosZ"]');
+
     resObj.append('<div>' + Translator.get('Size') + ': ' + obj.attr('rackx') + 'm /' + obj.attr('racky') + 'm /' + obj.attr('rackz') + 'm' + '</div>');
-    resObj.append($('<div>' + Translator.get('posz') + ': </div>').append(posZForm));
-    resObj.append($('<div>' + Translator.get('Actions') + ': </div>').append('<a href="#" class="removeRack"><i class="icon-trash"></i></a> - <a class="rotateRack" href="#"><i class="icon-repeat" style="transform: rotateZ(' + (objToRot(obj) + 90) + 'deg);"></i></a>'));
-    return resObj;
+    resObj.append($('<div>' + Translator.get('Actions') + ': </div>').append('<a href="#" class="removeRack"><i class="icon-trash"></i></a> - <a class="rotateRack" href="#"><i class="icon-repeat" style="transform: rotateZ(' + (objToRot(obj) + 90) + 'deg);"></i></a>'
+		+ '<br /><br />X: <input type="text" style="width: 100px;" value="' + customPosX.val() + '" class="syncwith" syncwith="#' + customPosX.attr('id') + '" placeholder="' + (posX.val() / 100) + '" />m'
+		+ '<br />Y: <input type="text" style="width: 100px;" value="' + customPosY.val() + '" class="syncwith" syncwith="#' + customPosY.attr('id') + '" placeholder="' + (posY.val() / 100) + '" />m'
+		+ '<br />Z: <input type="text" style="width: 100px;" value="' + customPosZ.val() + '" class="syncwith" syncwith="#' + customPosZ.attr('id') + '" placeholder="' + (posZ.val() / 100) + '" />m'));
+	return resObj;
 }
 
 $(function()

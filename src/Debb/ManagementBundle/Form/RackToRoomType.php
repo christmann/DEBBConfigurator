@@ -11,7 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  * @package Debb\ManagementBundle\Form
  * @author Patrick Bußmann <patrick.bussmann@christmann.info>
  */
-class RackToRoomType extends AbstractType
+class RackToRoomType extends ConnectorExtendedType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -19,11 +19,8 @@ class RackToRoomType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+		parent::buildForm($builder, $options);
         $builder
-            ->add('posx', 'hidden')
-			->add('posy', 'hidden')
-			->add('posz', 'hidden')
-			->add('rotation', 'hidden')
             ->add('rack')
         ;
     }
