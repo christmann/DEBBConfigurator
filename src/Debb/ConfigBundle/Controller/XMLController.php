@@ -616,7 +616,7 @@ abstract class XMLController extends BaseController
 				$representation->addAttribute('id', $this->convertLocationToId($id . $rep['location'])); // example: id1084_04_1
 				$representation->addAttribute('format', $rep['format']); // example: VRML
 				$representation->addAttribute('location', $rep['location']); // example: ./objects/XNodeBoard.wrl
-				$representation->addAttribute('unit', 'm');
+//				$representation->addAttribute('unit', 'm'); // not in plmxml schema!
 			}
 		}
 
