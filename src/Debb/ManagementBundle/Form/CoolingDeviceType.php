@@ -24,10 +24,10 @@ class CoolingDeviceType extends BaseType
         $builder
             ->add('class', 'choice', array('choices' => $this->getClasses(true), 'attr' => array('class' => 'noBreakAfterThis')))
             ->add('maxCoolingCapacity', 'decimal', array('required' => false))
-            ->add('maxAirThroughput', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis')))
-            ->add('maxWaterThroughput', null, array('required' => false))
-            ->add('airThroughputProfile', 'decimal', array('required' => false, 'attr' => array('class' => 'noBreakAfterThis'), 'query_builder' => $this->userQueryBuilder))
-            ->add('waterThroughputProfile', 'decimal', array('required' => false, 'query_builder' => $this->userQueryBuilder))
+            ->add('maxAirThroughput', 'decimal', array('required' => false, 'attr' => array('class' => 'noBreakAfterThis')))
+            ->add('maxWaterThroughput', 'decimal', array('required' => false))
+            ->add('airThroughputProfile', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis'), 'query_builder' => $this->userQueryBuilder))
+            ->add('waterThroughputProfile', null, array('required' => false, 'query_builder' => $this->userQueryBuilder))
 	        ->add('coolingCapacityRated', 'decimal')
 			->add('energyEfficiencyRatio', 'collection', array(
 				'type' => new CoolingEERType(),
