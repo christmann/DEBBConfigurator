@@ -12,3 +12,7 @@ services:
         class: Debb\ManagementBundle\Form\DecimalType
         tags:
             - { name: form.type, alias: decimal }
+    debbconfig.form.type.hidden_decimal:
+        class: Debb\ManagementBundle\Form\HiddenDecimalType
+        tags:
+            - { name: form.type, alias: hidden_decimal }

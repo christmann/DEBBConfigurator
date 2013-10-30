@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="chassis_typ_specification")
  * @ORM\Entity
  */
-class ChassisTypSpecification extends Connector
+class ChassisTypSpecification extends ConnectorExtended
 {
 	/**
 	 * @var \Debb\ManagementBundle\Entity\Chassis
@@ -21,131 +21,11 @@ class ChassisTypSpecification extends Connector
 	private $chassis;
 
 	/**
-	 * @var integer
-	 *
-	 * @ORM\Column(name="posx", type="integer")
-	 */
-	private $posX = 0;
-
-	/**
-	 * @var integer
-	 *
-	 * @ORM\Column(name="posy", type="integer")
-	 */
-	private $posY = 0;
-
-	/**
-	 * @var float
-	 *
-	 * @ORM\Column(name="posz", type="float", nullable=true)
-	 */
-	private $posZ = 0;
-
-	/**
-	 * @var float
-	 *
-	 * @ORM\Column(name="rotation", type="float", nullable=true)
-	 */
-	private $rotation = 0;
-
-	/**
 	 * @var string
 	 *
 	 * @ORM\Column(name="typ", type="string", length=4, nullable=true)
 	 */
 	private $typ;
-
-    /**
-     * Set posX
-     *
-     * @param integer $posX
-     * @return ChassisTypSpecification
-     */
-    public function setPosX($posX)
-    {
-        $this->posX = $posX;
-    
-        return $this;
-    }
-
-    /**
-     * Get posX
-     *
-     * @return integer 
-     */
-    public function getPosX()
-    {
-        return $this->posX;
-    }
-
-    /**
-     * Set posY
-     *
-     * @param integer $posY
-     * @return ChassisTypSpecification
-     */
-    public function setPosY($posY)
-    {
-        $this->posY = $posY;
-    
-        return $this;
-    }
-
-    /**
-     * Get posY
-     *
-     * @return integer 
-     */
-    public function getPosY()
-    {
-        return $this->posY;
-    }
-
-    /**
-     * Set posZ
-     *
-     * @param float $posZ
-     * @return ChassisTypSpecification
-     */
-    public function setPosZ($posZ)
-    {
-        $this->posZ = $posZ;
-    
-        return $this;
-    }
-
-    /**
-     * Get posZ
-     *
-     * @return float 
-     */
-    public function getPosZ()
-    {
-        return $this->posZ;
-    }
-
-    /**
-     * Set rotation
-     *
-     * @param float $rotation
-     * @return ChassisTypSpecification
-     */
-    public function setRotation($rotation)
-    {
-        $this->rotation = $rotation;
-    
-        return $this;
-    }
-
-    /**
-     * Get rotation
-     *
-     * @return float 
-     */
-    public function getRotation()
-    {
-        return $this->rotation;
-    }
 
     /**
      * Set chassis

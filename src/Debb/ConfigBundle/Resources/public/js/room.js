@@ -184,6 +184,7 @@ $(function()
         }
         obj.remove();
 	});
+	// Copied to /src/Debb/ManagementBundle/Resources/public/js/chassis.js:116
     $(document).on('change, keyup', '.syncwith[syncwith]', function(e)
     {
         var obj = $($(this).attr('syncwith'));

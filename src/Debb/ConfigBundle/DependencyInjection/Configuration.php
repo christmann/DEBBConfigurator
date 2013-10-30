@@ -27,15 +27,17 @@ class Configuration implements ConfigurationInterface
 		// svn_path
 		$rootNode
 			->children()
-			->scalarNode('svn_path')
-			->defaultFalse()
+				->scalarNode('svn_path')
+				->defaultFalse()
+				->end()
 			->end();
 
 		// svn_url
 		$rootNode
 			->children()
-			->scalarNode('svn_url')
-			->defaultNull()
+				->scalarNode('svn_url')
+				->defaultNull()
+				->end()
 			->end();
 
         return $treeBuilder;
