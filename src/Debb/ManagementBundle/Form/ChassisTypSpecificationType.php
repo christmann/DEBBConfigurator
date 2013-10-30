@@ -11,7 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  * @package Debb\ManagementBundle\Form
  * @author Patrick Bußmann <patrick.bussmann@christmann.info>
  */
-class ChassisTypSpecificationType extends BaseType
+class ChassisTypSpecificationType extends ConnectorExtendedType
 {
 	/**
 	 * @param FormBuilderInterface $builder
@@ -19,12 +19,9 @@ class ChassisTypSpecificationType extends BaseType
 	 */
 	public function buildForm(FormBuilderInterface $builder, array $options)
     {
+		parent::buildForm($builder, $options);
         $builder
             ->add('typ', 'hidden')
-            ->add('posX', 'hidden')
-            ->add('posY', 'hidden')
-            ->add('posZ', 'hidden')
-            ->add('rotation', 'hidden')
         ;
     }
 

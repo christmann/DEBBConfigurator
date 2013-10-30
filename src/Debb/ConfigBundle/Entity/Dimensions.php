@@ -12,7 +12,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Dimensions extends \Debb\ManagementBundle\Entity\Base
 {
-
 	/**
 	 * @var float
 	 *
@@ -356,7 +355,7 @@ class Dimensions extends \Debb\ManagementBundle\Entity\Base
 	/**
 	 * Check if location in mesh is correct
 	 *
-	 * @Assert\True(message = "Please use a location in mesh like 3 3 3 or 3.3 3.3 3.3")
+	 * @Assert\True(message = "Please use a location in mesh like 3 -3 3 or 3.3 3.3 -3.3")
 	 */
 	public function isLocationInMeshLegal()
 	{

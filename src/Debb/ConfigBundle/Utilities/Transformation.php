@@ -11,6 +11,8 @@ use Debb\ManagementBundle\Entity\Base;
 use Debb\ManagementBundle\Entity\ChassisTypSpecification;
 use Debb\ManagementBundle\Entity\Component;
 use Debb\ManagementBundle\Entity\Connector;
+use Debb\ManagementBundle\Entity\FlowPump;
+use Debb\ManagementBundle\Entity\FlowPumpToChassis;
 use Debb\ManagementBundle\Entity\Heatsink;
 use Debb\ManagementBundle\Entity\NodegroupToRack;
 use Debb\ManagementBundle\Entity\NodeToNodegroup;
@@ -64,12 +66,23 @@ class Transformation
 			self::$transformations[] = array($posX, $posY, $posZ, $rotation, $children->getSizeX() * 1000, $children->getSizeZ() * 1000, $children->getSizeY() * 1000);
 			$transform = self::generate_transform($separator, $posX, $posY, $posZ, $rotation, $children->getSizeX() * 1000, $children->getSizeZ() * 1000, $children->getSizeY() * 1000);
 		}
+		else if ($className == 'FlowPump')
+		{
+			/** @var $connector FlowPumpToChassis */
+			$posX = $connector->getCustomPosX() != null ? $connector->getCustomPosX() * 1000 : ($connector->getPosX() * ($className == 'FlowPump' && XMLController::get_real_class($connector) == 'FlowPumpToChassis' ? -1 : 10));
+			$posY = $connector->getCustomPosY() != null ? $connector->getCustomPosY() * 1000 : ($connector->getPosY() * ($className == 'FlowPump' && XMLController::get_real_class($connector) == 'FlowPumpToChassis' ? -1 : 10));
+			$posZ = $connector->getCustomPosZ() != null ?: $connector->getPosZ();
+			$rotation = $connector->getRotation();
+			/** @var $children FlowPump */
+			self::$transformations[] = array($posX, $posY, $posZ, $rotation, $children->getSizeX() * 1000, $children->getSizeZ() * 1000, $children->getSizeY() * 1000);
+			$transform = self::generate_transform($separator, $posX, $posY, $posZ, $rotation, $children->getSizeX() * 1000, $children->getSizeZ() * 1000, $children->getSizeY() * 1000);
+		}
 		else if ($className == 'Node')
 		{
 			/** @var $connector ChassisTypSpecification */
-			$posX = $connector->getPosX();
-			$posY = $connector->getPosY();
-			$posZ = $connector->getPosZ();
+			$posX = $connector->getCustomPosX() != null ? $connector->getCustomPosX() * 1000 : $connector->getPosX();
+			$posY = $connector->getCustomPosY() != null ? $connector->getCustomPosY() * 1000 : $connector->getPosY();
+			$posZ = $connector->getCustomPosZ() != null ?: $connector->getPosZ();
 			$rotation = $connector->getRotation();
 			/** @var $children Node */
 			self::$transformations[] = array($posX, $posY, 15, $rotation , $children->getSizeX() * 1000, $children->getSizeZ() * 1000, $children->getSizeY() * 1000);

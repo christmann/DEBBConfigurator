@@ -22,9 +22,19 @@ function updateNodeDimensions(node)
         var id = getExactId($(this).find('div[id]').attr('id')),
             position = $(this).position(),
             left = position.left,
-            bottom = $('#nodegroupContainer').height() - position.top - $(this).outerHeight(true);
-        $(this).find('[id$="_posX"], [id$="_posx"]').val(left);
-        $(this).find('[id$="_posY"], [id$="_posy"]').val(parseInt(bottom));
+            bottom = parseInt($('#nodegroupContainer').height() - position.top - $(this).outerHeight(true)),
+			oldPosX = parseInt($(this).find('[id$="_posX"], [id$="_posx"]').val()),
+			oldPosY = parseInt($(this).find('[id$="_posY"], [id$="_posy"]').val());
+		if(oldPosX != left && oldPosY != bottom)
+		{
+			clearCustomPos(this);
+		}
+		else if(oldPosX != left || oldPosY != bottom)
+		{
+			clearCustomPos(this, oldPosX != left ? 'X' : 'Y');
+		}
+		$(this).find('[id$="_posX"], [id$="_posx"]').val(left);
+		$(this).find('[id$="_posY"], [id$="_posy"]').val(bottom);
     });
 }
 
@@ -90,7 +100,18 @@ function generateTipContent()
 	{
 		resObj.append('<div>' + Translator.get('Size') + ': ' + obj.attr('sizex') + 'm /' + obj.attr('sizey') + 'm /' + obj.attr('sizez') + 'm' + '</div>');
 	}
-    resObj.append($('<div>' + Translator.get('Actions') + ': </div>').append('<a href="#" class="removeNode"><i class="icon-trash"></i></a> - <a class="rotateNode" href="#"><i class="icon-repeat" style="transform: rotateZ(' + (objToRot(obj) + 90) + 'deg);"></i></a>'));
+
+	var posX = obj.find('[name*="posX"]'),
+		posY = obj.find('[name*="posY"]'),
+		posZ = obj.find('[name*="posZ"]'),
+		customPosX = obj.find('[name*="customPosX"]'),
+		customPosY = obj.find('[name*="customPosY"]'),
+		customPosZ = obj.find('[name*="customPosZ"]');
+
+    resObj.append($('<div>' + Translator.get('Actions') + ': </div>').append('<a href="#" class="removeNode"><i class="icon-trash"></i></a> - <a class="rotateNode" href="#"><i class="icon-repeat" style="transform: rotateZ(' + (objToRot(obj) + 90) + 'deg);"></i></a>'
+	+ '<br /><br />X: <input type="text" style="width: 100px;" value="' + customPosX.val() + '" class="syncwith" syncwith="#' + customPosX.attr('id') + '" placeholder="' + (posX.val() / 1000) + '" />m'
+	+ '<br />Y: <input type="text" style="width: 100px;" value="' + customPosY.val() + '" class="syncwith" syncwith="#' + customPosY.attr('id') + '" placeholder="' + (posY.val() / 1000) + '" />m'
+	+ '<br />Z: <input type="text" style="width: 100px;" value="' + customPosZ.val() + '" class="syncwith" syncwith="#' + customPosZ.attr('id') + '" placeholder="' + (posZ.val() / 1000) + '" />m'));
     return resObj;
 }
 
@@ -107,8 +128,40 @@ function unitToPixel(m)
 	return pixels <= 0 ? 0 : pixels;
 }
 
+/**
+ * Clears the custom position of object
+ * @param obj
+ * @returns {jQuery}
+ */
+function clearCustomPos(obj, mode)
+{
+	var obj = typeof obj == 'undefined' ? $(this) : $(obj);
+	obj.find('[name*="customPos' + (typeof mode == 'undefined' ? '' : mode) + '"]').val('');
+	return obj;
+}
+
 $(function ()
 {
+	// Copy from /src/Debb/ConfigBundle/Resources/public/js/room.js:188
+	$(document).on('change, keyup', '.syncwith[syncwith]', function(e)
+	{
+		var obj = $($(this).attr('syncwith'));
+		if(obj.length > 0)
+		{
+			var val = $(this).val();
+			if(typeof($(this).attr('maxval')) != 'undefined')
+			{
+				var maxval = parseFloat($($(this).attr('maxval')).val());
+				if(parseFloat(val) > maxval)
+				{
+					val = maxval;
+					$(this).val(maxval);
+					e.preventDefault();
+				}
+			}
+			obj.val(val);
+		}
+	});
     $('#nodegroupContainer').resizable({
         grid: 10,
         stop: function( event, ui ) {
