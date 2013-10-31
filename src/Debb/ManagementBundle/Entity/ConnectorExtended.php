@@ -41,7 +41,7 @@ class ConnectorExtended extends Connector
      */
     public function setCustomPosX($customPosX)
     {
-        $this->customPosX = $customPosX == 0 ? null : $customPosX;
+        $this->customPosX = $customPosX ?: null;
     
         return $this;
     }
@@ -64,7 +64,7 @@ class ConnectorExtended extends Connector
      */
     public function setCustomPosY($customPosY)
     {
-        $this->customPosY = $customPosY == 0 ? null : $customPosY;
+        $this->customPosY = $customPosY ?: null;
     
         return $this;
     }
@@ -87,7 +87,7 @@ class ConnectorExtended extends Connector
      */
     public function setCustomPosZ($customPosZ)
     {
-        $this->customPosZ = $customPosZ == 0 ? null : $customPosZ;
+        $this->customPosZ = $customPosZ ?: null;
     
         return $this;
     }
