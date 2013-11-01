@@ -4,13 +4,27 @@ namespace Debb\ManagementBundle\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
 
+/**
+ * Class DecimalTransformer
+ * @package Debb\ManagementBundle\DataTransformer
+ * @author Patrick Bußmann <patrick.bussmann@christmann.info>
+ */
 class DecimalTransformer implements DataTransformerInterface
 {
 	/**
-	 * @param mixed $value
+	 * @param string $value
 	 * @return string
 	 */
 	public function transform($value)
+	{
+		return self::convert($value);
+	}
+
+	/**
+	 * @param string $value
+	 * @return string
+	 */
+	public static function convert($value)
 	{
 		return rtrim(preg_replace('#([.,]\d*?)0+$#', '\\1', $value), '.,');
 	}
