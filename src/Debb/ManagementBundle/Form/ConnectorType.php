@@ -25,6 +25,7 @@ class ConnectorType extends AbstractType
 			->add('posX', 'hidden')
 			->add('posY', 'hidden')
 			->add('posZ', 'hidden')
+			->add('rotation', 'hidden')
 		;
 	}
 
