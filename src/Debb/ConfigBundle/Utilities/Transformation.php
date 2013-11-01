@@ -7,6 +7,7 @@ use Debb\ConfigBundle\Entity\Node;
 use Debb\ConfigBundle\Entity\NodeGroup;
 use Debb\ConfigBundle\Entity\Rack;
 use Debb\ConfigBundle\Entity\Room;
+use Debb\ManagementBundle\DataTransformer\DecimalTransformer;
 use Debb\ManagementBundle\Entity\Base;
 use Debb\ManagementBundle\Entity\ChassisTypSpecification;
 use Debb\ManagementBundle\Entity\Component;
@@ -183,9 +184,9 @@ class Transformation
 		$boundingBox[4] += 100;
 		$boundingBox[5] += 100;
 
-		for($x = 0; $x <= 5; $x++)
+		for($x = 0; $x < count($boundingBox); $x++)
 		{
-			$boundingBox[$x] = $boundingBox[$x] / 1000 * self::$sizeMulti;
+			$boundingBox[$x] = DecimalTransformer::convert($boundingBox[$x] / 1000 * self::$sizeMulti);
 		}
 
 		return implode($separator, $boundingBox);
@@ -255,6 +256,11 @@ class Transformation
 		$matrix[12] = $matrix[12] / 1000 * self::$sizeMulti;
 		$matrix[13] = $matrix[13] / 1000 * self::$sizeMulti;
 		$matrix[14] = $matrix[14] / 1000 * self::$sizeMulti;
+
+		for($x = 0; $x < count($matrix); $x++)
+		{
+			$matrix[$x] = DecimalTransformer::convert($matrix[$x]);
+		}
 
 		return implode($separator, $matrix);
 	}
