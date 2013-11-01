@@ -70,9 +70,9 @@ class Transformation
 		else if ($className == 'FlowPump')
 		{
 			/** @var $connector FlowPumpToChassis */
-			$posX = $connector->getCustomPosX() ? $connector->getCustomPosX() * 1000 : ($connector->getPosX() * ($className == 'FlowPump' && XMLController::get_real_class($connector) == 'FlowPumpToChassis' ? -1 : 10));
-			$posY = $connector->getCustomPosY() ? $connector->getCustomPosY() * 1000 : ($connector->getPosY() * ($className == 'FlowPump' && XMLController::get_real_class($connector) == 'FlowPumpToChassis' ? -1 : 10));
-			$posZ = $connector->getCustomPosZ() ? $connector->getCustomPosZ() * 1000 : $connector->getPosZ();
+			$posX = $connector->getCustomPosX() ? $connector->getCustomPosX() * (XMLController::get_real_class($connector) == 'FlowPumpToChassis' ? -1000 : 1000) : ($connector->getPosX() * (XMLController::get_real_class($connector) == 'FlowPumpToChassis' ? -1 : 10));
+			$posY = $connector->getCustomPosY() ? $connector->getCustomPosY() * (XMLController::get_real_class($connector) == 'FlowPumpToChassis' ? -1000 : 1000) : ($connector->getPosY() * (XMLController::get_real_class($connector) == 'FlowPumpToChassis' ? -1 : 10));
+			$posZ = $connector->getCustomPosZ() ? $connector->getCustomPosZ() * (XMLController::get_real_class($connector) == 'FlowPumpToChassis' ? -1000 : 1000) : $connector->getPosZ();
 			$rotation = $connector->getRotation();
 			/** @var $children FlowPump */
 			self::$transformations[] = array($posX, $posY, $posZ, $rotation, $children->getSizeX() * 1000, $children->getSizeZ() * 1000, $children->getSizeY() * 1000);
