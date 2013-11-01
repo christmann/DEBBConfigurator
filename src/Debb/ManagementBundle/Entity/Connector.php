@@ -31,14 +31,14 @@ class Connector
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="posx", type="integer")
+	 * @ORM\Column(name="posx", type="integer", nullable=true)
 	 */
 	private $posX;
 
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="posy", type="integer")
+	 * @ORM\Column(name="posy", type="integer", nullable=true)
 	 */
 	private $posY;
 
