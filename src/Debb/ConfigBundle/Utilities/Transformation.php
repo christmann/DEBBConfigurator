@@ -103,15 +103,12 @@ class Transformation
 			self::$transformations[] = array($posX, $posY, $posZ, 0, $children->getSizeX() * 1000, $children->getSizeZ() * 1000, $children->getSizeY() * 1000);
 			$transform = self::generate_transform($separator, $posX, $posY, $posZ, 0, $children->getSizeX() * 1000, $children->getSizeZ() * 1000);
 		}
-		else if ($className == 'Component')
+		else if ($className == 'Heatsink')
 		{
 			/** @var $children Component */
 			/** @var $connector mixed */ /* Node for example */
-			if($children->getActive() instanceof Heatsink)
-			{
-				self::$transformations[] = array(0, 0, $connector->getFullY() * 1000, 0, 0, 0, 0);
-				$transform = self::generate_transform($separator, 0, 0, $connector->getFullY() * 1000, 0, 0, 0);
-			}
+			self::$transformations[] = array(0, 0, $connector->getFullY() * 1000, 0, 0, 0, 0);
+			$transform = self::generate_transform($separator, 0, 0, $connector->getFullY() * 1000, 0, 0, 0);
 		}
 		else
 		{
