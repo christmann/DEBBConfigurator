@@ -104,19 +104,19 @@ function generateTipContent()
 	var posX = parseInt(obj.find('[name*="posX"]').val()),
 		posY = parseInt(obj.find('[name*="posY"]').val()),
 		posZ = obj.find('[name*="posZ"]'),
-//		rotation = objToRot(obj),
+		rotation = objToRot(obj),
 		customPosX = obj.find('[name*="customPosX"]'),
 		customPosY = obj.find('[name*="customPosY"]'),
 		customPosZ = obj.find('[name*="customPosZ"]');
 
-//	if(rotation == 90 || rotation == 180)
-//	{
-//		posY += obj.outerHeight(true);
-//	}
-//	if(rotation == 180 || rotation == 270)
-//	{
-//		posX += obj.outerWidth(true) - 1;
-//	}
+	if(rotation == 90 || rotation == 180)
+	{
+		posY += obj.outerHeight(true);
+	}
+	if(rotation == 180 || rotation == 270)
+	{
+		posX += obj.outerWidth(true) - 1;
+	}
 
     resObj.append($('<div>' + Translator.get('Actions') + ': </div>').append('<a href="#" class="removeNode"><i class="icon-trash"></i></a> - <a class="rotateNode" href="#"><i class="icon-repeat" style="transform: rotateZ(' + (objToRot(obj) + 90) + 'deg);"></i></a>'
 	+ '<br /><br />X: <input type="text" style="width: 100px;" value="' + customPosX.val() + '" class="syncwith" syncwith="#' + customPosX.attr('id') + '" placeholder="' + (posX / 1000) + '" />m'

@@ -70,24 +70,26 @@ class Transformation
 		else if ($className == 'FlowPump')
 		{
 			/** @var $connector FlowPumpToChassis */
-			$posX = $connector->getCustomPosX() ? $connector->getCustomPosX() * (XMLController::get_real_class($connector) == 'FlowPumpToChassis' ? -1000 : 1000) : ($connector->getPosX() * (XMLController::get_real_class($connector) == 'FlowPumpToChassis' ? -1 : 10));
-			$posY = $connector->getCustomPosY() ? $connector->getCustomPosY() * (XMLController::get_real_class($connector) == 'FlowPumpToChassis' ? -1000 : 1000) : ($connector->getPosY() * (XMLController::get_real_class($connector) == 'FlowPumpToChassis' ? -1 : 10));
-			$posZ = $connector->getCustomPosZ() ? $connector->getCustomPosZ() * (XMLController::get_real_class($connector) == 'FlowPumpToChassis' ? -1000 : 1000) : $connector->getPosZ();
+			$customs = ($connector->getCustomPosX() ? 'X' : '') . ($connector->getCustomPosY() ? 'Y' : '') . ($connector->getCustomPosZ() ? 'Z' : '');
+			$posX = $connector->getCustomPosX() ? $connector->getCustomPosX() * (XMLController::get_real_class($connector) == 'FlowPumpToChassis' ? 1000 : 1000) : ($connector->getPosX() * (XMLController::get_real_class($connector) == 'FlowPumpToChassis' ? 1 : 10));
+			$posY = $connector->getCustomPosY() ? $connector->getCustomPosY() * (XMLController::get_real_class($connector) == 'FlowPumpToChassis' ? 1000 : 1000) : ($connector->getPosY() * (XMLController::get_real_class($connector) == 'FlowPumpToChassis' ? 1 : 10));
+			$posZ = $connector->getCustomPosZ() ? $connector->getCustomPosZ() * (XMLController::get_real_class($connector) == 'FlowPumpToChassis' ? 1000 : 1000) : $connector->getPosZ();
 			$rotation = $connector->getRotation();
 			/** @var $children FlowPump */
 			self::$transformations[] = array($posX, $posY, $posZ, $rotation, $children->getSizeX() * 1000, $children->getSizeZ() * 1000, $children->getSizeY() * 1000);
-			$transform = self::generate_transform($separator, $posX, $posY, $posZ, $rotation, $children->getSizeX() * 1000, $children->getSizeZ() * 1000, $children->getSizeY() * 1000);
+			$transform = self::generate_transform($separator, $posX, $posY, $posZ, $rotation, $children->getSizeX() * 1000, $children->getSizeZ() * 1000, $children->getSizeY() * 1000, $customs);
 		}
 		else if ($className == 'Node')
 		{
 			/** @var $connector ChassisTypSpecification */
+			$customs = ($connector->getCustomPosX() ? 'X' : '') . ($connector->getCustomPosY() ? 'Y' : '') . ($connector->getCustomPosZ() ? 'Z' : '');
 			$posX = $connector->getCustomPosX() ? $connector->getCustomPosX() * 1000 : $connector->getPosX();
 			$posY = $connector->getCustomPosY() ? $connector->getCustomPosY() * 1000 : $connector->getPosY();
 			$posZ = $connector->getCustomPosZ() ? $connector->getCustomPosZ() * 1000 : $connector->getPosZ();
 			$rotation = $connector->getRotation();
 			/** @var $children Node */
 			self::$transformations[] = array($posX, $posY, $posZ, $rotation , $children->getSizeX() * 1000, $children->getSizeZ() * 1000, $children->getSizeY() * 1000);
-			$transform = self::generate_transform($separator, $posX, $posY, $posZ, $rotation , $children->getSizeX() * 1000, $children->getSizeZ() * 1000);
+			$transform = self::generate_transform($separator, $posX, $posY, $posZ, $rotation , $children->getSizeX() * 1000, $children->getSizeZ() * 1000, $customs);
 		}
 		else if ($className == 'NodeGroup' && is_callable(array($connector, 'getRack')))
 		{
@@ -205,14 +207,23 @@ class Transformation
 	 *
 	 * @return string the generated transformation
 	 */
-	public static function generate_transform($separator = ' ', $x = 0, $y = 0, $z = 0, $rotation = 0, $xSide = 0, $ySide = 0)
+	public static function generate_transform($separator = ' ', $x = 0, $y = 0, $z = 0, $rotation = 0, $xSide = 0, $ySide = 0, $isCustom = '')
 	{
 		$x = floatval($x);
 		$y = floatval($y);
 		$z = floatval($z);
-		$rotation = floatval($rotation);
+		$rotation = intval($rotation);
 		$xSide = floatval($xSide);
 		$ySide = floatval($ySide);
+
+		if(strpos(strtoupper($isCustom), 'Y') === false && ($rotation == 90 || $rotation == 180))
+		{
+			$y += $ySide;
+		}
+		if(strpos(strtoupper($isCustom), 'X') === false && ($rotation == 180 || $rotation == 270))
+		{
+			$x += $xSide;
+		}
 
 		$matrix = array();
 
@@ -222,40 +233,16 @@ class Transformation
 		}
 
 		$rotation = $rotation % 360;
-		if ($rotation == 270)
-		{
-			$matrix[12] = $x + $ySide;
-			$matrix[13] = $y;
-		}
-		elseif ($rotation == 180)
-		{
-			$matrix[12] = $x;
-			$matrix[13] = $y;
-		}
-		elseif ($rotation == 90)
-		{
-			$matrix[12] = $x;
-			$matrix[13] = $y+ $xSide;
-		}
-		else
-		{
-			$matrix[12] = $x + $xSide;
-			$matrix[13] = $y + $ySide;
-		}
-		$matrix[12] -= $xSide;
-		$matrix[13] -= $ySide;
 
 		$matrix[0] = round(cos(deg2rad($rotation)), 14);
 		$matrix[1] = round(sin(deg2rad($rotation)), 14);
 		$matrix[4] = round(-sin(deg2rad($rotation)), 14);
 		$matrix[5] = round(cos(deg2rad($rotation)), 14);
 		$matrix[10] = 1;
-		$matrix[14] = $z;
+		$matrix[12] = $x / 1000 * self::$sizeMulti;
+		$matrix[13] = $y / 1000 * self::$sizeMulti;
+		$matrix[14] = $z / 1000 * self::$sizeMulti;
 		$matrix[15] = 1;
-
-		$matrix[12] = $matrix[12] / 1000 * self::$sizeMulti;
-		$matrix[13] = $matrix[13] / 1000 * self::$sizeMulti;
-		$matrix[14] = $matrix[14] / 1000 * self::$sizeMulti;
 
 		for($x = 0; $x < count($matrix); $x++)
 		{
