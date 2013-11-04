@@ -212,7 +212,8 @@ class Transformation
 		$x = floatval($x);
 		$y = floatval($y);
 		$z = floatval($z);
-		$rotation = intval($rotation);
+		$rotation = 360 - intval($rotation);
+		$rotation %= 360;
 		$xSide = floatval($xSide);
 		$ySide = floatval($ySide);
 
@@ -231,8 +232,6 @@ class Transformation
 		{
 			$matrix[$i] = 0;
 		}
-
-		$rotation = $rotation % 360;
 
 		$matrix[0] = round(cos(deg2rad($rotation)), 14);
 		$matrix[1] = round(sin(deg2rad($rotation)), 14);
