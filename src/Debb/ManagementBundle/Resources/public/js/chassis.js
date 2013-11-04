@@ -133,7 +133,7 @@ function generateTipContent()
  */
 function unitToPixel(m)
 {
-	m = parseInt(m * 100);
+	m = parseInt(parseFloat(m) * 100);
 	var pixels =  parseInt((m - 3) + "0") + 9;
 	return pixels <= 0 ? 0 : pixels;
 }
@@ -228,14 +228,25 @@ $(function ()
     });
     $('.node').each(function()
     {
-	    var pump = $(this).find('[id$="_flowPump"]');
+	    var pump = $(this).find('[id$="_flowPump"]'),
+			rotation = objToRot(this);
 	    if(pump.length > 0)
 	    {
 		    var rackX = parseFloat($('[flowpumpid=' + pump.val() + '][rackx]').attr('rackx')),
 			    rackZ = parseFloat($('[flowpumpid=' + pump.val() + '][rackz]').attr('rackz'));
-		    $(this).css('width', unitToPixel(rackX) + 'px');
-		    $(this).css('height', unitToPixel(rackZ) + 'px');
+		    $(this).width(unitToPixel(rackX)).height(unitToPixel(rackZ));
+			$(this).attr('sizex', rackX).attr('sizez', rackZ);
 	    }
+
+		if(rotation == 0 || rotation == 180)
+		{
+			$(this).height(unitToPixel($(this).attr('sizez'))).width(unitToPixel($(this).attr('sizex')));
+		}
+		else
+		{
+			$(this).height(unitToPixel($(this).attr('sizex'))).width(unitToPixel($(this).attr('sizez')));
+		}
+
         if(typeof $(this).attr('posx') != 'undefined')
         {
             $(this).css('left', (parseInt($(this).attr('posx')) < 0 ? 0 : parseInt($(this).attr('posx'))) + 'px');
@@ -263,13 +274,20 @@ $(function ()
     });
     $(document).on('click', '.rotateNode', function(e)
     {
-        e.preventDefault();
         var obj = $(this).parents('.node:first, .popover:first'),
             node = obj.is('.popover') ? obj.prev('.node') : obj,
             rotation = objToRot(node);
         node.removeClass('node' + rotation + 'Deg');
         rotation += 90;
         if ( rotation > 270 ) { rotation = 0; }
+		if(rotation == 0 || rotation == 180)
+		{
+			node.height(unitToPixel(node.attr('sizez'))).width(unitToPixel(node.attr('sizex')));
+		}
+		else
+		{
+			node.height(unitToPixel(node.attr('sizex'))).width(unitToPixel(node.attr('sizez')));
+		}
         node.addClass('node' + rotation + 'Deg');
         node.find('input[id$="_rotation"]').val(rotation);
         node.find('.rotateNode .icon-repeat').css('transform', 'rotateZ(' + (rotation + 90) + 'deg)');
@@ -277,6 +295,7 @@ $(function ()
         {
             node.next('.popover').find('.rotateNode .icon-repeat').css('transform', 'rotateZ(' + (rotation + 90) + 'deg)');
         }
+		e.preventDefault();
     });
     $(document).on('click', '.node', function(e)
     {
