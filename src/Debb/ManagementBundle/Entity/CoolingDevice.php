@@ -2,6 +2,7 @@
 
 namespace Debb\ManagementBundle\Entity;
 
+use Debb\ManagementBundle\DataTransformer\DecimalTransformer;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -100,16 +101,16 @@ class CoolingDevice extends DEBBComplex
 		$array['Class'] = (string) $this->getClass();
 		if ($this->getMaxCoolingCapacity() !== null)
 		{
-			$array['MaxCoolingCapacity'] = $this->getMaxCoolingCapacity();
+			$array['MaxCoolingCapacity'] = DecimalTransformer::convert($this->getMaxCoolingCapacity());
 		}
-		$array['CoolingCapacityRated'] = (string) $this->getCoolingCapacityRated();
+		$array['CoolingCapacityRated'] = DecimalTransformer::convert((string) $this->getCoolingCapacityRated());
 		if ($this->getMaxAirThroughput() !== null)
 		{
-			$array['MaxAirThroughput'] = $this->getMaxAirThroughput();
+			$array['MaxAirThroughput'] = DecimalTransformer::convert($this->getMaxAirThroughput());
 		}
 		if ($this->getMaxWaterThroughput() !== null)
 		{
-			$array['MaxWaterThroughput'] = $this->getMaxWaterThroughput();
+			$array['MaxWaterThroughput'] = DecimalTransformer::convert($this->getMaxWaterThroughput());
 		}
 		if ($this->getAirThroughputProfile() !== null)
 		{

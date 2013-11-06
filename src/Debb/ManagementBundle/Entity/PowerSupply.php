@@ -2,6 +2,7 @@
 
 namespace Debb\ManagementBundle\Entity;
 
+use Debb\ManagementBundle\DataTransformer\DecimalTransformer;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -69,7 +70,7 @@ class PowerSupply extends Base /* extends DEBBComplexType */
 		}
 		if ($this->getTotalOutputPower() !== null)
 		{
-			$array['TotalOutputPower'] = $this->getTotalOutputPower();
+			$array['TotalOutputPower'] = DecimalTransformer::convert($this->getTotalOutputPower());
 		}
 		if ($this->getEfficiency() !== null)
 		{

@@ -2,6 +2,7 @@
 
 namespace Debb\ManagementBundle\Entity;
 
+use Debb\ManagementBundle\DataTransformer\DecimalTransformer;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -46,7 +47,7 @@ class Processor extends Base
 	private $cStates;
 
 	/**
-	 * @var decimal
+	 * @var float
 	 *
 	 * @ORM\Column(name="tdp", type="decimal", precision=18, scale=9, nullable=true)
 	 */
@@ -86,7 +87,7 @@ class Processor extends Base
 		}
 		if($this->getTDP() !== null)
 		{
-			$array['TDP'] = $this->getTDP();
+			$array['TDP'] = DecimalTransformer::convert($this->getTDP());
 		}
 		return $array;
 	}

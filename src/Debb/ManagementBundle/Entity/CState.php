@@ -2,6 +2,7 @@
 
 namespace Debb\ManagementBundle\Entity;
 
+use Debb\ManagementBundle\DataTransformer\DecimalTransformer;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -48,7 +49,7 @@ class CState
 		$array['State'] = $state;
 		if($this->getPowerUsage() !== null)
 		{
-			$array['PowerUsage'] = $this->getPowerUsage();
+			$array['PowerUsage'] = DecimalTransformer::convert($this->getPowerUsage());
 		}
 		return $array;
 	}
