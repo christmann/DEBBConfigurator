@@ -1040,11 +1040,11 @@ abstract class XMLController extends BaseController
 			$plmXml = $this->asPlmXmlAction($id, true);
 			if($toSvn === null)
 			{
-				$zip->addFromString('PLMXML_'.$item->getComponentId().'.plmxml', $plmXml);
+				$zip->addFromString('PLMXML_'.$item->getComponentId().'.xml', $plmXml);
 			}
 			else
 			{
-				$toSvn->set('PLMXML_'.$item->getComponentId().'.plmxml', $plmXml, false, false);
+				$toSvn->set('PLMXML_'.$item->getComponentId().'.xml', $plmXml, false, false);
 			}
 			$room = new \Debb\ConfigBundle\Controller\RoomController();
 			$room->setContainer($this->getContainer());
