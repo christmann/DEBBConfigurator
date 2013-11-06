@@ -2,6 +2,7 @@
 
 namespace Debb\ManagementBundle\Entity;
 
+use Debb\ManagementBundle\DataTransformer\DecimalTransformer;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -71,11 +72,11 @@ class PState
 		$array['State'] = $state;
 		if($this->getFrequency() !== null)
 		{
-			$array['Frequency'] = $this->getFrequency();
+			$array['Frequency'] = DecimalTransformer::convert($this->getFrequency());
 		}
 		if($this->getVoltage() !== null)
 		{
-			$array['Voltage'] = $this->getVoltage();
+			$array['Voltage'] = DecimalTransformer::convert($this->getVoltage());
 		}
 		foreach($this->getLoadPowerUsages() as $loadPowerUsage)
 		{

@@ -2,6 +2,7 @@
 
 namespace Debb\ManagementBundle\Entity;
 
+use Debb\ManagementBundle\DataTransformer\DecimalTransformer;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -66,11 +67,11 @@ class FlowState
 		$array['State'] = $state;
 		if ($this->getFlow() !== null)
 		{
-			$array['Flow'] = $this->getFlow();
+			$array['Flow'] = DecimalTransformer::convert($this->getFlow());
 		}
 		if ($this->getPowerUsage() !== null)
 		{
-			$array['PowerUsage'] = $this->getPowerUsage();
+			$array['PowerUsage'] = DecimalTransformer::convert($this->getPowerUsage());
 		}
 		if ($this->getDescription() !== null)
 		{
