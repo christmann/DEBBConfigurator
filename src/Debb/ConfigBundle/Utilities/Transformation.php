@@ -176,12 +176,12 @@ class Transformation
 				}
 			}
 		}
-		$boundingBox[0] -= 100;
-		$boundingBox[1] -= 100;
-		$boundingBox[2] -= 100;
-		$boundingBox[3] += 100;
-		$boundingBox[4] += 100;
-		$boundingBox[5] += 100;
+		$boundingBox[0] -= 10;
+		$boundingBox[1] -= 10;
+		$boundingBox[2] -= 10;
+		$boundingBox[3] += 10;
+		$boundingBox[4] += 10;
+		$boundingBox[5] += 10;
 
 		for($x = 0; $x < count($boundingBox); $x++)
 		{
