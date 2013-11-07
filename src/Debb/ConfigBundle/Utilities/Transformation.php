@@ -98,8 +98,8 @@ class Transformation
 			/** @var $children NodeGroup */
 			$posX = $connector->getRack()->getSpaceLeft() * 1000;
 			$posY = $connector->getRack()->getSpaceFront() * 1000;
-			$posZ = $connector->getField() * $ru;
-			$posZ -= $ru * ($children->getDraft() != null ? $children->getDraft()->getHeSize() : 1) + $connector->getRack()->getSpaceBottom() * 1000;
+			$posZ = ($connector->getField() - ($children->getDraft() != null ? $children->getDraft()->getHeSize() : 1) + 1) * $ru;
+			$posZ += $connector->getRack()->getSpaceBottom() * 1000;
 			self::$transformations[] = array($posX, $posY, $posZ, 0, $children->getSizeX() * 1000, $children->getSizeZ() * 1000, $children->getSizeY() * 1000);
 			$transform = self::generate_transform($separator, $posX, $posY, $posZ, 0, $children->getSizeX() * 1000, $children->getSizeZ() * 1000);
 		}
