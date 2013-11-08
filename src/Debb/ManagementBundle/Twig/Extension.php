@@ -35,6 +35,7 @@ class Extension extends \Twig_Extension
 		return array(
 			'route_exists' => new \Twig_Function_Method($this, 'routeExists'),
 			'renderState' => new \Twig_Function_Method($this, 'renderState'),
+			'countUp' => new \Twig_Function_Method($this, 'countUp'),
 		);
 	}
 
@@ -91,6 +92,18 @@ class Extension extends \Twig_Extension
 			$this->renderState($child, $state);
 		}
 		return $returnField ? $field : $field->isRendered();
+	}
+
+	/**
+	 * Count up a global variable
+	 *
+	 * @param string $globalVar the global variable to count
+	 *
+	 * @return integer the new number
+	 */
+	public function countUp($globalVar = 'x')
+	{
+		return @$GLOBALS[$globalVar]++;
 	}
 
 	/**

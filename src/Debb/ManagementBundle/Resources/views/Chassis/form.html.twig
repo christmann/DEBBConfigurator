@@ -80,7 +80,8 @@
 	{%- endif %}
 	<a href="#" class="removeNode"><i class="icon-trash"></i></a> - <a class="rotateNode" href="#"><i class="icon-repeat" style="transform: rotateZ({{ nodeForm.vars.data.rotation | default(0) + 90 }}deg);"></i></a>
 	{%- if nodetypspecs is not null %}
-		<select name="{{ nodeForm.typ.vars.full_name }}" id="{{ nodeForm.typ.vars.id }}" style="margin-left: -7px; width: 63px; margin-top: 25px;">
+        <br />[<span class="nodeCount">{{ countUp('x') }}</span>]<br />
+		<select name="{{ nodeForm.typ.vars.full_name }}" id="{{ nodeForm.typ.vars.id }}" style="margin-left: -7px; width: 63px; margin-top: 10px;">
 			{% for value in nodetypspecs|default({}) %}
 				{%- set selectedValue = nodeForm.typ.vars.data -%}
 				<option value="{{ value.type }}"{% if selectedValue is defined and selectedValue is not null and selectedValue == value.type %} selected="selected"{% endif %}>{{ value.type | trans }}</option>
