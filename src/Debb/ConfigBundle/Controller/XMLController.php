@@ -455,7 +455,7 @@ abstract class XMLController extends BaseController
 		$productInstance->addAttribute('id', $id); // example: inst71_01_7
 		if ($name != null)
 		{
-			$number = $real_class_name == 'Node' ? sprintf('%02s', @++$GLOBALS['plmxmlcounterinst_' . md5($name . $round)]) : (int) @++$GLOBALS['plmxmlcounterinst_' . md5($name . $round)];
+			$number = $real_class_name == 'Node' ? sprintf('%02s', @++$GLOBALS['plmxmlcounterinst_' . md5($round)]) : (int) @++$GLOBALS['plmxmlcounterinst_' . md5($name . $round)];
 			$productInstance->addAttribute('name', $name . ($real_class_name == 'Heatsink' ? '_' : '') . $number); // example: Node07
 		}
 
@@ -558,7 +558,7 @@ abstract class XMLController extends BaseController
 		$productRevisionView->addAttribute('id', $id); // example: id84_04_1
 		if ($name != null)
 		{
-			$number = $real_class_name == 'Node' ? sprintf('%02s', @++$GLOBALS['plmxmlcounterrevview_' . md5($name . $round)]) : (int) @++$GLOBALS['plmxmlcounterrevview_' . md5($name . $round)];
+			$number = $real_class_name == 'Node' ? sprintf('%02s', @++$GLOBALS['plmxmlcounterrevview_' . md5($round)]) : (int) @++$GLOBALS['plmxmlcounterrevview_' . md5($name . $round)];
 			$productRevisionView->addAttribute('name', $name . ($real_class_name == 'Heatsink' ? '_' : '') . $number); // example: Node07
 		}
 		if (is_array($instanceRefs) && count($instanceRefs) > 0)
