@@ -225,6 +225,7 @@ $(function ()
             newNode.attr('sizex', rackX).attr('sizey', rackY).attr('sizez', rackZ);
             newNode.find('.rotateNode .icon-repeat').css('transform', 'rotateZ(' + (objToRot(newNode) + 90) + 'deg)');
 	    }
+		updateNodes();
     });
     $('.node').each(function()
     {
@@ -271,6 +272,7 @@ $(function ()
             obj.popover('destroy');
         }
         obj.remove();
+		updateNodes();
     });
     $(document).on('click', '.rotateNode', function(e)
     {
@@ -327,6 +329,11 @@ function updateNodes() {
 		$(nodes[x]).find('select').attr('id', 'debb_managementbundle_chassistype_typspec_' + y).attr('name', 'typspec[' + y + ']');
 		y++;
 	}
+	var x = 0;
+	$('.nodeCount').each(function()
+	{
+		$(this).text(++x);
+	});
 }
 
 function getExactId(str) {
