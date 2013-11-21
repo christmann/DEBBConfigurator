@@ -21,7 +21,7 @@ function updateRackDimensions(rack)
         var id = getExactId($(this).find('.rackGform').find('div[id]').attr('id')),
             position = $(this).position(),
             left = position.left,
-            bottom = parseInt($('#rackContainer').height() - position.top - $(this).outerHeight(true)),
+            bottom = Math.round(parseInt($('#rackContainer').height() - position.top - $(this).outerHeight(true)) / 10) * 10,
 			oldPosX = parseInt($(this).find('[id$="_posX"], [id$="_posx"]').val()),
 			oldPosY = parseInt($(this).find('[id$="_posY"], [id$="_posy"]').val()),
 	        selector = $(this).is('[flowPumpId]') ? 'flowPumps' : 'racks';
