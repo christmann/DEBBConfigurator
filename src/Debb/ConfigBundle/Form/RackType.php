@@ -27,6 +27,7 @@ class RackType extends BaseType
             ->add('sizeZ', null, array('required' => false, 'label' => 'SizeZ', 'attr' => array('class' => 'noBreakAfterThis')))
 			->add('spaceBottom', null, array('required' => false, 'label' => 'SpaceBottom'))
 			->add('spaceLeft', null, array('required' => false, 'label' => 'SpaceLeft', 'attr' => array('class' => 'noBreakAfterThis')))
+			->add('spaceFront', null, array('required' => false, 'label' => 'SpaceFront'))
 			->add('nodeGroupSize', 'choice', array('choices' => $this->getNodeGroupSizeChoices(), 'required' => false, 'label' => 'RackSize',
 				'empty_value' => false, 'attr' => array('class' => 'updateRackSize noBreakAfterThis')))
 	        ->add('meshResolution', null, array('required' => false, 'attr' => array('placeholder' => '0 0 0')))
