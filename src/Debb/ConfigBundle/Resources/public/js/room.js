@@ -25,11 +25,11 @@ function updateRackDimensions(rack)
 			oldPosX = parseInt($(this).find('[id$="_posX"], [id$="_posx"]').val()),
 			oldPosY = parseInt($(this).find('[id$="_posY"], [id$="_posy"]').val()),
 	        selector = $(this).is('[flowPumpId]') ? 'flowPumps' : 'racks';
-		if(oldPosX != left && oldPosY != bottom)
+		if(oldPosX != left && oldPosY != bottom - 1)
 		{
 			clearCustomPos(this);
 		}
-		else if(oldPosX != left || oldPosY != bottom)
+		else if(oldPosX != left || oldPosY != bottom - 1)
 		{
 			clearCustomPos(this, oldPosX != left ? 'X' : 'Y');
 		}
