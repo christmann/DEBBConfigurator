@@ -39,6 +39,7 @@ SpaceTop: Gap top [m]
 SpaceLeft: Gap left [m]
 SpaceRight: Gap right [m]
 SpaceBottom: Gap bottom [m]
+SpaceFront: Gap front [m]
 adopt: Adopt
 your: your
 yours: your
