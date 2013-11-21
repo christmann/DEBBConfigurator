@@ -215,11 +215,11 @@ class Transformation
 		$xSide = floatval($xSide);
 		$ySide = floatval($ySide);
 
-		if(strpos(strtoupper($isCustom), 'Y') === false && ($rotation == 270 || $rotation == 180))
+		if(strpos(strtoupper($isCustom), 'Y') === false && ($rotation == 90 || $rotation == 180))
 		{
 			$y += $ySide;
 		}
-		if(strpos(strtoupper($isCustom), 'X') === false && ($rotation == 180 || $rotation == 90))
+		if(strpos(strtoupper($isCustom), 'X') === false && ($rotation == 180 || $rotation == 270))
 		{
 			$x += $xSide;
 		}
