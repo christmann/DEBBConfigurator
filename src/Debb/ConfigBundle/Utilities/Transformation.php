@@ -59,13 +59,14 @@ class Transformation
 		if ($className == 'Rack')
 		{
 			/** @var $connector RackToRoom */
-			$posX = $connector->getPosX() * 10;
-			$posY = $connector->getPosY() * 10;
-			$posZ = $connector->getPosZ();
+			$customs = ($connector->getCustomPosX() ? 'X' : '') . ($connector->getCustomPosY() ? 'Y' : '') . ($connector->getCustomPosZ() ? 'Z' : '');
+			$posX = $connector->getCustomPosX() ? $connector->getCustomPosX() * 1000 : $connector->getPosX() * 10;
+			$posY = $connector->getCustomPosY() ? $connector->getCustomPosY() * 1000 : $connector->getPosY() * 10;
+			$posZ = $connector->getCustomPosZ() ? $connector->getCustomPosZ() * 1000 : $connector->getPosZ();
 			$rotation = $connector->getRotation();
 			/** @var $children Rack */
 			self::$transformations[] = array($posX, $posY, $posZ, $rotation, $children->getSizeX() * 1000, $children->getSizeZ() * 1000, $children->getSizeY() * 1000);
-			$transform = self::generate_transform($separator, $posX, $posY, $posZ, $rotation, $children->getSizeX() * 1000, $children->getSizeZ() * 1000);
+			$transform = self::generate_transform($separator, $posX, $posY, $posZ, $rotation, $children->getSizeX() * 1000, $children->getSizeZ() * 1000, $customs);
 		}
 		else if ($className == 'FlowPump')
 		{
@@ -89,7 +90,7 @@ class Transformation
 			$rotation = $connector->getRotation();
 			/** @var $children Node */
 			self::$transformations[] = array($posX, $posY, $posZ, $rotation , $children->getSizeX() * 1000, $children->getSizeZ() * 1000, $children->getSizeY() * 1000);
-			$transform = self::generate_transform($separator, $posX, $posY, $posZ, $rotation , $children->getSizeX() * 1000, $children->getSizeZ() * 1000, $customs);
+			$transform = self::generate_transform($separator, $posX, $posY, $posZ, $rotation, $children->getSizeX() * 1000, $children->getSizeZ() * 1000, $customs);
 		}
 		else if ($className == 'NodeGroup' && is_callable(array($connector, 'getRack')))
 		{
