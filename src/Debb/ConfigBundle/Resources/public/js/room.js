@@ -21,15 +21,15 @@ function updateRackDimensions(rack)
         var id = getExactId($(this).find('.rackGform').find('div[id]').attr('id')),
             position = $(this).position(),
             left = position.left,
-            bottom = parseInt($('#rackContainer').height() - position.top - $(this).outerHeight(true)) + 1,
+            bottom = parseInt($('#rackContainer').height() - position.top - $(this).outerHeight(true)),
 			oldPosX = parseInt($(this).find('[id$="_posX"], [id$="_posx"]').val()),
 			oldPosY = parseInt($(this).find('[id$="_posY"], [id$="_posy"]').val()),
 	        selector = $(this).is('[flowPumpId]') ? 'flowPumps' : 'racks';
-		if(oldPosX != left && oldPosY != bottom - 1)
+		if(oldPosX != left && oldPosY != bottom)
 		{
 			clearCustomPos(this);
 		}
-		else if(oldPosX != left || oldPosY != bottom - 1)
+		else if(oldPosX != left || oldPosY != bottom)
 		{
 			clearCustomPos(this, oldPosX != left ? 'X' : 'Y');
 		}
