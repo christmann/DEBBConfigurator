@@ -219,7 +219,7 @@ class Transformation
 		// 180° = x + xSide; y + ySide
 		// 270° = x + ySide
 
-		if($rotation == 90)
+		if($rotation == 270)
 		{
 			if(strpos(strtoupper($isCustom), 'Y') === false)
 			{
@@ -237,7 +237,7 @@ class Transformation
 				$x += $xSide;
 			}
 		}
-		else if($rotation == 270)
+		else if($rotation == 90)
 		{
 			if(strpos(strtoupper($isCustom), 'X') === false)
 			{
