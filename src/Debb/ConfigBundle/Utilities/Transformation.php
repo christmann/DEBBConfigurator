@@ -215,13 +215,34 @@ class Transformation
 		$xSide = floatval($xSide);
 		$ySide = floatval($ySide);
 
-		if(strpos(strtoupper($isCustom), 'Y') === false && ($rotation == 90 || $rotation == 180))
+		// 90°  = y + xSide
+		// 180° = x + xSide; y + ySide
+		// 270° = x + ySide
+
+		if($rotation == 90)
 		{
-			$y += $ySide;
+			if(strpos(strtoupper($isCustom), 'Y') === false)
+			{
+				$y += $xSide;
+			}
 		}
-		if(strpos(strtoupper($isCustom), 'X') === false && ($rotation == 180 || $rotation == 270))
+		else if($rotation == 180)
 		{
-			$x += $xSide;
+			if(strpos(strtoupper($isCustom), 'Y') === false)
+			{
+				$y += $ySide;
+			}
+			if(strpos(strtoupper($isCustom), 'X') === false)
+			{
+				$x += $xSide;
+			}
+		}
+		else if($rotation == 270)
+		{
+			if(strpos(strtoupper($isCustom), 'X') === false)
+			{
+				$x += $ySide;
+			}
 		}
 
 		$matrix = array();
