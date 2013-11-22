@@ -14,9 +14,7 @@ use Debb\ManagementBundle\Entity\Component;
 use Debb\ManagementBundle\Entity\Connector;
 use Debb\ManagementBundle\Entity\FlowPump;
 use Debb\ManagementBundle\Entity\FlowPumpToChassis;
-use Debb\ManagementBundle\Entity\Heatsink;
 use Debb\ManagementBundle\Entity\NodegroupToRack;
-use Debb\ManagementBundle\Entity\NodeToNodegroup;
 use Debb\ManagementBundle\Entity\RackToRoom;
 
 /**
@@ -89,7 +87,7 @@ class Transformation
 			$posZ = $connector->getCustomPosZ() ? $connector->getCustomPosZ() * 1000 : $connector->getPosZ();
 			$rotation = $connector->getRotation();
 			/** @var $children Node */
-			self::$transformations[] = array($posX, $posY, $posZ, $rotation , $children->getSizeX() * 1000, $children->getSizeZ() * 1000, $children->getSizeY() * 1000);
+			self::$transformations[] = array($posX, $posY, $posZ, $rotation, $children->getSizeX() * 1000, $children->getSizeZ() * 1000, $children->getSizeY() * 1000);
 			$transform = self::generate_transform($separator, $posX, $posY, $posZ, $rotation, $children->getSizeX() * 1000, $children->getSizeZ() * 1000, $customs);
 		}
 		else if ($className == 'NodeGroup' && is_callable(array($connector, 'getRack')))
@@ -184,7 +182,7 @@ class Transformation
 		$boundingBox[4] += 10;
 		$boundingBox[5] += 10;
 
-		for($x = 0; $x < count($boundingBox); $x++)
+		for ($x = 0; $x < count($boundingBox); $x++)
 		{
 			$boundingBox[$x] = DecimalTransformer::convert($boundingBox[$x] / 1000 * self::$sizeMulti);
 		}
@@ -219,35 +217,29 @@ class Transformation
 		// 180° = x + xSide; y + ySide
 		// 270° = x + ySide
 
-		if($rotation == 270)
+		if ($rotation == 270 && strpos(strtoupper($isCustom), 'Y') === false)
 		{
-			if(strpos(strtoupper($isCustom), 'Y') === false)
-			{
-				$y += $xSide;
-			}
+			$y += $xSide;
 		}
-		else if($rotation == 180)
+		else if ($rotation == 180)
 		{
-			if(strpos(strtoupper($isCustom), 'Y') === false)
+			if (strpos(strtoupper($isCustom), 'Y') === false)
 			{
 				$y += $ySide;
 			}
-			if(strpos(strtoupper($isCustom), 'X') === false)
+			if (strpos(strtoupper($isCustom), 'X') === false)
 			{
 				$x += $xSide;
 			}
 		}
-		else if($rotation == 90)
+		else if ($rotation == 90 && strpos(strtoupper($isCustom), 'X') === false)
 		{
-			if(strpos(strtoupper($isCustom), 'X') === false)
-			{
-				$x += $ySide;
-			}
+			$x += $ySide;
 		}
 
 		$matrix = array();
 
-		for ($i=0; $i < 4*4; $i++)
+		for ($i = 0; $i < 4 * 4; $i++)
 		{
 			$matrix[$i] = 0;
 		}
@@ -262,7 +254,7 @@ class Transformation
 		$matrix[14] = $z / 1000 * self::$sizeMulti;
 		$matrix[15] = 1;
 
-		for($x = 0; $x < count($matrix); $x++)
+		for ($x = 0; $x < count($matrix); $x++)
 		{
 			$matrix[$x] = DecimalTransformer::convert($matrix[$x]);
 		}
