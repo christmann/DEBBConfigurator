@@ -335,11 +335,13 @@ function updateNodes() {
 		$(this).text(++x);
 		$(this).parent('div').attr('title', '[' + $(this).text() + '] ' + $(this).parent('div').attr('title'));
 	});
-	var y = 0;
+	var yInlet = 0,
+		yOutlet = 0;
 	$('.pumpCount').each(function()
 	{
-		$(this).text(++y);
-		var flowPumpTitle = $('[flowpumpid=' + $(this).parent('div').find('[id$="_flowPump"]').val() + '][title]').attr('title');
+		var flowPump = $('[flowpumpid=' + $(this).parent('div').find('[id$="_flowPump"]').val() + '][title]'),
+			flowPumpTitle = flowPump.attr('title');
+		$(this).text(parseInt(flowPump.attr('inlet')) == 1 ? ++yInlet : ++yOutlet);
 		$(this).parent('div').find('span.pumpName').text('[' + $(this).text() + '] ' + flowPumpTitle);
 		$(this).parent('div').attr('data-original-title', '[' + $(this).text() + '] ' + flowPumpTitle);
 		$(this).parent('div').attr('title', '[' + $(this).text() + '] ' + flowPumpTitle);

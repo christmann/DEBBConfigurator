@@ -44,7 +44,7 @@
 				{{ 'Add flow pump' | trans }}:
 				<ul class="hoz">
 					{% for flowPump in flowPumps %}
-						<li class="hoz ui-state-default eDraftRack addFlowPump" style="margin-left: 0px; margin-right: 10px;"><div class="draftRack" flowPumpId="{{ flowPump.id }}" rackx="{{ flowPump.sizeY }}" racky="{{ flowPump.sizeX }}" rackz="{{ flowPump.sizeZ }}" title="{{ flowPump | e }}">{{ flowPump }}</div></li>
+						<li class="hoz ui-state-default eDraftRack addFlowPump" style="margin-left: 0px; margin-right: 10px;"><div class="draftRack" flowPumpId="{{ flowPump.id }}" rackx="{{ flowPump.sizeY }}" racky="{{ flowPump.sizeX }}" rackz="{{ flowPump.sizeZ }}" title="{{ flowPump | e }}" inlet="{{ flowPump.inlet }}">{{ flowPump }}</div></li>
 					{% endfor %}
 				</ul>
 			</div>
