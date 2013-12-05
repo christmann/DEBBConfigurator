@@ -38,3 +38,4 @@ src/CIM/PluploadBundle/
 index.php
 *.iml
 tests/*
+/.project
