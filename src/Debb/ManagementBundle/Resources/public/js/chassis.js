@@ -333,6 +333,16 @@ function updateNodes() {
 	$('.nodeCount').each(function()
 	{
 		$(this).text(++x);
+		$(this).parent('div').attr('title', '[' + $(this).text() + '] ' + $(this).parent('div').attr('title'));
+	});
+	var y = 0;
+	$('.pumpCount').each(function()
+	{
+		$(this).text(++y);
+		var flowPumpTitle = $('[flowpumpid=' + $(this).parent('div').find('[id$="_flowPump"]').val() + '][title]').attr('title');
+		$(this).parent('div').find('span.pumpName').text('[' + $(this).text() + '] ' + flowPumpTitle);
+		$(this).parent('div').attr('data-original-title', '[' + $(this).text() + '] ' + flowPumpTitle);
+		$(this).parent('div').attr('title', '[' + $(this).text() + '] ' + flowPumpTitle);
 	});
 }
 

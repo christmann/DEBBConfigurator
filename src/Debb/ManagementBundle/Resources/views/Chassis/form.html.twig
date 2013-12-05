@@ -76,7 +76,7 @@
 
 {% macro typspec(nodetypspecs, nodeForm, nodeContainer) %}
 	{% if nodeContainer is null or nodeContainer == true -%}
-		<div class="node node{{ nodeForm.vars.data.rotation | default(0) }}Deg" posx="{{ nodeForm.vars.data.posX|default('') }}" posy="{{ nodeForm.vars.data.posY|default('') }}" posz="{{ nodeForm.vars.data.posZ|default('') }}">
+		<div title="{{- nodeForm.vars.data | default('') -}}" class="node node{{ nodeForm.vars.data.rotation | default(0) }}Deg" posx="{{ nodeForm.vars.data.posX|default('') }}" posy="{{ nodeForm.vars.data.posY|default('') }}" posz="{{ nodeForm.vars.data.posZ|default('') }}">
 	{%- endif %}
 	<a href="#" class="removeNode"><i class="icon-trash"></i></a> - <a class="rotateNode" href="#"><i class="icon-repeat" style="transform: rotateZ({{ nodeForm.vars.data.rotation | default(0) + 90 }}deg);"></i></a>
 	{%- if nodetypspecs is not null %}
@@ -88,6 +88,7 @@
 			{% endfor %}
 		</select>
 	{%- else -%}
+        <br />[<span class="pumpCount">{{ countUp('y') }}</span>]<br />
 		<br />
 		<span class="pumpName">{{- nodeForm.vars.data | default('') -}}</span>
 	{%- endif -%}
