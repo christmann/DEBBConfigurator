@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	xmlns:xsd_1="http://www.coolemall.eu/DEBBComponent" targetNamespace="http://www.coolemall.eu/DEBBComponent">
+	xmlns:xsd_1="http://www.coolemall.eu/DEBBComponent" targetNamespace="http://www.coolemall.eu/DEBBComponent"
+	version="8.0">
 
 	<xsd:complexType name="ConnectorType">
 		<xsd:sequence>
 			<xsd:element name="Number" type="xsd:int" minOccurs="0"
 				maxOccurs="1">
 				<xsd:annotation>
-					<xsd:documentation>
-						The number is only necessary for describing
+					<xsd:documentation>The number is only necessary for describing
 						slots but not the "Uplink" connector
 					</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="ConnectorType" type="xsd:string"
-				minOccurs="1" maxOccurs="1">
-			</xsd:element>
+				minOccurs="1" maxOccurs="1"></xsd:element>
 			<xsd:element name="Label" type="xsd:string" minOccurs="1"
-				maxOccurs="1">
-			</xsd:element>
+				maxOccurs="1"></xsd:element>
 			<xsd:element name="Transform" type="xsd:string"
 				minOccurs="0" maxOccurs="1">
 				<xsd:annotation>
 					<xsd:documentation>The transform element contains relative position
 						and rotations. It might be the same transform syntax than in
-						PLMXML but depend on our needs.</xsd:documentation>
+						PLMXML but depend on our needs.
+					</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="AvailSpace" type="xsd:string"
 				minOccurs="0" maxOccurs="1">
 				<xsd:annotation>
 					<xsd:documentation>
-						Size as space separated string with max XYZ	sizes
+						Size as space separated string with max XYZ
+						sizes
 					</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
@@ -40,15 +40,13 @@
 
 	<xsd:complexType name="CoolingDeviceType">
 		<xsd:complexContent>
-			<xsd:extension base="xsd_1:DEBBComplexType">
+			<xsd:extension base="xsd_1:DEBBComponentType">
 				<xsd:sequence>
 					<xsd:element name="Class">
 						<xsd:simpleType>
 							<xsd:restriction base="xsd:string">
 								<xsd:enumeration value="Fan"></xsd:enumeration>
-								<xsd:enumeration
-									value="Refrigeration">
-								</xsd:enumeration>
+								<xsd:enumeration value="Refrigeration"></xsd:enumeration>
 								<xsd:enumeration value="Heatpipe"></xsd:enumeration>
 								<xsd:enumeration value="ILC"></xsd:enumeration>
 								<xsd:enumeration value="LCU"></xsd:enumeration>
@@ -57,19 +55,9 @@
 							</xsd:restriction>
 						</xsd:simpleType>
 					</xsd:element>
-					<xsd:element minOccurs="0" name="MaxCoolingCapacity"
-						type="xsd:decimal" />
+					<xsd:element name="MaxCoolingCapacity" type="xsd:decimal"
+						minOccurs="0" />
 					<xsd:element name="CoolingCapacityRated" type="xsd:decimal"></xsd:element>
-					<xsd:element minOccurs="0" name="MaxAirThroughput"
-						type="xsd:decimal" />
-					<xsd:element minOccurs="0" name="MaxWaterThroughput"
-						type="xsd:decimal" />
-					<xsd:element name="AirThroughputProfile"
-						type="xsd_1:FlowProfileType" maxOccurs="1" minOccurs="0">
-					</xsd:element>
-					<xsd:element name="WaterThroughputProfile"
-						type="xsd_1:FlowProfileType" maxOccurs="1" minOccurs="0">
-					</xsd:element>
 					<xsd:element name="EnergyEfficiencyRatio"
 						type="xsd_1:CoolingEERType" minOccurs="0" maxOccurs="1">
 					</xsd:element>
@@ -80,77 +68,74 @@
 
 	<xsd:complexType name="CoolingEEREntryType">
 		<xsd:sequence>
-			<xsd:element name="LWT" type="xsd:float" maxOccurs="1" minOccurs="1">
+			<xsd:element name="LWT" type="xsd:float" minOccurs="1"
+				maxOccurs="1">
 				<xsd:annotation>
-					<xsd:documentation>Water temperature entering the chiller</xsd:documentation>
-				</xsd:annotation></xsd:element>
-			<xsd:element name="CWT" type="xsd:float" maxOccurs="1" minOccurs="1">
+					<xsd:documentation>Water temperature entering the chiller
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="CWT" type="xsd:float" minOccurs="1"
+				maxOccurs="1">
 				<xsd:annotation>
-					<xsd:documentation>Air temperature entering the condenser</xsd:documentation>
-				</xsd:annotation></xsd:element>
-			<xsd:element name="Capacity" type="xsd:int" maxOccurs="1" minOccurs="1"></xsd:element>
-			<xsd:element name="PowerUsage" type="xsd:int" maxOccurs="1" minOccurs="1"></xsd:element>
-			<xsd:element name="EER" type="xsd:float" maxOccurs="1" minOccurs="1"></xsd:element>
+					<xsd:documentation>Air temperature entering the condenser
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Capacity" type="xsd:int" minOccurs="1"
+				maxOccurs="1"></xsd:element>
+			<xsd:element name="PowerUsage" type="xsd:int" minOccurs="1"
+				maxOccurs="1"></xsd:element>
+			<xsd:element name="EER" type="xsd:float" minOccurs="1"
+				maxOccurs="1"></xsd:element>
 		</xsd:sequence>
 	</xsd:complexType>
 
 	<xsd:complexType name="CStateType">
 		<xsd:sequence>
 			<xsd:element name="State" type="xsd:int" />
+			<xsd:element name="Name" type="xsd:string" minOccurs="0"
+				maxOccurs="1" />
 			<xsd:element name="PowerUsage" type="xsd:double" />
 		</xsd:sequence>
 	</xsd:complexType>
 
-	<xsd:complexType name="DEBBComplexType">
-		<xsd:annotation>
-			<xsd:documentation>DEBBComplexType described the more complex parts
-				in comparison to DEBBPhysicalElementsType like power supplies,
-				cooling devices, etc</xsd:documentation>
-		</xsd:annotation>
-		<xsd:complexContent>
-			<xsd:extension base="xsd_1:DEBBSimpleType">
-				<xsd:sequence>
-					<xsd:element name="Inlet" type="xsd_1:FlowPumpType"
-						maxOccurs="unbounded" minOccurs="0">
-					</xsd:element>
-					<xsd:element name="Outlet" type="xsd_1:FlowPumpType"
-						maxOccurs="unbounded" minOccurs="0">
-					</xsd:element>
-					<xsd:element name="Heatsink" type="xsd_1:HeatsinkType"
-						maxOccurs="unbounded" minOccurs="0">
-					</xsd:element>
-					<xsd:element name="Sensor" type="xsd_1:SensorType"
-						maxOccurs="unbounded" minOccurs="0">
-					</xsd:element>
-					<xsd:element name="Network" type="xsd_1:NetworkType"
-						minOccurs="0" maxOccurs="unbounded"></xsd:element>
-				</xsd:sequence>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
-
-
 	<xsd:complexType name="DEBBComponentType">
 		<xsd:annotation>
 			<xsd:documentation>
-				DEBBComponent is used to represent exactly one DEBB
-				Component as it is used in the project and references by
-				its own ComponentID. In opposite to DEBBPhysicalElement
-				but is not referenced at all since this would lead to a
-				much more complex simulation. Examples for
-				DEBBComponents: Any model of
-				Node/NodeGroup/Rack/ServerRoom/PowerSupply/CoolingDevice/Fan/Sensor/...
+				DEBBComponent is used to represent one possible
+				DEBB Component as it is used in the project and references by its
+				own ComponentId. All ComponentType are based on this type Examples
+				for DEBBComponents: Any model of ode/NodeGroup/Rack/ServerRoom
+				/PowerSupply/CoolingDevice/Fan/Sensor/...
 			</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
-			<xsd:extension base="xsd_1:DEBBComplexType">
+			<xsd:extension base="xsd_1:DEBBPhysicalElementType">
 				<xsd:sequence>
-					<xsd:element name="Connector" type="xsd_1:ConnectorType"
-						minOccurs="0" maxOccurs="1">
-					</xsd:element>
-					<xsd:element name="Slot" type="xsd_1:ConnectorType"
+					<xsd:element name="ComponentId" type="xsd:string"
+						maxOccurs="1" minOccurs="0"></xsd:element>
+					<xsd:element name="SchemaVersion" type="xsd:string"
+						maxOccurs="1" minOccurs="0"></xsd:element>
+					<xsd:element name="Inlet" type="xsd_1:FlowPumpType"
+						maxOccurs="unbounded" minOccurs="0" />
+					<xsd:element name="Outlet" type="xsd_1:FlowPumpType"
+						maxOccurs="unbounded" minOccurs="0" />
+					<xsd:element name="Heatsink" type="xsd_1:HeatsinkType"
+						maxOccurs="unbounded" minOccurs="0" />
+					<xsd:element name="Network" type="xsd_1:NetworkType"
 						minOccurs="0" maxOccurs="unbounded">
+						<xsd:annotation>
+							<xsd:documentation>
+								Network interfaces are normally only relevant for server, but almost 
+								all types of components can have one so description is done here.
+							</xsd:documentation>
+						</xsd:annotation>
 					</xsd:element>
+					<xsd:element name="Connector" type="xsd_1:ConnectorType"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="Slot" type="xsd_1:ConnectorType"
+						minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element name="Size" type="xsd:string" minOccurs="0"
 						maxOccurs="1">
 						<xsd:annotation>
@@ -167,17 +152,24 @@
 	<xsd:complexType name="DEBBPhysicalElementType">
 		<xsd:annotation>
 			<xsd:documentation>DEBBPhysicalElementType is the basic type for all
-				physical existing parts.
-				Examples for DEBBPhysical ElementTypes but not DEBBComplexTypes (memory
-				module, shelves, ...) which might also have a power consumption
-				(normally static)
-				These modules are directly derived from DEBBPhysicalElementType since no
-				additional definition is needed.
+				physical existing parts. Examples for DEBBPhysical ElementTypes but
+				not DEBBComplexTypes (memory module, shelves, ...) which might also
+				have a power consumption (normally static). These modules are
+				directly derived from DEBBPhysicalElementType since no additional
+				definition is needed. Former "DEBBSimpleType" is included here since
+				depending on desired description of components even CPUs may have
+				their own transform etc. so no distinction is necessary.
 			</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element name="ComponentId" type="xsd:string"
-				maxOccurs="1" minOccurs="0">
+			<xsd:element name="PartID" type="xsd:string" maxOccurs="1"
+				minOccurs="0">
+                <xsd:annotation>
+                	<xsd:documentation>PartId may identify any single physical part and may be 
+                		used especially for automatic assignment. The former known ComponentId 
+                		should is defined to be used by humans to identify single parts/components 
+                		with desired granularity</xsd:documentation>
+                </xsd:annotation>
 			</xsd:element>
 			<xsd:element name="Label" type="xsd:string" minOccurs="0"
 				maxOccurs="1">
@@ -195,55 +187,73 @@
 					</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="PowerUsage" type="xsd:float" maxOccurs="1" minOccurs="0"></xsd:element>
-			<xsd:element name="PowerUsageProfile"
-				type="xsd_1:FlowProfileType" minOccurs="0" maxOccurs="1">
+			<xsd:element name="PowerUsageProfile" type="xsd_1:FlowProfileType"
+				minOccurs="0" maxOccurs="1">
 			</xsd:element>
 			<xsd:element name="Type" type="xsd:string" minOccurs="0"
 				maxOccurs="1">
 				<xsd:annotation>
 					<xsd:documentation>
-						The type element might be used to specify a type
-						for the module, i.e. for memory DDR/DDR2, for
-						CPU architecture name etc. It has only
-						informational character.
+						The type element might be used to specify a type for the module, i.e. for memory 
+						DDR/DDR2, for CPU architecture name etc. It has only informational character.
 					</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="Transform" type="xsd:string"
+				minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>
+						The Transform tag is necessary for all part which are located within a Component i.e. fans 
+						within a RECS or sensors or. For The "root" object of a DEBB it is not used. For all parts 
+						at a fixed position within the DEBB (fans, sensors, etc.) this is the transform matrix 
+						relative to the DEBB origin. For DEBBComponents this is the relative position of the 
+						connector to the DEBB's origin. By "adding" the relative transforms the resulting transform 
+						can be directly used for PLMXML.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Reference" type="xsd_1:ReferenceType"
+				minOccurs="0" maxOccurs="unbounded">
+			</xsd:element>
+			<xsd:element name="Sensor" type="xsd_1:SensorType"
+				maxOccurs="unbounded" minOccurs="0" />
+			<xsd:element name="IsPartTemplate" type="xsd:boolean"
+				minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>
+						IsPartTemplate is used to declare if this description is only a template for further usage 
+						defining parts (PhysicalElement) within the component. An part instance then refers to the 
+						template and only additional or changing elements have to be specified
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="UseTemplate" type="xsd:boolean"
+				minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>
+						UseTemplate is used to declare if this part (PhysicalElement) description is based on a 
+						predefined tempalte. So i.e. for many identical parts woth only different locations and 
+						names the specification can be shortened and done in a more readable way.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Profiles" type="xsd_1:FlowListType"
+				minOccurs="0" maxOccurs="1"></xsd:element>
 		</xsd:sequence>
 	</xsd:complexType>
 
-	<xsd:complexType name="DEBBSimpleType">
+	<xsd:complexType name="FlowListType">
 		<xsd:annotation>
-			<xsd:documentation>
-				SimpleType describes all distinct devices for CAD, so
-				where Transform and id/name are necessary. On the other
-				side the memory or CPU are nor relevant for that.
+			<xsd:documentation>FlowList describes a list of named profile for flows (air, liquid, energy, ...). 
+				Especially for complex devices like cooling only relevant profiles need to be specified
 			</xsd:documentation>
 		</xsd:annotation>
-		<xsd:complexContent>
-			<xsd:extension base="xsd_1:DEBBPhysicalElementType">
-				<xsd:sequence>
-					<xsd:element name="Transform" type="xsd:string"
-						minOccurs="0" maxOccurs="1">
-						<xsd:annotation>
-							<xsd:documentation>The Transform tag is necessary for all part
-								which are located within a Component i.e. fans within a RECS or
-								sensors or. For The "root object of a DEBB it is not used.
-								For all parts at a fixed position within the DEBB (fans, sensors,
-								etc.) this is the transform matrix relative to the DEBB origin.
-								For DEBBComponents this is the relative position of the
-								connector to the DEBB's origin. By "adding" the relative
-								transforms the resulting transform can be directly used for
-								PLMXML.
-							</xsd:documentation>
-						</xsd:annotation>
-					</xsd:element>
-					<xsd:element name="Reference" type="xsd_1:ReferenceType"
-						minOccurs="0" maxOccurs="unbounded"></xsd:element>
-				</xsd:sequence>
-			</xsd:extension>
-		</xsd:complexContent>
+		<xsd:sequence>
+			<xsd:element name="Name" type="xsd:string" minOccurs="0"
+				maxOccurs="1"></xsd:element>
+			<xsd:element name="FlowProfiles" type="xsd_1:FlowProfileType"
+				minOccurs="1" maxOccurs="unbounded" />
+		</xsd:sequence>
 	</xsd:complexType>
 
 	<xsd:complexType name="FlowProfileType">
@@ -252,11 +262,26 @@
 				liquid, energy, ...) including different discrete states and
 				possible transitions since they all have the same characteristic
 				attributes. If there are now significant transition times/energy
-				consumptions they are simple omitted</xsd:documentation>
+				consumptions they are simple omitted
+			</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element name="Name" type="xsd:string" minOccurs="0"
 				maxOccurs="1"></xsd:element>
+			<xsd:element name="Type" type="xsd:string"
+				minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Since profiles are no longer statically
+						specified for specific components, the name tag which formerly
+						identified the type or profile (i.e. AirThroughputProfile) is no
+						longer available.
+						Using the name might be not appropriate since multiple profiles of the
+						same kind might then be difficult to distinguish / the type needs
+						to be encoded in the name. Si the type field is then used to
+						simplify the naming.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element name="FlowState" type="xsd_1:FlowStateType"
 				minOccurs="1" maxOccurs="unbounded" />
 		</xsd:sequence>
@@ -265,12 +290,11 @@
 	<xsd:complexType name="FlowStateType">
 		<xsd:annotation>
 			<xsd:documentation>FlowStateType describes any kind of flow (air,
-				liquid, power, ...) and assumes that for maintaining the flow a
-				certain power usage is necessary.
-				For power supply units only the power which is used for
-				creating/transforming the power flow is counted as PowerUsage, but
-				not the power provided. So adding all PowerUsages will show the
-				overall consumption
+				iquid, power, ...) and assumes that for maintaining the flow a
+				certain power usage is necessary. For power supply units only the
+				power which is used for creating/transforming the power flow is
+				counted as PowerUsage, but not the power provided. So adding all
+				PowerUsages will show the overall consumption
 			</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
@@ -281,25 +305,32 @@
 			<xsd:element name="PowerUsage" type="xsd:double"
 				maxOccurs="1" minOccurs="0">
 			</xsd:element>
-			<xsd:element name="Description" type="xsd:string" maxOccurs="1" minOccurs="0"></xsd:element>
+			<xsd:element name="Description" type="xsd:string"
+				maxOccurs="1" minOccurs="0">
+			</xsd:element>
+			<xsd:element name="Efficiency" type="xsd:double"
+				minOccurs="0" maxOccurs="1"></xsd:element>
 		</xsd:sequence>
 	</xsd:complexType>
 
 	<xsd:complexType name="HeatsinkType">
-        <xsd:annotation>
-        	<xsd:documentation>A heatsink is any type of device transfering heat betweeen two neighbour gas, fluids or solids like
-- heat exchanger in colling deviced transfering heat from one cooling circuit to another (i.e. air/liquid or liquid/liquid)
-- cpu cooler transfering heta from the cpu to the air or liquid  (solid/air or liquid)
-</xsd:documentation>
-        </xsd:annotation>
-        <xsd:complexContent>
-			<xsd:extension base="xsd_1:DEBBSimpleType">
+		<xsd:annotation>
+			<xsd:documentation>A heatsink is any type of device transfering heat
+				betweeen two neighbour gas, fluids or solids like
+				- heat exchanger in colling deviced transfering heat from one cooling circuit to
+					another(i.e. air/liquid or liquid/liquid)
+				- cpu cooler transfering heta from the cpu to the air or liquid (solid/air or liquid)
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="xsd_1:DEBBPhysicalElementType">
 				<xsd:sequence>
 					<xsd:element name="TransferRate" type="xsd:float"
 						minOccurs="0" maxOccurs="1">
 						<xsd:annotation>
 							<xsd:documentation>Also called efficiency</xsd:documentation>
-						</xsd:annotation></xsd:element>
+						</xsd:annotation>
+					</xsd:element>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -326,7 +357,8 @@
 						minOccurs="0" maxOccurs="1">
 						<xsd:annotation>
 							<xsd:documentation>Physical Interface description like fibre,
-								twisted pair, etc.</xsd:documentation>
+								twisted pair, etc.
+							</xsd:documentation>
 						</xsd:annotation>
 					</xsd:element>
 					<xsd:element name="Technology" type="xsd:string"
@@ -361,16 +393,19 @@
 	</xsd:complexType>
 
 	<xsd:complexType name="FlowPumpType">
-        <xsd:annotation>
-        	<xsd:documentation>FlowPump includes all devices "moving" air or liquid like fans, water pumps etc.</xsd:documentation>
-        </xsd:annotation>
-        <xsd:complexContent>
-			<xsd:extension base="xsd_1:DEBBSimpleType">
+		<xsd:annotation>
+			<xsd:documentation>FlowPump includes all devices "moving" air or
+				liquid like fans, water pumps etc.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="xsd_1:DEBBPhysicalElementType">
 				<xsd:sequence>
-					<xsd:element name="MaxRPM" type="xsd:int"
-						minOccurs="0" maxOccurs="1">
+					<xsd:element name="MaxRPM" type="xsd:int" minOccurs="0"
+						maxOccurs="1">
 					</xsd:element>
-					<xsd:element name="Efficiency" type="xsd:float" maxOccurs="1" minOccurs="0"></xsd:element>
+					<xsd:element name="Efficiency" type="xsd:float"
+						maxOccurs="1" minOccurs="0"></xsd:element>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -378,7 +413,7 @@
 
 	<xsd:complexType name="PowerSupplyType">
 		<xsd:complexContent>
-			<xsd:extension base="xsd_1:DEBBComplexType">
+			<xsd:extension base="xsd_1:DEBBComponentType">
 				<xsd:sequence>
 					<xsd:element name="Class">
 						<xsd:simpleType>
@@ -393,8 +428,6 @@
 					<!-- maximum output power of the PowerSupply metered in miliWatt -->
 					<xsd:element name="TotalOutputPower" type="xsd:decimal" />
 					<xsd:element name="Efficiency" type="xsd:int"></xsd:element>
-					<xsd:element name="PowerProfile" type="xsd_1:FlowProfileType"
-						maxOccurs="1" minOccurs="0"></xsd:element>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -422,39 +455,56 @@
 		</xsd:complexContent>
 	</xsd:complexType>
 
-    <xsd:complexType name="PStateLoadPowerUsageType">
+	<xsd:complexType name="PStateLoadPowerUsageType">
 		<xsd:sequence>
-			<xsd:element name="Load" type="xsd:float" maxOccurs="1" minOccurs="1"></xsd:element>
-			<xsd:element name="PowerUsage" type="xsd:float" maxOccurs="1" minOccurs="1"></xsd:element>
+			<xsd:element name="Load" type="xsd:float" maxOccurs="1"
+				minOccurs="1"></xsd:element>
+			<xsd:element name="PowerUsage" type="xsd:float"
+				maxOccurs="1" minOccurs="1"></xsd:element>
 		</xsd:sequence>
 	</xsd:complexType>
 
 	<xsd:complexType name="PStateType">
 		<xsd:sequence>
 			<xsd:element name="State" type="xsd:int" />
+			<xsd:element name="Name" type="xsd:string" minOccurs="0"
+				maxOccurs="1" />
 			<xsd:element name="Frequency" type="xsd:double" />
 			<xsd:element name="Voltage" type="xsd:double" />
-			<xsd:element name="PowerUsageMin" type="xsd:double" maxOccurs="1" minOccurs="0">
+			<xsd:element name="PowerUsageMin" type="xsd:double"
+				maxOccurs="1" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>No longer used, only for compatibility reasons.
-Replaced by LoadPwerUsage with more options</xsd:documentation>
-				</xsd:annotation></xsd:element>
-			<xsd:element name="PowerUsageMax" type="xsd:double" maxOccurs="1" minOccurs="0">
+					<xsd:documentation>
+						No longer used, only for compatibility reasons.
+						Replaced by LoadPwerUsage with more options
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="PowerUsageMax" type="xsd:double"
+				maxOccurs="1" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>No longer used, only for compatibility reasons.
-Replaced by LoadPwerUsage with more options</xsd:documentation></xsd:annotation></xsd:element>
-			<xsd:element name="LoadPowerUsage" type="xsd_1:PStateLoadPowerUsageType" maxOccurs="unbounded" minOccurs="0">
+					<xsd:documentation>
+						No longer used, only for compatibility reasons.
+						Replaced by LoadPwerUsage with more options
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="LoadPowerUsage" type="xsd_1:PStateLoadPowerUsageType"
+				maxOccurs="unbounded" minOccurs="0">
 				<xsd:annotation>
-					<xsd:documentation>Replaces PowerUsageMin/Max and allows specifying PowerUsage for specific loads.</xsd:documentation>
-				</xsd:annotation></xsd:element>
+					<xsd:documentation>
+						Replaces PowerUsageMin/Max and allows specifying
+						PowerUsage for specific loads.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:complexType>
 
 	<xsd:complexType name="ReferenceType">
 		<xsd:annotation>
-			<xsd:documentation>
-				ReferenceType describes references to external files
-				like STL, VRML, etc. and consists of a type and path.
+			<xsd:documentation>ReferenceType describes references to external
+				files like STL, VRML, etc. and consists of a type and path.
 			</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
@@ -467,77 +517,96 @@ Replaced by LoadPwerUsage with more options</xsd:documentation></xsd:annotation>
 	</xsd:complexType>
 
 	<xsd:complexType name="SensorType">
-		<xsd:complexContent>
-			<xsd:extension base="xsd_1:DEBBSimpleType">
-				<xsd:sequence>
-					<xsd:element name="Class">
-						<xsd:simpleType>
-							<xsd:restriction base="xsd:string">
-								<xsd:enumeration value="Temperature"></xsd:enumeration>
-								<xsd:enumeration value="Voltage"></xsd:enumeration>
-								<xsd:enumeration value="Power"></xsd:enumeration>
-								<xsd:enumeration value="Humidity"></xsd:enumeration>
-								<xsd:enumeration value="Throughput"></xsd:enumeration>
-								<xsd:enumeration value="Velocity"></xsd:enumeration>
-							</xsd:restriction>
-						</xsd:simpleType>
-					</xsd:element>
-					<xsd:element name="Unit">
-						<xsd:annotation>
-							<xsd:documentation>Only basic units should be used. For later
-								development other units can be used then the Factor should be
-								added.</xsd:documentation>
-						</xsd:annotation>
-						<xsd:simpleType>
-							<xsd:restriction base="xsd:string">
-								<xsd:enumeration value="°C"></xsd:enumeration>
-								<xsd:enumeration value="V"></xsd:enumeration>
-								<xsd:enumeration value="mV"></xsd:enumeration>
-								<xsd:enumeration value="kV"></xsd:enumeration>
-								<xsd:enumeration value="W"></xsd:enumeration>
-								<xsd:enumeration value="mW"></xsd:enumeration>
-								<xsd:enumeration value="kW"></xsd:enumeration>
-								<xsd:enumeration value="MW"></xsd:enumeration>
-								<xsd:enumeration value="%"></xsd:enumeration>
-								<xsd:enumeration value="l/sec"></xsd:enumeration>
-								<xsd:enumeration value="l/min"></xsd:enumeration>
-								<xsd:enumeration value="l/h"></xsd:enumeration>
-								<xsd:enumeration value="m3/min"></xsd:enumeration>
-								<xsd:enumeration value="m3/h"></xsd:enumeration>
-								<xsd:enumeration value="m/s"></xsd:enumeration>
-								<xsd:enumeration value="km/h"></xsd:enumeration>
-							</xsd:restriction>
-						</xsd:simpleType>
-					</xsd:element>
-					<xsd:element name="MinValue" type="xsd:float"
-						maxOccurs="1" minOccurs="0">
-					</xsd:element>
-					<xsd:element name="MaxValue" type="xsd:float"
-						maxOccurs="1" minOccurs="0">
-					</xsd:element>
-					<xsd:element name="Factor" type="xsd:float" maxOccurs="1"
-						minOccurs="0">
-						<xsd:annotation>
-							<xsd:documentation>Factor is just the multiplier between the
-								currently used unit and the basic unit (i.e. litre to cubic
-								meter)</xsd:documentation>
-						</xsd:annotation>
-					</xsd:element>
-					<xsd:element name="Accuracy" type="xsd:float"
-						maxOccurs="1" minOccurs="0">
-					</xsd:element>
-					<xsd:element name="Input" type="xsd:boolean">
-						<xsd:annotation>
-							<xsd:documentation>Input is a flag describing that a sensors is a
-								input value for the simulation or not. for example heat sources
-								can be seen an sources without any output afterwards. Other
-								sensors migth be added for extracting results at the end of the
-								simulation.</xsd:documentation>
-						</xsd:annotation>
-					</xsd:element>
-				</xsd:sequence>
-			</xsd:extension>
-		</xsd:complexContent>
+		<xsd:annotation>
+			<xsd:documentation>SensorType describes not a physical sensor,
+				instead only the sensor functionality. Therefore it is not derived
+				from DEBBPhysicalElement
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Name" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>The name represents the sensor name used in
+						the PLMXML UserValue value attribute
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Class">
+				<xsd:annotation>
+					<xsd:documentation>The classses represent the different constants
+						represented in the PLMXML UserValue title attributes for sensors
+					</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="temperature-sensor"></xsd:enumeration>
+						<xsd:enumeration value="voltage-sensor"></xsd:enumeration>
+						<xsd:enumeration value="power-sensor"></xsd:enumeration>
+						<xsd:enumeration value="humidity-sensor"></xsd:enumeration>
+						<xsd:enumeration value="airflow-volume-sensor"></xsd:enumeration>
+						<xsd:enumeration value="airflow-speed-sensor"></xsd:enumeration>
+						<xsd:enumeration value="throughput-sensor"></xsd:enumeration>
+						<xsd:enumeration value="throughput-sensor"></xsd:enumeration>
+						<xsd:enumeration value="velocity-sensor"></xsd:enumeration>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="Unit">
+				<xsd:annotation>
+					<xsd:documentation>Only basic units should be used. For later development 
+						other units can be used then the Factor should be added.
+					</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="°C"></xsd:enumeration>
+						<xsd:enumeration value="V"></xsd:enumeration>
+						<xsd:enumeration value="mV"></xsd:enumeration>
+						<xsd:enumeration value="kV"></xsd:enumeration>
+						<xsd:enumeration value="W"></xsd:enumeration>
+						<xsd:enumeration value="mW"></xsd:enumeration>
+						<xsd:enumeration value="kW"></xsd:enumeration>
+						<xsd:enumeration value="MW"></xsd:enumeration>
+						<xsd:enumeration value="%"></xsd:enumeration>
+						<xsd:enumeration value="l/sec"></xsd:enumeration>
+						<xsd:enumeration value="l/min"></xsd:enumeration>
+						<xsd:enumeration value="l/h"></xsd:enumeration>
+						<xsd:enumeration value="m3/min"></xsd:enumeration>
+						<xsd:enumeration value="m3/h"></xsd:enumeration>
+						<xsd:enumeration value="m/s"></xsd:enumeration>
+						<xsd:enumeration value="km/h"></xsd:enumeration>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="MinValue" type="xsd:float" maxOccurs="1"
+				minOccurs="0">
+			</xsd:element>
+			<xsd:element name="MaxValue" type="xsd:float" maxOccurs="1"
+				minOccurs="0">
+			</xsd:element>
+			<xsd:element name="Factor" type="xsd:float" maxOccurs="1"
+				minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Factor is just the multiplier between he
+						currently used unit and the basic unit (i.e. litre to cubic	meter)
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Accuracy" type="xsd:float" maxOccurs="1"
+				minOccurs="0">
+			</xsd:element>
+			<xsd:element name="Input" type="xsd:boolean">
+				<xsd:annotation>
+					<xsd:documentation>
+						Input is a flag describing that a sensors is a
+						input value for the simulation or not. for example heat sources
+						can be seen an sources without any output afterwards. Other
+						sensors migth be added for extracting results at the end of the
+						simulation.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
 	</xsd:complexType>
 
 	<xsd:element name="Node" type="xsd_1:NodeType"></xsd:element>
@@ -554,7 +623,9 @@ Replaced by LoadPwerUsage with more options</xsd:documentation></xsd:annotation>
 
 	<xsd:complexType name="CoolingEERType">
 		<xsd:sequence>
-			<xsd:element name="Item" type="xsd_1:CoolingEEREntryType" maxOccurs="unbounded" minOccurs="1"></xsd:element>
+			<xsd:element name="Item" type="xsd_1:CoolingEEREntryType"
+				maxOccurs="unbounded" minOccurs="1"></xsd:element>
 		</xsd:sequence>
 	</xsd:complexType>
+
 </xsd:schema>
