@@ -237,6 +237,15 @@
 					</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="InstanceName" type="xsd:string"
+				minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>
+						Since instanciated templates need to be distinguished, for all instances a seperate 
+						name has to be specified which then should be added as prefix to all names in the template
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 			<xsd:element name="Profiles" type="xsd_1:FlowListType"
 				minOccurs="0" maxOccurs="1"></xsd:element>
 		</xsd:sequence>
@@ -545,7 +554,6 @@
 						<xsd:enumeration value="humidity-sensor"></xsd:enumeration>
 						<xsd:enumeration value="airflow-volume-sensor"></xsd:enumeration>
 						<xsd:enumeration value="airflow-speed-sensor"></xsd:enumeration>
-						<xsd:enumeration value="throughput-sensor"></xsd:enumeration>
 						<xsd:enumeration value="throughput-sensor"></xsd:enumeration>
 						<xsd:enumeration value="velocity-sensor"></xsd:enumeration>
 					</xsd:restriction>
