@@ -92,5 +92,5 @@ fos_user:
             type: coolemall_user_profile
 
 debb_config:
-    svn_path: %debb_svn_path%
-    svn_url: %debb_svn_url%
+    svn_path: /var/www/debbsvn
+    svn_url: http://debbconfig:82/svn

@@ -21,6 +21,7 @@ class RoomType extends BaseType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+			->add('componentId', null, array('required' => false))
 			->add('name', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis')))
             ->add('building', null, array('required' => false))
 			->add('sizeX', 'hidden', array('required' => false))

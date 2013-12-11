@@ -15,13 +15,20 @@ class FlowPumpType extends DEBBSimpleType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 	    parent::buildForm($builder, $options);
+		$transform = $builder->get('transform');
+		$references = $builder->get('references');
+
         $builder
+			->remove('transform')
+			->remove('references')
 	        ->add('sizeX', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis'), 'label' => 'SizeX'))
 	        ->add('sizeY', null, array('required' => false, 'label' => 'SizeY'))
-	        ->add('sizeZ', null, array('required' => false, 'label' => 'SizeZ'))
-	        ->add('maxRPM', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis')))
-	        ->add('efficiency', null, array('required' => false))
+	        ->add('sizeZ', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis'), 'label' => 'SizeZ'))
+	        ->add('maxRPM', null, array('required' => false))
+	        ->add('efficiency', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis')))
 			->add('inlet', 'choice', array('choices' => array(0 => 'Outlet', 1 => 'Inlet'), 'label' => 'Mode'))
+			->add($transform)
+			->add($references)
         ;
     }
     

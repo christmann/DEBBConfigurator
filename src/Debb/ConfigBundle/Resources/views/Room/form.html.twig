@@ -39,6 +39,7 @@
 {% block content %}
     {{ form_errors(form) }}
 	<div style="margin-left: 6px;">
+        {{ form_row(form.componentId) }}
         {{ form_row(form.name) }}
 		{{ form_row(form.building) }}
         {{ form_row(form.sizeY) }}

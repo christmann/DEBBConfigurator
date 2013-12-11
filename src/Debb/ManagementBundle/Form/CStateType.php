@@ -21,6 +21,7 @@ class CStateType extends AbstractType
     {
         $builder
 			->add('state', 'integer', array('mapped' => false, 'required' => false, 'disabled' => true, 'attr' => array('ignoreform' => true)))
+			->add('name', null)
             ->add('powerUsage', 'decimal')
         ;
     }

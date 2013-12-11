@@ -12,7 +12,10 @@ function guid()
 
 $(function ()
 {
-    $('.noBreakAfterThis').parent().css('float', 'left').css('margin-right', '30px');
+	$('.noBreakAfterThis').parent().addClass('isNoBreakAfterThis').each(function(index)
+	{
+		$(this).next('div:not(.isNoBreakAfterThis)').after('<div class="clear"></div>');
+	});
 
     var changed = false;
     var isSubmitted = false;

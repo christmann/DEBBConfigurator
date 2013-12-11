@@ -38,34 +38,6 @@ class CoolingDevice extends DEBBComplex
 	private $coolingCapacityRated;
 
 	/**
-	 * @var float
-	 *
-	 * @ORM\Column(name="MaxAirThroughput", type="decimal", precision=18, scale=9, nullable=true)
-	 */
-	private $maxAirThroughput;
-
-	/**
-	 * @var float
-	 *
-	 * @ORM\Column(name="MaxWaterThroughput", type="decimal", precision=18, scale=9, nullable=true)
-	 */
-	private $maxWaterThroughput;
-
-	/**
-	 * @var \Debb\ManagementBundle\Entity\FlowProfile
-	 *
-	 * @ORM\ManyToOne(targetEntity="Debb\ManagementBundle\Entity\FlowProfile")
-	 */
-	private $airThroughputProfile;
-
-	/**
-	 * @var \Debb\ManagementBundle\Entity\FlowProfile
-	 *
-	 * @ORM\ManyToOne(targetEntity="Debb\ManagementBundle\Entity\FlowProfile")
-	 */
-	private $waterThroughputProfile;
-
-	/**
 	 * @var \Debb\ManagementBundle\Entity\CoolingEER
 	 *
 	 * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\CoolingEER", mappedBy="coolingDevice", cascade={"all"}, orphanRemoval=true)
@@ -104,22 +76,6 @@ class CoolingDevice extends DEBBComplex
 			$array['MaxCoolingCapacity'] = DecimalTransformer::convert($this->getMaxCoolingCapacity());
 		}
 		$array['CoolingCapacityRated'] = DecimalTransformer::convert((string) $this->getCoolingCapacityRated());
-		if ($this->getMaxAirThroughput() !== null)
-		{
-			$array['MaxAirThroughput'] = DecimalTransformer::convert($this->getMaxAirThroughput());
-		}
-		if ($this->getMaxWaterThroughput() !== null)
-		{
-			$array['MaxWaterThroughput'] = DecimalTransformer::convert($this->getMaxWaterThroughput());
-		}
-		if ($this->getAirThroughputProfile() !== null)
-		{
-			$array['AirThroughputProfile'] = $this->getAirThroughputProfile()->getDebbXmlArray();
-		}
-		if ($this->getWaterThroughputProfile() !== null)
-		{
-			$array['WaterThroughputProfile'] = $this->getWaterThroughputProfile()->getDebbXmlArray();
-		}
 		if ($this->getEnergyEfficiencyRatio() !== null && count($this->getEnergyEfficiencyRatio()) > 0)
 		{
 			$array['EnergyEfficiencyRatio'] = array();
@@ -175,98 +131,6 @@ class CoolingDevice extends DEBBComplex
     public function getMaxCoolingCapacity()
     {
         return $this->maxCoolingCapacity;
-    }
-
-    /**
-     * Set maxAirThroughput
-     *
-     * @param float $maxAirThroughput
-     * @return CoolingDevice
-     */
-    public function setMaxAirThroughput($maxAirThroughput)
-    {
-        $this->maxAirThroughput = $maxAirThroughput;
-    
-        return $this;
-    }
-
-    /**
-     * Get maxAirThroughput
-     *
-     * @return float 
-     */
-    public function getMaxAirThroughput()
-    {
-        return $this->maxAirThroughput;
-    }
-
-    /**
-     * Set maxWaterThroughput
-     *
-     * @param float $maxWaterThroughput
-     * @return CoolingDevice
-     */
-    public function setMaxWaterThroughput($maxWaterThroughput)
-    {
-        $this->maxWaterThroughput = $maxWaterThroughput;
-    
-        return $this;
-    }
-
-    /**
-     * Get maxWaterThroughput
-     *
-     * @return float 
-     */
-    public function getMaxWaterThroughput()
-    {
-        return $this->maxWaterThroughput;
-    }
-
-    /**
-     * Set airThroughputProfile
-     *
-     * @param \Debb\ManagementBundle\Entity\FlowProfile $airThroughputProfile
-     * @return CoolingDevice
-     */
-    public function setAirThroughputProfile(\Debb\ManagementBundle\Entity\FlowProfile $airThroughputProfile = null)
-    {
-        $this->airThroughputProfile = $airThroughputProfile;
-    
-        return $this;
-    }
-
-    /**
-     * Get airThroughputProfile
-     *
-     * @return \Debb\ManagementBundle\Entity\FlowProfile 
-     */
-    public function getAirThroughputProfile()
-    {
-        return $this->airThroughputProfile;
-    }
-
-    /**
-     * Set waterThroughputProfile
-     *
-     * @param \Debb\ManagementBundle\Entity\FlowProfile $waterThroughputProfile
-     * @return CoolingDevice
-     */
-    public function setWaterThroughputProfile(\Debb\ManagementBundle\Entity\FlowProfile $waterThroughputProfile = null)
-    {
-        $this->waterThroughputProfile = $waterThroughputProfile;
-    
-        return $this;
-    }
-
-    /**
-     * Get waterThroughputProfile
-     *
-     * @return \Debb\ManagementBundle\Entity\FlowProfile 
-     */
-    public function getWaterThroughputProfile()
-    {
-        return $this->waterThroughputProfile;
     }
 
     /**

@@ -18,7 +18,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Base
 {
-
 	/**
 	 * @var integer
 	 *
@@ -31,9 +30,23 @@ class Base
 	/**
 	 * @var string
 	 *
+	 * @ORM\Column(name="part_id", type="string", length=255, nullable=true)
+	 */
+	private $partId;
+
+	/**
+	 * @var string
+	 *
 	 * @ORM\Column(name="componentid", type="string", length=255, nullable=true)
 	 */
 	private $componentId;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="schema_version", type="string", length=255, nullable=true)
+	 */
+	private $schemaVersion;
 
 	/**
 	 * @var string
@@ -97,11 +110,11 @@ class Base
 	private $maxPower;
 
 	/**
-	 * @var float
+	 * @var string
 	 *
-	 * @ORM\Column(name="power_usage", type="float", nullable=true)
+	 * @ORM\Column(name="instance_name", type="string", length=255, nullable=true)
 	 */
-	private $powerUsage;
+	private $instanceName;
 
 	/**
 	 * @var \Debb\ManagementBundle\Entity\FlowProfile[]
@@ -208,23 +221,23 @@ class Base
 	}
 
 	/**
-	 * Sets the component id
+	 * Sets the part id
 	 *
-	 * @param string $componentId
+	 * @param string $partId
 	 */
-	public function setComponentId($componentId)
+	public function setPartId($partId)
 	{
-		$this->componentId = $componentId;
+		$this->partId = $partId;
 	}
 
 	/**
-	 * Get the component id - if to short use the unique id
+	 * Get the part id - if to short use the unique id
 	 * 
-	 * @return string the component id
+	 * @return string the part id
 	 */
-	public function getComponentId()
+	public function getPartId()
 	{
-		if($this->componentId == null || strlen($this->componentId) < 2)
+		if($this->partId == null || strlen($this->partId) < 2)
 		{
 			$name = preg_replace('#[^\d\w]#', '', $this->getFullName());
 			while(strlen($name) < 5)
@@ -236,9 +249,9 @@ class Base
 			{
 				return null;
 			}
-			$this->setComponentId($name . '_' . $this->getId());
+			$this->setPartId($name . '_' . $this->getId());
 		}
-		return $this->componentId;
+		return $this->partId;
 	}
 
 	/**
@@ -251,7 +264,15 @@ class Base
 		$array = array();
 		if ($this->getComponentId() != null)
 		{
+			$array['PartID'] = $this->getPartId();
+		}
+		if ($this->getComponentId() != null)
+		{
 			$array['ComponentId'] = $this->getComponentId();
+		}
+		if ($this->getSchemaVersion() != null)
+		{
+			$array['SchemaVersion'] = $this->getSchemaVersion();
 		}
 		if ($this->getLabel() != null)
 		{
@@ -268,10 +289,6 @@ class Base
 		if ($this->getMaxPower() != null)
 		{
 			$array['MaxPower'] = $this->getMaxPower();
-		}
-		if ($this->getPowerUsage() != null)
-		{
-			$array['PowerUsage'] = $this->getPowerUsage();
 		}
 		if ($this->getPowerUsageProfile() != null)
 		{
@@ -453,29 +470,6 @@ class Base
     }
 
     /**
-     * Set powerUsage
-     *
-     * @param float $powerUsage
-     * @return Base
-     */
-    public function setPowerUsage($powerUsage)
-    {
-        $this->powerUsage = $powerUsage;
-    
-        return $this;
-    }
-
-    /**
-     * Get powerUsage
-     *
-     * @return float 
-     */
-    public function getPowerUsage()
-    {
-        return $this->powerUsage;
-    }
-
-    /**
      * Set powerUsageProfile
      *
      * @param \Debb\ManagementBundle\Entity\FlowProfile $powerUsageProfile
@@ -519,5 +513,74 @@ class Base
     public function getXmlName()
     {
         return $this->xmlName;
+    }
+
+    /**
+     * Set schemaVersion
+     *
+     * @param string $schemaVersion
+     * @return Base
+     */
+    public function setSchemaVersion($schemaVersion)
+    {
+        $this->schemaVersion = $schemaVersion;
+    
+        return $this;
+    }
+
+    /**
+     * Get schemaVersion
+     *
+     * @return string 
+     */
+    public function getSchemaVersion()
+    {
+        return $this->schemaVersion;
+    }
+
+    /**
+     * Set componentId
+     *
+     * @param string $componentId
+     * @return Base
+     */
+    public function setComponentId($componentId)
+    {
+        $this->componentId = $componentId;
+    
+        return $this;
+    }
+
+    /**
+     * Get componentId
+     *
+     * @return string 
+     */
+    public function getComponentId()
+    {
+        return $this->componentId;
+    }
+
+    /**
+     * Set instanceName
+     *
+     * @param string $instanceName
+     * @return Base
+     */
+    public function setInstanceName($instanceName)
+    {
+        $this->instanceName = $instanceName;
+    
+        return $this;
+    }
+
+    /**
+     * Get instanceName
+     *
+     * @return string 
+     */
+    public function getInstanceName()
+    {
+        return $this->instanceName;
     }
 }

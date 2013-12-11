@@ -1107,3 +1107,9 @@ div[class*="noBreakAfterThis"]
 {
 	line-height: 20px;
 }
+
+.isNoBreakAfterThis
+{
+	float: left;
+	margin-right: 30px;
+}
