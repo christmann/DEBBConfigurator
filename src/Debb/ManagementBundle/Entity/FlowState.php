@@ -49,6 +49,13 @@ class FlowState
 	private $description;
 
 	/**
+	 * @var float|null
+	 *
+	 * @ORM\Column(name="efficiency", type="decimal", precision=18, scale=9, nullable=true)
+	 */
+	private $efficiency;
+
+	/**
 	 * @var \Debb\ManagementBundle\Entity\FlowProfile
 	 *
 	 * @Assert\NotNull()
@@ -76,6 +83,10 @@ class FlowState
 		if ($this->getDescription() !== null)
 		{
 			$array['Description'] = $this->getDescription();
+		}
+		if ($this->getEfficiency() !== null)
+		{
+			$array['Efficiency'] = $this->getEfficiency();
 		}
 		return $array;
 	}
@@ -203,5 +214,28 @@ class FlowState
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set efficiency
+     *
+     * @param float $efficiency
+     * @return FlowState
+     */
+    public function setEfficiency($efficiency)
+    {
+        $this->efficiency = $efficiency;
+    
+        return $this;
+    }
+
+    /**
+     * Get efficiency
+     *
+     * @return float 
+     */
+    public function getEfficiency()
+    {
+        return $this->efficiency;
     }
 }

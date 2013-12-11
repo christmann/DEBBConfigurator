@@ -54,16 +54,11 @@ class BaseType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder
-			->add('manufacturer', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false))
-			->add('product', null, array('required' => false))
-			->add('label', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false))
-			->add('hostname', null, array('required' => false))
-			->add('type', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false,
-				'label_attr' => array(
-					'data-title' => 'Annotation',
-					'data-content' => 'The type element might be used to specify a type for the module, i.e. for memory DDR/DDR2, for CPU architecture name etc. It has only informational character.',
-					'data-toggle' => 'tooltip'
-				),))
+			->add('componentId', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false))
+			->add('manufacturer', null, array('required' => false))
+			->add('product', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false))
+			->add('label', null, array('required' => false))
+			->add('hostname', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false))
 			->add('maxPower', null, array('required' => false,
 				'label_attr' => array(
 					'data-title' => 'Annotation',
@@ -71,8 +66,14 @@ class BaseType extends AbstractType
 					'data-toggle' => 'tooltip'
 				),))
 			->add('powerUsageProfile', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false, 'query_builder' => $this->userQueryBuilder))
-			->add('powerUsage', null, array('required' => false))
 			->add('xmlName', null, array('required' => false, 'label' => 'XML name'))
+			->add('type', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false,
+				'label_attr' => array(
+					'data-title' => 'Annotation',
+					'data-content' => 'The type element might be used to specify a type for the module, i.e. for memory DDR/DDR2, for CPU architecture name etc. It has only informational character.',
+					'data-toggle' => 'tooltip'
+				),))
+			->add('instanceName', null, array('required' => false))
 		;
 	}
 

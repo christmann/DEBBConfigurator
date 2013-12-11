@@ -23,6 +23,13 @@ class CState
      */
     private $id;
 
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="name", type="string", length=255, nullable=true)
+	 */
+	private $name;
+
     /**
      * @var float
      *
@@ -47,10 +54,11 @@ class CState
 	{
 		$array = array();
 		$array['State'] = $state;
-		if($this->getPowerUsage() !== null)
+		if($this->getName() !== null)
 		{
-			$array['PowerUsage'] = DecimalTransformer::convert($this->getPowerUsage());
+			$array['Name'] = $this->getName();
 		}
+		$array['PowerUsage'] = $this->getPowerUsage() !== null ? DecimalTransformer::convert($this->getPowerUsage()) : 0;
 		return $array;
 	}
 
@@ -108,5 +116,28 @@ class CState
     public function getProcessor()
     {
         return $this->processor;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return CState
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 }

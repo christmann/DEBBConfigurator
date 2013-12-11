@@ -2,6 +2,9 @@
 
 namespace Debb\ConfigBundle\Entity;
 
+use Debb\ManagementBundle\Entity\DEBBSimple;
+use Debb\ManagementBundle\Entity\FlowPumpToRoom;
+use Debb\ManagementBundle\Entity\RackToRoom;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -140,6 +143,7 @@ class Room extends Dimensions
 		$this->racks = $ordered;
 
 		$x = 0;
+		/** @var $rack RackToRoom */
 		foreach ($this->racks as $rack)
 		{
 			$rack->setField($x);
@@ -237,6 +241,7 @@ class Room extends Dimensions
 		$this->flowPumps = $ordered;
 
 		$x = 0;
+		/** @var $flowPump FlowPumpToRoom */
 		foreach ($this->flowPumps as $flowPump)
 		{
 			$flowPump->setField($x);

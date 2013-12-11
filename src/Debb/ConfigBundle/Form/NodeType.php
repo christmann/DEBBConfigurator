@@ -24,12 +24,12 @@ class NodeType extends BaseType
 		$xmlName = $builder->get('xmlName');
         $builder
 			->remove('xmlName')
-            ->add('sizeX', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis'), 'label' => 'SizeX'))
+            ->add('sizeX', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false, 'label' => 'SizeX'))
             ->add('sizeY', null, array('required' => false, 'label' => 'SizeY'))
-            ->add('sizeZ', null, array('required' => false, 'label' => 'SizeZ', 'attr' => array('class' => 'noBreakAfterThis')))
+            ->add('sizeZ', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false, 'label' => 'SizeZ'))
+			->add('meshResolution', null, array('required' => false, 'attr' => array('placeholder' => '0 0 0')))
 			->add($xmlName)
-            ->add('meshResolution', null, array('required' => false, 'attr' => array('placeholder' => '0 0 0', 'class' => 'noBreakAfterThis')))
-	        ->add('locationInMesh', null, array('required' => false, 'attr' => array('placeholder' => '0 0 0')))
+			->add('locationInMesh', null, array('required' => false, 'attr' => array('placeholder' => '0 0 0')))
             ->add('components', 'collection', array(
 				'type' => new ComponentType($this->container),
 				'allow_add' => true,
@@ -37,7 +37,8 @@ class NodeType extends BaseType
 				'by_reference' => false,
 				'required' => false,
 			))
-            ->add('image', 'plupload', array('required' => false, 'label' => 'upload node image', 'placeholder' => true, 'bootstrap' => true, 'showMaxSize' => true))
+            ->add('image', 'plupload', array('required' => false, 'label' => 'upload node image', 'placeholder' => true,
+				'bootstrap' => true, 'showMaxSize' => true))
 			->add('references', 'plupload', array(
 					'filter' => array('wrl,vrml' => 'VRML', 'stl' => 'STL'),
 					'label' => 'Upload model files',
@@ -48,7 +49,8 @@ class NodeType extends BaseType
 			)
             ->remove('type')
 			->add('type', 'hidden', array('required' => false, 'disabled' => (bool) $options['data']->isTypeLocked()))
-			->add('networks', 'entity', array('class' => 'DebbManagementBundle:Network', 'multiple' => true, 'expanded' => true, 'query_builder' => $this->userQueryBuilder))
+			->add('networks', 'entity', array('attr' => array('useRow' => true),
+				'class' => 'DebbManagementBundle:Network', 'multiple' => true, 'expanded' => true, 'query_builder' => $this->userQueryBuilder))
         ;
     }
 

@@ -236,11 +236,11 @@ class CoolingEER
 	public function getDebbXmlArray()
 	{
 		$array = array();
-		$array['LWT'] = $this->getLWT() !== null ? $this->getLWT() : '';
-		$array['CWT'] = $this->getCWT() !== null ? $this->getCWT() : '';
-		$array['Capacity'] = $this->getCapacity() !== null ? $this->getCapacity() : '';
-		$array['PowerUsage'] = $this->getPowerUsage() !== null ? $this->getPowerUsage() : '';
-		$array['EER'] = $this->getEER() !== null ? $this->getEER() : '';
+		$array['LWT'] = $this->getLWT() !== null ? $this->getLWT() : 0;
+		$array['CWT'] = $this->getCWT() !== null ? $this->getCWT() : 0;
+		$array['Capacity'] = $this->getCapacity() !== null ? $this->getCapacity() : 0;
+		$array['PowerUsage'] = $this->getPowerUsage() !== null ? $this->getPowerUsage() : 0;
+		$array['EER'] = $this->getEER() !== null ? $this->getEER() : 0;
 		return array('Item' => $array);
 	}
 

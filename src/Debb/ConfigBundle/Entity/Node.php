@@ -174,8 +174,7 @@ class Node extends Dimensions
 		}
 		$array['Node'][] = array(array('Connector' => array(
 			'ConnectorType' => ($this->getType() == 'CXP2' ? 'COMExpress Type 2' : ($this->getType() == 'CPX6' ? 'COMExpress Type 6' : $this->getType())),
-			'Label' => 'COMExpress',
-			'Transform' => 'Transform'
+			'Label' => 'COMExpress'
 		)));
 
 		$baseboards = $this->getComponents(Component::TYPE_BASEBOARD);

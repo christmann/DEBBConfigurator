@@ -23,6 +23,7 @@ class FlowStateType extends AbstractType
             ->add('flow', 'decimal', array('required' => false))
             ->add('powerUsage', 'decimal', array('required' => false))
             ->add('description', null, array('required' => false))
+            ->add('efficiency', 'decimal', array('required' => false))
         ;
     }
 

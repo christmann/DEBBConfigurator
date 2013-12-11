@@ -248,7 +248,7 @@ abstract class XMLController extends BaseController
 			$xmlStr = $xml->asXML();
 		}
 
-		$xmlStr = str_replace('<'.$this->debbType.'>',  '<xsd_1:'.$this->debbType.' xmlns:xsd_1="http://www.coolemall.eu/DEBBComponent" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.coolemall.eu/DEBBComponent DEBBComponents.xsd " >',
+		$xmlStr = str_replace('<'.$this->debbType.'>',  '<xsd_1:'.$this->debbType.' xmlns:xsd_1="http://www.coolemall.eu/DEBBComponent" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.coolemall.eu/DEBBComponent DEBBComponents.xsd" xmlns:version="8.0" >',
 			str_replace('</'.$this->debbType.'>', '</xsd_1:'.$this->debbType.'>', $xmlStr));
 
 		$room = new \Debb\ConfigBundle\Controller\RoomController();
@@ -352,9 +352,9 @@ abstract class XMLController extends BaseController
 				$childIds,                                                                                                                       // $instanceRefs
 				null,                                                                                                                            // $type
 				$representations,                                                                                                                // $representations
-				$entity->getComponentId(),                                                                                                       // $DEBBComponentId
+				$entity->getPartId(),                                                                                                       // $DEBBComponentId
 				method_exists($entity, 'getDebbLevel') ? $entity->getDebbLevel() : $real_class_name,                                             // $DEBBLevel
-				$real_class_name . '_'.$entity->getComponentId().'.xml',                                                                         // $DEBBComponentsFile
+				$real_class_name . '_'.$entity->getPartId().'.xml',                                                                         // $DEBBComponentsFile
 				$first ? $entity->getMeshResolution() : null,                                                                                    // $meshResolution
 				$first ? Transformation::generateBoundingBox() : null,                                                                           // $bound
 				$entity,                                                                                                                         // $entity
@@ -796,22 +796,22 @@ abstract class XMLController extends BaseController
 					{
 						if($toSvn === null)
 						{
-							$zip->addFromString('Node_'.$node->getComponentId().'.xml', $debbXmlStr);
+							$zip->addFromString('Node_'.$node->getPartId().'.xml', $debbXmlStr);
 						}
 						else
 						{
-							$toSvn->set('Node_'.$node->getComponentId().'.xml', $debbXmlStr, false, false);
+							$toSvn->set('Node_'.$node->getPartId().'.xml', $debbXmlStr, false, false);
 						}
 					}
 					if ($node->getImage() != null && file_exists($node->getImage()->getFullPath()))
 					{
 						if($toSvn === null)
 						{
-							$zip->addFile($node->getImage()->getFullPath(), 'pics/' . $node->getComponentId() . '.' . $node->getImage()->getExtension());
+							$zip->addFile($node->getImage()->getFullPath(), 'pics/' . $node->getPartId() . '.' . $node->getImage()->getExtension());
 						}
 						else
 						{
-							$toSvn->set('pics/' . $node->getComponentId() . '.' . $node->getImage()->getExtension(), $basePath . $node->getImage()->getFullPath(), true, false);
+							$toSvn->set('pics/' . $node->getPartId() . '.' . $node->getImage()->getExtension(), $basePath . $node->getImage()->getFullPath(), true, false);
 						}
 					}
 					if(count($node->getReferences()) > 0)
@@ -846,11 +846,11 @@ abstract class XMLController extends BaseController
 								{
 									if($toSvn === null)
 									{
-										$zip->addFromString('Heatsink_'.$heatsink->getComponentId().'.xml', $debbXmlStr);
+										$zip->addFromString('Heatsink_'.$heatsink->getPartId().'.xml', $debbXmlStr);
 									}
 									else
 									{
-										$toSvn->set('Heatsink_'.$heatsink->getComponentId().'.xml', $debbXmlStr, false, false);
+										$toSvn->set('Heatsink_'.$heatsink->getPartId().'.xml', $debbXmlStr, false, false);
 									}
 								}
 								if(count($heatsink->getReferences()) > 0)
@@ -870,6 +870,30 @@ abstract class XMLController extends BaseController
 							}
 						}
 					}
+					$coolingDevices = $node->getComponents(Component::TYPE_COOLING_DEVICE);
+					if(count($coolingDevices) > 0)
+					{
+						$controller = new CoolingDeviceController();
+						$controller->setContainer($this->getContainer());
+						foreach($coolingDevices as $coolingDevice)
+						{
+							if($coolingDevice instanceof CoolingDevice)
+							{
+								$debbXmlStr = $controller->getDebbXml($coolingDevice->getId(), true);
+								if($debbXmlStr !== false)
+								{
+									if($toSvn === null)
+									{
+										$zip->addFromString('CoolingDevice_'.$coolingDevice->getPartId().'.xml', $debbXmlStr);
+									}
+									else
+									{
+										$toSvn->set('CoolingDevice_'.$coolingDevice->getPartId().'.xml', $debbXmlStr, false, false);
+									}
+								}
+							}
+						}
+					}
 				}
 			}
 			foreach($nodeGroups as $nodeGroup)
@@ -884,11 +908,11 @@ abstract class XMLController extends BaseController
 					{
 						if($toSvn === null)
 						{
-							$zip->addFromString('NodeGroup_'.$nodeGroup->getComponentId().'.xml', $debbXmlStr);
+							$zip->addFromString('NodeGroup_'.$nodeGroup->getPartId().'.xml', $debbXmlStr);
 						}
 						else
 						{
-							$toSvn->set('NodeGroup_'.$nodeGroup->getComponentId().'.xml', $debbXmlStr, false, false);
+							$toSvn->set('NodeGroup_'.$nodeGroup->getPartId().'.xml', $debbXmlStr, false, false);
 						}
 					}
 					if(count($nodeGroup->getReferences()) > 0)
@@ -919,11 +943,11 @@ abstract class XMLController extends BaseController
 					{
 						if($toSvn === null)
 						{
-							$zip->addFromString('Rack_'.$rack->getComponentId().'.xml', $debbXmlStr);
+							$zip->addFromString('Rack_'.$rack->getPartId().'.xml', $debbXmlStr);
 						}
 						else
 						{
-							$toSvn->set('Rack_'.$rack->getComponentId().'.xml', $debbXmlStr, false, false);
+							$toSvn->set('Rack_'.$rack->getPartId().'.xml', $debbXmlStr, false, false);
 						}
 					}
 					if(count($rack->getReferences()) > 0)
@@ -954,11 +978,11 @@ abstract class XMLController extends BaseController
 					{
 						if($toSvn === null)
 						{
-							$zip->addFromString('FlowPump_'.$flowPump->getComponentId().'.xml', $debbXmlStr);
+							$zip->addFromString('FlowPump_'.$flowPump->getPartId().'.xml', $debbXmlStr);
 						}
 						else
 						{
-							$toSvn->set('FlowPump_'.$flowPump->getComponentId().'.xml', $debbXmlStr, false, false);
+							$toSvn->set('FlowPump_'.$flowPump->getPartId().'.xml', $debbXmlStr, false, false);
 						}
 					}
 					if(count($flowPump->getReferences()) > 0)
@@ -989,11 +1013,11 @@ abstract class XMLController extends BaseController
 					{
 						if($toSvn === null)
 						{
-							$zip->addFromString('Room_'.$rRoom->getComponentId().'.xml', $debbXmlStr);
+							$zip->addFromString('Room_'.$rRoom->getPartId().'.xml', $debbXmlStr);
 						}
 						else
 						{
-							$toSvn->set('Room_'.$rRoom->getComponentId().'.xml', $debbXmlStr, false, false);
+							$toSvn->set('Room_'.$rRoom->getPartId().'.xml', $debbXmlStr, false, false);
 						}
 					}
 					if(count($rRoom->getReferences()) > 0)
@@ -1024,11 +1048,11 @@ abstract class XMLController extends BaseController
 								{
 									if($toSvn === null)
 									{
-										$zip->addFromString('CoolingDevice_'.$coolingDevice->getComponentId().'.xml', $debbXmlStr);
+										$zip->addFromString('CoolingDevice_'.$coolingDevice->getPartId().'.xml', $debbXmlStr);
 									}
 									else
 									{
-										$toSvn->set('CoolingDevice_'.$coolingDevice->getComponentId().'.xml', $debbXmlStr, false, false);
+										$toSvn->set('CoolingDevice_'.$coolingDevice->getPartId().'.xml', $debbXmlStr, false, false);
 									}
 								}
 							}
@@ -1040,11 +1064,11 @@ abstract class XMLController extends BaseController
 			$plmXml = $this->asPlmXmlAction($id, true);
 			if($toSvn === null)
 			{
-				$zip->addFromString('PLMXML_'.$item->getComponentId().'.xml', $plmXml);
+				$zip->addFromString('PLMXML_'.$item->getPartId().'.xml', $plmXml);
 			}
 			else
 			{
-				$toSvn->set('PLMXML_'.$item->getComponentId().'.xml', $plmXml, false, false);
+				$toSvn->set('PLMXML_'.$item->getPartId().'.xml', $plmXml, false, false);
 			}
 			$room = new \Debb\ConfigBundle\Controller\RoomController();
 			$room->setContainer($this->getContainer());

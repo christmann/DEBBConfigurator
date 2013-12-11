@@ -61,6 +61,10 @@ class FlowProfile
 			$array['Name'] = $this->getName();
 		}
 		$x = 1;
+		if(count($this->getFlowStates()) < 1)
+		{
+			$this->addFlowState(new FlowState());
+		}
 		foreach($this->getFlowStates() as $flowState)
 		{
 			$array[] = array(array('FlowState' => $flowState->getDebbXmlArray($x++)));
