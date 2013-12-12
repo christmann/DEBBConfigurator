@@ -36,6 +36,7 @@ class Subversion
 	{
 		$this->setSvnPath(is_bool($svnPath) ? $svnPath : realpath($svnPath));
 		$this->setSvnUrl($svnUrl);
+		$this->update();
 	}
 
 	/**
@@ -154,7 +155,7 @@ class Subversion
 		}
 		if($isPath ? copy($file, $destination) : file_put_contents($destination, $file))
 		{
-			$result = exec('cd ' . escapeshellarg($this->getSvnPath())
+			exec('cd ' . escapeshellarg($this->getSvnPath())
 			 . ' && svn add --force *');
 			$commitMsg = array_merge(array('Added "' . $key . '"'), $extraMessage);
 			if($commit)
@@ -184,7 +185,7 @@ class Subversion
 		}
 		$key = $this->keyToPath($key);
 		$destination = $this->getSvnPath() . DIRECTORY_SEPARATOR . $key;
-		$result = exec('cd ' . escapeshellarg($this->getSvnPath())
+		exec('cd ' . escapeshellarg($this->getSvnPath())
 		. ' && svn delete ' . $destination);
 		$commitMsg = array_merge(array('Deleted "' . $key . '"'), $extraMessage);
 		if($commit)
@@ -202,11 +203,30 @@ class Subversion
 	 */
 	public function commit($extraMessage = array(), $onlyExtraMessage = false)
 	{
+		if(!$this->getSvnPath())
+		{
+			return false;
+		}
 		$messages = $onlyExtraMessage ? $extraMessage : array_merge($extraMessage, $this->getCommitMessages());
 		$result = exec('cd ' . escapeshellarg($this->getSvnPath())
 		. ' && svn commit ' . escapeshellarg($this->getSvnPath()) . ' -m ' . escapeshellarg(implode("\n", $messages)));
 		$this->setCommitMessages();
 		return (bool) preg_match('#Committed revision [0-9]+.#i', $result);
+	}
+
+	/**
+	 * Updates the svn directory
+	 *
+	 * @return bool|string the response of exec command or false if the svn path is not correct
+	 */
+	public function update()
+	{
+		if(!$this->getSvnPath())
+		{
+			return false;
+		}
+		return exec('cd ' . escapeshellarg($this->getSvnPath())
+		. ' && svn update');
 	}
 
 	/**

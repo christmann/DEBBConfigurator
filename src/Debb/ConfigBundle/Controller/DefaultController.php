@@ -204,7 +204,7 @@ class DefaultController extends BaseController
 							}
 						}
 
-						$eEntry = $em->getRepository('DebbManagementBundle:'.$key)->findBy(array('componentId' => $entry->getComponentId(), 'user' => $this->getUserId()));
+						$eEntry = $em->getRepository('DebbManagementBundle:'.$key)->findBy(array('partId' => $entry->getPartId(), 'user' => $this->getUserId()));
 						if(count($eEntry) > 0)
 						{
 							$entry = $eEntry[0];
@@ -215,7 +215,7 @@ class DefaultController extends BaseController
 							$counted = false;
 							foreach($node->getComponents() as $nodeComp)
 							{
-								if($nodeComp->getActive()->getComponentId() == $entry->getComponentId())
+								if($nodeComp->getActive()->getPartId() == $entry->getPartId())
 								{
 									$nodeComp->setAmount($nodeComp->getAmount() + 1);
 									$counted = true;

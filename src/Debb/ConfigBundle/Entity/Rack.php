@@ -8,6 +8,7 @@
 
 namespace Debb\ConfigBundle\Entity;
 
+use Debb\ManagementBundle\Entity\DEBBComponent;
 use Debb\ManagementBundle\Entity\NodegroupToRack;
 use Debb\ManagementBundle\Entity\RackToRoom;
 use Doctrine\ORM\Mapping as ORM;
@@ -18,7 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="rack")
  * @ORM\Entity(repositoryClass="Debb\ManagementBundle\Repository\BaseRepository")
  */
-class Rack extends Dimensions
+class Rack extends DEBBComponent
 {
 	/**
 	 * @var \Debb\ManagementBundle\Entity\NodeGroupToRack[]
@@ -172,14 +173,6 @@ class Rack extends Dimensions
 	public function getDebbXmlArray()
 	{
 		$array['Rack'] = parent::getDebbXmlArray();
-		if($this->getHostname() != null)
-		{
-			$array['Rack']['hostname'] = $this->getHostname();
-		}
-		foreach($this->getReferences() as $reference)
-		{
-			$array['Rack'][] = array(array('Reference' => array('Type' => $reference->getFileEnding(), 'Location' => './object/' . $reference->getId() . '_' . $reference->getName())));
-		}
 		return $array;
 	}
 

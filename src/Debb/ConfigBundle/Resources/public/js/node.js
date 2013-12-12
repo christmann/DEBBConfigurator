@@ -22,7 +22,7 @@ $(function()
 			id++;
 			var type = $(this).parents('.component:first').find('input[id$="_type"]').attr('value'),
 				selectBox = $(this).parents('.component:first').find('[id$="_amount"]');
-			if(parseInt(selectBox.val()) < 1 || (type != TYPE_PROCESSOR && type != TYPE_POWER_SUPPLY && type != TYPE_BASEBOARD))
+			if(parseInt(selectBox.val()) < 1 || (type != TYPE_POWER_SUPPLY && type != TYPE_BASEBOARD))
 			{
 				var prototype = $('.componentBox').attr('data-prototype'),
 					newForm = prototype.replace(/__name__/g, id),
@@ -70,35 +70,41 @@ $(function()
 		});
 		$(document).on('click', '.delAmount', function(e)
 		{
-			var selectBox = $(this).parents('.amountExtras').parent().find('select[id$="_amount"]');
-			if(selectBox.find('option:selected').prev().length > 0)
+			var selectBox = $(this).parents('.amountExtras').parent().find('select[id$="_amount"]:not([disabled])');
+			if(selectBox.length > 0)
 			{
-				selectBox.val(parseInt(selectBox.val()) - 1);
-			}
-			else
-			{
-				$(this).parents('.component:first').find('.delComponent').click();
+				if(selectBox.find('option:selected').prev().length > 0)
+				{
+					selectBox.val(parseInt(selectBox.val()) - 1);
+				}
+				else
+				{
+					$(this).parents('.component:first').find('.delComponent').click();
+				}
 			}
 			e.preventDefault();
 		});
 		$(document).on('click', '.addAmount', function(e)
 		{
-			var selectBox = $(this).parents('.amountExtras').parent().find('select[id$="_amount"]');
-			if(selectBox.find('option:selected').next().length > 0)
+			var selectBox = $(this).parents('.amountExtras').parent().find('select[id$="_amount"]:not([disabled])');
+			if(selectBox.length > 0)
 			{
-				selectBox.val(parseInt(selectBox.val()) + 1);
-			}
-			else if(selectBox.find('option:last').is(':selected'))
-			{
-				var component = $(this).parents('.component');
-				component.find('.addComponent').click();
-				var newComponent = component.next('.component');
-				component.find('select[id!=""]:not([id$="_amount"])').each(function()
+				if(selectBox.find('option:selected').next().length > 0)
 				{
-					var cache = $(this).attr('id').split('_');
-					cache = cache[cache.length - 1];
-					newComponent.find('select[id$="_' + cache + '"]').val($(this).val());
-				});
+					selectBox.val(parseInt(selectBox.val()) + 1);
+				}
+				else if(selectBox.find('option:last').is(':selected'))
+				{
+					var component = $(this).parents('.component');
+					component.find('.addComponent').click();
+					var newComponent = component.next('.component');
+					component.find('select[id!=""]:not([id$="_amount"])').each(function()
+					{
+						var cache = $(this).attr('id').split('_');
+						cache = cache[cache.length - 1];
+						newComponent.find('select[id$="_' + cache + '"]').val($(this).val());
+					});
+				}
 			}
 			e.preventDefault();
 		});
@@ -146,46 +152,6 @@ $(function()
 	});
 
 function updateComponents() {
-	$('.component').find('input, select, label, .amountExtras').hide();
-	$('.component').each(function()
-	{
-		var id = getExactId($(this).find('div:first').attr('id')),
-			type = $('#debb_configbundle_nodetype_components_' + id + '_type').attr('value'),
-			amount = parseInt($('#debb_configbundle_nodetype_components_' + id + '_amount').attr('value'));
-
-		if(type != TYPE_NOTHING && amount > 0)
-		{
-			$('#debb_configbundle_nodetype_components_' + id + '_amount').parent().find('input, select, label, .amountExtras').show();
-		}
-		if(type == TYPE_BASEBOARD)
-		{
-			$('#debb_configbundle_nodetype_components_' + id + '_baseboard').parent().find('input, select, label, .amountExtras').show();
-		}
-		else if(type == TYPE_PROCESSOR)
-		{
-			$('#debb_configbundle_nodetype_components_' + id + '_processor').parent().find('input, select, label, .amountExtras').show();
-		}
-		else if(type == TYPE_COOLING_DEVICE)
-		{
-			$('#debb_configbundle_nodetype_components_' + id + '_coolingDevice').parent().find('input, select, label, .amountExtras').show();
-		}
-		else if(type == TYPE_MEMORY)
-		{
-			$('#debb_configbundle_nodetype_components_' + id + '_memory').parent().find('input, select, label, .amountExtras').show();
-		}
-		else if(type == TYPE_POWER_SUPPLY)
-		{
-			$('#debb_configbundle_nodetype_components_' + id + '_powersupply').parent().find('input, select, label, .amountExtras').show();
-		}
-        else if(type == TYPE_HEATSINK)
-        {
-            $('#debb_configbundle_nodetype_components_' + id + '_heatsink').parent().find('input, select, label, .amountExtras').show();
-        }
-		if(amount < 1)
-		{
-			$('#debb_configbundle_nodetype_components_' + id).find('select, .amountExtras').hide();
-		}
-	});
 	$('.component select[id$="_amount"]').each(function()
 	{
 		if($(this).val() > 0)
@@ -207,6 +173,48 @@ function updateComponents() {
 		if($(this).val() < 1)
 		{
 			$(this).parent().find('.amountExtras').hide();
+		}
+	});
+	$('.component').find('input, select, label, .amountExtras').hide();
+	$('.component').each(function()
+	{
+		var id = getExactId($(this).find('div:first').attr('id')),
+			type = $('#debb_configbundle_nodetype_components_' + id + '_type').attr('value'),
+			amount = parseInt($('#debb_configbundle_nodetype_components_' + id + '_amount').attr('value'));
+
+		if(type != TYPE_NOTHING && amount > 0)
+		{
+			$('#debb_configbundle_nodetype_components_' + id + '_amount').parent().find('input, select, label, .amountExtras').show();
+		}
+		if(type == TYPE_BASEBOARD)
+		{
+			$('#debb_configbundle_nodetype_components_' + id + '_baseboard').parent().find('input, select, label').show();
+			$('#debb_configbundle_nodetype_components_' + id + '_baseboard').parent().parent().find('select[id$="_amount"]').prop('disabled', true);
+		}
+		else if(type == TYPE_PROCESSOR)
+		{
+			$('#debb_configbundle_nodetype_components_' + id + '_processor').parent().find('input, select, label, .amountExtras').show();
+		}
+		else if(type == TYPE_COOLING_DEVICE)
+		{
+			$('#debb_configbundle_nodetype_components_' + id + '_coolingDevice').parent().find('input, select, label, .amountExtras').show();
+		}
+		else if(type == TYPE_MEMORY)
+		{
+			$('#debb_configbundle_nodetype_components_' + id + '_memory').parent().find('input, select, label, .amountExtras').show();
+		}
+		else if(type == TYPE_POWER_SUPPLY)
+		{
+			$('#debb_configbundle_nodetype_components_' + id + '_powersupply').parent().find('input, select, label').show();
+			$('#debb_configbundle_nodetype_components_' + id + '_powersupply').parent().parent().find('select[id$="_amount"]').prop('disabled', true);
+		}
+        else if(type == TYPE_HEATSINK)
+        {
+            $('#debb_configbundle_nodetype_components_' + id + '_heatsink').parent().find('input, select, label, .amountExtras').show();
+        }
+		if(amount < 1)
+		{
+			$('#debb_configbundle_nodetype_components_' + id).find('select, .amountExtras').hide();
 		}
 	});
 };

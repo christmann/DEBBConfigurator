@@ -63,7 +63,6 @@
             {{ form_row(form.type) }}
             {{ form_row(form.maxPower) }}
             {{ form_row(form.powerUsageProfile) }}
-            {{ form_row(form.powerUsage) }}
             {{ form_row(form.meshResolution) }}
             {{ form_row(form.locationInMesh) }}
             {{ form_row(form.xmlName) }}
@@ -76,7 +75,6 @@
 			{% do form.spaceLeft.setRendered %}{% do form.spaceRight.setRendered %}{% do form.spaceTop.setRendered %}{% do form.spaceBottom.setRendered %}{% do form.spaceFront.setRendered %}{% do form.spaceBehind.setRendered %}
 			{% do form.nodes.setRendered %}
 			{% do form.powerUsageProfile.setRendered %}
-			{% do form.powerUsage.setRendered %}
 			{% do form.meshResolution.setRendered %}
 			{% do form.locationInMesh.setRendered %}
 			<div class="clear"></div>
