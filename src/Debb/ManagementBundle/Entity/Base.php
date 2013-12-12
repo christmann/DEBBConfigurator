@@ -262,7 +262,7 @@ class Base
 	public function getDebbXmlArray()
 	{
 		$array = array();
-		if ($this->getComponentId() != null)
+		if ($this->getPartId() != null)
 		{
 			$array['PartID'] = $this->getPartId();
 		}
