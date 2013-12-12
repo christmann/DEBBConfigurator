@@ -2,7 +2,9 @@
 
 namespace Debb\ConfigBundle\Entity;
 
+use Debb\ManagementBundle\Entity\DEBBComponent;
 use Debb\ManagementBundle\Entity\DEBBSimple;
+use Debb\ManagementBundle\Entity\FlowPump;
 use Debb\ManagementBundle\Entity\FlowPumpToRoom;
 use Debb\ManagementBundle\Entity\RackToRoom;
 use Doctrine\ORM\Mapping as ORM;
@@ -14,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="room")
  * @ORM\Entity(repositoryClass="Debb\ManagementBundle\Repository\BaseRepository")
  */
-class Room extends Dimensions
+class Room extends DEBBComponent
 {
 	/**
 	 * @var \Debb\ManagementBundle\Entity\RackToRoom[]
@@ -275,6 +277,40 @@ class Room extends Dimensions
 	}
 
 	/**
+	 * Get the inlets of this room
+	 *
+	 * @param bool $useOutletsInstead should this function return outlets instead of inlets?
+	 * @return \Debb\ManagementBundle\Entity\FlowPump[]
+	 */
+	public function getInlets($useOutletsInstead = false)
+	{
+		$array = array();
+		foreach($this->getFlowPumps() as $flowPumpToRoom)
+		{
+			/** @var $flowPump FlowPump */
+			$flowPump = $flowPumpToRoom->getFlowPump();
+			if($flowPump != null)
+			{
+				if($flowPump !== null && $flowPump->isInlet() == !$useOutletsInstead)
+				{
+					$array[] = $flowPump->getDebbXmlArray();
+				}
+			}
+		}
+		return $array;
+	}
+
+	/**
+	 * Get the outlets of this node group
+	 *
+	 * @return \Debb\ManagementBundle\Entity\FlowPump[]
+	 */
+	public function getOutlets()
+	{
+		return $this->getInlets(true);
+	}
+
+	/**
 	 * Returns a array for later converting
 	 * 
 	 * @return array the array for later converting
@@ -282,33 +318,6 @@ class Room extends Dimensions
 	public function getDebbXmlArray()
 	{
 		$array['Room'] = parent::getDebbXmlArray();
-		foreach($this->getReferences() as $reference)
-		{
-			$array['Room'][] = array(array('Reference' => array('Type' => $reference->getFileEnding(), 'Location' => './object/' . $reference->getId() . '_' . $reference->getName())));
-		}
-
-		$afterThis = array();
-		foreach($this->getFlowPumps() as $flowPumpToRoom)
-		{
-			$flowPump = $flowPumpToRoom->getFlowPump();
-			if($flowPump != null)
-			{
-				$arr = array($flowPump->getDebbXmlArray());
-				if($flowPump->isInlet())
-				{
-					$array['Room'][] = $arr;
-				}
-				else
-				{
-					$afterThis[] = $arr;
-				}
-			}
-		}
-		foreach($afterThis as $flowPump)
-		{
-			$array['Room'][] = $flowPump;
-		}
-
 		return $array;
 	}
 

@@ -3,6 +3,7 @@
 namespace Debb\ManagementBundle\Entity;
 
 use CoolEmAll\UserBundle\Entity\User;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -262,41 +263,74 @@ class Base
 	public function getDebbXmlArray()
 	{
 		$array = array();
-		if ($this->getPartId() != null)
+		if ($this->getPartId() !== null)
 		{
 			$array['PartID'] = $this->getPartId();
 		}
-		if ($this->getComponentId() != null)
-		{
-			$array['ComponentId'] = $this->getComponentId();
-		}
-		if ($this->getSchemaVersion() != null)
-		{
-			$array['SchemaVersion'] = $this->getSchemaVersion();
-		}
-		if ($this->getLabel() != null)
+		if ($this->getLabel() !== null)
 		{
 			$array['Label'] = $this->getLabel();
 		}
-		if ($this->getManufacturer() != null)
+		if ($this->getManufacturer() !== null)
 		{
 			$array['Manufacturer'] = $this->getManufacturer();
 		}
-		if ($this->getProduct() != null)
+		if ($this->getProduct() !== null)
 		{
 			$array['Product'] = $this->getProduct();
 		}
-		if ($this->getMaxPower() != null)
+		if ($this->getMaxPower() !== null)
 		{
 			$array['MaxPower'] = $this->getMaxPower();
 		}
-		if ($this->getPowerUsageProfile() != null)
+		if ($this->getPowerUsageProfile() !== null)
 		{
 			$array['PowerUsageProfile'] = $this->getPowerUsageProfile()->getDebbXmlArray();
 		}
-		if ($this->getType() != null)
+		if ($this->getType() !== null)
 		{
 			$array['Type'] = $this->getType();
+		}
+		/**
+		 * Try zone for methods which not implemented in this base class
+		 */
+		try{
+			if(method_exists($this, 'getTransform'))
+			{
+				if ($this->getTransform() !== null)
+				{
+					$array['Transform'] = $this->getTransform();
+				}
+			}
+		}catch(\Exception $ex){}try{
+			if(method_exists($this, 'getReference'))
+			{
+				if ($this->getReference() !== null)
+				{
+					$array['Reference'] = $this->getReference() instanceof Reference ? $this->getReference()->getDebbXmlArray() : array('Type' => $this->getReference()->getFileEnding(), 'Location' => './object/' . $this->getReference()->getId() . '_' . $this->getReference()->getName());
+				}
+			}
+		}catch(\Exception $ex){}try{
+			if(method_exists($this, 'getReferences'))
+			{
+				if ($this->getReferences() !== null)
+				{
+					foreach($this->getReferences() as $reference)
+					{
+						if($reference instanceof Reference || $reference instanceof File)
+						{
+							$array[] = array(array('Reference' => array('Type' => $reference->getFileEnding(), 'Location' => './object/' . $reference->getId() . '_' . $reference->getName())));
+						}
+					}
+				}
+			}
+		}catch(\Exception $ex){}
+		/**
+		 * End of try zone
+		 */
+		if($this->getInstanceName() !== null)
+		{
+			$array['InstanceName'] = $this->getInstanceName();
 		}
 		return $array;
 	}

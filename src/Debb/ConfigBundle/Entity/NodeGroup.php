@@ -3,6 +3,8 @@
 namespace Debb\ConfigBundle\Entity;
 
 use Debb\ManagementBundle\Entity\Chassis;
+use Debb\ManagementBundle\Entity\DEBBComponent;
+use Debb\ManagementBundle\Entity\Network;
 use Debb\ManagementBundle\Entity\NodegroupToRack;
 use Debb\ManagementBundle\Entity\NodeToNodegroup;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -14,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="nodegroup")
  * @ORM\Entity(repositoryClass="Debb\ManagementBundle\Repository\BaseRepository")
  */
-class NodeGroup extends Dimensions
+class NodeGroup extends DEBBComponent
 {
     /**
      * Nodes
@@ -157,58 +159,50 @@ class NodeGroup extends Dimensions
     public function getDebbXmlArray()
     {
         $array['NodeGroup'] = parent::getDebbXmlArray();
-		foreach($this->getReferences() as $reference)
-		{
-			$array['NodeGroup'][] = array(array('Reference' => array('Type' => $reference->getFileEnding(), 'Location' => './object/' . $reference->getId() . '_' . $reference->getName())));
-		}
-	    $draft = $this->getDraft();
-	    if($draft !== null)
-	    {
-			$afterThis = array();
-		    foreach($draft->getFlowPumps() as $flowPumpToChassis)
-		    {
-			    $flowPump = $flowPumpToChassis->getFlowPump();
-			    if($flowPump != null)
-			    {
-					$arr = array($flowPump->getDebbXmlArray());
-					if($flowPump->isInlet())
-					{
-						$array['NodeGroup'][] = $arr;
-					}
-					else
-					{
-						$afterThis[] = $arr;
-					}
-			    }
-		    }
-			foreach($afterThis as $flowPump)
-			{
-				$array['NodeGroup'][] = $flowPump;
-			}
-	    }
-		foreach($this->getNetworks() as $network)
-		{
-			$array['NodeGroup'][] = array('Network' => $network->getDebbXmlArray());
-		}
 		if($this->getDraft() != null && $this->getDraft()->getTypspecification() != null)
 		{
 			/** @var $typSpec \Debb\ManagementBundle\Entity\ChassisTypSpecification */
 			foreach($this->getDraft()->getTypspecification() as $slot => $typSpec)
 			{
-				/**
-						<Slot>
-							<Number>1</Number>
-							<ConnectorType>ComExpress Type 2</ConnectorType>
-							<Label>Slot_1</Label>
-							<Transform>0 -1 0 0 1 0 0 0 0 0 1 0 X Y Z 1</Transform><!-- No input in chassis! -->
-						</Slot>
-				 */
 				$slot++;
 				$array['NodeGroup'][] = array(array('Slot' => array('Number' => $slot, 'ConnectorType' => $typSpec->getTyp(), 'Label' => 'Slot_' . $slot)));
 			}
 		}
         return $array;
     }
+
+	/**
+	 * Get the inlets of this node group
+	 *
+	 * @param bool $useOutletsInstead should this function return outlets instead of inlets?
+	 * @return \Debb\ManagementBundle\Entity\FlowPump[]
+	 */
+	public function getInlets($useOutletsInstead = false)
+	{
+		$array = array();
+		if($this->getDraft() !== null)
+		{
+			foreach($this->getDraft()->getFlowPumps() as $flowPumpToChassis)
+			{
+				$flowPump = $flowPumpToChassis->getFlowPump();
+				if($flowPump !== null && $flowPump->isInlet() == !$useOutletsInstead)
+				{
+					$array[] = $flowPump;
+				}
+			}
+		}
+		return $array;
+	}
+
+	/**
+	 * Get the outlets of this node group
+	 *
+	 * @return \Debb\ManagementBundle\Entity\FlowPump[]
+	 */
+	public function getOutlets()
+	{
+		return $this->getInlets(true);
+	}
 
     /**
      * Set draft

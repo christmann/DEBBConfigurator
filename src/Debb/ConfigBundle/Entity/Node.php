@@ -4,6 +4,7 @@ namespace Debb\ConfigBundle\Entity;
 
 use Debb\ManagementBundle\Entity\Base;
 use Debb\ManagementBundle\Entity\Baseboard;
+use Debb\ManagementBundle\Entity\DEBBComponent;
 use Debb\ManagementBundle\Entity\Heatsink;
 use Debb\ManagementBundle\Entity\Memory;
 use Debb\ManagementBundle\Entity\Processor;
@@ -17,7 +18,7 @@ use Doctrine\ORM\PersistentCollection;
  * @ORM\Table(name="node")
  * @ORM\Entity(repositoryClass="Debb\ManagementBundle\Repository\BaseRepository")
  */
-class Node extends Dimensions
+class Node extends DEBBComponent
 {
 	/**
 	 * @var \Debb\ManagementBundle\Entity\Component[]
@@ -153,6 +154,14 @@ class Node extends Dimensions
 	}
 
 	/**
+	 * @return \Debb\ManagementBundle\Entity\Component[]|PersistentCollection
+	 */
+	public function getHeatsinks()
+	{
+		return $this->getComponents(Component::TYPE_HEATSINK);
+	}
+
+	/**
 	 * Returns a array for later converting
 	 * 
 	 * @return array the array for later converting
@@ -160,18 +169,6 @@ class Node extends Dimensions
 	public function getDebbXmlArray()
 	{
 		$array['Node'] = parent::getDebbXmlArray();
-		foreach($this->getReferences() as $reference)
-		{
-			$array['Node'][] = array(array('Reference' => array('Type' => $reference->getFileEnding(), 'Location' => './object/' . $reference->getId() . '_' . $reference->getName())));
-		}
-		foreach($this->getComponents(Component::TYPE_HEATSINK) as $heatsink)
-		{
-			$array['Node'][] = array($heatsink->getDebbXmlArray());
-		}
-		foreach($this->getNetworks() as $network)
-		{
-			$array['Node'][] = array('Network' => $network->getDebbXmlArray());
-		}
 		$array['Node'][] = array(array('Connector' => array(
 			'ConnectorType' => ($this->getType() == 'CXP2' ? 'COMExpress Type 2' : ($this->getType() == 'CPX6' ? 'COMExpress Type 6' : $this->getType())),
 			'Label' => 'COMExpress'
@@ -187,6 +184,10 @@ class Node extends Dimensions
 			$comp->setAmount(1);
 			$comp->setBaseboard(new Baseboard());
 			$baseboards[] = $comp;
+		}
+		if(count($baseboards) > 1 || reset($baseboards)->getAmount() > 1)
+		{
+			$baseboards = array(reset($baseboards)->setAmount(1));
 		}
 
 		if(!count($processors) || reset($processors)->getAmount() < 1)
