@@ -21,6 +21,7 @@ class FlowProfileType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('type', null, array('required' => false))
 	        ->add('flowStates', 'collection', array(
 		        'type' => new FlowStateType(),
 		        'allow_add' => true,

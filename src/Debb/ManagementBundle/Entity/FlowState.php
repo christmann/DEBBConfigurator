@@ -27,6 +27,13 @@ class FlowState
      */
     private $id;
 
+	/**
+	 * @var string
+	 * @Assert\NotNull()
+	 * @ORM\Column(name="state", type="string", length=255)
+	 */
+	private $state;
+
     /**
      * @var float
      *
@@ -71,7 +78,7 @@ class FlowState
 	public function getDebbXmlArray($state = 0)
 	{
 		$array = array();
-		$array['State'] = $state;
+		$array['State'] = $this->getState() !== null ? $this->getState() : $state;
 		if ($this->getFlow() !== null)
 		{
 			$array['Flow'] = DecimalTransformer::convert($this->getFlow());
@@ -209,7 +216,7 @@ class FlowState
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
