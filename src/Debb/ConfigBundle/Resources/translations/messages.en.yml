@@ -115,6 +115,7 @@ State: State [number]
 Transfer rate: Transfer rate [NTU]
 preparing file: We are preparing your file, please wait...
 failed file: There was a problem generating your file, please try again.
+StateT: State
 
 # help
 help:

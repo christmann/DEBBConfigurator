@@ -32,6 +32,12 @@ class FlowProfile
      */
     private $name;
 
+	/**
+	 * @var string
+	 * @ORM\Column(name="type", type="string", length=255, nullable=true)
+	 */
+	private $type;
+
     /**
      * @var \Debb\ManagementBundle\Entity\FlowState[]
      *
@@ -59,6 +65,10 @@ class FlowProfile
 		if ($this->getName() !== null)
 		{
 			$array['Name'] = $this->getName();
+		}
+		if ($this->getType() !== null)
+		{
+			$array['Type'] = $this->getType();
 		}
 		$x = 1;
 		if(count($this->getFlowStates()) < 1)
@@ -181,4 +191,27 @@ class FlowProfile
 	{
 		return $this->getName();
 	}
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     * @return FlowProfile
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string 
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
 }
