@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "f70488143050e383041eee8715fb2092",
+    "hash": "bf99b181e0cea3e9c8fe47883a0b5be2",
     "packages": [
         {
             "name": "avalanche123/imagine-bundle",
@@ -2249,12 +2249,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/willdurand/BazingaExposeTranslationBundle.git",
-                "reference": "52a58fb340e1ff1ef8324cecd79ac4e9b30a3330"
+                "reference": "a026f52db130f310d542154e9473105fa35c6e86"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/willdurand/BazingaExposeTranslationBundle/zipball/52a58fb340e1ff1ef8324cecd79ac4e9b30a3330",
-                "reference": "52a58fb340e1ff1ef8324cecd79ac4e9b30a3330",
+                "url": "https://api.github.com/repos/willdurand/BazingaExposeTranslationBundle/zipball/a026f52db130f310d542154e9473105fa35c6e86",
+                "reference": "a026f52db130f310d542154e9473105fa35c6e86",
                 "shasum": ""
             },
             "require": {
@@ -2293,7 +2293,7 @@
                 "javascript",
                 "translation"
             ],
-            "time": "2013-11-26 10:35:53"
+            "time": "2013-12-12 15:04:38"
         }
     ],
     "packages-dev": [
@@ -2586,12 +2586,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/MinkSelenium2Driver.git",
-                "reference": "1a00db27d403920afa65718313cb2571b74df98b"
+                "reference": "c37597a4c7f93f720e748fc396b2d18e5efdbacd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/MinkSelenium2Driver/zipball/1a00db27d403920afa65718313cb2571b74df98b",
-                "reference": "1a00db27d403920afa65718313cb2571b74df98b",
+                "url": "https://api.github.com/repos/Behat/MinkSelenium2Driver/zipball/c37597a4c7f93f720e748fc396b2d18e5efdbacd",
+                "reference": "c37597a4c7f93f720e748fc396b2d18e5efdbacd",
                 "shasum": ""
             },
             "require": {
@@ -2636,7 +2636,7 @@
                 "testing",
                 "webdriver"
             ],
-            "time": "2013-12-10 15:14:01"
+            "time": "2013-12-12 13:40:09"
         },
         {
             "name": "behat/symfony2-extension",
