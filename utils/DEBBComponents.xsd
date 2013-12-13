@@ -450,6 +450,8 @@
 					<xsd:element name="MaxClockSpeed" type="xsd:unsignedInt" />
 					<xsd:element name="Cores" type="xsd:int" maxOccurs="1"
 						minOccurs="0"></xsd:element>
+					<xsd:element name="VirtualCoresPerCore" type="xsd:int" maxOccurs="1"
+						minOccurs="0"></xsd:element>
 					<xsd:element name="PState" type="xsd_1:PStateType"
 						minOccurs="0" maxOccurs="unbounded">
 					</xsd:element>
@@ -480,24 +482,6 @@
 				maxOccurs="1" />
 			<xsd:element name="Frequency" type="xsd:double" />
 			<xsd:element name="Voltage" type="xsd:double" />
-			<xsd:element name="PowerUsageMin" type="xsd:double"
-				maxOccurs="1" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>
-						No longer used, only for compatibility reasons.
-						Replaced by LoadPwerUsage with more options
-					</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="PowerUsageMax" type="xsd:double"
-				maxOccurs="1" minOccurs="0">
-				<xsd:annotation>
-					<xsd:documentation>
-						No longer used, only for compatibility reasons.
-						Replaced by LoadPwerUsage with more options
-					</xsd:documentation>
-				</xsd:annotation>
-			</xsd:element>
 			<xsd:element name="LoadPowerUsage" type="xsd_1:PStateLoadPowerUsageType"
 				maxOccurs="unbounded" minOccurs="0">
 				<xsd:annotation>

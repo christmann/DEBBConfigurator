@@ -14,7 +14,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Processor extends Base
 {
-
 	/**
 	 * Maximum Clockfrequency of CPU in MHz
 	 *
@@ -24,6 +23,13 @@ class Processor extends Base
 	 * @ORM\Column(name="max_clock_speed", type="integer")
 	 */
 	private $maxClockSpeed;
+
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="vcores_per_core", type="integer", nullable=true)
+	 */
+	private $virtualCoresPerCore;
 
 	/**
 	 * @var integer
@@ -289,4 +295,27 @@ class Processor extends Base
 	{
 		return $this->getComponents();
 	}
+
+    /**
+     * Set virtualCoresPerCore
+     *
+     * @param integer $virtualCoresPerCore
+     * @return Processor
+     */
+    public function setVirtualCoresPerCore($virtualCoresPerCore)
+    {
+        $this->virtualCoresPerCore = $virtualCoresPerCore;
+    
+        return $this;
+    }
+
+    /**
+     * Get virtualCoresPerCore
+     *
+     * @return integer 
+     */
+    public function getVirtualCoresPerCore()
+    {
+        return $this->virtualCoresPerCore;
+    }
 }

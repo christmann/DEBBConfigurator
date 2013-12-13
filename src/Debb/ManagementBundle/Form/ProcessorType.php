@@ -20,9 +20,10 @@ class ProcessorType extends BaseType
     {
 	    parent::buildForm($builder, $options);
         $builder
-			->add('MaxClockSpeed', 'text')
-			->add('cores', 'text', array('attr' => array('class' => 'noBreakAfterThis')))
-            ->add('tdp', 'decimal')
+			->add('MaxClockSpeed', 'text', array('attr' => array('class' => 'noBreakAfterThis')))
+			->add('VirtualCoresPerCore', 'number', array('required' => false))
+			->add('cores', 'text', array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false))
+            ->add('tdp', 'decimal', array('required' => false))
 	        ->add('pstates', 'collection', array(
 		        'type' => new PStateType(),
 		        'allow_add' => true,
