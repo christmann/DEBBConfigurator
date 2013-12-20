@@ -448,12 +448,12 @@ class Node extends DEBBComponent
 		{
 			if($component !== null && $component->getActive() instanceof Base)
 			{
-				$costs[] = array(XMLController::get_real_class($component->getActive()) => array(
-						'costs_euro' => $component->getActive()->getRealCostsEur(),
-						'costs_co2_emission' => $component->getActive()->getRealCostsEnv(),
-						'Amount' => $component->getAmount()
-					)
-				);
+				$xml = $component->getActive()->getCostsXml();
+				if($component->getAmount() > 1)
+				{
+					$xml['Amount'] = $component->getAmount();
+				}
+				$costs[] = array(XMLController::get_real_class($component->getActive()) => $xml);
 			}
 		}
 
