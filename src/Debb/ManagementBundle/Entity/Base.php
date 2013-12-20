@@ -724,7 +724,6 @@ class Base
 	{
 		return array(
 			'PartID' => $this->getPartId(),
-			'Amount' => 1,
 			'costs_euro' => $this->getCostsEur(),
 			'costs_co2_emission' => $this->getCostsEnv()
 		);
