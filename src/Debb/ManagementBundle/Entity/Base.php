@@ -3,6 +3,7 @@
 namespace Debb\ManagementBundle\Entity;
 
 use CoolEmAll\UserBundle\Entity\User;
+use Debb\ManagementBundle\DataTransformer\DecimalTransformer;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -128,6 +129,24 @@ class Base
 	 * @var bool true if we can ignore our "isThisCorrect" function or false if not
 	 */
 	protected $isCorrect = false;
+
+	/**
+	 * The costs in euro
+	 *
+	 * @var float
+	 *
+	 * @ORM\Column(name="costs_eur", type="decimal", precision=18, scale=9, nullable=true)
+	 */
+	private $costsEur;
+
+	/**
+	 * The costs in CO² (environment)
+	 *
+	 * @var float
+	 *
+	 * @ORM\Column(name="costs_env", type="decimal", precision=18, scale=9, nullable=true)
+	 */
+	private $costsEnv;
 
 	/**
 	 * Get id
@@ -617,4 +636,97 @@ class Base
     {
         return $this->instanceName;
     }
+
+    /**
+     * Set costsEur
+     *
+     * @param float $costsEur
+     * @return Base
+     */
+    public function setCostsEur($costsEur)
+    {
+        $this->costsEur = $costsEur;
+    
+        return $this;
+    }
+
+    /**
+     * Get costsEur
+     *
+     * @return float 
+     */
+    public function getCostsEur()
+    {
+        return DecimalTransformer::convert((float) $this->costsEur);
+    }
+
+    /**
+     * Set costsEnv
+     *
+     * @param float $costsEnv
+     * @return Base
+     */
+    public function setCostsEnv($costsEnv)
+    {
+        $this->costsEnv = $costsEnv;
+    
+        return $this;
+    }
+
+    /**
+     * Get costsEnv
+     *
+     * @return float 
+     */
+    public function getCostsEnv()
+    {
+        return DecimalTransformer::convert((float) $this->costsEnv);
+    }
+
+	/**
+	 * @return float
+	 */
+	public function getRealCostsEur($inclSelf = true)
+	{
+		$costs = 0;
+
+		// Count self
+		if($inclSelf)
+		{
+			$costs += $this->getCostsEur();
+		}
+
+		return $costs;
+	}
+
+	/**
+	 * @return float
+	 */
+	public function getRealCostsEnv($inclSelf = true)
+	{
+		$costs = 0;
+
+		// Count self
+		if($inclSelf)
+		{
+			$costs += $this->getCostsEnv();
+		}
+
+		return $costs;
+	}
+
+	/**
+	 * Get the costs array for xml
+	 *
+	 * @return array
+	 */
+	public function getCostsXml()
+	{
+		return array(
+			'PartID' => $this->getPartId(),
+			'Amount' => 1,
+			'costs_euro' => $this->getCostsEur(),
+			'costs_co2_emission' => $this->getCostsEnv()
+		);
+	}
 }

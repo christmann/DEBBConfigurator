@@ -28,7 +28,7 @@ class Reference
      * @var string
      *
      * @Assert\NotBlank()
-     * @ORM\Column(name="Type", type="string", length=255)
+     * @ORM\Column(name="type", type="string", length=255)
      */
     private $type;
 
@@ -36,7 +36,7 @@ class Reference
      * @var string
      *
      * @Assert\NotBlank()
-     * @ORM\Column(name="Location", type="string", length=255)
+     * @ORM\Column(name="location", type="string", length=255)
      */
     private $location;
 

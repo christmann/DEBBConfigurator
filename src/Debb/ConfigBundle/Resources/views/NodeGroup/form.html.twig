@@ -34,6 +34,11 @@
 
 {% block content %}
     {{ form_errors(form) }}
+    <div class="row-fluid">
+        <div class="span6">
+            <strong>{{ 'Costs' | trans }} ({{ 'now'|date('datetimeformat' | trans) }}):</strong> {{ form.vars.data.getRealCostsEur(false) }} EUR / {{ form.vars.data.getRealCostsEnv(false) }} CO2
+        </div>
+    </div>
 	<div id="nodegroup"
 		 data-prototype="{{ ('<div class="node"><span class="nodeTitle">&nbsp;</span>' ~ form_widget(form.nodes.vars.prototype, {attr: {'style': 'display: none'} })
 		 ~ '<a href="#" class="selectNode">' ~  ('select.%what%' | trans({'%what%': 'node' | trans})) ~ '</a></div>') | e }}">
@@ -59,6 +64,7 @@
             {{ form_row(form.product) }}
             {{ form_row(form.label) }}
             {{ form_row(form.hostname) }}
+            {{ form_row(form.instanceName) }}
             {% form_theme form.draft _self %}{{ form_row(form.draft) }}
             {{ form_row(form.type) }}
             {{ form_row(form.maxPower) }}
@@ -66,6 +72,8 @@
             {{ form_row(form.meshResolution) }}
             {{ form_row(form.locationInMesh) }}
             {{ form_row(form.xmlName) }}
+            {{ form_row(form.costsEur) }}
+            {{ form_row(form.costsEnv) }}
             {%- if form.networks.vars.choices | length > 0 -%}
                 <div class="hoz" style="margin-bottom: 10px;">{{ form_row(form.networks) }}</div><div class="clear" style="height: 4px;"></div>
             {%- else -%}
@@ -104,7 +112,7 @@
 							{% endfor %}
 							{% endset %}
 							<option value="{{ node.id }}"
-									{% if node.image is not null %}img="{{ node.image.getFullPath | apply_filter('node_thumb') }}"{% endif %}
+									{% if node.image is not null and node.image.getFullPath|length > 1 %}img="{{ node.image.getFullPath | apply_filter('node_thumb') }}"{% endif %}
 									{% if node.type is not null %}nodetyp="{{ node.type }}"{% endif %}
 									text="{{ sText | e }}">
 								{{ node }}</option>

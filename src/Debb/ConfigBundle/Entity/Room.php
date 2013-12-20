@@ -2,6 +2,9 @@
 
 namespace Debb\ConfigBundle\Entity;
 
+use Debb\ConfigBundle\Controller\XMLController;
+use Debb\ManagementBundle\DataTransformer\DecimalTransformer;
+use Debb\ManagementBundle\Entity\CoolingDevice;
 use Debb\ManagementBundle\Entity\DEBBComponent;
 use Debb\ManagementBundle\Entity\DEBBSimple;
 use Debb\ManagementBundle\Entity\FlowPump;
@@ -494,4 +497,129 @@ class Room extends DEBBComponent
     {
         return $this->coolingDevices;
     }
+
+	/**
+	 * @return float
+	 */
+	public function getRealCostsEur($inclSelf = true)
+	{
+		$costs = 0;
+
+		// Count racks
+		foreach($this->getRacks() as $rackToRoom)
+		{
+			if($rackToRoom instanceof RackToRoom && $rackToRoom->getRack() instanceof Rack)
+			{
+				$costs += $rackToRoom->getRack()->getRealCostsEur();
+			}
+		}
+
+		// Count cooling devices
+		foreach($this->getCoolingDevices() as $coolingDevice)
+		{
+			if($coolingDevice instanceof CoolingDevice)
+			{
+				$costs += $coolingDevice->getRealCostsEur();
+			}
+		}
+
+		// Count flow pumps
+		foreach($this->getFlowPumps() as $flowPump)
+		{
+			if($flowPump instanceof FlowPumpToRoom && $flowPump->getFlowPump() instanceof FlowPump)
+			{
+				$costs += $flowPump->getFlowPump()->getRealCostsEur();
+			}
+		}
+
+		// Count self
+		if($inclSelf)
+		{
+			$costs += parent::getRealCostsEur();
+		}
+
+		return DecimalTransformer::convert($costs);
+	}
+
+	/**
+	 * @return float
+	 */
+	public function getRealCostsEnv($inclSelf = true)
+	{
+		$costs = 0;
+
+		// Count racks
+		foreach($this->getRacks() as $rackToRoom)
+		{
+			if($rackToRoom instanceof RackToRoom && $rackToRoom->getRack() instanceof Rack)
+			{
+				$costs += $rackToRoom->getRack()->getRealCostsEnv();
+			}
+		}
+
+		// Count cooling devices
+		foreach($this->getCoolingDevices() as $coolingDevice)
+		{
+			if($coolingDevice instanceof CoolingDevice)
+			{
+				$costs += $coolingDevice->getRealCostsEnv();
+			}
+		}
+
+		// Count flow pumps
+		foreach($this->getFlowPumps() as $flowPump)
+		{
+			if($flowPump instanceof FlowPumpToRoom && $flowPump->getFlowPump() instanceof FlowPump)
+			{
+				$costs += $flowPump->getFlowPump()->getRealCostsEnv();
+			}
+		}
+
+		// Count self
+		if($inclSelf)
+		{
+			$costs += parent::getRealCostsEnv();
+		}
+
+		return DecimalTransformer::convert($costs);
+	}
+
+	/**
+	 * Get the costs array for xml
+	 *
+	 * @return array
+	 */
+	public function getCostsXml()
+	{
+		$costs = parent::getCostsXml();
+
+		// Count racks
+		foreach($this->getRacks() as $rackToRoom)
+		{
+			if($rackToRoom instanceof RackToRoom && $rackToRoom->getRack() instanceof Rack)
+			{
+				$costs[] = array(XMLController::get_real_class($rackToRoom->getRack()) => $rackToRoom->getRack()->getCostsXml());
+			}
+		}
+
+		// Count cooling devices
+		foreach($this->getCoolingDevices() as $coolingDevice)
+		{
+			if($coolingDevice instanceof CoolingDevice)
+			{
+				$costs[] = array(XMLController::get_real_class($coolingDevice) => $coolingDevice->getCostsXml());
+			}
+		}
+
+		// Count flow pumps
+		foreach($this->getFlowPumps() as $flowPump)
+		{
+			if($flowPump instanceof FlowPumpToRoom && $flowPump->getFlowPump() instanceof FlowPump)
+			{
+				$costs[] = array($flowPump->getFlowPump()->getDebbLevel() => $flowPump->getFlowPump()->getCostsXml());
+			}
+		}
+
+		return $costs;
+	}
 }
