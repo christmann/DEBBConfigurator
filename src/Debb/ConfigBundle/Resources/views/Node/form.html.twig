@@ -37,6 +37,18 @@
         {{- 'Please select components for the red marked select boxes or delete them.' | trans -}}
     </div>
 
+    <div class="row-fluid" style="font-weight: bold;">
+        {{ 'Costs of components' }} ({{ 'now'|date('datetimeformat' | trans) }})
+    </div>
+    <div class="row-fluid">
+        <div class="span1" id="costsEur" style="text-align: right;">{{ form.vars.data.getRealCostsEur(false) }}</div>
+        <div class="span1">EUR</div>
+    </div>
+    <div class="row-fluid">
+        <div class="span1" id="costsEnv" style="text-align: right;">{{ form.vars.data.getRealCostsEnv(false) }}</div>
+        <div class="span1">CO2</div>
+    </div>
+
     <div class="row-fluid">
         <div class="span6">
             <div class="componentBox" style="border-left: 1px solid #DFDFDF; padding-left: 5px;" data-prototype="{{ form_row(form.components.vars.prototype) | escape }}">

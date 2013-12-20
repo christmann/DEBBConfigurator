@@ -259,6 +259,61 @@ abstract class XMLController extends BaseController
 	}
 
 	/**
+	 * Return entity as costs xml string
+	 *
+	 * @param int $id item id
+	 * @param bool $pretty format output for user?
+	 *
+	 * @return string the DEBBComponents.xml string
+	 */
+	public function getCostsXml($id, $pretty = false)
+	{
+		$item = $this->getEntity($id);
+
+		if($this->debbType == null)
+		{
+			$this->debbType = XMLController::get_real_class($item);
+			if($this->debbType == 'Component')
+			{
+				$this->debbType = XMLController::get_real_class($item->getActive());
+			}
+			else if($this->debbType == 'FlowPump')
+			{
+				$this->debbType = $item->getDebbLevel();
+			}
+		}
+
+		$xml = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><Costs />');
+
+		$now = new \DateTime('now');
+		$info = array(
+			'costs_euro' => $item->getRealCostsEur(),
+			'costs_co2_emission' => $item->getRealCostsEnv(),
+			'timestamp' => $now->format('Y-m-d H:i:s')
+		);
+		$info[$this->debbType] = $item->getCostsXml();
+
+		if(is_array($info))
+		{
+			\Debb\ManagementBundle\Entity\Base::array_to_xml($info, $xml);
+		}
+
+		if ($pretty)
+		{
+			$dom = dom_import_simplexml($xml)->ownerDocument;
+			$dom->formatOutput = true;
+			$dom->preserveWhiteSpace = true;
+			$xmlStr = $dom->saveXML(null, LIBXML_NOEMPTYTAG);
+		}
+		else
+		{
+			$xmlStr = $xml->asXML();
+		}
+
+		return $xmlStr;
+	}
+
+	/**
 	 * Obtains an object class name without namespaces
 	 * @param object $obj
 	 * @return string real class name without namespace
@@ -1070,6 +1125,16 @@ abstract class XMLController extends BaseController
 			{
 				$toSvn->set('PLMXML_'.$item->getPartId().'.xml', $plmXml, false, false);
 			}
+
+			if($toSvn === null)
+			{
+				$zip->addFromString('Costs.xml', $this->getCostsXml($id, true));
+			}
+			else
+			{
+				$toSvn->set('Costs.xml', $this->getCostsXml($id, true), false, false);
+			}
+
 			$room = new \Debb\ConfigBundle\Controller\RoomController();
 			$room->setContainer($this->getContainer());
 			$room->valide($plmXml, file_get_contents('../utils/PLMXMLSchema.xsd'), 'PLMXML');

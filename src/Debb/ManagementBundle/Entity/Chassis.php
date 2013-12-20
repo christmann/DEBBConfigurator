@@ -4,6 +4,7 @@ namespace Debb\ManagementBundle\Entity;
 
 use Debb\ConfigBundle\Entity\Dimensions;
 use Debb\ConfigBundle\Entity\NodeGroup;
+use Debb\ManagementBundle\DataTransformer\DecimalTransformer;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -453,5 +454,76 @@ class Chassis extends Dimensions
 			}
 			$this->setTypspecification($typSpecifications);
 		}
+	}
+
+	/**
+	 * @return float
+	 */
+	public function getRealCostsEur($inclSelf = true)
+	{
+		$costs = 0;
+
+		// Count flow pumps
+		foreach($this->getFlowPumps() as $flowPump)
+		{
+			if($flowPump instanceof FlowPumpToChassis && $flowPump->getFlowPump() instanceof FlowPump)
+			{
+				$costs += $flowPump->getFlowPump()->getRealCostsEur();
+			}
+		}
+
+		// Count self
+		if($inclSelf)
+		{
+			$costs += parent::getRealCostsEur();
+		}
+
+		return DecimalTransformer::convert($costs);
+	}
+
+	/**
+	 * @return float
+	 */
+	public function getRealCostsEnv($inclSelf = true)
+	{
+		$costs = 0;
+
+		// Count flow pumps
+		foreach($this->getFlowPumps() as $flowPump)
+		{
+			if($flowPump instanceof FlowPumpToChassis && $flowPump->getFlowPump() instanceof FlowPump)
+			{
+				$costs += $flowPump->getFlowPump()->getRealCostsEnv();
+			}
+		}
+
+		// Count self
+		if($inclSelf)
+		{
+			$costs += parent::getRealCostsEnv();
+		}
+
+		return DecimalTransformer::convert($costs);
+	}
+
+	/**
+	 * Get the costs array for xml
+	 *
+	 * @return array
+	 */
+	public function getCostsXml()
+	{
+		$costs = parent::getCostsXml();
+
+		// Count flow pumps
+		foreach($this->getFlowPumps() as $flowPump)
+		{
+			if($flowPump instanceof FlowPumpToChassis && $flowPump->getFlowPump() instanceof FlowPump)
+			{
+				$costs[] = array($flowPump->getFlowPump()->getDebbLevel() => $flowPump->getFlowPump()->getCostsXml());
+			}
+		}
+
+		return $costs;
 	}
 }

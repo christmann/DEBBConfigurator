@@ -30,18 +30,26 @@
 
 {% block content %}
 	<div class="rackTop">&nbsp;</div>
-	<div class="rack" data-prototype="{{ form_row(form.nodegroups.vars.prototype) | escape }}">
-		{% set formNodeGroups = form.nodegroups | reverse %}
-		{% if formNodeGroups|length > 0 and formNodeGroups[0].vars.value.field == 0 %}
-			{% set formNodeGroups = formNodeGroups | reverse %}
-		{% endif %}
-		{% for nodeGroup in formNodeGroups %}
-			<div class="nodegroup" data-original-title="{{ (nodeGroup.vars.id|replace({"debb_configbundle_racktype_nodegroups_":""})+1) }}.">
-				{{ form_widget(nodeGroup, {attr: {'style': 'display: none'}}) }}
-				<span id="{{ nodeGroup.vars.id }}_title" data-toggle="tooltip" class="rack_title" data-original-title="{{ nodeGroup.vars.value.nodegroup }}" size="{{ nodeGroup.vars.data.nodegroup.draft.heSize | default(1)}}">{{ nodeGroup.vars.value.nodegroup }}</span>
-			</div>
-		{% endfor %}
-	</div>
+    <div style="float: left; width: 250px;">
+        <div class="rack" data-prototype="{{ form_row(form.nodegroups.vars.prototype) | escape }}">
+            {% set formNodeGroups = form.nodegroups | reverse %}
+            {% if formNodeGroups|length > 0 and formNodeGroups[0].vars.value.field == 0 %}
+                {% set formNodeGroups = formNodeGroups | reverse %}
+            {% endif %}
+            {% for nodeGroup in formNodeGroups %}
+                <div class="nodegroup" data-original-title="{{ (nodeGroup.vars.id|replace({"debb_configbundle_racktype_nodegroups_":""})+1) }}.">
+                    {{ form_widget(nodeGroup, {attr: {'style': 'display: none'}}) }}
+                    <span id="{{ nodeGroup.vars.id }}_title" data-toggle="tooltip" class="rack_title" data-original-title="{{ nodeGroup.vars.value.nodegroup }}" size="{{ nodeGroup.vars.data.nodegroup.draft.heSize | default(1)}}">{{ nodeGroup.vars.value.nodegroup }}</span>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="row-fluid">
+            <div class="span9 offset1">
+                <strong>{{ 'Costs' | trans }} ({{ 'now'|date('datetimeformat' | trans) }})</strong><br />
+                {{ form.vars.data.getRealCostsEur(false) }} EUR / {{ form.vars.data.getRealCostsEnv(false) }} CO2
+            </div>
+        </div>
+    </div>
 	<div class="extraContent">
         {{ form_errors(form) }}
 		<div style="margin-left: 13px; color: #555;">

@@ -2,6 +2,8 @@
 
 namespace Debb\ConfigBundle\Entity;
 
+use Debb\ConfigBundle\Controller\XMLController;
+use Debb\ManagementBundle\DataTransformer\DecimalTransformer;
 use Debb\ManagementBundle\Entity\Base;
 use Debb\ManagementBundle\Entity\Baseboard;
 use Debb\ManagementBundle\Entity\DEBBComponent;
@@ -381,4 +383,80 @@ class Node extends DEBBComponent
     {
         return $this->networks;
     }
+
+	/**
+	 * @return float
+	 */
+	public function getRealCostsEur($inclSelf = true)
+	{
+		$costs = 0;
+
+		// Count components
+		foreach($this->getComponents() as $component)
+		{
+			if($component !== null && $component->getActive() instanceof Base)
+			{
+				$costs += $component->getActive()->getRealCostsEur() * $component->getAmount();
+			}
+		}
+
+		// Count self
+		if($inclSelf)
+		{
+			$costs += parent::getRealCostsEur();
+		}
+
+		return DecimalTransformer::convert($costs);
+	}
+
+	/**
+	 * @return float
+	 */
+	public function getRealCostsEnv($inclSelf = true)
+	{
+		$costs = 0;
+
+		// Count components
+		foreach($this->getComponents() as $component)
+		{
+			if($component !== null && $component->getActive() instanceof Base)
+			{
+				$costs += $component->getActive()->getRealCostsEnv() * $component->getAmount();
+			}
+		}
+
+		// Count self
+		if($inclSelf)
+		{
+			$costs += parent::getRealCostsEnv();
+		}
+
+		return DecimalTransformer::convert($costs);
+	}
+
+	/**
+	 * Get the costs array for xml
+	 *
+	 * @return array
+	 */
+	public function getCostsXml()
+	{
+		$costs = parent::getCostsXml();
+
+		// Count components
+		foreach($this->getComponents() as $component)
+		{
+			if($component !== null && $component->getActive() instanceof Base)
+			{
+				$costs[] = array(XMLController::get_real_class($component->getActive()) => array(
+						'costs_euro' => $component->getActive()->getRealCostsEur(),
+						'costs_co2_emission' => $component->getActive()->getRealCostsEnv(),
+						'amount' => $component->getAmount()
+					)
+				);
+			}
+		}
+
+		return $costs;
+	}
 }

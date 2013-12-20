@@ -28,7 +28,7 @@ class CoolingEER
      * @var float
      *
 	 * @Assert\NotNull()
-     * @ORM\Column(name="LWT", type="float")
+     * @ORM\Column(name="lwt", type="float")
      */
     private $lWT;
 
@@ -38,7 +38,7 @@ class CoolingEER
      * @var float
      *
 	 * @Assert\NotNull()
-     * @ORM\Column(name="CWT", type="float")
+     * @ORM\Column(name="cwt", type="float")
      */
     private $cWT;
 
@@ -46,7 +46,7 @@ class CoolingEER
      * @var integer
      *
 	 * @Assert\NotNull()
-     * @ORM\Column(name="Capacity", type="integer")
+     * @ORM\Column(name="capacity", type="integer")
      */
     private $capacity;
 
@@ -54,7 +54,7 @@ class CoolingEER
      * @var integer
      *
 	 * @Assert\NotNull()
-     * @ORM\Column(name="PowerUsage", type="integer")
+     * @ORM\Column(name="power_usage", type="integer")
      */
     private $powerUsage;
 
@@ -62,7 +62,7 @@ class CoolingEER
      * @var float
      *
 	 * @Assert\NotNull()
-     * @ORM\Column(name="EER", type="float")
+     * @ORM\Column(name="eer", type="float")
      */
     private $eER;
 

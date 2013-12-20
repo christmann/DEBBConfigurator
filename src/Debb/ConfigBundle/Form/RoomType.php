@@ -27,6 +27,8 @@ class RoomType extends BaseType
 			->add('sizeX', 'hidden', array('required' => false))
 			->add('sizeY', 'number', array('required' => false, 'label' => 'SizeY', 'attr' => array('class' => 'noBreakAfterThis')))
 			->add('xmlName', null, array('required' => false))
+			->add('costsEur', 'decimal', array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false))
+			->add('costsEnv', 'decimal', array('required' => false))
             ->add('meshResolution', null, array('required' => false, 'attr' => array('placeholder' => '0 0 0', 'class' => 'noBreakAfterThis')))
             ->add('locationInMesh', null, array('required' => false, 'attr' => array('placeholder' => '0 0 0')))
 			->add('sizeZ', 'hidden', array('required' => false))

@@ -8,6 +8,8 @@
 
 namespace Debb\ConfigBundle\Entity;
 
+use Debb\ConfigBundle\Controller\XMLController;
+use Debb\ManagementBundle\DataTransformer\DecimalTransformer;
 use Debb\ManagementBundle\Entity\DEBBComponent;
 use Debb\ManagementBundle\Entity\NodegroupToRack;
 use Debb\ManagementBundle\Entity\RackToRoom;
@@ -274,5 +276,91 @@ class Rack extends DEBBComponent
 	public function getParents()
 	{
 		return $this->getRooms();
+	}
+
+	/**
+	 * @return float
+	 */
+	public function getRealCostsEur($inclSelf = true)
+	{
+		$costs = 0;
+
+		// Count node groups
+		foreach($this->getNodeGroups() as $nodegroupToRack)
+		{
+			if($nodegroupToRack !== null && $nodegroupToRack->getNodegroup() instanceof NodeGroup)
+			{
+				$costs += $nodegroupToRack->getNodegroup()->getRealCostsEur();
+			}
+		}
+
+		// Count self
+		if($inclSelf)
+		{
+			$costs += parent::getRealCostsEur();
+		}
+
+		return DecimalTransformer::convert($costs);
+	}
+
+	/**
+	 * @return float
+	 */
+	public function getRealCostsEnv($inclSelf = true)
+	{
+		$costs = 0;
+
+		// Count node groups
+		foreach($this->getNodeGroups() as $nodegroupToRack)
+		{
+			if($nodegroupToRack !== null && $nodegroupToRack->getNodegroup() instanceof NodeGroup)
+			{
+				$costs += $nodegroupToRack->getNodegroup()->getRealCostsEnv();
+			}
+		}
+
+		// Count self
+		if($inclSelf)
+		{
+			$costs += parent::getRealCostsEnv();
+		}
+
+		return DecimalTransformer::convert($costs);
+	}
+
+	/**
+	 * Get the costs array for xml
+	 *
+	 * @return array
+	 */
+	public function getCostsXml()
+	{
+		$costs = parent::getCostsXml();
+
+		// Count node groups
+		foreach($this->getNodeGroups() as $nodegroupToRack)
+		{
+			if($nodegroupToRack !== null && $nodegroupToRack->getNodegroup() instanceof NodeGroup)
+			{
+				/**
+				 * Count up the amount instead add thousand same things...
+				 *
+					$xml = $nodegroupToRack->getNodegroup()->getCostsXml();
+					if(isset($lastPartID) && isset($lastAmount) && $lastPartID == $xml['PartID'])
+					{
+						$lastAmount++;
+					}
+					else
+					{
+						$lastPartID =& $xml['PartID'];
+						$lastAmount =& $xml['Amount'];
+						$costs[] = array(XMLController::get_real_class($nodegroupToRack->getNodegroup()) => $xml);
+					}
+				 */
+				$costs[] = array(XMLController::get_real_class($nodegroupToRack->getNodegroup()) => $nodegroupToRack->getNodegroup()->getCostsXml());
+			}
+		}
+
+		return $costs;
 	}
 }

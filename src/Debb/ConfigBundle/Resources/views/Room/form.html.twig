@@ -46,6 +46,8 @@
         {{ form_row(form.xmlName) }}
         {{ form_row(form.meshResolution) }}
         {{ form_row(form.locationInMesh) }}
+        {{ form_row(form.costsEur) }}
+        {{ form_row(form.costsEnv) }}
         {{ form_row(form.references) }}
         {%- if form.coolingDevices.vars.choices | length > 0 -%}
             <div class="hoz" style="margin-bottom: 10px;">{{ form_row(form.coolingDevices) }}</div><div class="clear" style="height: 4px;"></div>
@@ -74,6 +76,19 @@
 			</div>
 			<div class="clear"></div>
 		{%- endif %}
+
+        <div class="row-fluid" style="font-weight: bold;">
+            {{ 'Costs of components' }} ({{ 'now'|date('datetimeformat' | trans) }})
+        </div>
+        <div class="row-fluid">
+            <div class="span1" id="costsEur" style="text-align: right;">{{ form.vars.data.getRealCostsEur(false) }}</div>
+            <div class="span1">EUR</div>
+        </div>
+        <div class="row-fluid">
+            <div class="span1" id="costsEnv" style="text-align: right;">{{ form.vars.data.getRealCostsEnv(false) }}</div>
+            <div class="span1">CO2</div>
+        </div>
+
 		<div id="rackSize">{{ 'size' | trans }}: <span id="rackSizeX">{{ (rackSizeX / 100.0) | number_format(2, '.', '') }}</span>m x <span id="rackSizeZ">{{ (rackSizeZ / 100.0) | number_format(2, '.', '') }}</span>m</div>
 		<div id="rackContainer" style="position: relative; width: {{ rackSizeX }}px; height: {{ rackSizeZ }}px; border: 2px solid #000; background: url('{{ asset('bundles/debbconfig/img/room-grid.png') }}') repeat scroll 1px {{ rackSizeZ + 1 }}px transparent;" data-prototype-rack="{{ form_row(form.racks.vars.prototype) | escape }}" data-prototype-flowpump="{{ form_row(form.flowPumps.vars.prototype) | escape }}">
 			{% for rack in form.racks %}

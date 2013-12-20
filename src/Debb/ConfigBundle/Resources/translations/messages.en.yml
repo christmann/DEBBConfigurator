@@ -60,6 +60,8 @@ RackSize: Rack size [RU]
 upload image file: Upload image
 size: Size
 posz: Pos Z [mm]
+Costs eur: Costs [EUR]
+Costs env: Costs [CO2]
 
 # form fields which not defined above
 Product: Product
@@ -116,6 +118,7 @@ Transfer rate: Transfer rate [NTU]
 preparing file: We are preparing your file, please wait...
 failed file: There was a problem generating your file, please try again.
 StateT: State
+datetimeformat: m/d/Y H:i:s
 
 # help
 help:

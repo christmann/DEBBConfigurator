@@ -26,7 +26,7 @@ class PStateLoadPowerUsage
      * @var float
      *
 	 * @Assert\NotNull()
-     * @ORM\Column(name="lLoad", type="float")
+     * @ORM\Column(name="l_load", type="float")
      */
     private $lLoad;
 

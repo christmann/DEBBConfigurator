@@ -2,6 +2,8 @@
 
 namespace Debb\ConfigBundle\Entity;
 
+use Debb\ConfigBundle\Controller\XMLController;
+use Debb\ManagementBundle\DataTransformer\DecimalTransformer;
 use Debb\ManagementBundle\Entity\Chassis;
 use Debb\ManagementBundle\Entity\DEBBComponent;
 use Debb\ManagementBundle\Entity\Network;
@@ -355,4 +357,120 @@ class NodeGroup extends DEBBComponent
     {
         return $this->networks;
     }
+
+	/**
+	 * @return float
+	 */
+	public function getRealCostsEur($inclSelf = true)
+	{
+		$costs = 0;
+
+		// Count nodes
+		foreach($this->getNodes() as $nodeToNodegroup)
+		{
+			if($nodeToNodegroup !== null && $nodeToNodegroup->getNode() instanceof Node)
+			{
+				$costs += $nodeToNodegroup->getNode()->getRealCostsEur();
+			}
+		}
+
+		// Count networks
+		foreach($this->getNetworks() as $network)
+		{
+			if($network instanceof Network)
+			{
+				$costs += $network->getRealCostsEur();
+			}
+		}
+
+		// Count chassis
+		if($this->getDraft() instanceof Chassis)
+		{
+			$costs += $this->getDraft()->getRealCostsEur();
+		}
+
+		// Count self
+		if($inclSelf)
+		{
+			$costs += parent::getRealCostsEur();
+		}
+
+		return DecimalTransformer::convert($costs);
+	}
+
+	/**
+	 * @return float
+	 */
+	public function getRealCostsEnv($inclSelf = true)
+	{
+		$costs = 0;
+
+		// Count nodes
+		foreach($this->getNodes() as $nodeToNodegroup)
+		{
+			if($nodeToNodegroup !== null && $nodeToNodegroup->getNode() instanceof Node)
+			{
+				$costs += $nodeToNodegroup->getNode()->getRealCostsEnv();
+			}
+		}
+
+		// Count networks
+		foreach($this->getNetworks() as $network)
+		{
+			if($network instanceof Network)
+			{
+				$costs += $network->getRealCostsEnv();
+			}
+		}
+
+		// Count chassis
+		if($this->getDraft() instanceof Chassis)
+		{
+			$costs += $this->getDraft()->getRealCostsEnv();
+		}
+
+		// Count self
+		if($inclSelf)
+		{
+			$costs += parent::getRealCostsEnv();
+		}
+
+		return DecimalTransformer::convert($costs);
+	}
+
+	/**
+	 * Get the costs array for xml
+	 *
+	 * @return array
+	 */
+	public function getCostsXml()
+	{
+		$costs = parent::getCostsXml();
+
+		// Count nodes
+		foreach($this->getNodes() as $nodeToNodegroup)
+		{
+			if($nodeToNodegroup !== null && $nodeToNodegroup->getNode() instanceof Node)
+			{
+				$costs[] = array(XMLController::get_real_class($nodeToNodegroup->getNode()) => $nodeToNodegroup->getNode()->getCostsXml());
+			}
+		}
+
+		// Count networks
+		foreach($this->getNetworks() as $network)
+		{
+			if($network instanceof Network)
+			{
+				$costs[] = array(XMLController::get_real_class($network) => $network->getCostsXml());
+			}
+		}
+
+		// Count chassis
+		if($this->getDraft() instanceof Chassis)
+		{
+			$costs[] = array(XMLController::get_real_class($this->getDraft()) => $this->getDraft()->getCostsXml());
+		}
+
+		return $costs;
+	}
 }

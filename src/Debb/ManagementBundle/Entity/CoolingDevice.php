@@ -25,7 +25,7 @@ class CoolingDevice extends DEBBComplex
 	/**
 	 * @var float
 	 *
-	 * @ORM\Column(name="MaxCoolingCapacity", type="decimal", precision=18, scale=9, nullable=true)
+	 * @ORM\Column(name="max_cooling_capacity", type="decimal", precision=18, scale=9, nullable=true)
 	 */
 	private $maxCoolingCapacity;
 
@@ -33,7 +33,7 @@ class CoolingDevice extends DEBBComplex
 	 * @var float
 	 *
 	 * @Assert\NotBlank()
-	 * @ORM\Column(name="CoolingCapacityRated", type="decimal", precision=18, scale=9)
+	 * @ORM\Column(name="cooling_capacity_rated", type="decimal", precision=18, scale=9)
 	 */
 	private $coolingCapacityRated;
 

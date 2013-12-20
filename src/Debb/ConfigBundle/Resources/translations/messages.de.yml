@@ -63,6 +63,8 @@ RackSize: Rack Größe [RU]
 size: Größe
 upload image file: Bild hochladen
 Add rack: Rack hinzufügen
+Costs eur: Kosten [EUR]
+Costs env: Kosten [CO2]
 
 # form fields which not defined above
 Product: Produkt
@@ -109,6 +111,7 @@ add new node type: Neuen Knoten-Typ hinzufügen
 Maxtemp: Maximale Temperatur
 Mintemp: Minimale Temperatur
 posz: Pos Z [mm]
+datetimeformat: d.m.Y H:i:s
 
 # help
 help:
