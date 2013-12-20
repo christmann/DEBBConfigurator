@@ -451,7 +451,7 @@ class Node extends DEBBComponent
 				$costs[] = array(XMLController::get_real_class($component->getActive()) => array(
 						'costs_euro' => $component->getActive()->getRealCostsEur(),
 						'costs_co2_emission' => $component->getActive()->getRealCostsEnv(),
-						'amount' => $component->getAmount()
+						'Amount' => $component->getAmount()
 					)
 				);
 			}
