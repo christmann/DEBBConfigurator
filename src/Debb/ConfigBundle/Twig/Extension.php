@@ -57,6 +57,7 @@ class Extension extends \Twig_Extension
 	 */
 	public function svnEnabled()
 	{
+		if($this->container->get('request')->getSession()->has('context')) { return true; }
 		return $this->container->getParameter('debb.configbundle.svn_path') != false && $this->container->getParameter('debb.configbundle.svn_url') !== null;
 	}
 

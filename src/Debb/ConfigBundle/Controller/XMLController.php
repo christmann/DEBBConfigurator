@@ -25,6 +25,7 @@ use Debb\ManagementBundle\Entity\Component;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -76,6 +77,7 @@ abstract class XMLController extends BaseController
 	 */
 	public function asSVNAction($id)
 	{
+		return new JsonResponse(array('next' => $this->getRequest()->getMethod() == 'POST'));
 		$svn = new Subversion($this->container->getParameter('debb.configbundle.svn_path'), $this->container->getParameter('debb.configbundle.svn_url'));
 		$key = str_replace('.', '', $this->getUser()) . '/' . date('Y_m_d__H_i_s') . '/';
 		$svn->setMasterKey($key);
