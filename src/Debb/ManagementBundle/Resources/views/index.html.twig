@@ -24,6 +24,9 @@
 {% endblock %}
 
 {% block content %}
+    {% if svnEnabled() and exportasarchive is defined and route_exists(localdev_admin_route("_assvn")) and app.session.has('context') %}
+        <input id="svnuploaddefaultdir" type="hidden" value="{{ app.session.get('context').debb_url|default('') }}" />
+    {% endif %}
 	{% block index_table %}
 		<table class="table table-striped table-condensed">
 			<thead>
@@ -80,7 +83,7 @@
                                             </a>
                                         {% endif %}
                                         {% if svnEnabled() and exportasarchive is defined and route_exists(localdev_admin_route("_assvn")) %}{# If you can export something as archive you can add it to svn! #}
-                                            <a target="_blank" href="{{ path(localdev_admin_route("_assvn"), {"id": item.id}) }}" class="btn">
+                                            <a target="_blank" href="{{ path(localdev_admin_route("_assvn"), {"id": item.id}) }}" class="btn svnUpload">
                                                 <span rel="tooltip" data-original-title="{{ 'Add to svn' | trans }}"><img src="{{ asset('bundles/debbconfig/img/svn-icon.png') }}" /></span>
                                             </a>
                                         {% endif %}
