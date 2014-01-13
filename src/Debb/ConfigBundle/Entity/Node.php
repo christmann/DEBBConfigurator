@@ -180,16 +180,16 @@ class Node extends DEBBComponent
 		$processors = $this->getComponents(Component::TYPE_PROCESSOR);
 		$memories = $this->getComponents(Component::TYPE_MEMORY);
 
-		if(!count($baseboards) || reset($baseboards)->getAmount() < 1)
+		if(count($baseboards) > 1 || reset($baseboards)->getAmount() != 1)
+		{
+			$baseboards = array(reset($baseboards)->setAmount(1));
+		}
+		if (count($baseboards) < 1 || !(reset($baseboards)->getActive() instanceof Baseboard))
 		{
 			$comp = new Component();
 			$comp->setAmount(1);
 			$comp->setBaseboard(new Baseboard());
 			$baseboards = array($comp);
-		}
-		if(count($baseboards) > 1 && reset($baseboards)->getActive() instanceof Baseboard && (reset($baseboards)->getAmount() != 1))
-		{
-			$baseboards = array(reset($baseboards)->setAmount(1));
 		}
 
 		foreach (array_merge(
