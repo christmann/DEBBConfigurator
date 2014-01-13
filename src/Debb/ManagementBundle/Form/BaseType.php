@@ -69,6 +69,8 @@ class BaseType extends AbstractType
 				),))
 			->add('powerUsageProfile', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false, 'query_builder' => $this->userQueryBuilder))
 			->add('xmlName', null, array('required' => false, 'label' => 'XML name'))
+			->add('minAllowedTemperature', 'decimal', array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false))
+			->add('maxAllowedTemperature', 'decimal', array('required' => false))
 			->add('type', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false,
 				'label_attr' => array(
 					'data-title' => 'Annotation',

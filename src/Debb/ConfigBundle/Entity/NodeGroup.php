@@ -58,6 +58,7 @@ class NodeGroup extends DEBBComponent
     public function __construct()
     {
         $this->nodes = new ArrayCollection();
+        $this->networks = new ArrayCollection();
     }
 
     /**

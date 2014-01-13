@@ -10,12 +10,22 @@ function guid()
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 }
 
-$(function ()
+function noBreakClasses()
 {
-	$('.noBreakAfterThis').parent().addClass('isNoBreakAfterThis').each(function(index)
+	$('.isNoBreakAfterThis').removeClass('isNoBreakAfterThis').each(function()
+	{
+		$(this).next('div.clear').remove();
+		$(this).next().next('div.clear').remove();
+	});
+	$('.noBreakAfterThis').parent().addClass('isNoBreakAfterThis').each(function()
 	{
 		$(this).next('div:not(.isNoBreakAfterThis)').after('<div class="clear"></div>');
 	});
+}
+
+$(function ()
+{
+	noBreakClasses();
 
     var changed = false;
     var isSubmitted = false;

@@ -22,9 +22,13 @@ class CoolingDeviceType extends BaseType
     {
 	    parent::buildForm($builder, $options);
         $builder
-            ->add('class', 'choice', array('choices' => $this->getClasses(true), 'attr' => array('class' => 'noBreakAfterThis')))
-            ->add('maxCoolingCapacity', 'decimal', array('required' => false))
-	        ->add('coolingCapacityRated', 'decimal')
+			->add('class', 'choice', array('choices' => $this->getClasses(true), 'attr' => array('class' => 'noBreakAfterThis')))
+			->add('fanEfficiency', 'decimal', array('required' => false))
+			->add('coolingCoilEfficiency', 'decimal', array('required' => false, 'attr' => array('class' => 'noBreakAfterThis')))
+			->add('deltaThEx', 'decimal', array('required' => false))
+			->add('maxCoolingCapacity', 'decimal', array('required' => false, 'attr' => array('class' => 'noBreakAfterThis')))
+			->add('coolingCapacityRated', 'decimal', array('required' => false))
+			->add('eERRated', 'decimal', array('required' => false))
 			->add('energyEfficiencyRatio', 'collection', array(
 				'type' => new CoolingEERType(),
 				'allow_add' => true,
@@ -33,6 +37,8 @@ class CoolingDeviceType extends BaseType
 				'required' => false,
 				'label' => 'Energy efficiency ratio'
 			))
+			->add('deltaThDryCooler', 'decimal', array('required' => false, 'attr' => array('class' => 'noBreakAfterThis')))
+			->add('dryCoolerEfficiency', 'decimal', array('required' => false))
         ;
     }
 
@@ -60,7 +66,7 @@ class CoolingDeviceType extends BaseType
 	public static function getClasses($inclKeys = false)
 	{
 		$ret = array();
-		foreach(array('Fan', 'Refrigeration', 'Heatpipe', 'ILC', 'LCU', 'CRAH', 'HVAC') as $class)
+		foreach(array('CRAH', 'Free-cooling', 'Refrigeration', 'Heatpipe', 'ILC', 'LCU', 'HVAC') as $class)
 		{
 			if($inclKeys)
 			{

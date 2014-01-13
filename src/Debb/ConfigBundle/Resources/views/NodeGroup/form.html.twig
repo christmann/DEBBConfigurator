@@ -66,6 +66,8 @@
             {{ form_row(form.hostname) }}
             {{ form_row(form.instanceName) }}
             {% form_theme form.draft _self %}{{ form_row(form.draft) }}
+            {{ form_row(form.minAllowedTemperature) }}
+            {{ form_row(form.maxAllowedTemperature) }}
             {{ form_row(form.type) }}
             {{ form_row(form.maxPower) }}
             {{ form_row(form.powerUsageProfile) }}
@@ -79,12 +81,14 @@
             {%- else -%}
                 {%- do form.networks.setRendered -%}
             {%- endif -%}
-			{% do form.sizeX.setRendered %}{% do form.sizeY.setRendered %}{% do form.sizeZ.setRendered %}
-			{% do form.spaceLeft.setRendered %}{% do form.spaceRight.setRendered %}{% do form.spaceTop.setRendered %}{% do form.spaceBottom.setRendered %}{% do form.spaceFront.setRendered %}{% do form.spaceBehind.setRendered %}
-			{% do form.nodes.setRendered %}
-			{% do form.powerUsageProfile.setRendered %}
-			{% do form.meshResolution.setRendered %}
-			{% do form.locationInMesh.setRendered %}
+			{%- do form.sizeX.setRendered %}{% do form.sizeY.setRendered %}{% do form.sizeZ.setRendered %}
+			{%- do form.spaceLeft.setRendered %}{% do form.spaceRight.setRendered %}{% do form.spaceTop.setRendered %}{% do form.spaceBottom.setRendered %}{% do form.spaceFront.setRendered %}{% do form.spaceBehind.setRendered %}
+			{%- do form.nodes.setRendered %}
+			{%- do form.powerUsageProfile.setRendered %}
+			{%- do form.meshResolution.setRendered %}
+			{%- do form.locationInMesh.setRendered %}
+			{%- do form.minAllowedTemperature.setRendered %}
+			{%- do form.maxAllowedTemperature.setRendered %}
 			<div class="clear"></div>
 		</div>
 		<div id="node-select-box">

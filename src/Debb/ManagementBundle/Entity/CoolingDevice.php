@@ -17,10 +17,37 @@ class CoolingDevice extends DEBBComplex
 	/**
 	 * @var string
 	 *
+	 * The cooling device should contain all functional sections of the
+	 * cooling from heat exchanger chiller, dry cooler etc. The combination of
+	 * such functional elements result in a specific class of cooling device so
+	 * from the class the order of following functional elements can be
+	 * deduced directly. Only CRAH and free cooling are currently used
+	 *
 	 * @Assert\Choice(callback={"Debb\ManagementBundle\Form\CoolingDeviceType", "getClasses"}, message="Choose a valid class.")
 	 * @ORM\Column(name="class", type="string", length=255)
 	 */
 	private $class;
+
+	/**
+	 * @var float
+	 *
+	 * @ORM\Column(name="fan_efficiency", type="decimal", precision=18, scale=9, nullable=true)
+	 */
+	private $fanEfficiency;
+
+	/**
+	 * @var float
+	 *
+	 * @ORM\Column(name="cooling_coil_efficiency", type="decimal", precision=18, scale=9, nullable=true)
+	 */
+	private $coolingCoilEfficiency;
+
+	/**
+	 * @var float
+	 *
+	 * @ORM\Column(name="delta_th_ex", type="decimal", precision=18, scale=9, nullable=true)
+	 */
+	private $deltaThEx;
 
 	/**
 	 * @var float
@@ -32,10 +59,16 @@ class CoolingDevice extends DEBBComplex
 	/**
 	 * @var float
 	 *
-	 * @Assert\NotBlank()
-	 * @ORM\Column(name="cooling_capacity_rated", type="decimal", precision=18, scale=9)
+	 * @ORM\Column(name="cooling_capacity_rated", type="decimal", precision=18, scale=9, nullable=true)
 	 */
 	private $coolingCapacityRated;
+
+	/**
+	 * @var float
+	 *
+	 * @ORM\Column(name="eerrated", type="decimal", precision=18, scale=9, nullable=true)
+	 */
+	private $eERRated;
 
 	/**
 	 * @var \Debb\ManagementBundle\Entity\CoolingEER
@@ -43,6 +76,20 @@ class CoolingDevice extends DEBBComplex
 	 * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\CoolingEER", mappedBy="coolingDevice", cascade={"all"}, orphanRemoval=true)
 	 */
 	private $energyEfficiencyRatio;
+
+	/**
+	 * @var float
+	 *
+	 * @ORM\Column(name="delta_th_dry_cooler", type="decimal", precision=18, scale=9, nullable=true)
+	 */
+	private $deltaThDryCooler;
+
+	/**
+	 * @var float
+	 *
+	 * @ORM\Column(name="dry_cooler_efficiency", type="decimal", precision=18, scale=9, nullable=true)
+	 */
+	private $dryCoolerEfficiency;
 
 	/**
 	 * Components
@@ -70,19 +117,58 @@ class CoolingDevice extends DEBBComplex
 	public function getDebbXmlArray()
 	{
 		$array = parent::getDebbXmlArray();
-		$array['Class'] = (string) $this->getClass();
-		if ($this->getMaxCoolingCapacity() !== null)
+		$array['Class'] = $this->getClass();
+
+		/**
+		 * CRAH
+		 */
+//		if(strtolower($this->getClass()) == 'CRAH')
+		if($this->getFanEfficiency() !== null && $this->getCoolingCoilEfficiency() !== null && $this->getDeltaThEx() !== null)
 		{
-			$array['MaxCoolingCapacity'] = DecimalTransformer::convert($this->getMaxCoolingCapacity());
+			$array['CRAH'] = array(
+				'FanEfficiency' => $this->getFanEfficiency(),
+				'CoolingCoilEfficiency' => $this->getCoolingCoilEfficiency(),
+				'DeltaThEx' => $this->getDeltaThEx()
+			);
 		}
-		$array['CoolingCapacityRated'] = DecimalTransformer::convert((string) $this->getCoolingCapacityRated());
-		if ($this->getEnergyEfficiencyRatio() !== null && count($this->getEnergyEfficiencyRatio()) > 0)
+
+		/**
+		 * Chiller
+		 */
+//		if(strtolower($this->getClass()) == 'Chiller')
+		if($this->getCoolingCapacityRated() !== null && $this->getEERRated() !== null)
 		{
-			$array['EnergyEfficiencyRatio'] = array();
-			foreach($this->getEnergyEfficiencyRatio() as $eer)
+			$chiller = array();
+			if($this->getMaxCoolingCapacity() !== null)
 			{
-				$array['EnergyEfficiencyRatio'][] = array($eer->getDebbXmlArray());
+				$chiller['MaxCoolingCapacity'] = $this->getMaxCoolingCapacity();
 			}
+
+			$chiller['CoolingCapacityRated'] = $this->getCoolingCapacityRated();
+			$chiller['EERRated'] = $this->getEERRated();
+
+			if ($this->getEnergyEfficiencyRatio() !== null && count($this->getEnergyEfficiencyRatio()) > 0)
+			{
+				$chiller['EnergyEfficiencyRatio'] = array();
+				foreach($this->getEnergyEfficiencyRatio() as $eer)
+				{
+					$chiller['EnergyEfficiencyRatio'][] = array($eer->getDebbXmlArray());
+				}
+			}
+
+			$array['Chiller'] = $chiller;
+		}
+
+		/**
+		 * DryCooler
+		 */
+//		if(strtolower($this->getClass()) == 'DryCooler')
+		if($this->getDeltaThDryCooler() !== null && $this->getDryCoolerEfficiency() !== null)
+		{
+			$array['DryCooler'] = array(
+				'DeltaThDryCooler' => $this->getDeltaThDryCooler(),
+				'DryCoolerEfficiency' => $this->getDryCoolerEfficiency()
+			);
 		}
 		return $array;
 	}
@@ -107,30 +193,7 @@ class CoolingDevice extends DEBBComplex
      */
     public function getClass()
     {
-        return $this->class;
-    }
-
-    /**
-     * Set maxCoolingCapacity
-     *
-     * @param float $maxCoolingCapacity
-     * @return CoolingDevice
-     */
-    public function setMaxCoolingCapacity($maxCoolingCapacity)
-    {
-        $this->maxCoolingCapacity = $maxCoolingCapacity;
-    
-        return $this;
-    }
-
-    /**
-     * Get maxCoolingCapacity
-     *
-     * @return float 
-     */
-    public function getMaxCoolingCapacity()
-    {
-        return $this->maxCoolingCapacity;
+        return (string) $this->class;
     }
 
     /**
@@ -146,7 +209,7 @@ class CoolingDevice extends DEBBComplex
 			$this->energyEfficiencyRatio[] = $energyEfficiencyRatio;
 			$energyEfficiencyRatio->setCoolingDevice($this);
 		}
-    
+
         return $this;
     }
 
@@ -164,34 +227,11 @@ class CoolingDevice extends DEBBComplex
     /**
      * Get energyEfficiencyRatio
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Debb\ManagementBundle\Entity\CoolingEER[]
      */
     public function getEnergyEfficiencyRatio()
     {
         return $this->energyEfficiencyRatio;
-    }
-
-    /**
-     * Set coolingCapacityRated
-     *
-     * @param float $coolingCapacityRated
-     * @return CoolingDevice
-     */
-    public function setCoolingCapacityRated($coolingCapacityRated)
-    {
-        $this->coolingCapacityRated = $coolingCapacityRated;
-    
-        return $this;
-    }
-
-    /**
-     * Get coolingCapacityRated
-     *
-     * @return float 
-     */
-    public function getCoolingCapacityRated()
-    {
-        return $this->coolingCapacityRated;
     }
 
 	/**
@@ -236,4 +276,188 @@ class CoolingDevice extends DEBBComplex
 	{
 		return $this->getComponents();
 	}
+
+    /**
+     * Set fanEfficiency
+     *
+     * @param float $fanEfficiency
+     * @return CoolingDevice
+     */
+    public function setFanEfficiency($fanEfficiency)
+    {
+        $this->fanEfficiency = $fanEfficiency;
+    
+        return $this;
+    }
+
+    /**
+     * Get fanEfficiency
+     *
+     * @return float 
+     */
+    public function getFanEfficiency()
+    {
+        return DecimalTransformer::convert($this->fanEfficiency, false);
+    }
+
+    /**
+     * Set coolingCoilEfficiency
+     *
+     * @param float $coolingCoilEfficiency
+     * @return CoolingDevice
+     */
+    public function setCoolingCoilEfficiency($coolingCoilEfficiency)
+    {
+        $this->coolingCoilEfficiency = $coolingCoilEfficiency;
+    
+        return $this;
+    }
+
+    /**
+     * Get coolingCoilEfficiency
+     *
+     * @return float 
+     */
+    public function getCoolingCoilEfficiency()
+    {
+        return DecimalTransformer::convert($this->coolingCoilEfficiency, false);
+    }
+
+    /**
+     * Set deltaThEx
+     *
+     * @param float $deltaThEx
+     * @return CoolingDevice
+     */
+    public function setDeltaThEx($deltaThEx)
+    {
+        $this->deltaThEx = $deltaThEx;
+    
+        return $this;
+    }
+
+    /**
+     * Get deltaThEx
+     *
+     * @return float 
+     */
+    public function getDeltaThEx()
+    {
+        return DecimalTransformer::convert($this->deltaThEx, false);
+    }
+
+    /**
+     * Set maxCoolingCapacity
+     *
+     * @param float $maxCoolingCapacity
+     * @return CoolingDevice
+     */
+    public function setMaxCoolingCapacity($maxCoolingCapacity)
+    {
+        $this->maxCoolingCapacity = $maxCoolingCapacity;
+    
+        return $this;
+    }
+
+    /**
+     * Get maxCoolingCapacity
+     *
+     * @return float 
+     */
+    public function getMaxCoolingCapacity()
+    {
+        return DecimalTransformer::convert($this->maxCoolingCapacity, false);
+    }
+
+    /**
+     * Set coolingCapacityRated
+     *
+     * @param float $coolingCapacityRated
+     * @return CoolingDevice
+     */
+    public function setCoolingCapacityRated($coolingCapacityRated)
+    {
+        $this->coolingCapacityRated = $coolingCapacityRated;
+    
+        return $this;
+    }
+
+    /**
+     * Get coolingCapacityRated
+     *
+     * @return float 
+     */
+    public function getCoolingCapacityRated()
+    {
+        return DecimalTransformer::convert($this->coolingCapacityRated, false);
+    }
+
+    /**
+     * Set eERRated
+     *
+     * @param float $eERRated
+     * @return CoolingDevice
+     */
+    public function setEERRated($eERRated)
+    {
+        $this->eERRated = $eERRated;
+    
+        return $this;
+    }
+
+    /**
+     * Get eERRated
+     *
+     * @return float 
+     */
+    public function getEERRated()
+    {
+        return DecimalTransformer::convert($this->eERRated, false);
+    }
+
+    /**
+     * Set deltaThDryCooler
+     *
+     * @param float $deltaThDryCooler
+     * @return CoolingDevice
+     */
+    public function setDeltaThDryCooler($deltaThDryCooler)
+    {
+        $this->deltaThDryCooler = $deltaThDryCooler;
+    
+        return $this;
+    }
+
+    /**
+     * Get deltaThDryCooler
+     *
+     * @return float 
+     */
+    public function getDeltaThDryCooler()
+    {
+        return DecimalTransformer::convert($this->deltaThDryCooler, false);
+    }
+
+    /**
+     * Set dryCoolerEfficiency
+     *
+     * @param float $dryCoolerEfficiency
+     * @return CoolingDevice
+     */
+    public function setDryCoolerEfficiency($dryCoolerEfficiency)
+    {
+        $this->dryCoolerEfficiency = $dryCoolerEfficiency;
+    
+        return $this;
+    }
+
+    /**
+     * Get dryCoolerEfficiency
+     *
+     * @return float 
+     */
+    public function getDryCoolerEfficiency()
+    {
+        return DecimalTransformer::convert($this->dryCoolerEfficiency, false);
+    }
 }
