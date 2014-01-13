@@ -21,14 +21,13 @@ class NodeType extends BaseType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 	    parent::buildForm($builder, $options);
-		$xmlName = $builder->get('xmlName');
         $builder
-			->remove('xmlName')
+			->remove('instanceName')
             ->add('sizeX', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false, 'label' => 'SizeX'))
             ->add('sizeY', null, array('required' => false, 'label' => 'SizeY'))
             ->add('sizeZ', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false, 'label' => 'SizeZ'))
 			->add('meshResolution', null, array('required' => false, 'attr' => array('placeholder' => '0 0 0')))
-			->add($xmlName)
+			->add('instanceName', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false))
 			->add('locationInMesh', null, array('required' => false, 'attr' => array('placeholder' => '0 0 0')))
             ->add('components', 'collection', array(
 				'type' => new ComponentType($this->container),

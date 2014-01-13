@@ -126,6 +126,20 @@ class Base
 	private $powerUsageProfile;
 
 	/**
+	 * @var float
+	 *
+	 * @ORM\Column(name="min_allowed_temperature", type="decimal", precision=18, scale=9, nullable=true)
+	 */
+	private $minAllowedTemperature;
+
+	/**
+	 * @var float
+	 *
+	 * @ORM\Column(name="max_allowed_temperature", type="decimal", precision=18, scale=9, nullable=true)
+	 */
+	private $maxAllowedTemperature;
+
+	/**
 	 * @var bool true if we can ignore our "isThisCorrect" function or false if not
 	 */
 	protected $isCorrect = false;
@@ -305,6 +319,14 @@ class Base
 		if ($this->getPowerUsageProfile() !== null)
 		{
 			$array['PowerUsageProfile'] = $this->getPowerUsageProfile()->getDebbXmlArray();
+		}
+		if ($this->getMinAllowedTemperature() !== null)
+		{
+			$array['MinAllowedTemperature'] = $this->getMinAllowedTemperature();
+		}
+		if ($this->getMaxAllowedTemperature() !== null)
+		{
+			$array['MaxAllowedTemperature'] = $this->getMaxAllowedTemperature();
 		}
 		if ($this->getType() !== null)
 		{
@@ -728,4 +750,50 @@ class Base
 			'costs_co2_emission' => $this->getCostsEnv()
 		);
 	}
+
+    /**
+     * Set minAllowedTemperature
+     *
+     * @param float $minAllowedTemperature
+     * @return Base
+     */
+    public function setMinAllowedTemperature($minAllowedTemperature)
+    {
+        $this->minAllowedTemperature = $minAllowedTemperature;
+    
+        return $this;
+    }
+
+    /**
+     * Get minAllowedTemperature
+     *
+     * @return float 
+     */
+    public function getMinAllowedTemperature()
+    {
+        return DecimalTransformer::convert($this->minAllowedTemperature);
+    }
+
+    /**
+     * Set maxAllowedTemperature
+     *
+     * @param float $maxAllowedTemperature
+     * @return Base
+     */
+    public function setMaxAllowedTemperature($maxAllowedTemperature)
+    {
+        $this->maxAllowedTemperature = $maxAllowedTemperature;
+    
+        return $this;
+    }
+
+    /**
+     * Get maxAllowedTemperature
+     *
+     * @return float 
+     */
+    public function getMaxAllowedTemperature()
+    {
+        return DecimalTransformer::convert($this->maxAllowedTemperature);
+    }
 }

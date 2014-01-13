@@ -4,7 +4,16 @@
 
 {% block stylesheets -%}
     {{- parent() -}}
-    <style type="text/css">#content .well:nth-child(2n) { margin-left: 0px; }</style>
+    <style type="text/css">.cooling-eer .well:nth-child(2n-1) { margin-left: 0px; }</style>
+{%- endblock %}
+
+{% block javascripts -%}
+    {{- parent() -}}
+    {% javascripts
+                    '@DebbManagementBundle/Resources/public/js/coolingDevice.js'
+    %}
+        <script src="{{ asset_url }}" type="text/javascript"></script>
+    {% endjavascripts %}
 {%- endblock %}
 
 {% block cooling_eer -%}
@@ -15,8 +24,8 @@
 {% block content -%}
     {%- set cooling_eer = block('cooling_eer') -%}
     {{ parent() }}
-    <hr />
-    <div class="row-fluid">
+    <div class="row-fluid cooling-eer">
+        <hr />
         {{ cooling_eer | raw }}
     </div>
 {%- endblock %}

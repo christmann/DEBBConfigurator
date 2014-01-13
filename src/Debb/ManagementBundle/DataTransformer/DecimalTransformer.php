@@ -21,11 +21,12 @@ class DecimalTransformer implements DataTransformerInterface
 	}
 
 	/**
-	 * @param string $value
-	 * @return string
+	 * @param string|null $value
+	 * @return string|null
 	 */
-	public static function convert($value)
+	public static function convert($value, $allowNull = true)
 	{
+		if($value === null) { return $allowNull ? null : ''; }
 		return rtrim(preg_replace('#([.,]\d*?)0+$#', '\\1', $value), '.,');
 	}
 

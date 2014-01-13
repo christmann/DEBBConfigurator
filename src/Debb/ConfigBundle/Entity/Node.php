@@ -185,27 +185,11 @@ class Node extends DEBBComponent
 			$comp = new Component();
 			$comp->setAmount(1);
 			$comp->setBaseboard(new Baseboard());
-			$baseboards[] = $comp;
+			$baseboards = array($comp);
 		}
-		if(count($baseboards) > 1 || reset($baseboards)->getAmount() > 1)
+		if(count($baseboards) > 1 && reset($baseboards)->getActive() instanceof Baseboard && (reset($baseboards)->getAmount() != 1))
 		{
 			$baseboards = array(reset($baseboards)->setAmount(1));
-		}
-
-		if(!count($processors) || reset($processors)->getAmount() < 1)
-		{
-			$comp = new Component();
-			$comp->setAmount(1);
-			$comp->setProcessor(new Processor());
-			$processors[] = $comp;
-		}
-
-		if(!count($memories) || reset($memories)->getAmount() < 1)
-		{
-			$comp = new Component();
-			$comp->setAmount(1);
-			$comp->setMemory(new Memory());
-			$memories[] = $comp;
 		}
 
 		foreach (array_merge(
@@ -214,6 +198,7 @@ class Node extends DEBBComponent
 					 $memories
 				 ) as $component)
 		{
+			/** @var $component Component */
 			if ($component->getAmount() >= 1 && $component->getType() != Component::TYPE_NOTHING)
 			{
 				$array['Node'][] = $component->getDebbXmlArray();
