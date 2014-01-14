@@ -90,16 +90,24 @@ abstract class XMLController extends BaseController
 		 * 3 = All
 		 */
 		$typeOfExperiment = (int) @$context['experiment_type'];
-		$next = '/experiment/' . (int) @$context['experiment_id']; // This must work without coolemall gui ... no route at the moment!?
-		if($typeOfExperiment == 0)
+		$next = $this->getRouter()->getRouteCollection()->get('experiment_show') !== null ? $this->generateUrl('experiment_show', array('id' => (int) @$context['experiment_id'])) : "return alert('No CoolEmAllGui!');";
+		if($typeOfExperiment == 0 && $this->getRouter()->getRouteCollection()->get('dcworms_gui') !== null)
 		{
-			$next = '/dcworms/index';
+			$next = $this->generateUrl('experiment_show');
 		}
 
 		return new JsonResponse(array(
 			'ok' => $this->exportAsArchiveAction($id, $svn),
 			'next' => $next
 		));
+	}
+
+	/**
+	 * @return \Symfony\Bundle\FrameworkBundle\Routing\Router
+	 */
+	public function getRouter()
+	{
+		return $this->getContainer()->get('router');
 	}
 
 	/**
