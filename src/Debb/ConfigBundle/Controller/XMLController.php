@@ -79,6 +79,7 @@ abstract class XMLController extends BaseController
 	{
 		$svn = new Subversion('/srv/www/coolemall_svn');
 		$context = $this->getSession()->has('context') ? $this->getSession()->get('context') : array('debb_url' => 'debbexports/' . str_replace('.', '', $this->getUser()) . '/' . date('Y_m_d__H_i_s'), 'experiment_type' => 0);
+		$context['debb_url'] = str_replace('https://svn.coolemall.eu/svn', '', $context['debb_url']);
 		$key = preg_replace('#^/|/$#', '', $this->getRequest()->request->has('svndir') && strlen($this->getRequest()->request->get('svndir')) > 0 ? $this->getRequest()->request->get('svndir') : $context['debb_url']) . '/';
 		$svn->setMasterKey($key);
 
