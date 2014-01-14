@@ -77,12 +77,28 @@ abstract class XMLController extends BaseController
 	 */
 	public function asSVNAction($id)
 	{
-		return new JsonResponse(array('next' => $this->getRequest()->getMethod() == 'POST'));
-		$svn = new Subversion($this->container->getParameter('debb.configbundle.svn_path'), $this->container->getParameter('debb.configbundle.svn_url'));
-		$key = str_replace('.', '', $this->getUser()) . '/' . date('Y_m_d__H_i_s') . '/';
+		$svn = new Subversion('/srv/www/coolemall_svn');
+		$context = $this->getSession()->has('context') ? $this->getSession()->get('context') : array('debb_url' => 'debbexports/' . str_replace('.', '', $this->getUser()) . '/' . date('Y_m_d__H_i_s'), 'experiment_type' => 0);
+		$key = preg_replace('#^/|/$#', '', $this->getRequest()->request->has('svndir') && strlen($this->getRequest()->request->get('svndir')) > 0 ? $this->getRequest()->request->get('svndir') : $context['debb_url']) . '/';
 		$svn->setMasterKey($key);
-		$this->exportAsArchiveAction($id, $svn);
-		return RedirectResponse::create($svn->url($key));
+
+		/**
+		 * 0 = DCWorms
+		 * 1 = CFD
+		 * 2 = Testbed
+		 * 3 = All
+		 */
+		$typeOfExperiment = (int) @$context['experiment_type'];
+		$next = '/experiment/' . (int) @$context['experiment_id']; // This must work without coolemall gui ... no route at the moment!?
+		if($typeOfExperiment == 0)
+		{
+			$next = '/dcworms/index';
+		}
+
+		return new JsonResponse(array(
+			'ok' => $this->exportAsArchiveAction($id, $svn),
+			'next' => $next
+		));
 	}
 
 	/**
