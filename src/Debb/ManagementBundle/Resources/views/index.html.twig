@@ -27,6 +27,9 @@
     {% if svnEnabled() and exportasarchive is defined and route_exists(localdev_admin_route("_assvn")) and app.session.has('context') %}
         <input id="svnuploaddefaultdir" type="hidden" value="{{ app.session.get('context').debb_url|default('')|replace({'https://svn.coolemall.eu/svn': ''}) }}" />
     {% endif %}
+    {% image '@DebbConfigBundle/Resources/public/img/ajax-loader-small.gif' %}
+        <input type="hidden" id="ajaxloadersmall" value="{{ asset_url }}" />
+    {% endimage %}
 	{% block index_table %}
 		<table class="table table-striped table-condensed">
 			<thead>

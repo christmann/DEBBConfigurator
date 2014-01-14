@@ -41,7 +41,7 @@ $(function()
 		e.preventDefault();
 		var btn = $(this),
 			modal = $(this).parents('.svnModal.modal');
-		btn.html(btn.html() + ' <img src="/bundles/debbconfig/img/ajax-loader-small.gif" />');
+		btn.html(btn.html() + ' <img src="' + $('#ajaxloadersmall').val() + '" />');
 		btn.prop('disabled', true);
 
 		$.post(modal.find('[name="requesturl"]').val(), {'svndir': modal.find('[name="svndir"]').val()}, function(response)
