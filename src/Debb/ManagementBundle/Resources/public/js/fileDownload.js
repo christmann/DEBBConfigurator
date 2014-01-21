@@ -10,7 +10,7 @@ $(function()
         });
     });
 
-	$(document).on('click', 'a.svnUpload', function(e)
+	$(document).on('click', 'a.svnUpload:not(.disabled)', function(e)
 	{
 		e.preventDefault();
 		var id = debbUtils.generateUniqueId('svnModal_1');
@@ -20,10 +20,10 @@ $(function()
 			+ '		<h3>SVN Upload</h3>'
 			+ '	</div>'
 			+ '	<div class="modal-body">'
-			+ '		<p>' + ($('#svnuploaddefaultdir').length > 0 ? ('This is the default upload directory:<br />' + $('#svnuploaddefaultdir').val() + '<br />') : '') +
-			'			You could specify a upload directory if you want:<br />' +
-			'			<input type="text" name="svndir" style="width: 90%;" placeholder="Example: /repository/common/debbs/trunk/PSNC_Little_Server_Room" /><input type="hidden" name="requesturl" value="' + $(this).prop('href') + '" /><br />' +
-			'			The directory would be deleted completely.</p>'
+			+ '		<p>Change SVN upload path if necessary (the content of the directory will be overwritten):<br />'
+			+ ($('#svnuploaddefaultdir').length > 0 ? ($('#svnuploaddefaultdir').val() + '<br />') : '')
+			+ '			<input type="text" name="svndir" style="width: 90%;" placeholder="Example: /repository/common/debbs/trunk/PSNC_Little_Server_Room" /><input type="hidden" name="requesturl" value="' + $(this).prop('href') + '" /><br />'
+			+ '			The directory would be deleted completely.</p>'
 			+ '	</div>'
 			+ '	<div class="modal-footer">'
 			+ '		<a href="#" class="btn" data-dismiss="modal">Close</a>'
