@@ -91,9 +91,17 @@ abstract class XMLController extends BaseController
 		 */
 		$typeOfExperiment = (int) @$context['experiment_type'];
 		$next = $this->getRouter()->getRouteCollection()->get('experiment_show') !== null ? $this->generateUrl('experiment_show', array('id' => (int) @$context['experiment_id'])) : "return alert('No CoolEmAllGui!');";
-		if($typeOfExperiment == 0 && $this->getRouter()->getRouteCollection()->get('dcworms_gui') !== null)
+		if(in_array($typeOfExperiment, array(0, 3)) && $this->getRouter()->getRouteCollection()->get('dcworms_gui') !== null)
 		{
 			$next = $this->generateUrl('dcworms_gui');
+		}
+		else if($typeOfExperiment == 1 && $this->getRouter()->getRouteCollection()->get('covise_simulation') !== null)
+		{
+			$next = $this->generateUrl('covise_simulation');
+		}
+		else if($typeOfExperiment == 2 && $this->getRouter()->getRouteCollection()->get('experiment') !== null)
+		{
+			$next = $this->generateUrl('experiment');
 		}
 
 		return new JsonResponse(array(
