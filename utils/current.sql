@@ -190,8 +190,8 @@ CREATE TABLE `chassis_file` (
   PRIMARY KEY (`chassis_id`,`file_id`),
   KEY `IDX_9FDACE8863EE729` (`chassis_id`),
   KEY `IDX_9FDACE8893CB796C` (`file_id`),
-  CONSTRAINT `FK_9FDACE8893CB796C` FOREIGN KEY (`file_id`) REFERENCES `file` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `FK_9FDACE8863EE729` FOREIGN KEY (`chassis_id`) REFERENCES `chassis` (`id`) ON DELETE CASCADE
+  CONSTRAINT `FK_9FDACE8863EE729` FOREIGN KEY (`chassis_id`) REFERENCES `chassis` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `FK_9FDACE8893CB796C` FOREIGN KEY (`file_id`) REFERENCES `file` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1170,8 +1170,8 @@ CREATE TABLE `nodegroup_network` (
   PRIMARY KEY (`nodegroup_id`,`network_id`),
   KEY `IDX_6549E06E2C147D48` (`nodegroup_id`),
   KEY `IDX_6549E06E34128B91` (`network_id`),
-  CONSTRAINT `FK_6549E06E34128B91` FOREIGN KEY (`network_id`) REFERENCES `network` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `FK_6549E06E2C147D48` FOREIGN KEY (`nodegroup_id`) REFERENCES `nodegroup` (`id`) ON DELETE CASCADE
+  CONSTRAINT `FK_6549E06E2C147D48` FOREIGN KEY (`nodegroup_id`) REFERENCES `nodegroup` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `FK_6549E06E34128B91` FOREIGN KEY (`network_id`) REFERENCES `network` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1240,7 +1240,7 @@ CREATE TABLE `nodetonodegroup` (
   KEY `IDX_A3331D142C147D48` (`nodegroup_id`),
   CONSTRAINT `FK_A3331D142C147D48` FOREIGN KEY (`nodegroup_id`) REFERENCES `nodegroup` (`id`) ON DELETE CASCADE,
   CONSTRAINT `FK_A3331D14460D9FD7` FOREIGN KEY (`node_id`) REFERENCES `node` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=244 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=239 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1751,4 +1751,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-01-25  0:00:02
+-- Dump completed on 2014-01-26  0:00:02
