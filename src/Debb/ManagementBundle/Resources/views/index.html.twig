@@ -68,7 +68,7 @@
 														<span rel="tooltip" data-original-title="
 														{%- if item.getParents() | default([]) | length > 0 -%}
 														    {{- 'This is used by...' | trans -}}{%- set listOfUsed = [] -%}
-														    <ul>{%- for entity in item.getParents() | default([]) if entity.active is not null and entity.__toString() | default(entity) not in listOfUsed -%}
+														    <ul>{%- for entity in item.getParents() | default([]) if entity.__toString() is not null and entity.__toString() | default(entity) not in listOfUsed -%}
     														    <li>{{- entity.__toString() | default(entity) -}}</li>
 														    {% set listOfUsed = listOfUsed | merge([entity.__toString() | default(entity)]) %}{%- endfor -%}</ul>
 														{%- else -%}
