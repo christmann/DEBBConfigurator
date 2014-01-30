@@ -88,6 +88,24 @@ class DEBBSimple extends Dimensions
     {
         $this->references = new \Doctrine\Common\Collections\ArrayCollection();
     }
+
+	/**
+	 * Duplicate this entity
+	 */
+	public function __clone()
+	{
+		if ($this->getId() > 0)
+		{
+			parent::__clone();
+
+			$references = new ArrayCollection();
+			foreach($this->getReferences() as $reference)
+			{
+				$references->add(clone $reference);
+			}
+			$this->references = $references;
+		}
+	}
     
     /**
      * Add references

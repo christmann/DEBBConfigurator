@@ -3,6 +3,7 @@
 namespace Debb\ManagementBundle\Entity;
 
 use Debb\ManagementBundle\DataTransformer\DecimalTransformer;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -107,6 +108,26 @@ class CoolingDevice extends DEBBComplex
 	{
 		$this->energyEfficiencyRatio = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->components = new \Doctrine\Common\Collections\ArrayCollection();
+	}
+
+	/**
+	 * Duplicate this entity
+	 */
+	public function __clone()
+	{
+		if ($this->getId() > 0)
+		{
+			parent::__clone();
+
+			$this->components = new ArrayCollection();
+
+			$energyEfficiencyRatios = new ArrayCollection();
+			foreach($this->energyEfficiencyRatio as $energyEfficiencyRatio)
+			{
+				$energyEfficiencyRatios->add(clone $energyEfficiencyRatio);
+			}
+			$this->setEnergyEfficiencyRatio($energyEfficiencyRatios);
+		}
 	}
 
 	/**
@@ -223,6 +244,24 @@ class CoolingDevice extends DEBBComplex
 		$energyEfficiencyRatio->setCoolingDevice();
         $this->energyEfficiencyRatio->removeElement($energyEfficiencyRatio);
     }
+
+	/**
+	 * Set energyEfficiencyRatio
+	 *
+	 * @param \Debb\ManagementBundle\Entity\CoolingEER[] $energyEfficiencyRatio
+	 * @return CoolingDevice
+	 */
+	public function setEnergyEfficiencyRatio($energyEfficiencyRatio)
+	{
+		$this->energyEfficiencyRatio = $energyEfficiencyRatio;
+
+		foreach($this->energyEfficiencyRatio as $energyEfficiencyRatio)
+		{
+			$energyEfficiencyRatio->setCoolingDevice($this);
+		}
+
+		return $this;
+	}
 
     /**
      * Get energyEfficiencyRatio

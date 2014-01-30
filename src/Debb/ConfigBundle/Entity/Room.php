@@ -10,6 +10,7 @@ use Debb\ManagementBundle\Entity\DEBBSimple;
 use Debb\ManagementBundle\Entity\FlowPump;
 use Debb\ManagementBundle\Entity\FlowPumpToRoom;
 use Debb\ManagementBundle\Entity\RackToRoom;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -73,6 +74,47 @@ class Room extends DEBBComponent
 		$this->references = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->coolingDevices = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->isCorrect = true; // ignore the base function!
+	}
+
+	/**
+	 * Duplicate this entity
+	 */
+	public function __clone()
+	{
+		if ($this->getId() > 0)
+		{
+			parent::__clone();
+
+			$this->setName(preg_match_all('# - ([0-9]+)$#', $this->getName(), $matches) > 0 ? preg_replace('# - ([0-9]+)$#', ' - ' . ++$matches[1][0], $this->getName()) : ($this->getName() . ' - ' . 2));
+
+			$racks = new ArrayCollection();
+			foreach($this->getRacks() as $rack)
+			{
+				$racks->add(clone $rack);
+			}
+			$this->setRacks($racks);
+
+			$flowPumps = new ArrayCollection();
+			foreach($this->getFlowPumps() as $flowPump)
+			{
+				$flowPumps->add(clone $flowPump);
+			}
+			$this->setFlowPumps($flowPumps);
+
+			$references = new ArrayCollection();
+			foreach($this->getReferences() as $reference)
+			{
+				$references->add(clone $reference);
+			}
+			$this->references = $references;
+
+			$coolingsDevices = new ArrayCollection();
+			foreach($this->getCoolingDevices() as $cd)
+			{
+				$coolingsDevices[] = $cd;
+			}
+			$this->coolingDevices = $coolingsDevices;
+		}
 	}
 
 	/**

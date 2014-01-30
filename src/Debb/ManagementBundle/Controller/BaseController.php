@@ -66,15 +66,15 @@ class BaseController extends CRUDController
 	/**
 	 * Creates a new entity
 	 *
-	 * @Route("/form/{id}", defaults={"id"=0}, requirements={"id"="\d+|"});
+	 * @Route("/form/{id}-{duplicated}", defaults={"id"=0, "duplicated"=0}, requirements={"id"="\d+|", "duplicated"="0|1|"});
 	 * @Template()
 	 *
 	 * @param Request                                   $request  Request object
 	 * @param int                                       $id       item id
-	 *
+	 * @param int										$duplicated 1/0 true/false is duplicated?
 	 * @return array
 	 */
-	public function formAction(Request $request, $id = 0)
+	public function formAction(Request $request, $id = 0, $duplicated = 0)
 	{
 		$item = $this->getEntity($id);
 
@@ -95,5 +95,22 @@ class BaseController extends CRUDController
 			'form' => $form->createView(),
 			'item' => $item
 		));
+	}
+
+	/**
+	 * Duplicate entity
+	 *
+	 * @Route("/duplicate/{id}", requirements={"id"="\d+"});
+	 *
+	 * @param int $id item id
+	 *
+	 * @return \Symfony\Component\HttpFoundation\Response
+	 */
+	public function duplicateAction($id)
+	{
+		$item = $this->getEntity($id);
+		$itemNew = clone $item;
+		$this->persistEntity($itemNew);
+		return $this->redirect($this->generateUrl(ControllerUtils::getRouteName($this->getRequest(), '_form'), array('id' => $itemNew->getId(), 'duplicated' => 1)));
 	}
 }

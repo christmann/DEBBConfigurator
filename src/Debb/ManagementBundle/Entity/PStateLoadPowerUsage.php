@@ -70,6 +70,19 @@ class PStateLoadPowerUsage
         return $this->id;
     }
 
+	/**
+	 * Duplicate this entity
+	 */
+	public function __clone()
+	{
+		if ($this->getId() > 0)
+		{
+			$this->id = null;
+
+			$this->setPstate(clone $this->getPstate());
+		}
+	}
+
     /**
      * Set lLoad
      *

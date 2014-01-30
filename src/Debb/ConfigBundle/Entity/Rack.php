@@ -13,6 +13,7 @@ use Debb\ManagementBundle\DataTransformer\DecimalTransformer;
 use Debb\ManagementBundle\Entity\DEBBComponent;
 use Debb\ManagementBundle\Entity\NodegroupToRack;
 use Debb\ManagementBundle\Entity\RackToRoom;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -62,6 +63,33 @@ class Rack extends DEBBComponent
 		$this->nodeGroups[] = new NodegroupToRack();
 		$this->references = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->rooms = new \Doctrine\Common\Collections\ArrayCollection();
+	}
+
+	/**
+	 * Duplicate this entity
+	 */
+	public function __clone()
+	{
+		if ($this->getId() > 0)
+		{
+			parent::__clone();
+
+			$nodeGroups = new ArrayCollection();
+			foreach($this->getNodeGroups() as $nodeGroup)
+			{
+				$nodeGroups->add(clone $nodeGroup);
+			}
+			$this->setNodeGroups($nodeGroups);
+
+			$references = new ArrayCollection();
+			foreach($this->getReferences() as $reference)
+			{
+				$references->add(clone $reference);
+			}
+			$this->references = $references;
+
+			$this->setRooms(new ArrayCollection());
+		}
 	}
 
 	/**
@@ -257,6 +285,24 @@ class Rack extends DEBBComponent
     {
         $this->rooms->removeElement($rooms);
     }
+
+	/**
+	 * Set rooms
+	 *
+	 * @param \Debb\ManagementBundle\Entity\RackToRoom[] $rooms
+	 * @return Rack
+	 */
+	public function setRooms($rooms)
+	{
+		$this->rooms = $rooms;
+
+		foreach($this->rooms as $room)
+		{
+			$room->setRack($this);
+		}
+
+		return $this;
+	}
 
     /**
      * Get rooms

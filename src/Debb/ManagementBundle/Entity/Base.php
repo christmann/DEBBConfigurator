@@ -119,7 +119,7 @@ class Base
 	private $instanceName;
 
 	/**
-	 * @var \Debb\ManagementBundle\Entity\FlowProfile[]
+	 * @var \Debb\ManagementBundle\Entity\FlowProfile
 	 *
 	 * @ORM\ManyToOne(targetEntity="Debb\ManagementBundle\Entity\FlowProfile")
 	 */
@@ -199,7 +199,7 @@ class Base
 	 * Set product
 	 *
 	 * @param string $product
-	 * @return Bas
+	 * @return Base
 	 */
 	public function setProduct($product)
 	{
@@ -445,6 +445,8 @@ class Base
 		if ($this->getId() > 0)
 		{
         	$this->id = null;
+
+			$this->setProduct(preg_match_all('# - ([0-9]+)$#', $this->getProduct(), $matches) > 0 ? preg_replace('# - ([0-9]+)$#', ' - ' . ++$matches[1][0], $this->getProduct()) : ($this->getProduct() . ' - ' . 2));
 		}
     }
 
@@ -552,7 +554,7 @@ class Base
      */
     public function setPowerUsageProfile(\Debb\ManagementBundle\Entity\FlowProfile $powerUsageProfile = null)
     {
-        $this->powerUsageProfile = $powerUsageProfile;
+        $this->powerUsageProfil = $powerUsageProfile;
     
         return $this;
     }

@@ -62,6 +62,19 @@ class PState
 	}
 
 	/**
+	 * Duplicate this entity
+	 */
+	public function __clone()
+	{
+		if ($this->getId() > 0)
+		{
+			$this->id = null;
+
+			$this->processor = null;
+		}
+	}
+
+	/**
 	 * Returns a array for later converting
 	 *
 	 * @return array the array for later converting

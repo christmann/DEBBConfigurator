@@ -7,9 +7,11 @@ use Debb\ManagementBundle\DataTransformer\DecimalTransformer;
 use Debb\ManagementBundle\Entity\Base;
 use Debb\ManagementBundle\Entity\Baseboard;
 use Debb\ManagementBundle\Entity\DEBBComponent;
+use Debb\ManagementBundle\Entity\DEBBSimple;
 use Debb\ManagementBundle\Entity\Heatsink;
 use Debb\ManagementBundle\Entity\Memory;
 use Debb\ManagementBundle\Entity\Processor;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use \Debb\ManagementBundle\Entity\Component;
 use Doctrine\ORM\PersistentCollection;
@@ -72,6 +74,46 @@ class Node extends DEBBComponent
 		$this->components = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->references = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->nodeGroups = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->networks = new \Doctrine\Common\Collections\ArrayCollection();
+	}
+
+	/**
+	 * Duplicate this entity
+	 */
+	public function __clone()
+	{
+		if ($this->getId() > 0)
+		{
+			parent::__clone();
+
+			if($this->getImage() !== null)
+			{
+				$this->image = clone $this->image;
+			}
+
+			$components = new ArrayCollection();
+			foreach($this->getComponents() as $component)
+			{
+				$components->add(clone $component);
+			}
+			$this->setComponents($components);
+
+			$references = new ArrayCollection();
+			foreach($this->getReferences() as $reference)
+			{
+				$references->add(clone $reference);
+			}
+			$this->references = $references;
+
+			$networks = new ArrayCollection();
+			foreach($this->getNetworks() as $network)
+			{
+				$networks->add($network);
+			}
+			$this->networks = $networks;
+
+			$this->setNodeGroup(new ArrayCollection());
+		}
 	}
 
 	/**
@@ -212,7 +254,7 @@ class Node extends DEBBComponent
 	 * Add references
 	 *
 	 * @param \Debb\ManagementBundle\Entity\File $references
-	 * @return DEBBSimple
+	 * @return Node
 	 */
 	public function addReference(\Debb\ManagementBundle\Entity\File $references)
 	{
@@ -307,6 +349,24 @@ class Node extends DEBBComponent
     {
         $this->nodeGroups->removeElement($nodeGroups);
     }
+
+	/**
+	 * Set nodeGroups
+	 *
+	 * @param \Debb\ManagementBundle\Entity\NodeToNodegroup[] $nodeGroups
+	 * @return Node
+	 */
+	public function setNodeGroup($nodeGroups)
+	{
+		$this->nodeGroups = $nodeGroups;
+
+		foreach($this->nodeGroups as $nodeGroup)
+		{
+			$nodeGroup->setNode($this);
+		}
+
+		return $this;
+	}
 
     /**
      * Get nodeGroups

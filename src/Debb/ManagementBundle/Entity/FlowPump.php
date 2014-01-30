@@ -2,6 +2,7 @@
 
 namespace Debb\ManagementBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -53,15 +54,6 @@ class FlowPump extends DEBBSimple
 	 * @var \Debb\ManagementBundle\Entity\FlowPumpToRoom[]
 	 */
 	private $flowPumpToRooms;
-
-	/**
-	 * Components
-	 *
-	 * @ORM\OneToMany(targetEntity="Debb\ManagementBundle\Entity\Component", cascade={"persist"}, mappedBy="heatsink", orphanRemoval=true)
-	 *
-	 * @var \Debb\ManagementBundle\Entity\Component[]
-	 */
-	private $components;
 
 	/**
 	 * Returns a array for later converting
@@ -173,8 +165,32 @@ class FlowPump extends DEBBSimple
     {
         $this->flowPumpToChassis = new \Doctrine\Common\Collections\ArrayCollection();
         $this->flowPumpToRooms = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->components = new \Doctrine\Common\Collections\ArrayCollection();
     }
+
+	/**
+	 * Duplicate this entity
+	 */
+	public function __clone()
+	{
+		if ($this->getId() > 0)
+		{
+			parent::__clone();
+
+			$flowPumpToChassiss = new ArrayCollection();
+			foreach($this->getFlowPumpToChassis() as $flowPumpToChassis)
+			{
+				$flowPumpToChassiss->add(clone $flowPumpToChassis);
+			}
+			$this->setFlowPumpToChassis($flowPumpToChassiss);
+
+			$flowPumpToRooms = new ArrayCollection();
+			foreach($this->getFlowPumpToRooms() as $flowPumpToRoom)
+			{
+				$flowPumpToRooms->add(clone $flowPumpToRoom);
+			}
+			$this->setFlowPumpToRoom($flowPumpToRooms);
+		}
+	}
     
     /**
      * Get inlet
@@ -192,7 +208,7 @@ class FlowPump extends DEBBSimple
      * @param \Debb\ManagementBundle\Entity\FlowPumpToChassis $flowPumpToChassis
      * @return FlowPump
      */
-    public function addFlowPumpToChassi(\Debb\ManagementBundle\Entity\FlowPumpToChassis $flowPumpToChassis)
+    public function addFlowPumpToChassis(\Debb\ManagementBundle\Entity\FlowPumpToChassis $flowPumpToChassis)
     {
         $this->flowPumpToChassis[] = $flowPumpToChassis;
     
@@ -204,10 +220,28 @@ class FlowPump extends DEBBSimple
      *
      * @param \Debb\ManagementBundle\Entity\FlowPumpToChassis $flowPumpToChassis
      */
-    public function removeFlowPumpToChassi(\Debb\ManagementBundle\Entity\FlowPumpToChassis $flowPumpToChassis)
+    public function removeFlowPumpToChassis(\Debb\ManagementBundle\Entity\FlowPumpToChassis $flowPumpToChassis)
     {
         $this->flowPumpToChassis->removeElement($flowPumpToChassis);
     }
+
+	/**
+	 * Set flowPumpToChassis
+	 *
+	 * @param \Debb\ManagementBundle\Entity\FlowPumpToChassis[] $flowPumpToChassis
+	 * @return FlowPump
+	 */
+	public function setFlowPumpToChassis($flowPumpToChassis)
+	{
+		$this->flowPumpToChassis = $flowPumpToChassis;
+
+		foreach ($this->flowPumpToChassis as $flowPumpToChassis)
+		{
+			$flowPumpToChassis->setFlowPump($this);
+		}
+
+		return $this;
+	}
 
     /**
      * Get flowPumpToChassis
@@ -242,6 +276,24 @@ class FlowPump extends DEBBSimple
         $this->flowPumpToRooms->removeElement($flowPumpToRooms);
     }
 
+	/**
+	 * Set flowPumpToRooms
+	 *
+	 * @param \Debb\ManagementBundle\Entity\FlowPumpToRoom[] $flowPumpToRooms
+	 * @return FlowPump
+	 */
+	public function setFlowPumpToRoom($flowPumpToRooms)
+	{
+		$this->flowPumpToRooms = $flowPumpToRooms;
+
+		foreach ($this->flowPumpToChassis as $flowPumpToRooms)
+		{
+			$flowPumpToRooms->setFlowPump($this);
+		}
+
+		return $this;
+	}
+
     /**
      * Get flowPumpToRooms
      *
@@ -250,39 +302,6 @@ class FlowPump extends DEBBSimple
     public function getFlowPumpToRooms()
     {
         return $this->flowPumpToRooms;
-    }
-
-    /**
-     * Add components
-     *
-     * @param \Debb\ManagementBundle\Entity\Component $components
-     * @return FlowPump
-     */
-    public function addComponent(\Debb\ManagementBundle\Entity\Component $components)
-    {
-        $this->components[] = $components;
-    
-        return $this;
-    }
-
-    /**
-     * Remove components
-     *
-     * @param \Debb\ManagementBundle\Entity\Component $components
-     */
-    public function removeComponent(\Debb\ManagementBundle\Entity\Component $components)
-    {
-        $this->components->removeElement($components);
-    }
-
-    /**
-     * Get components
-     *
-     * @return \Debb\ManagementBundle\Entity\Component[]
-     */
-    public function getComponents()
-    {
-        return $this->components;
     }
 
 	/**

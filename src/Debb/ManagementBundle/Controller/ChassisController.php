@@ -23,7 +23,7 @@ class ChassisController extends BaseController
 	 *
 	 * @param Request                                   $request  Request object
 	 * @param int                                       $id       item id
-	 *
+	 * @param int										$duplicated 1/0 true/false is duplicated?
 	 * @return array
 	 */
 	public function formAction(Request $request, $id = 0, $duplicated = 0)
@@ -56,22 +56,5 @@ class ChassisController extends BaseController
             'duplicated' => $duplicated,
 			'flowPumps' => $flowPumps
 		));
-	}
-
-	/**
-	 * Duplicate entity
-	 *
-	 * @Route("/duplicate/{id}", requirements={"id"="\d+"});
-	 *
-	 * @param int $id item id
-	 *
-	 * @return \Symfony\Component\HttpFoundation\Response
-	 */
-	public function duplicateAction($id)
-	{
-		$item = $this->getEntity($id);
-		$itemNew = clone $item;
-		$this->persistEntity($itemNew);
-		return $this->redirect($this->generateUrl('debb_management_chassis_form', array('id' => $itemNew->getId(), 'duplicated' => 1)));
 	}
 }
