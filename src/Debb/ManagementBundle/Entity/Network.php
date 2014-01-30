@@ -36,7 +36,7 @@ class Network extends Base
      *
      * @var integer
      *
-     * @ORM\Column(name="max_bandwidth", type="integer", nullable=true)
+     * @ORM\Column(name="max_bandwidth", type="bigint", nullable=true)
      */
     private $maxBandwidth;
 
