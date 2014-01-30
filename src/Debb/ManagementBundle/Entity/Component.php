@@ -480,6 +480,10 @@ class Component
 	 */
 	function __call($method, $args = array())
 	{
-		return call_user_func(array($this->getActive(), $method), $args);
+		if($this->getActive() !== null)
+		{
+			return call_user_func(array($this->getActive(), $method), $args);
+		}
+		return null;
 	}
 }
