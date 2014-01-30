@@ -70,7 +70,7 @@ $(function()
 		});
 		$(document).on('click', '.delAmount', function(e)
 		{
-			var selectBox = $(this).parents('.amountExtras').parent().find('select[id$="_amount"]:not([disabled])');
+			var selectBox = $(this).parents('.amountExtras').parent().find('select[id$="_amount"]');
 			if(selectBox.length > 0)
 			{
 				if(selectBox.find('option:selected').prev().length > 0)
@@ -86,7 +86,7 @@ $(function()
 		});
 		$(document).on('click', '.addAmount', function(e)
 		{
-			var selectBox = $(this).parents('.amountExtras').parent().find('select[id$="_amount"]:not([disabled])');
+			var selectBox = $(this).parents('.amountExtras').parent().find('select[id$="_amount"]:not([disabled],[readonly])');
 			if(selectBox.length > 0)
 			{
 				if(selectBox.find('option:selected').next().length > 0)
@@ -189,7 +189,7 @@ function updateComponents() {
 		if(type == TYPE_BASEBOARD)
 		{
 			$('#debb_configbundle_nodetype_components_' + id + '_baseboard').parent().find('input, select, label').show();
-			$('#debb_configbundle_nodetype_components_' + id + '_baseboard').parent().parent().find('select[id$="_amount"]').prop('disabled', true);
+			$('#debb_configbundle_nodetype_components_' + id + '_baseboard').parent().parent().find('select[id$="_amount"]').prop('readonly', true);
 		}
 		else if(type == TYPE_PROCESSOR)
 		{
@@ -206,7 +206,7 @@ function updateComponents() {
 		else if(type == TYPE_POWER_SUPPLY)
 		{
 			$('#debb_configbundle_nodetype_components_' + id + '_powersupply').parent().find('input, select, label').show();
-			$('#debb_configbundle_nodetype_components_' + id + '_powersupply').parent().parent().find('select[id$="_amount"]').prop('disabled', true);
+			$('#debb_configbundle_nodetype_components_' + id + '_powersupply').parent().parent().find('select[id$="_amount"]').prop('readonly', true);
 		}
         else if(type == TYPE_HEATSINK)
         {
