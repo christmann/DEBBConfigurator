@@ -929,7 +929,7 @@ CREATE TABLE `network` (
   `max_power` double DEFAULT NULL,
   `interface` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `technology` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `max_bandwidth` int(11) DEFAULT NULL,
+  `max_bandwidth` bigint(20) DEFAULT NULL,
   `powerUsageProfile_id` int(11) DEFAULT NULL,
   `xml_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `part_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -1751,4 +1751,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-01-30  0:00:02
+-- Dump completed on 2014-01-31  0:00:02
