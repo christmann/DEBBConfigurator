@@ -27,15 +27,15 @@ class NodeGroupController extends XMLController
 	/**
 	 * Creates a new entity
 	 *
-	 * @Route("/form/{id}", defaults={"id"=0}, requirements={"id"="\d+|"});
+	 * @Route("/form/{id}-{duplicated}", defaults={"id"=0, "duplicated"=0}, requirements={"id"="\d+|", "duplicated"="0|1|"});
 	 * @Template()
 	 *
 	 * @param Request                                   $request  Request object
 	 * @param int                                       $id       item id
-	 *
+	 * @param int										$duplicated 1/0 true/false is duplicated?
 	 * @return array
 	 */
-	public function formAction(Request $request, $id = 0)
+	public function formAction(Request $request, $id = 0, $duplicated = 0)
 	{
 		$GLOBALS['user_bypass'] = $this->getUser();
 		$item = $this->getEntity($id);

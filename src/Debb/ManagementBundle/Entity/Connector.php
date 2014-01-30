@@ -66,6 +66,17 @@ class Connector
         return $this->id;
     }
 
+	/**
+	 * Duplicate this entity
+	 */
+	public function __clone()
+	{
+		if ($this->getId() > 0)
+		{
+			$this->id = null;
+		}
+	}
+
     /**
      * Set field (x = 0, y = 0 - first field = 0, next field (x = 10, y = 0) = 1, next/third field (x = 0, y = 10) = 2, ...
 	 *

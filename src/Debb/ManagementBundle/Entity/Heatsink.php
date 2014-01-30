@@ -2,6 +2,7 @@
 
 namespace Debb\ManagementBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -80,6 +81,19 @@ class Heatsink extends DEBBSimple
     {
         $this->components = new \Doctrine\Common\Collections\ArrayCollection();
     }
+
+	/**
+	 * Duplicate this entity
+	 */
+	public function __clone()
+	{
+		if ($this->getId() > 0)
+		{
+			parent::__clone();
+
+			$this->components = new ArrayCollection();
+		}
+	}
     
     /**
      * Add components

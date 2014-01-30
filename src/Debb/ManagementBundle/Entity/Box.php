@@ -13,7 +13,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Box extends \Debb\ConfigBundle\Entity\Dimensions
 {
-
 	/**
 	 * @var Image
 	 *
@@ -27,6 +26,22 @@ class Box extends \Debb\ConfigBundle\Entity\Dimensions
 	 * @ORM\Column(name="slots", type="integer")
 	 */
 	private $slots;
+
+	/**
+	 * Duplicate this entity
+	 */
+	public function __clone()
+	{
+		if ($this->getId() > 0)
+		{
+			parent::__clone();
+
+			if($this->getImage() !== null)
+			{
+				$this->image = clone $this->image;
+			}
+		}
+	}
 
 	/**
 	 * Set slots

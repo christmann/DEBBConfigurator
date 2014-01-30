@@ -72,6 +72,19 @@ class CState
         return $this->id;
     }
 
+	/**
+	 * Duplicate this entity
+	 */
+	public function __clone()
+	{
+		if ($this->getId() > 0)
+		{
+			$this->id = null;
+
+			$this->processor = null;
+		}
+	}
+
     /**
      * Set powerUsage
      *

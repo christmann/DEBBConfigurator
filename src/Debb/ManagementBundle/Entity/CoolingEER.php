@@ -90,6 +90,19 @@ class CoolingEER
         return (int) $this->id;
     }
 
+	/**
+	 * Duplicate this entity
+	 */
+	public function __clone()
+	{
+		if ($this->getId() > 0)
+		{
+			$this->id = null;
+
+			$this->coolingDevice = null;
+		}
+	}
+
     /**
      * Set lWT
      *

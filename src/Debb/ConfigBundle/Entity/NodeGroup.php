@@ -58,8 +58,36 @@ class NodeGroup extends DEBBComponent
     public function __construct()
     {
         $this->nodes = new ArrayCollection();
+        $this->racks = new ArrayCollection();
         $this->networks = new ArrayCollection();
     }
+
+	/**
+	 * Duplicate this entity
+	 */
+	public function __clone()
+	{
+		if ($this->getId() > 0)
+		{
+			parent::__clone();
+
+			$nodes = new ArrayCollection();
+			foreach($this->getNodes() as $node)
+			{
+				$nodes->add(clone $node);
+			}
+			$this->setNodes($nodes);
+
+			$networks = new ArrayCollection();
+			foreach($this->getNetworks() as $network)
+			{
+				$networks->add($network);
+			}
+			$this->setNetworks($networks);
+
+			$this->racks = new ArrayCollection();
+		}
+	}
 
     /**
      * Add nodes
@@ -87,7 +115,8 @@ class NodeGroup extends DEBBComponent
     {
         $this->nodes = $nodes;
 
-        foreach ($this->nodes as $node) {
+        foreach ($this->getNodes() as $node)
+		{
             $node->setNodeGroup($this);
         }
 
@@ -348,6 +377,19 @@ class NodeGroup extends DEBBComponent
     {
         $this->networks->removeElement($networks);
     }
+
+	/**
+	 * Set networks
+	 *
+	 * @param \Debb\ManagementBundle\Entity\Network[] $networks
+	 * @return NodeGroup
+	 */
+	public function setNetworks($networks)
+	{
+		$this->networks = $networks;
+
+		return $this;
+	}
 
     /**
      * Get networks

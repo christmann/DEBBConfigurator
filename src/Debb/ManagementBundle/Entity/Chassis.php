@@ -426,8 +426,6 @@ class Chassis extends Dimensions
 		{
 			parent::__clone();
 
-			$this->setProduct($this->getProduct() . ' - 2');
-
 			if($this->getImage() != null)
 			{
 				$this->image = clone $this->image;

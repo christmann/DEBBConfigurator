@@ -157,6 +157,19 @@ class Component
 	}
 
 	/**
+	 * Duplicate this entity
+	 */
+	public function __clone()
+	{
+		if ($this->getId() > 0)
+		{
+			$this->id = null;
+
+			$this->node = null;
+		}
+	}
+
+	/**
 	 * Set type
 	 *
 	 * @param integer $type

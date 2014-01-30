@@ -3,6 +3,7 @@
 namespace Debb\ManagementBundle\Entity;
 
 use Debb\ManagementBundle\DataTransformer\DecimalTransformer;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -107,6 +108,33 @@ class Processor extends Base
         $this->cStates = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->components = new \Doctrine\Common\Collections\ArrayCollection();
     }
+
+	/**
+	 * Duplicate this entity
+	 */
+	public function __clone()
+	{
+		if ($this->getId() > 0)
+		{
+			parent::__clone();
+
+			$this->components = new ArrayCollection();
+
+			$pStates = new ArrayCollection();
+			foreach($this->getPStates() as $pState)
+			{
+				$pStates->add(clone $pState);
+			}
+			$this->setPState($pStates);
+
+			$cStates = new ArrayCollection();
+			foreach($this->getPStates() as $cState)
+			{
+				$cStates->add(clone $cState);
+			}
+			$this->setPState($cStates);
+		}
+	}
     
     /**
      * Set maxClockSpeed
@@ -182,6 +210,24 @@ class Processor extends Base
         $this->pStates->removeElement($pStates);
     }
 
+	/**
+	 * Set pStates
+	 *
+	 * @param \Debb\ManagementBundle\Entity\PState[] $pStates
+	 * @return Processor
+	 */
+	public function setPState($pStates)
+	{
+		$this->pStates = $pStates;
+
+		foreach($this->pStates as $pState)
+		{
+			$pState->setProcessor($this);
+		}
+
+		return $this;
+	}
+
     /**
      * Get pStates
      *
@@ -218,6 +264,24 @@ class Processor extends Base
 	{
 		$cStates->setProcessor();
 		$this->cStates->removeElement($cStates);
+	}
+
+	/**
+	 * Set cStates
+	 *
+	 * @param \Debb\ManagementBundle\Entity\CState[] $cStates
+	 * @return Processor
+	 */
+	public function setCState($cStates)
+	{
+		$this->cStates = $cStates;
+
+		foreach($this->cStates as $cState)
+		{
+			$cState->setProcessor($this);
+		}
+
+		return $this;
 	}
 
 	/**

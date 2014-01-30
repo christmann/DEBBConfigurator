@@ -2,6 +2,7 @@
 
 namespace Debb\ManagementBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -100,6 +101,26 @@ class FlowProfile
         return $this->id;
     }
 
+	/**
+	 * Duplicate this entity
+	 */
+	public function __clone()
+	{
+		if ($this->getId() > 0)
+		{
+			$this->id = null;
+
+			$this->setName(preg_match_all('# - ([0-9]+)$#', $this->getName(), $matches) > 0 ? preg_replace('# - ([0-9]+)$#', ' - ' . ++$matches[1][0], $this->getName()) : ($this->getName() . ' - ' . 2));
+
+			$flowStates = new ArrayCollection();
+			foreach($this->getFlowStates() as $flowState)
+			{
+				$flowStates->add(clone $flowState);
+			}
+			$this->setFlowState($flowStates);
+		}
+	}
+
     /**
      * Set name
      *
@@ -150,6 +171,24 @@ class FlowProfile
 	    $flowStates->setFlowProfile();
         $this->flowStates->removeElement($flowStates);
     }
+
+	/**
+	 * Set flowStates
+	 *
+	 * @param \Debb\ManagementBundle\Entity\FlowState[] $flowPumps
+	 * @return FlowProfile
+	 */
+	public function setFlowState($flowStates)
+	{
+		$this->flowStates = $flowStates;
+
+		foreach ($this->flowStates as $flowState)
+		{
+			$flowState->setFlowProfile($this);
+		}
+
+		return $this;
+	}
 
     /**
      * Get flowStates

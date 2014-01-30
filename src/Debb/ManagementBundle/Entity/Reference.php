@@ -83,6 +83,17 @@ class Reference
         return $this->id;
     }
 
+	/**
+	 * Duplicate this entity
+	 */
+	public function __clone()
+	{
+		if ($this->getId() > 0)
+		{
+			$this->id = null;
+		}
+	}
+
     /**
      * Set type
      *
