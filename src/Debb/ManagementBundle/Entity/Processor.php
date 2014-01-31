@@ -102,6 +102,10 @@ class Processor extends Base
 		{
 			$array['Cores'] = $this->getCores();
 		}
+		if($this->getVirtualCoresPerCore() !== null)
+		{
+			$array['VirtualCoresPerCore'] = (int) $this->getVirtualCoresPerCore();
+		}
 		$x = 1;
 		foreach($this->getPStates() as $pState)
 		{
