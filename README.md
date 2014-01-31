@@ -3,10 +3,6 @@ DEBBConfigurator
 
 The DEBBConfigurator is a component of the CoolEmAll GUI.
 
-This document contains information on how to download, install, and start
-using Symfony. For a more detailed explanation, see the [Installation][1]
-chapter of the Symfony Documentation.
-
 1) Installation
 ----------------------------------
 
@@ -79,8 +75,6 @@ The DEBBConfigurator uses the following bundles.
   * [**SensioFrameworkExtraBundle**][7] - Adds several enhancements, including
     template and routing annotation capability
 
-
-
   * [**KnpMenuBundle**][9] - Object Oriented menus for your Symfony2 project.
 
   * [**LocaldevFrameworkExtraBundle**][10] - Provides a lots of CRUD controller features.
@@ -93,14 +87,13 @@ The DEBBConfigurator uses the following bundles.
 
   * [**FOSUserBundle**][14] - Provides user management for your Symfony2 Project
 
-  * [**CIMPluploadBundle**][15] - Provides user management for your Symfony2 Project
+  * **CIMPluploadBundle** - Provides a plupload upload
 
-  * [**CoolEmAllUserBundle**][16] - Provides user management for your Symfony2 Project
+  * **CoolEmAllUserBundle** - Added extra features for the FOSUserBundle
 
-  * **DebbConfigBundle** - Provides user management for your Symfony2 Project
+  * **DebbConfigBundle** - Thats the main bundle for the DEBBConfigurator
 
-  * **DebbManagementBundle** - Provides user management for your Symfony2 Project
-
+  * **DebbManagementBundle** - Provides components for the DebbConfigBundle
 
   * **WebProfilerBundle** (in dev/test env) - Adds profiling functionality and
     the web debug toolbar
