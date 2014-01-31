@@ -56,51 +56,31 @@ Whats inside?
 The DEBBConfigurator uses the following bundles.
 
   * **FrameworkBundle** - The core Symfony framework bundle
-
   * [**SecurityBundle**][1] - Adds security by integrating Symfony's security
     component
-
   * [**TwigBundle**][2] - Adds support for the Twig templating engine
-
   * [**MonologBundle**][3] - Adds support for Monolog, a logging library
-
   * [**SwiftmailerBundle**][4] - Adds support for Swiftmailer, a library for
     sending emails
-
   * [**AsseticBundle**][5] - Adds support for Assetic, an asset processing
     library
-
   * [**DoctrineBundle**][6] - Adds support for the Doctrine ORM
-
   * [**SensioFrameworkExtraBundle**][7] - Adds several enhancements, including
     template and routing annotation capability
-
   * [**KnpMenuBundle**][9] - Object Oriented menus for your Symfony2 project.
-
   * [**LocaldevFrameworkExtraBundle**][10] - Provides a lots of CRUD controller features.
-
   * [**LocaldevAdminBundle**][11] - Provides templates and controllers for easy delete/edit/show entities
-
   * [**AvalancheImagineBundle**][12] - Image manipulation using Imagine and Twig Filters
-
   * [**BazingaJsTranslationBundle**][13] - A pretty nice way to expose your Symfony2 translation messages to your client applications
-
   * [**FOSUserBundle**][14] - Provides user management for your Symfony2 Project
-
   * **CIMPluploadBundle** - Provides a plupload upload
-
   * **CoolEmAllUserBundle** - Added extra features for the FOSUserBundle
-
   * **DebbConfigBundle** - Thats the main bundle for the DEBBConfigurator
-
   * **DebbManagementBundle** - Provides components for the DebbConfigBundle
-
   * **WebProfilerBundle** (in dev/test env) - Adds profiling functionality and
     the web debug toolbar
-
   * **SensioDistributionBundle** (in dev/test env) - Adds functionality for
     configuring and working with Symfony distributions
-
   * [**SensioGeneratorBundle**][8] (in dev/test env) - Adds code generation
     capabilities
 
