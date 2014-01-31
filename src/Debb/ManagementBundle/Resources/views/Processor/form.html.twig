@@ -1,0 +1,56 @@
+{%- extends "DebbManagementBundle::form.html.twig" -%}
+{%- form_theme form "DebbManagementBundle::form_theme.html.twig" -%}
+{%- import _self as utils -%}
+
+{%- block javascripts -%}
+    {{- parent() -}}
+	{%- javascripts
+					'@DebbManagementBundle/Resources/public/js/processor.js'
+	-%}
+		<script src="{{ asset_url }}" type="text/javascript"></script>
+	{%- endjavascripts -%}
+{%- endblock -%}
+
+{% block p_c_states -%}
+	<div class="span6">
+		{{- utils.stateBlock(form.pstates) -}}
+	</div>
+	<div class="span6">
+		{{- utils.stateBlock(form.cstates) -}}
+	</div>
+	{%- do form.pstates.setRendered() -%}
+	{%- do form.cstates.setRendered() -%}
+{%- endblock %}
+
+{% block content -%}
+	{%- set p_c_states = block('p_c_states') -%}
+	{{ parent() }}
+	<hr />
+	<div class="row-fluid">
+		{{ p_c_states | raw }}
+	</div>
+{%- endblock %}
+
+{% macro stateBlock(f) -%}
+	{%- import _self as utils -%}
+	{%- form_theme f _self -%}
+	<h4>{{- f.vars.label }} <a class="addThing" data-prototype="{{ utils.stateForm(f.vars.prototype) | e }}" obj="$(this).parents('div:first')" href="#"><i class="icon-plus"></i></a></h4>
+	{%- for children in f.children -%}
+		{%- form_theme children _self -%}
+		{{- utils.stateForm(children) -}}
+	{%- endfor -%}
+{%- endmacro %}
+
+{% macro stateForm(f) -%}
+	{%- import _self as utils -%}
+	<div class="well">
+		<div class="toprightcorner"><a href="#" class="trash" obj="$(this).parents('.well:first')"><i class="icon-trash"></i></a></div>
+		{% for ff in f %}
+			{% if ff.vars.unique_block_prefix == '_debb_managementbundle_processortype_pstates_entry_loadPowerUsages' %}
+				{{- utils.stateBlock(ff) -}}
+			{% else %}
+				{{ form_row(ff) }}
+			{% endif %}
+		{% endfor %}
+	</div>
+{%- endmacro %}

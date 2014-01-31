@@ -1,0 +1,30 @@
+debb_management.processor.plural: Processors
+debb_management.processor.singular: processor
+debb_management.mainboard.plural: Mainboards
+debb_management.mainboard.singular: mainboard
+debb_management.coolingdevice.plural: Cooling devices
+debb_management.coolingdevice.singular: cooling device
+debb_management.memory.plural: Memories
+debb_management.memory.singular: memory
+debb_management.powersupply.plural: Power supplies
+debb_management.powersupply.singular: power supply
+debb_management.storage.plural: HDDs
+debb_management.storage.singular: HDD
+debb_management.chassis.plural: Chassis
+debb_management.chassis.singular: chassis
+localdev_admin.actions.create: create %name%
+debb_management.chassis.nodegroup.message: <strong>Chassis is in use by the following node groups</strong>: %items%<br />
+debb_management.chassis.rack.message: <strong>Chassis is in use by the following racks</strong>: %items%
+debb_management.chassis.message.title: Information
+debb_management.heatsink.plural: Heatsinks
+debb_management.heatsink.singular: heatsink
+debb_management.network.plural: Networks
+debb_management.network.singular: network
+debb_management.flowprofile.plural: Profiles
+debb_management.flowprofile.singular: profile
+debb_management.sensor.plural: Sensors
+debb_management.sensor.singular: sensor
+debb_management.baseboard.plural: Baseboards
+debb_management.baseboard.singular: baseboard
+debb_management.flowpump.plural: Flow pumps
+debb_management.flowpump.singular: flow pump

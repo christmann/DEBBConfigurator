@@ -1,0 +1,20 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+{% block title %}{{ 'registration.submit' | trans({}, 'FOSUserBundle') }}{% endblock %}
+
+{% block form_header %}
+	{{ form_start(form, {'method': 'POST', 'attr': {'class': 'fos_user_registration_register'}, 'action': path('fos_user_registration_register')}) }}
+{% endblock %}
+
+{% block content %}
+	{% block form %}
+		{{ form_widget(form) }}
+	{% endblock %}
+{% endblock %}
+
+{% block buttonbar %}
+	<button class="blue blue-button" type="submit">{{ 'registration.submit' | trans({}, 'FOSUserBundle') }}</button>
+{% endblock %}
+
+{% block form_footer %}
+	{{ form_end(form) }}
+{% endblock %}

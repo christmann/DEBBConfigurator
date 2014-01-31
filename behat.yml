@@ -1,0 +1,21 @@
+default:
+  extensions:
+    Behat\Symfony2Extension\Extension:
+#      bundle: # specifies bundle to be runned for specific profile
+      kernel:
+#        bootstrap: # defines autoloading/bootstraping file to autoload all the needed classes in order to instantiate kernel.
+#        path: # defines path to the kernel class to be requires in order to instantiate it.
+#        class: # defines name of the kernel class.
+        env: test # defines environment in which kernel should be instantiated and used inside suite.
+        debug: true # defines whether kernel should be instantiated with debug option set to true.
+#      context: # specifies options, used to guess context class:
+#        path_suffix: # suffix from bundle directory for features.
+#        class_suffix: # suffix from bundle classname for context class.
+      mink_driver: true # if set to true - extension will load symfony2 session for Mink.
+    Behat\MinkExtension\Extension:
+      base_url: 'http://debb.christmann.info/app_test.php/'
+      default_session: symfony2
+      javascript_session: selenium
+      selenium2:
+        wd_host: http://selenium-vm:4444/wd/hub
+      browser_name: firefox

@@ -1,0 +1,9 @@
+homepage:
+    pattern:  /{_locale}
+    defaults: { _controller: DebbConfigBundle:Default:debb, _locale: en }
+    requirements:
+        _locale: en|de
+
+DebbConfigBundle:
+    resource: "@DebbConfigBundle/Controller/"
+    type:     annotation

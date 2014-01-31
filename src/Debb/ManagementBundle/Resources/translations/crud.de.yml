@@ -1,0 +1,28 @@
+debb_management.processor.plural: Prozessoren
+debb_management.processor.singular: Prozessor
+debb_management.mainboard.plural: Mainboards
+debb_management.mainboard.singular: Mainboard
+debb_management.coolingdevice.plural: Kühler
+debb_management.coolingdevice.singular: Kühler
+debb_management.memory.plural: Speicher
+debb_management.memory.singular: Speicher
+debb_management.powersupply.plural: Netzteile
+debb_management.powersupply.singular: Netzteil
+debb_management.storage.plural: HDDs
+debb_management.storage.singular: HDD
+debb_management.chassis.plural: Gehäuse
+debb_management.chassis.singular: Gehäuse
+localdev_admin.actions.create: %name% erstellen
+debb_management.chassis.nodegroup.message: <strong>Das Gehäuse wird in den folgenden Knotengruppen verwendet</strong>:  %items%<br />
+debb_management.chassis.rack.message: <strong>Das Gehäuse wird in den folgenden Racks verwendet</strong>:  %items%
+debb_management.chassis.message.title: Information
+debb_management.heatsink.plural: Heatsinks
+debb_management.heatsink.singular: Heatsink
+debb_management.network.plural: Netzwerke
+debb_management.network.singular: Netzwerk
+debb_management.flowprofile.plural: Profile
+debb_management.flowprofile.singular: Profil
+debb_management.sensor.plural: Sensoren
+debb_management.sensor.singular: Sensor
+debb_management.baseboard.plural: Baseboards
+debb_management.baseboard.singular: Baseboard

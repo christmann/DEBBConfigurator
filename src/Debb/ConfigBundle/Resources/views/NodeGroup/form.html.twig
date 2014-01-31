@@ -1,0 +1,137 @@
+{% set exportasarchive = true %}
+{% extends "DebbManagementBundle::form.html.twig" %}
+{#% form_theme form "DebbManagementBundle::form_theme.html.twig" %#}
+{% form_theme form _self %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style type="text/css">
+    {% if isCoolEmAllGui is not defined or isCoolEmAllGui == true %}.span9 {% endif %}label { display: block; }
+    div.hoz div { float: left; margin-right: 10px; }
+    input[type="radio"], input[type="checkbox"] { margin: 0; }
+    </style>
+{% endblock %}
+
+{% block _debb_configbundle_nodegrouptype_draft_widget %}
+	<select {% if required %}required="required" {% endif %}name="{{ full_name }}" id="{{ id }}">
+        <option value="0">- {{ 'Choose an draft' | trans }} -</option>
+		{% for var in choices %}
+			<option value="{{ var.value }}" sizex="{{ var.data.sizeX | default(0) }}"
+					sizey="{{ var.data.sizeY | default(0) }}"{% if value == var.value %} selected="selected"{% endif %}
+					image="{% if var.data.image is not null %}{{ asset(var.data.image.getFullPath) }}{% endif %}"
+					typspecs="{% if var.data.typspecification is not null %}{{ var.data.getTypspecification(true) | raw | json_encode | e }}{% endif %}">{{ var.label }}</option>
+		{% endfor %}
+	</select>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script type="text/javascript">var nodeGroupId = {{ form.vars.data.id | default(0) }};</script>
+	{% javascripts '@DebbConfigBundle/Resources/public/js/nodegroup.js' %}
+	<script src="{{ asset_url }}" type="text/javascript"></script>
+	{% endjavascripts %}
+{% endblock %}
+
+{% block content %}
+    {{ form_errors(form) }}
+    <div class="row-fluid">
+        <div class="span6">
+            <strong>{{ 'Costs' | trans }} ({{ 'now'|date('datetimeformat' | trans) }}):</strong> {{ form.vars.data.getRealCostsEur(false) }} EUR / {{ form.vars.data.getRealCostsEnv(false) }} CO2
+        </div>
+    </div>
+	<div id="nodegroup"
+		 data-prototype="{{ ('<div class="node"><span class="nodeTitle">&nbsp;</span>' ~ form_widget(form.nodes.vars.prototype, {attr: {'style': 'display: none'} })
+		 ~ '<a href="#" class="selectNode">' ~  ('select.%what%' | trans({'%what%': 'node' | trans})) ~ '</a></div>') | e }}">
+		{% set formNodes = form.nodes | reverse %}
+		{% if formNodes | length > 0 %}
+			{% if formNodes[0].vars.value.field == 0 %}
+				{% set formNodes = formNodes | reverse %}
+			{% endif %}
+			{% for node in formNodes %}
+				<div class="node">
+					<span class="nodeTitle">&nbsp;</span>
+					{{ form_widget(node, {attr: {'style': 'display: none' }}) }}
+					<a href="#" class="selectNode">{{ 'select.%what%' | trans({'%what%': 'node' | trans}) }}</a>
+				</div>
+			{% endfor %}
+		{% endif %}
+	</div>
+
+	<div id="nodegroup-configarea">
+		<div id="grouptitle-box">
+            {{ form_row(form.componentId) }}
+            {{ form_row(form.manufacturer) }}
+            {{ form_row(form.product) }}
+            {{ form_row(form.label) }}
+            {{ form_row(form.hostname) }}
+            {{ form_row(form.instanceName) }}
+            {% form_theme form.draft _self %}{{ form_row(form.draft) }}
+            {{ form_row(form.minAllowedTemperature) }}
+            {{ form_row(form.maxAllowedTemperature) }}
+            {{ form_row(form.type) }}
+            {{ form_row(form.maxPower) }}
+            {{ form_row(form.powerUsageProfile) }}
+            {{ form_row(form.meshResolution) }}
+            {{ form_row(form.locationInMesh) }}
+            {{ form_row(form.xmlName) }}
+            {{ form_row(form.costsEur) }}
+            {{ form_row(form.costsEnv) }}
+            {%- if form.networks.vars.choices | length > 0 -%}
+                <div class="hoz" style="margin-bottom: 10px;">{{ form_row(form.networks) }}</div><div class="clear" style="height: 4px;"></div>
+            {%- else -%}
+                {%- do form.networks.setRendered -%}
+            {%- endif -%}
+			{%- do form.sizeX.setRendered %}{% do form.sizeY.setRendered %}{% do form.sizeZ.setRendered %}
+			{%- do form.spaceLeft.setRendered %}{% do form.spaceRight.setRendered %}{% do form.spaceTop.setRendered %}{% do form.spaceBottom.setRendered %}{% do form.spaceFront.setRendered %}{% do form.spaceBehind.setRendered %}
+			{%- do form.nodes.setRendered %}
+			{%- do form.powerUsageProfile.setRendered %}
+			{%- do form.meshResolution.setRendered %}
+			{%- do form.locationInMesh.setRendered %}
+			{%- do form.minAllowedTemperature.setRendered %}
+			{%- do form.maxAllowedTemperature.setRendered %}
+			<div class="clear"></div>
+		</div>
+		<div id="node-select-box">
+			<h5 style="font-weight: normal;">{{ 'select.%what%' | trans({'%what%': 'node' | trans}) }}<span id="nodegroupType"></span></h5>
+			<select id="node-chooser" size="16">
+				<option value="0" selected="selected">&nbsp;</option>
+				{% for key, nodeGroup in nodeGroups %}
+					<optgroup label="{{ key }}">
+						{% for node in nodeGroup|dSort %}
+							{% set sText %}
+							{% set first = true %}
+							{% if node.manufacturer is not null %}
+								{% if first %}{% set first = false %}{% else %}<br/>{% endif %}
+								<span rel="tooltip" style="font-weight: bold;" data-original-title="{{ 'Manufacturer' | trans }}">{{ node.manufacturer }}</span>
+							{% endif %}
+							{% if node.product is not null %}
+								{% if first %}{% set first = false %}{% else %}<br/>{% endif %}
+								<span rel="tooltip" style="font-weight: bold;" data-original-title="{{ 'Product' | trans }}">{{ node.product }}</span>
+							{% endif %}
+							<br/>{% for component in node.components if component.active is not null %}
+							{% set transThis = 'component.' ~ component.type %}
+							{% if first %}{% set first = false %}{% else %}<br/>{% endif %}
+							{{ component.amount }} x <span rel="tooltip"
+														   data-original-title="{{ transThis | trans }}">{{ component.active }}</span>
+							{% endfor %}
+							{% endset %}
+							<option value="{{ node.id }}"
+									{% if node.image is not null and node.image.getFullPath|length > 1 %}img="{{ node.image.getFullPath | apply_filter('node_thumb') }}"{% endif %}
+									{% if node.type is not null %}nodetyp="{{ node.type }}"{% endif %}
+									text="{{ sText | e }}">
+								{{ node }}</option>
+						{% endfor %}
+					</optgroup>
+				{% endfor %}
+			</select>
+
+			<div id="node-pic">&nbsp;</div>
+			<a href="#" class="blue-button adopt" style="display: none;"><i class="icon-ok icon-white"
+																			style="margin-right: 5px;"></i>{{ 'adopt' | trans }}
+			</a>
+		</div>
+		<div class="clear"></div>
+	</div>
+	{{ form_widget(form._token) }}
+	<div class="clear"></div>
+{% endblock %}

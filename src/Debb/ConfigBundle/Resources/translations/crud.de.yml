@@ -1,0 +1,10 @@
+debb_config.node.plural: Knoten
+debb_config.node.singular: Knoten
+debb_config.nodegroup.plural: Knotengruppen
+debb_config.nodegroup.singular: Knotengruppe
+debb_config.rack.plural: Racks
+debb_config.rack.singular: Rack
+debb_config.room.plural: Räume
+debb_config.room.singular: Raum
+localdev_admin.messages.wrongfile: Falscher Dateityp
+localdev_admin.messages.cantread: Die Datei kann nicht gelesen werden

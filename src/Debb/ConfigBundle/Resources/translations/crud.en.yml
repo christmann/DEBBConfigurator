@@ -1,0 +1,10 @@
+debb_config.node.plural: Nodes
+debb_config.node.singular: node
+debb_config.nodegroup.plural: Node groups
+debb_config.nodegroup.singular: node group
+debb_config.rack.plural: Racks
+debb_config.rack.singular: rack
+debb_config.room.plural: Rooms
+debb_config.room.singular: room
+localdev_admin.messages.wrongfile: Wrong file type
+localdev_admin.messages.cantread: Cant read the file

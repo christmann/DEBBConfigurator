@@ -1,0 +1,60 @@
+{% set showTitle = true %}
+{% extends "DebbManagementBundle::debb.html.twig" %}
+{% block title %}{{ ((item is not defined or item.id == null) ? 'localdev_admin.title.add' : 'localdev_admin.title.edit') | trans({"%name%":localdev_admin_name(false)}, 'crud') }}{% endblock %}
+{% form_theme form "DebbManagementBundle::form_theme.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='cssrewrite'
+                                        'bundles/debbconfig/css/jquery-ui.min.css'
+    %}
+        <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{% javascripts
+                        '@DebbConfigBundle/Resources/public/js/jquery-ui.min.js'
+						'@DebbManagementBundle/Resources/public/js/form.js'
+						'@DebbManagementBundle/Resources/public/js/global.js'
+                        '@DebbConfigBundle/Resources/public/js/jquery.fileDownload.js'
+                        '@DebbManagementBundle/Resources/public/js/fileDownload.js'
+	%}
+		<script src="{{ asset_url }}" type="text/javascript"></script>
+	{% endjavascripts %}
+{% endblock %}
+
+{% block form_header %}
+	{%- set action -%}
+		{%- if ownaction is not defined -%}
+			{%- if item is not defined or item.id is null -%}{{ path( localdev_admin_route('_form')) }}{%- else -%}{{ path( localdev_admin_route('_form'), {id: item.id}) }}{%- endif -%}
+		{%- else -%}
+			{{ ownaction }}
+		{%- endif -%}
+	{%- endset -%}
+	{{ form_start(form, {'method': 'POST', 'attr': {'class': 'clearfix'}, 'action': action}) }}
+{% endblock %}
+
+{% block content %}
+	{% block form %}
+		<div class="row{{ localdev_admin.layout.fluid }}">
+			{{ form_widget(form) }}
+		</div>
+	{% endblock %}
+{% endblock %}
+
+{% block buttonbar %}
+	{% if exportasarchive is defined and route_exists(localdev_admin_route("_exportasarchive")) and item is defined and item.id is not null %}
+		<a href="{{ path(localdev_admin_route("_exportasarchive"), {"id": item.id}) }}" target="_blank" class="blue-button white filedownload" style="padding-right: 8px; margin-right: -4px;">
+			<span rel="tooltip" data-original-title="{{ 'download.%what%.file' | trans({'%what%': 'archive' | trans}) }}"><i class="icon-download"></i></span>
+		</a>&nbsp;
+	{% endif %}
+	<a href="{% if ownbackhref is defined %}{{ ownbackhref }}{% else %}{{ path(localdev_admin_route('_index')) }}{% endif %}"
+	   class="blue-button white">{{ 'localdev_admin.actions.back'|trans({}, 'crud') }}</a>
+	<button class="blue-button blue" type="submit">{% if ownsavetext is defined %}{{ ownsavetext }}{% else %}{{ 'localdev_admin.actions.save'|trans({}, 'crud') }}{% endif %}</button>
+{% endblock %}
+
+{% block form_footer %}
+	{{ form_end(form) }}
+{% endblock %}

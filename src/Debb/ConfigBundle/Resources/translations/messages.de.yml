@@ -1,0 +1,119 @@
+page.title: DEBB Konfigurator
+page.description: DEBB konfigurieren
+page.keywords: debb, konfigurator
+create.%what%: %what% erstellen
+configure.%what%: %what% konfigurieren
+define.%what%: %what% definieren
+equip.%what%: %what% ausstatten
+add.%what%: %what% hinzufügen
+delete.%what%: %what% löschen
+select.%what%: %what% auswählen
+save.%what%: %what% speichern
+edit.%what%: %what% bearbeiten
+edit: Bearbeiten
+delete: Löschen
+add: Hinzufügen
+select: Auswählen
+save: Speichern
+choose.%person%.%what%: Wähle %person% %what%
+download.%what%.file: %what% herunterladen
+node: Knoten
+node.group: Knotengruppe
+overview: Übersicht
+rack: Rack
+management: Verwaltung
+Processor: Prozessor
+Mainboard: Mainboard
+Coolingdevice: Kühler
+Memory: Speicher
+Powersupply: Netzteil
+Storage: HDD
+Amount: Anzahl
+Chassis: Gehäuse
+delete.last.entry: Sicher, dass Sie den letzten Eintrag dieser Art löschen wollen?
+only.one.of.this: Sie können maximal nur eine Auswahl dieses Typs haben!
+SizeX: Breite [m]
+SizeY: Höhe [m]
+SizeZ: Tiefe [m]
+SpaceTop: Abstand oben [m]
+SpaceLeft: Abstand links [m]
+SpaceRight: Abstand rechts [m]
+SpaceBottom: Abstand unten [m]
+adopt: Auswählen
+your: dein
+yours: deine
+free rack units: freie HE's
+selected rack unit: ausgewählte HE
+none: Keine
+component.0: Unbekannt
+component.1: Baseboard
+component.2: Prozessor
+component.3: Kühler
+component.4: Speicher
+component.5: Netzteil
+component.6: Heatsink
+empty: leer
+import.%name%: %name% importieren
+Yes: Ja
+No: Nein
+Front: Vorne
+Top: Oben
+Tdp: TDP [Watt]
+RackSize: Rack Größe [RU]
+size: Größe
+upload image file: Bild hochladen
+Add rack: Rack hinzufügen
+Costs eur: Kosten [EUR]
+Costs env: Kosten [CO2]
+
+# form fields which not defined above
+Product: Produkt
+Title: Titel
+Manufacturer: Hersteller
+Components: Komponenten
+Model: Model
+Cores: Kerne
+Maxfrequency: max. Frequenz [MHz]
+Image: Bild
+Description: Beschreibung
+Socket: Sockel
+Connections: Verbindungen
+Component: Komponente
+Max power: maximale Leistung [Watt]
+Max clock speed: Maximale Taktrate [MHz]
+Max cooling capacity: Maximale Kühlleistung
+Max air throughput: Maximaler Luftdurchsatz [m³/h]
+Max water throughput: Maximaler Wasserdurchsatz [l/h]
+Total output power: Gesamt-Ausgangsleistung [Watt]
+Capacity: Kapazität [MByte]
+processors: Prozessoren
+mainboards: Mainboards
+memory: Speicher
+Efficiency: Typische Effizienz [%]
+Debbcomponentsxml: DEBBComponents.xml
+Slots x: Slots Horizontal
+Slots y: Slots Vertikal
+Hesize: Höhe [RU]
+Draft: Entwurf
+View: Ansicht
+nospace: Nicht genügend Platz..
+Ziparchive: ZIP Archiv
+archive: Archiv
+Scale: Maßstab
+Node type: Knotentyp
+upload node image: Upload node bild
+upload chassis image: Upload chassis bild
+upload vrml model: Upload VRML model
+upload stl model: Upload STL model
+upload zip file: Upload ZIP datei
+new: - Neu
+add new node type: Neuen Knoten-Typ hinzufügen
+Maxtemp: Maximale Temperatur
+Mintemp: Minimale Temperatur
+posz: Pos Z [mm]
+datetimeformat: d.m.Y H:i:s
+
+# help
+help:
+  zip: |
+    Sie sollten ein Zip Archiv mit der folgenden Struktur hochladen.

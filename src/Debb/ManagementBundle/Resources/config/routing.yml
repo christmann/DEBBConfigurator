@@ -1,0 +1,3 @@
+DebbManagementBundle:
+    resource: "@DebbManagementBundle/Controller/"
+    type:     annotation

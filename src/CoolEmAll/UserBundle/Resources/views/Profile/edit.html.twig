@@ -1,0 +1,23 @@
+{%- extends "FOSUserBundle::layout.html.twig" -%}
+{%- block title -%}{{ 'security.login.submit' | trans }}{%- endblock -%}
+
+{%- trans_default_domain 'FOSUserBundle' -%}
+
+{%- block form_header -%}
+	<form action="{{ path("fos_user_profile_edit") }}" {{ form_enctype(form) }} method="post">
+{%- endblock -%}
+
+{%- block fos_user_content -%}
+	{%- block form -%}
+		{{- form_errors(form) -}}
+		{{- form_widget(form) -}}
+	{%- endblock -%}
+{%- endblock -%}
+
+{%- block buttonbar -%}
+	<button class="blue blue-button" type="submit">{{ 'profile.edit.submit'|trans }}</button>
+{%- endblock -%}
+
+{%- block form_footer -%}
+	</form>
+{%- endblock -%}

@@ -1,0 +1,126 @@
+page.title: DEBB Configurator
+page.description: Configure DEBB
+page.keywords: debb, configurator
+create.%what%: Create %what%
+configure.%what%: Configure %what%
+define.%what%: Define %what%
+equip.%what%: Equip %what%
+add.%what%: add %what%
+delete.%what%: delete %what%
+select.%what%: Select %what%
+save.%what%: save %what%
+edit.%what%: edit %what%
+edit: Edit
+delete: Delete
+add: Add
+select: Select
+save: Save
+choose.%person%.%what%: choose %person% %what%
+download.%what%.file: Download %what%
+node: node
+node.group: Node Group
+overview: Overview
+rack: Rack
+management: Management
+Processor: Processor
+Mainboard: Mainboard
+Coolingdevice: Cooling device
+Memory: Memory
+Powersupply: Power supply
+Storage: HDD
+Amount: Amount
+Chassis: Chassis
+delete.last.entry: Sure? You want to delete the last entry of this kind!
+only.one.of.this: You can have a maximum of only a selection of this type!
+SizeX: Width [m]
+SizeY: Height [m]
+SizeZ: Depth [m]
+SpaceTop: Gap top [m]
+SpaceLeft: Gap left [m]
+SpaceRight: Gap right [m]
+SpaceBottom: Gap bottom [m]
+SpaceFront: Gap front [m]
+adopt: Adopt
+your: your
+yours: your
+free rack units: Free Rack Units
+selected rack unit: Selected Rack Unit
+none: none
+component.0: Unknown
+component.1: Baseboard
+component.2: Processor
+component.3: Cooler
+component.4: Memory
+component.5: Power supply
+component.6: Heatsink
+empty: Empty
+import.%name%: Import %name%
+Tdp: TDP [Watt]
+RackSize: Rack size [RU]
+upload image file: Upload image
+size: Size
+posz: Pos Z [mm]
+Costs eur: Costs [EUR]
+Costs env: Costs [CO2]
+
+# form fields which not defined above
+Product: Product
+Title: Title
+Manufacturer: Manufacturer
+Components: Components
+Model: Model
+Cores: Cores [number]
+Maxfrequency: Max frequency [MHz]
+Image: Image
+Description: Description
+Socket: Socket type
+Connections: Connections
+Component: Component
+Max power: Maximum power usage [Watt]
+Power usage: Power usage [Watt]
+Max clock speed: Maximum clock speed [MHz]
+Max cooling capacity: Maximum cooling capacity
+Max air throughput: Max air throughput [m³/h]
+Max water throughput: Max water throughput [l/h]
+Total output power: Total output power [Watt]
+Capacity: Capacity [MByte]
+Capacity : Capacity
+processors: Processors
+mainboards: Mainboards
+memory: Memory
+power supply: Power supply
+Efficiency: Typical efficiency [%]
+power supplies: Power supplies
+Debbcomponentsxml: DEBBComponents.xml
+Slots x: Slot count horizontal
+Slots y: Slot count vertical
+He size: Height [RU]
+Draft: Draft
+nospace: Not enough space..
+Ziparchive: ZIP archive
+archive: archive
+Scale: Scale
+Node type: Node type
+upload node image: Upload node image
+upload chassis image: Upload chassis image
+upload vrml model: Upload VRML model
+upload stl model: Upload STL model
+upload zip file: Upload ZIP file
+new: - New
+add new node type: Add new node type
+Maxtemp: Maximum Temperatur
+Mintemp: Minimale Temperatur
+Max bandwidth: Max bandwidth [bit/s]
+Voltage: Voltage [V]
+Frequency: Frequency [MHz]
+State: State [number]
+Transfer rate: Transfer rate [NTU]
+preparing file: We are preparing your file, please wait...
+failed file: There was a problem generating your file, please try again.
+StateT: State
+datetimeformat: m/d/Y H:i:s
+
+# help
+help:
+  zip: |
+    You should upload a zip file which contains the following structure.

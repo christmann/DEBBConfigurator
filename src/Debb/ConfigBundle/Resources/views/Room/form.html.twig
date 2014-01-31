@@ -1,0 +1,119 @@
+{% set exportasarchive = true %}
+{% extends "DebbManagementBundle::form.html.twig" %}
+{% form_theme form "DebbManagementBundle::form_theme.html.twig" %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{% stylesheets filter='cssrewrite'
+		'bundles/debbconfig/css/jquery-ui.min.css'
+	%}
+		<link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
+	{% endstylesheets %}
+	<style>
+		ul.hoz { list-style-type: none; margin: 0; padding: 0; margin-bottom: 10px; }
+		li.hoz { margin: 5px; padding: 5px; width: 150px; }
+        div.hoz div { float: left; margin-right: 10px; }
+        input[type="radio"], input[type="checkbox"] { margin: 0; }
+	</style>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{% javascripts
+		'@DebbConfigBundle/Resources/public/js/jquery-ui.min.js'
+		'@DebbConfigBundle/Resources/public/js/overlaps.function.js'
+		'@DebbConfigBundle/Resources/public/js/room.js'
+	%}
+		<script src="{{ asset_url }}" type="text/javascript"></script>
+	{% endjavascripts %}
+	<script type="text/javascript">
+		var roomId = {{ form.vars.data.id | default(0) }};
+	</script>
+{% endblock %}
+
+{% if form.vars.data.sizeX|default(0) < 1 %}{% set rackSizeX = 900 %}{% else %}{% set rackSizeX = form.vars.data.sizeX %}{% endif %}
+{% if form.vars.data.sizeZ|default(0) < 1 %}{% set rackSizeZ = 700 %}{% else %}{% set rackSizeZ = form.vars.data.sizeZ %}{% endif %}
+
+{% block contentExtras %} style="width: {{ rackSizeX + 21 }}px;"{% endblock %}
+
+{% block content %}
+    {{ form_errors(form) }}
+	<div style="margin-left: 6px;">
+        {{ form_row(form.componentId) }}
+        {{ form_row(form.name) }}
+		{{ form_row(form.building) }}
+        {{ form_row(form.sizeY) }}
+        {{ form_row(form.xmlName) }}
+        {{ form_row(form.meshResolution) }}
+        {{ form_row(form.locationInMesh) }}
+        {{ form_row(form.costsEur) }}
+        {{ form_row(form.costsEnv) }}
+        {{ form_row(form.references) }}
+        {%- if form.coolingDevices.vars.choices | length > 0 -%}
+            <div class="hoz" style="margin-bottom: 10px;">{{ form_row(form.coolingDevices) }}</div><div class="clear" style="height: 4px;"></div>
+        {%- else -%}
+            {%- do form.coolingDevices.setRendered -%}
+        {%- endif -%}
+		{%- if racks|length > 0 -%}
+			<div>
+				{{ 'Add rack' | trans }}
+				<ul class="hoz">
+					{% for rack in racks %}
+						<li class="hoz ui-state-default eDraftRack" style="margin-left: 0px; margin-right: 10px;"><div class="draftRack" rackId="{{ rack.id }}" rackX="{{ rack.sizeX }}" rackY="{{ rack.sizeY }}" rackZ="{{ rack.sizeZ }}" title="{{ rack | e }}">{{ rack }}</div></li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="clear"></div>
+		{%- endif -%}
+		{%- if flowPumps|length > 0 -%}
+			<div>
+				{{ 'Add flow pump' | trans }}
+				<ul class="hoz">
+					{% for flowPump in flowPumps %}
+						<li class="hoz ui-state-default eDraftRack" style="margin-left: 0px; margin-right: 10px;"><div class="draftRack" flowPumpId="{{ flowPump.id }}" rackX="{{ flowPump.sizeX }}" rackY="{{ flowPump.sizeY }}" rackZ="{{ flowPump.sizeZ }}" title="{{ flowPump | e }}">{{ flowPump }}</div></li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="clear"></div>
+		{%- endif %}
+
+        <div class="row-fluid" style="font-weight: bold;">
+            {{ 'Costs of components' }} ({{ 'now'|date('datetimeformat' | trans) }})
+        </div>
+        <div class="row-fluid">
+            <div class="span1" id="costsEur" style="text-align: right;">{{ form.vars.data.getRealCostsEur(false) }}</div>
+            <div class="span1">EUR</div>
+        </div>
+        <div class="row-fluid">
+            <div class="span1" id="costsEnv" style="text-align: right;">{{ form.vars.data.getRealCostsEnv(false) }}</div>
+            <div class="span1">CO2</div>
+        </div>
+
+		<div id="rackSize">{{ 'size' | trans }}: <span id="rackSizeX">{{ (rackSizeX / 100.0) | number_format(2, '.', '') }}</span>m x <span id="rackSizeZ">{{ (rackSizeZ / 100.0) | number_format(2, '.', '') }}</span>m</div>
+		<div id="rackContainer" style="position: relative; width: {{ rackSizeX }}px; height: {{ rackSizeZ }}px; border: 2px solid #000; background: url('{{ asset('bundles/debbconfig/img/room-grid.png') }}') repeat scroll 1px {{ rackSizeZ + 1 }}px transparent;" data-prototype-rack="{{ form_row(form.racks.vars.prototype) | escape }}" data-prototype-flowpump="{{ form_row(form.flowPumps.vars.prototype) | escape }}">
+			{% for rack in form.racks %}
+				<div class="rackG" posx="{{ rack.vars.data.posx }}" posy="{{ rack.vars.data.posy }}" posz="{{ rack.vars.data.posz }}"
+				     rackId="{{ rack.vars.data.id }}" title="{{ rack.vars.data.rack | e }}" rackx="{{ rack.vars.data.rack.sizeX }}" racky="{{ rack.vars.data.rack.sizeY }}" rackz="{{ rack.vars.data.rack.sizeZ }}"><a href="#" class="removeRack"><i class="icon-trash"></i></a> - <a href="#" class="rotateRack"><i class="icon-repeat" style="transform: rotateZ({{ rack.vars.data.rotation | default(0) + 90 }}deg);"></i></a><br />{{ rack.vars.data.rack }}
+					<div class="rackGform" style="display: none;">
+						{{ form_widget(rack) }}
+					</div>
+				</div>
+			{% endfor %}
+			{% for flowPump in form.flowPumps %}
+				<div class="rackG" posx="{{ flowPump.vars.data.posx }}" posy="{{ flowPump.vars.data.posy }}" posz="{{ flowPump.vars.data.posz }}"
+					 flowPumpId="{{ flowPump.vars.data.id }}" title="{{ flowPump.vars.data.flowPump | e }}" rackx="{{ flowPump.vars.data.flowPump.sizeX }}" racky="{{ flowPump.vars.data.flowPump.sizeY }}" rackz="{{ flowPump.vars.data.flowPump.sizeZ }}"><a href="#" class="removeRack"><i class="icon-trash"></i></a> - <a href="#" class="rotateRack"><i class="icon-repeat" style="transform: rotateZ({{ flowPump.vars.data.rotation | default(0) + 90 }}deg);"></i></a><br />{{ flowPump.vars.data.flowPump }}
+					<div class="rackGform" style="display: none;">
+						{{ form_widget(flowPump) }}
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+		{% do form.racks.setRendered %}{% do form.flowPumps.setRendered %}
+		<div class="clear"></div>
+		<div id="rackScale"><i class="icon-arrow-left"></i> {{ 'Scale' | trans }} 1m <i class="icon-arrow-right"></i></div>
+
+		{{ form_widget(form._token) }}
+		{{ form_rest(form) }}
+		<div class="clear"></div>
+	</div>
+{% endblock %}

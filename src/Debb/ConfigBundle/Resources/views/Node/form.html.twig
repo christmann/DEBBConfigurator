@@ -1,0 +1,140 @@
+{% set exportasarchive = true %}
+{% extends "DebbManagementBundle::form.html.twig" %}
+{% form_theme form "DebbManagementBundle::form_theme.html.twig" %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<style type="text/css">
+		input[type="text"] { width: 300px; }
+        label { width: 320px; }
+		select { width: 317px; }
+        div.hoz div { float: left; margin-right: 10px; }
+        input[type="radio"], input[type="checkbox"] { margin: 0; }
+	</style>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{% javascripts
+        '@DebbConfigBundle/Resources/public/js/node.js'
+	%}
+	<script src="{{ asset_url }}" type="text/javascript"></script>
+	{% endjavascripts %}
+{% endblock %}
+
+{% block topForm %}
+    <div style="margin-left: 6px;">
+        {%- if form.networks.vars.choices | length > 0 -%}
+            <div class="hoz" style="margin-bottom: 10px;">{{ form_row(form.networks) }}</div><div class="clear" style="height: 4px;"></div>
+        {%- else -%}
+            {%- do form.networks.setRendered -%}
+        {%- endif -%}
+    </div>
+
+    <div style="width: 100%; border-bottom: 1px dashed #DFDFDF; height: 1px;"></div>
+
+    <div id="componentErrorBox" style="display: none; margin-top: 10px; margin-bottom: 5px;" class="alert alert-error">
+        {{- 'Please select components for the red marked select boxes or delete them.' | trans -}}
+    </div>
+
+    <div class="row-fluid" style="font-weight: bold;">
+        {{ 'Costs of components' }} ({{ 'now'|date('datetimeformat' | trans) }})
+    </div>
+    <div class="row-fluid">
+        <div class="span1" id="costsEur" style="text-align: right;">{{ form.vars.data.getRealCostsEur(false) }}</div>
+        <div class="span1">EUR</div>
+    </div>
+    <div class="row-fluid">
+        <div class="span1" id="costsEnv" style="text-align: right;">{{ form.vars.data.getRealCostsEnv(false) }}</div>
+        <div class="span1">CO2</div>
+    </div>
+
+    <div class="row-fluid">
+        <div class="span6">
+            <div class="componentBox" style="border-left: 1px solid #DFDFDF; padding-left: 5px;" data-prototype="{{ form_row(form.components.vars.prototype) | escape }}">
+                {% for component in form.components if component.vars.data.type % 2 == 0 %}
+                    <div class="component">
+                        {{ form_widget(component) }}
+                        <div class="componentExtras">
+                            <div class="addComponent" rel="tooltip" data-original-title="{{ 'add' | trans() }}">
+                                <i class="icon-plus"></i>
+                            </div>
+                            <div class="delComponent" rel="tooltip" data-original-title="{{ 'delete' | trans() }}">
+                                <i class="icon-remove"></i>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="span6">
+            <div class="componentBoxHdds">
+                {% for component in form.components if component.vars.data.type % 2 == 1 %}
+                    <div class="component">
+                        {{ form_widget(component) }}
+                        <div class="componentExtras">
+                            <div class="addComponent" rel="tooltip" data-original-title="{{ 'add' | trans() }}">
+                                <i class="icon-plus"></i>
+                            </div>
+                            <div class="delComponent" rel="tooltip" data-original-title="{{ 'delete' | trans() }}">
+                                <i class="icon-remove"></i>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+    {{ form_widget(form._token) }}
+{% endblock %}
+
+{% block content %}
+	{{ form_errors(form) }}
+	<div class="row-fluid" style="position: relative; min-height: 320px;">
+		<div class="span3">
+            <div class="row-fluid">{{ form_widget(form.image) }}</div>
+		</div>
+		<div class="span9" style="border-left: 1px solid #DFDFDF; padding-left: 5px;">
+            {% set topForm = block('topForm') %}
+            <div style="margin-left: 6px;">
+	            {{ form.type.setRendered() | default() }}
+	            {{ form_rest(form) }}
+	            <div>
+		            <label for="{{ form.type.vars.id }}"
+                            {%- if isTypeInUse | default([]) | length > 0 %}
+                                 data-toggle="tooltip" data-title="{{ 'This is used by...' | trans | e }}" data-content="<ul>{%- for entity in isTypeInUse | default([]) -%}
+    														    <li>{{- entity -}}</li>{%- endfor -%}</ul>"
+                            {%- endif -%}>Type{%- if isTypeInUse | default([]) | length > 0 %} <i class="icon-info-sign"></i>{% endif %}</label>
+		            {{ form_errors(form.type) }}
+		            <select name="{{ form.type.vars.full_name }}" id="{{ form.type.vars.id }}"{% if isTypeInUse | default([]) | length > 0 %} disabled="disabled"{% endif %}>
+			            <option value="">&nbsp;</option>
+			            {% for nodeType in nodeTypes %}
+				            <option value="{{ nodeType.type }}"{% if form.type.vars.data == nodeType.type %} selected="selected"{% endif %}>{{ nodeType.type }}</option>
+			            {% endfor %}
+			            <option value="-1">{{ 'new' | trans }}</option>
+		            </select>
+	            </div>
+            </div>
+            {{ topForm | raw }}
+		</div>
+	</div>
+	<div id="addnodetype" class="modal hide" style="width: 347px; left: 57%;">
+		<div class="modal-header">
+			<button data-dismiss="modal" class="close" type="button">×</button>
+			<h3>{{ 'add new node type' | trans }}</h3>
+		</div>
+		<div action="/debbconfig/web/app_dev.php/en/management/nodetype/form" class="modal-body" id="debb_managementbundle_nodetypetype">
+			<label class="required" for="debb_managementbundle_nodetypetype_name">Name</label>
+			<input type="text" maxlength="4" name="debb_managementbundle_nodetypetype[name]" id="debb_managementbundle_nodetypetype_name">
+		</div>
+		<div class="modal-footer">
+			<a data-dismiss="modal" class="btn" href="#">
+				{{ 'localdev_admin.actions.close'|trans({}, 'crud') }}
+			</a>
+			<a class="btn btn-primary submitNodeType" href="#">
+				{{ 'localdev_admin.actions.save'|trans({}, 'crud') }}
+			</a>
+		</div>
+	</div>
+{% endblock %}

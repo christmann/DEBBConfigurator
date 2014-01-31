@@ -1,0 +1,98 @@
+{% extends "DebbManagementBundle::form.html.twig" %}
+{% form_theme form "DebbManagementBundle::form_theme.html.twig" %}
+{% import _self as chassis %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{% stylesheets filter='cssrewrite'
+		'bundles/debbconfig/css/jquery-ui.min.css'
+	%}
+		<link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
+	{% endstylesheets %}
+	<style>
+		.node { padding: 10px; margin: 0px; }
+		ul.hoz { list-style-type: none; margin: 0; padding: 0; margin-bottom: 10px; }
+		li.hoz { margin: 5px; padding: 5px; width: 150px; }
+	</style>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{% javascripts
+					'@DebbConfigBundle/Resources/public/js/jquery-ui.min.js'
+					'@DebbManagementBundle/Resources/public/js/chassis.js'
+	%}
+		<script src="{{ asset_url }}" type="text/javascript"></script>
+	{% endjavascripts %}
+    <script type="text/javascript">
+        var chassisId = {{ form.vars.data.id | default(0) }};
+    </script>
+{% endblock %}
+
+{% set chassisSizeX = form.vars.data.sizeX %}
+{% set chassisSizeY = form.vars.data.sizeY %}
+
+{% block contentExtras %} style="width: {{ chassisSizeX + 38 }}px;"{% endblock %}
+
+{% block form %}
+	{%- do form.typspecification.setRendered() -%}
+	{%- do form.flowPumps.setRendered -%}
+	{{- parent() -}}
+	<div id="chassiscontainer" class="row-fluid" style="width: {{ chassisSizeX + 10 }}px;">
+		{% if flowPumps|length > 0 -%}
+			<div>
+				{{ 'Add flow pump' | trans }}:
+				<ul class="hoz">
+					{% for flowPump in flowPumps %}
+						<li class="hoz ui-state-default eDraftRack addFlowPump" style="margin-left: 0px; margin-right: 10px;"><div class="draftRack" flowPumpId="{{ flowPump.id }}" rackx="{{ flowPump.sizeY }}" racky="{{ flowPump.sizeX }}" rackz="{{ flowPump.sizeZ }}" title="{{ flowPump | e }}" inlet="{{ flowPump.inlet }}">{{ flowPump }}</div></li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="clear"></div>
+		{%- endif %}
+		<div>
+			<a href="#" class="addNode btn btn-small" style="border-bottom-width: 0; border-bottom-left-radius: 0; border-bottom-right-radius: 0;">{{ 'Add node' | trans }}</a>
+		</div>
+		<div class="clear"></div>
+		<div id="chassisSize">{{ 'size' | trans }}: <span id="chassisSizeX">{{ (chassisSizeX / 1000.0) | number_format(2, '.', '') }}</span>m x <span id="chassisSizeY">{{ (chassisSizeY / 1000.0) | number_format(2, '.', '') }}</span>m</div>
+
+		{% set spaceInfoWidth = 75 %}
+		{% set itemtypspecification = item.typspecification %}
+		{% if itemtypspecification | keys|default({0: -1}).0 == 0 %}
+			{% set itemtypspecification = itemtypspecification | reverse %}
+		{% endif %}
+		<div id="nodegroupContainer" data-prototype="{{ chassis.typspec(nodetypspecs, form.typspecification.vars.prototype) | e }}" data-prototype-flowpump="{{ chassis.typspec(null, form.flowPumps.vars.prototype) | e }}" style="width: {{ chassisSizeX }}px; height: {{ chassisSizeY }}px;">
+			{%- for typspec in form.typspecification -%}
+				{{ chassis.typspec(nodetypspecs, typspec, true) }}
+			{%- endfor -%}
+			{% for flowPump in form.flowPumps %}
+				{{ chassis.typspec(null, flowPump, true) }}
+			{% endfor %}
+		</div>
+		<div class="clear"></div>
+		<div id="rackScale" style="float: left; margin-left: 0px; top: -16px; width: 99px; margin-top: 6px;"><i class="icon-arrow-left"></i> {{ 'Scale' | trans }} 10cm <i class="icon-arrow-right"></i></div>
+	</div>
+{% endblock %}
+
+{% macro typspec(nodetypspecs, nodeForm, nodeContainer) %}
+	{% if nodeContainer is null or nodeContainer == true -%}
+		<div title="{{- nodeForm.vars.data | default('') -}}" class="node node{{ nodeForm.vars.data.rotation | default(0) }}Deg" posx="{{ nodeForm.vars.data.posX|default('') }}" posy="{{ nodeForm.vars.data.posY|default('') }}" posz="{{ nodeForm.vars.data.posZ|default('') }}">
+	{%- endif %}
+	<a href="#" class="removeNode"><i class="icon-trash"></i></a> - <a class="rotateNode" href="#"><i class="icon-repeat" style="transform: rotateZ({{ nodeForm.vars.data.rotation | default(0) + 90 }}deg);"></i></a>
+	{%- if nodetypspecs is not null %}
+        <br />[<span class="nodeCount">{{ countUp('x') }}</span>]<br />
+		<select name="{{ nodeForm.typ.vars.full_name }}" id="{{ nodeForm.typ.vars.id }}" style="margin-left: -7px; width: 63px; margin-top: 10px;">
+			{% for value in nodetypspecs|default({}) %}
+				{%- set selectedValue = nodeForm.typ.vars.data -%}
+				<option value="{{ value.type }}"{% if selectedValue is defined and selectedValue is not null and selectedValue == value.type %} selected="selected"{% endif %}>{{ value.type | trans }}</option>
+			{% endfor %}
+		</select>
+	{%- else -%}
+        <br />[<span class="pumpCount">{{ countUp('y') }}</span>]<br />
+		<br />
+		<span class="pumpName">{{- nodeForm.vars.data | default('') -}}</span>
+	{%- endif -%}
+	{%- if nodeForm.typ is defined -%}{%- do nodeForm.typ.setRendered() -%}{%- endif -%}
+	{{ form_widget(nodeForm) }}
+	{% if nodeContainer is null or nodeContainer == true %}</div>{% endif %}
+{% endmacro %}

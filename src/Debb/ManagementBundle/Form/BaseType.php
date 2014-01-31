@@ -1,0 +1,110 @@
+<?php
+/**
+ * DEBBConfigurator - A configurator for DEBB component and PLMXML files
+ * Copyright (C) 2013-2014 christmann informationstechnik + medien GmbH & Co. KG
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Library General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Library General Public License for more details.
+ *
+ * You should have received a copy of the GNU Library General Public
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+ * Boston, MA  02110-1301, USA.
+ */
+
+namespace Debb\ManagementBundle\Form;
+
+use CoolEmAll\UserBundle\Entity\User;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+
+/**
+ * Class BaseType
+ * @package Debb\ManagementBundle\Form
+ * @author Patrick Bußmann <patrick.bussmann@christmann.info>
+ */
+class BaseType extends AbstractType
+{
+	/**
+	 * @var \Symfony\Component\DependencyInjection\Container
+	 */
+	protected $container;
+
+	/**
+	 * The query builder function for the user specifications
+	 */
+	protected $userQueryBuilder;
+
+	/**
+	 * @param Container $container
+	 */
+	function __construct(Container $container = null)
+	{
+		$this->container = $container;
+		$this->userQueryBuilder = function(EntityRepository $er)
+		{
+			$user = $this->container->get('security.context')->getToken()->getUser();
+			$qb = $er->createQueryBuilder('p');
+			if($user instanceof User)
+			{
+				$qb->where('p.user = :user')->setParameter('user', $user);
+			}
+			else
+			{
+				$qb->where('p.user IS NULL');
+			}
+			return $qb;
+		};
+	}
+
+	/**
+	 * @param FormBuilderInterface $builder
+	 * @param array $options
+	 */
+	public function buildForm(FormBuilderInterface $builder, array $options)
+	{
+		$builder
+			->add('componentId', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false))
+			->add('manufacturer', null, array('required' => false))
+			->add('product', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false))
+			->add('label', null, array('required' => false))
+			->add('costsEur', 'decimal', array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false))
+			->add('costsEnv', 'decimal', array('required' => false))
+			->add('hostname', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false))
+			->add('maxPower', null, array('required' => false,
+				'label_attr' => array(
+					'data-title' => 'Annotation',
+					'data-content' => 'MaxPowerUsage is the theoretical limit of power consumption and may used for designing',
+					'data-toggle' => 'tooltip'
+				),))
+			->add('powerUsageProfile', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false, 'query_builder' => $this->userQueryBuilder))
+			->add('xmlName', null, array('required' => false, 'label' => 'XML name'))
+			->add('minAllowedTemperature', 'decimal', array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false))
+			->add('maxAllowedTemperature', 'decimal', array('required' => false))
+			->add('type', null, array('attr' => array('class' => 'noBreakAfterThis'), 'required' => false,
+				'label_attr' => array(
+					'data-title' => 'Annotation',
+					'data-content' => 'The type element might be used to specify a type for the module, i.e. for memory DDR/DDR2, for CPU architecture name etc. It has only informational character.',
+					'data-toggle' => 'tooltip'
+				),))
+			->add('instanceName', null, array('required' => false))
+		;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getName()
+	{
+		return 'base';
+	}
+}

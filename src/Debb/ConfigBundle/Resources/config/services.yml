@@ -1,0 +1,32 @@
+services:
+    debbconfig.menu_builder:
+        class: Debb\ConfigBundle\Menu\MenuBuilder
+        arguments: ["@knp_menu.factory", "@translator"]
+
+    debbconfig.menu.main:
+        class: Knp\Menu\MenuItem
+        factory_service: debbconfig.menu_builder
+        factory_method: createMainMenu
+        arguments: ["@request"]
+        scope: request
+        tags:
+            - { name: knp_menu.menu, alias: main }
+
+    debbconfig.twig.configbundle_extension:
+        class: Debb\ConfigBundle\Twig\Extension
+        arguments:
+            - "@service_container"
+        tags:
+            - { name: twig.extension }
+
+    swiftmailer.command.spool_send:
+        class: Symfony\Bundle\SwiftmailerBundle\Command\SendEmailCommand
+        calls:
+            - [ setContainer, ["@service_container"] ]
+
+    debbconfig.listener.kernel_listener:
+        class: Debb\ConfigBundle\EventListener\KernelListener
+        calls:
+            - [ setContainer, ["@service_container"] ]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }

@@ -1,0 +1,18 @@
+parameters:
+#    debb_management.example.class: Debb\ManagementBundle\Example
+
+services:
+    debbconfig.twig.managementbundle_extension:
+        class: Debb\ManagementBundle\Twig\Extension
+        arguments:
+            - "@service_container"
+        tags:
+            - { name: twig.extension }
+    debbconfig.form.type.decimal:
+        class: Debb\ManagementBundle\Form\DecimalType
+        tags:
+            - { name: form.type, alias: decimal }
+    debbconfig.form.type.hidden_decimal:
+        class: Debb\ManagementBundle\Form\HiddenDecimalType
+        tags:
+            - { name: form.type, alias: hidden_decimal }

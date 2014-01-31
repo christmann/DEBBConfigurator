@@ -1,0 +1,48 @@
+{% extends "DebbManagementBundle::form.html.twig" %}
+{% form_theme form "DebbManagementBundle::form_theme.html.twig" %}
+{%- import _self as utils -%}
+
+{% block stylesheets -%}
+    {{- parent() -}}
+    <style type="text/css">.cooling-eer .well:nth-child(2n-1) { margin-left: 0px; }</style>
+{%- endblock %}
+
+{% block javascripts -%}
+    {{- parent() -}}
+    {% javascripts
+                    '@DebbManagementBundle/Resources/public/js/coolingDevice.js'
+    %}
+        <script src="{{ asset_url }}" type="text/javascript"></script>
+    {% endjavascripts %}
+{%- endblock %}
+
+{% block cooling_eer -%}
+    {{- utils.stateBlock(form.energyEfficiencyRatio) -}}
+    {%- do form.energyEfficiencyRatio.setRendered() -%}
+{%- endblock %}
+
+{% block content -%}
+    {%- set cooling_eer = block('cooling_eer') -%}
+    {{ parent() }}
+    <div class="row-fluid cooling-eer">
+        <hr />
+        {{ cooling_eer | raw }}
+    </div>
+{%- endblock %}
+
+{% macro stateBlock(f) -%}
+    {%- import _self as utils -%}
+    {%- form_theme f _self -%}
+    <h4>{{- f.vars.label }} <a class="addThing" data-prototype="{{ utils.stateForm(f.vars.prototype) | e }}" obj="$(this).parents('div:first')" href="#"><i class="icon-plus"></i></a></h4>
+    {%- for children in f.children -%}
+        {%- form_theme children _self -%}
+        {{- utils.stateForm(children) -}}
+    {%- endfor -%}
+{%- endmacro %}
+
+{% macro stateForm(f) -%}
+    <div class="well span6" style="float: left;">
+        <div class="toprightcorner"><a href="#" class="trash" obj="$(this).parents('.well')" slow="false"><i class="icon-trash"></i></a></div>
+        {{ form_widget(f) }}
+    </div>
+{%- endmacro %}

@@ -1,0 +1,58 @@
+#content
+{
+	margin-left: 21px;
+	width:      917px;
+	min-width:  917px;
+}
+
+.pageTitle
+{
+	margin-left: 18px;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.span9 label
+{
+	display: table;
+	font-size: 12px;
+}
+
+.component label
+{
+	display: inline-block;
+	font-size: 12px;
+}
+
+select
+{
+	width: 378px;
+}
+
+.container
+{
+	margin-left: 17px;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+#content .row:first-child
+{
+	display: none;
+}
+
+#footer
+{
+	width: 1183px;
+}
+
+#config-menu > ul:not(.menu_level_1) > li > a.first
+{
+	background-color: #0489B1;
+	border-left: 1px solid #04759D;
+	border-right: 1px solid #04759D;
+	border-top: 1px solid #04759D;
+}
+
+#config-menu > ul:not(.menu_level_1) > li > a.first:hover
+{
+	background-color: #046991;
+}

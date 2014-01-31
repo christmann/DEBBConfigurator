@@ -1,0 +1,134 @@
+{% set showTitle = true %}
+{% extends "DebbManagementBundle::debb.html.twig" %}
+{% block title %}{{ localdev_admin_name(true) }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='cssrewrite'
+                                        'bundles/debbconfig/css/jquery-ui.min.css'
+    %}
+        <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{% javascripts
+                    '@DebbConfigBundle/Resources/public/js/jquery-ui.min.js'
+                    '@DebbManagementBundle/Resources/public/js/global.js'
+                    '@DebbConfigBundle/Resources/public/js/jquery.fileDownload.js'
+                    '@DebbManagementBundle/Resources/public/js/fileDownload.js'
+    %}
+		<script src="{{ asset_url }}" type="text/javascript"></script>
+	{% endjavascripts %}
+{% endblock %}
+
+{% block content %}
+    {% if svnEnabled() and exportasarchive is defined and route_exists(localdev_admin_route("_assvn")) and app.session.has('context') %}
+        <input id="svnuploaddefaultdir" type="hidden" value="{{ app.session.get('context').debb_url|default('')|replace({'https://svn.coolemall.eu/svn': ''}) }}" />
+    {% endif %}
+    {% image '@DebbConfigBundle/Resources/public/img/ajax-loader-small.gif' %}
+        <input type="hidden" id="ajaxloadersmall" value="{{ asset_url }}" />
+    {% endimage %}
+	{% block index_table %}
+		<table class="table table-striped table-condensed">
+			<thead>
+				<tr>
+					{% block thead %}
+						<th>{{ 'localdev_admin.fields.name'|trans({}, 'crud') }}</th>
+					{% endblock %}
+					<th>
+						<div class="pull-right">{{ 'localdev_admin.fields.options'|trans({}, 'crud') }}</div>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for item in items|dSort %}
+					{% block tbody %}
+						<tr>
+							{% block trow %}
+								<td style="line-height: 27px;">{{ item }}</td>
+							{% endblock %}
+							<td class="options">
+								{% block tbutton_group %}
+									<div class="btn-group pull-right" style="margin-left: 10px;">
+										{% block tbuttons %}
+											{% block tbuttons_base %}
+												{% spaceless %}
+                                                    {% if route_exists(localdev_admin_route("_duplicate")) %}
+                                                        <a href="{{ path(localdev_admin_route("_duplicate"), {"id": item.id}) }}" class="btn">
+                                                            <span rel="tooltip" data-original-title="{{ 'duplicate' | trans }}"><i class="icon-plus-sign"></i></span>
+                                                        </a>
+                                                    {% endif %}
+													<a href="{{ path(localdev_admin_route("_form"), {"id":item.id}) }}" class="btn">
+														<span rel="tooltip" data-original-title="{{ 'edit' | trans }}"><i class="icon-edit"></i></span>
+													</a>
+													<a class="btn btn-danger{% if item.getParents() | default([]) | length > 0 %} disabled{% endif %}" data-toggle="modal"
+													   href="#delete{{ item.id }}">
+														<span rel="tooltip" data-original-title="
+														{%- if item.getParents() | default([]) | length > 0 -%}
+														    {{- 'This is used by...' | trans -}}{%- set listOfUsed = [] -%}
+														    <ul>{%- for entity in item.getParents() | default([]) if entity.__toString() is not null and entity.__toString() | default(entity) not in listOfUsed -%}
+    														    <li>{{- entity.__toString() | default(entity) -}}</li>
+														    {% set listOfUsed = listOfUsed | merge([entity.__toString() | default(entity)]) %}{%- endfor -%}</ul>
+														{%- else -%}
+														    {{- 'delete' | trans -}}
+														{%- endif %}"><i class="icon-remove icon-white"></i></span>
+													</a>
+												{% endspaceless %}
+											{% endblock %}
+										{% endblock %}
+									</div>
+                                    <div class="btn-group pull-right">
+                                        {% if exportasxml is defined and route_exists(localdev_admin_route("_asxml")) %}
+                                            <a target="_blank" href="{{ path(localdev_admin_route("_asxml"), {"id": item.id}) }}" class="btn filedownload">
+                                                <span rel="tooltip" data-original-title="{{ 'download.%what%.file' | trans({'%what%': 'DEBBComponents.xml' | trans}) }}"><i class="icon-file"></i></span>
+                                            </a>
+                                        {% endif %}
+                                        {% if exportasarchive is defined and route_exists(localdev_admin_route("_assvn")) %}{# If you can export something as archive you can add it to svn! #}
+                                            <a target="{% if svnEnabled() %}_blank" href="{{ path(localdev_admin_route("_assvn"), {"id": item.id}) }}{% else %}_self" onclick="return false;{% endif %}" class="btn
+                                                {%- if svnEnabled() == false %} disabled{% endif %} svnUpload">
+                                                <span rel="tooltip" data-original-title="
+                                                {%- if svnEnabled() %}{{ 'Add to svn' | trans }}{%- else -%}Please select the context in experiment configurator (CoolEmAll GUI) first.
+                                                {%- endif -%}"><img src="{{ asset('bundles/debbconfig/img/svn-icon.png') }}" /></span>
+                                            </a>
+                                        {% endif %}
+                                        {% if exportasarchive is defined and route_exists(localdev_admin_route("_exportasarchive")) %}
+                                            <a target="_blank" href="{{ path(localdev_admin_route("_exportasarchive"), {"id": item.id}) }}" class="btn filedownload">
+                                                <span rel="tooltip" data-original-title="{{ 'download.%what%.file' | trans({'%what%': 'archive' | trans}) }}"><i class="icon-download"></i></span>
+                                            </a>
+                                        {% endif %}
+                                    </div>
+								{%- endblock -%}
+                                {%- if item.getParents() | default([]) | length < 1 -%}
+                                    <div class="modal hide" id="delete{{ item.id }}">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">×</button>
+                                            <h3>{{ 'localdev_admin.delete.header'|trans({'%name%':item}, 'crud') }}</h3>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>{{ 'localdev_admin.delete.message'|trans({'%name%':item}, 'crud')|nl2br }}</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="#" class="btn" data-dismiss="modal">
+                                                {{ 'localdev_admin.actions.close'|trans({}, 'crud') }}
+                                            </a>
+                                            <a href="{{ path(localdev_admin_route("_remove"), {"id":item.id}) }}" class="btn btn-danger">
+                                                {{ 'localdev_admin.delete.confirm'|trans({'%name%':item}, 'crud') }}
+                                            </a>
+                                        </div>
+                                    </div>
+                                {%- endif -%}
+							</td>
+						</tr>
+					{% endblock %}
+				{% endfor %}
+			</tbody>
+		</table>
+	{% endblock %}
+{% endblock %}
+
+{% block buttonbar %}
+	<a href="{{ path(localdev_admin_route("_form")) }}"
+	   class="blue-button blue">{{ 'localdev_admin.actions.create' | trans({"%name%":localdev_admin_name()}, 'crud') }}</a>
+{% endblock %}
