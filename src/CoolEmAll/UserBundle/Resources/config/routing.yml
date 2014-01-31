@@ -1,3 +1,0 @@
-CoolEmAllUserBundle:
-    resource: "@CoolEmAllUserBundle/Controller/"
-    type:     annotation

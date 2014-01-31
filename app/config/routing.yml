@@ -4,9 +4,6 @@ DebbConfigBundle:
 DebbManagementBundle:
     resource: "@DebbManagementBundle/Resources/config/routing.yml"
 
-CoolEmAllUserBundle:
-    resource: "@CoolEmAllUserBundle/Resources/config/routing.yml"
-
 CIMPluploadBundle:
     resource: "@CIMPluploadBundle/Controller/"
     type:     annotation
