@@ -20,7 +20,7 @@ class AppKernel extends Kernel
 			new Localdev\FrameworkExtraBundle\LocaldevFrameworkExtraBundle(),
 			new Localdev\AdminBundle\LocaldevAdminBundle(),
 			new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
-			new Bazinga\ExposeTranslationBundle\BazingaExposeTranslationBundle(),
+			new Bazinga\Bundle\JsTranslationBundle\BazingaJsTranslationBundle(),
             new FOS\UserBundle\FOSUserBundle(),
 	        new CIM\PluploadBundle\CIMPluploadBundle(),
             new CoolEmAll\UserBundle\CoolEmAllUserBundle(),
