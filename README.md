@@ -84,7 +84,7 @@ The DEBBConfigurator uses the following bundles.
   * [**SensioGeneratorBundle**][8] (in dev/test env) - Adds code generation
     capabilities
 
-All libraries and bundles included are released under the MIT or BSD license.
+All libraries and bundles included are released under the LGPLv2.1 license.
 
 Enjoy!
 
