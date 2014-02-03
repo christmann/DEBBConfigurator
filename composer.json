@@ -70,10 +70,6 @@
 		{
 			"type": "composer",
 			"url": "http://satis.localdev.de"
-		},
-        {
-            "type": "vcs",
-            "url": "git@git.christmann.info:bundles/PluploadBundle.git"
-        }
+		}
 	]
 }
