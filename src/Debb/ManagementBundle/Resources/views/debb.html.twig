@@ -20,11 +20,11 @@
     {{ parent() }}
     {% javascripts
                     '@DebbConfigBundle/Resources/public/js/debbcomponents.js'
-                    '@BazingaExposeTranslationBundle/Resources/public/js/translator.min.js'
+                    '@BazingaJsTranslationBundle/Resources/public/js/translator.min.js'
     %}
         <script src="{{ asset_url }}" type="text/javascript"></script>
     {% endjavascripts %}
-    <script src="{{ url('bazinga_exposetranslation_js') }}" type="text/javascript"></script>
+    <script src="{{ url('bazinga_jstranslation_js') }}" type="text/javascript"></script>
 {%- endblock -%}
 
 {%- block body -%}

@@ -24,7 +24,7 @@
 		"localdev/admin-bundle": "dev-master",
 		"localdev/framework-extra-bundle": "2.1.x-dev",
 		"avalanche123/imagine-bundle": "v2.1",
-        "willdurand/expose-translation-bundle": "dev-master",
+        "willdurand/js-translation-bundle": "dev-master",
         "phpunit/phpunit": "*",
         "christmann/pluploadbundle": "dev-Symfony2.3",
         "friendsofsymfony/user-bundle": "~2.0@dev"
@@ -70,10 +70,6 @@
 		{
 			"type": "composer",
 			"url": "http://satis.localdev.de"
-		},
-        {
-            "type": "vcs",
-            "url": "git@git.christmann.info:bundles/PluploadBundle.git"
-        }
+		}
 	]
 }
