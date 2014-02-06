@@ -21,6 +21,7 @@
 
 namespace Debb\ManagementBundle\Form;
 
+use Debb\ConfigBundle\Form\RackType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -49,8 +50,9 @@ class FlowPumpType extends DEBBSimpleType
 	        ->add('sizeY', null, array('required' => false, 'label' => 'SizeY'))
 	        ->add('sizeZ', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis'), 'label' => 'SizeZ'))
 	        ->add('maxRPM', null, array('required' => false))
-	        ->add('efficiency', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis')))
+			->add('flowDirection', 'choice', array('required' => false, 'choices' => RackType::getFlowDirections(true), 'attr' => array('class' => 'noBreakAfterThis')))
 			->add('inlet', 'choice', array('choices' => array(0 => 'Outlet', 1 => 'Inlet'), 'label' => 'Mode'))
+	        ->add('efficiency', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis')))
 			->add($transform)
 			->add($references)
         ;

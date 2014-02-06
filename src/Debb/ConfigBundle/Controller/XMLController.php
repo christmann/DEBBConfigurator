@@ -32,6 +32,7 @@ use Debb\ManagementBundle\Controller\BaseController;
 use Debb\ManagementBundle\Controller\CoolingDeviceController;
 use Debb\ManagementBundle\Controller\FlowPumpController;
 use Debb\ManagementBundle\Controller\HeatsinkController;
+use Debb\ManagementBundle\DataTransformer\DecimalTransformer;
 use Debb\ManagementBundle\Entity\CoolingDevice;
 use Debb\ManagementBundle\Entity\DEBBSimple;
 use Debb\ManagementBundle\Entity\File;
@@ -461,11 +462,12 @@ abstract class XMLController extends BaseController
 				$childIds,                                                                                                                       // $instanceRefs
 				null,                                                                                                                            // $type
 				$representations,                                                                                                                // $representations
-				$entity->getPartId(),                                                                                                       // $DEBBComponentId
+				$entity->getPartId(),                                                                                                            // $DEBBComponentId
 				method_exists($entity, 'getDebbLevel') ? $entity->getDebbLevel() : $real_class_name,                                             // $DEBBLevel
-				$real_class_name . '_'.$entity->getPartId().'.xml',                                                                         // $DEBBComponentsFile
+				$real_class_name . '_'.$entity->getPartId().'.xml',                                                                              // $DEBBComponentsFile
 				$first ? $entity->getMeshResolution() : null,                                                                                    // $meshResolution
-				$first ? Transformation::generateBoundingBox() : null,                                                                           // $bound
+				$first ? Transformation::generateBoundingBox() :																				 // $bound
+					Transformation::generateBound($entity),
 				$entity,                                                                                                                         // $entity
 				$round
 			);
@@ -555,11 +557,11 @@ abstract class XMLController extends BaseController
 		$iId = $id;
 		$id = $exId . '_' . (int) @++$GLOBALS['productinstance'];
 
-		$real_class_name = $this->get_real_class($entity);
-		if($real_class_name == 'Component')
+		if($entity instanceof Component)
 		{
-			$real_class_name = $this->get_real_class($entity->getActive());
+			$entity = $entity->getActive();
 		}
+		$real_class_name = $this->get_real_class($entity);
 
 		$productInstance->addAttribute('id', $id); // example: inst71_01_7
 		if ($name != null)
@@ -617,6 +619,13 @@ abstract class XMLController extends BaseController
 		$label->addAttribute('value', $name . '_' . $iId);
 		$label->addAttribute('title', 'label');
 
+		if($entity instanceof Rack && $entity->getCurrentPowerUsage() !== null)
+		{
+			$userValue = $userData->addChild('UserValue');
+			$userValue->addAttribute('title', 'CurrentPowerUsage');
+			$userValue->addAttribute('value', DecimalTransformer::convert($entity->getCurrentPowerUsage());
+		}
+
 		if ($transform != null)
 		{
 			$transform = $productInstance->addChild('Transform', $transform); // example: 0 1 0 0 -1 0 0 0 0 0 1 0 0.175 0.744 0.005 1
@@ -658,11 +667,11 @@ abstract class XMLController extends BaseController
 		$iId = $id;
 		$id = $exId . '_' . (int) @++$GLOBALS['revisionview'];
 
-		$real_class_name = $this->get_real_class($entity);
-		if($real_class_name == 'Component')
+		if($entity instanceof Component)
 		{
-			$real_class_name = $this->get_real_class($entity->getActive());
+			$entity = $entity->getActive();
 		}
+		$real_class_name = $this->get_real_class($entity);
 
 		$productRevisionView->addAttribute('id', $id); // example: id84_04_1
 		if ($name != null)
@@ -705,8 +714,15 @@ abstract class XMLController extends BaseController
 			if ($meshResolution != null)
 			{
 				$userValue = $userData->addChild('UserValue');
-				$userValue->addAttribute('value', $meshResolution); // example: Component_Nodegroup_RECS_Sirius_2.0.xml
-				$userValue->addAttribute('title', 'MeshResolution'); // example: DEBBComponentFile
+				$userValue->addAttribute('value', $meshResolution); // example: 0 0 0
+				$userValue->addAttribute('title', 'MeshResolution'); // example: MeshResolution
+			}
+			if ($real_class_name == 'Rack' || ($entity instanceof FlowPump && $entity->isInlet()))
+			{
+				/** @var $entity Rack|FlowPump */
+				$userValue = $userData->addChild('UserValue');
+				$userValue->addAttribute('value', $entity->getFlowDirection()); // example: +x
+				$userValue->addAttribute('title', 'FlowDirection'); // example: FlowDirection
 			}
 		}
 

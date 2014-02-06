@@ -60,7 +60,7 @@ $(function()
         }
         else
         {
-            alert(Translator.get('Maximum reached!'));
+            alert(Translator.trans('Maximum reached!'));
         }
     });
     $(document).on('click', 'a.trash[obj]', function(e)

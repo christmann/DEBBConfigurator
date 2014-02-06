@@ -174,8 +174,8 @@ function generateTipContent()
 //		posX += obj.outerWidth(true) - 1;
 //	}
 
-    resObj.append('<div>' + Translator.get('Size') + ': ' + obj.attr('rackx') + 'm /' + obj.attr('racky') + 'm /' + obj.attr('rackz') + 'm' + '</div>');
-    resObj.append($('<div>' + Translator.get('Actions') + ': </div>').append('<a href="#" class="removeRack"><i class="icon-trash"></i></a> - <a class="rotateRack" href="#"><i class="icon-repeat" style="transform: rotateZ(' + (objToRot(obj) + 90) + 'deg);"></i></a>'
+    resObj.append('<div>' + Translator.trans('Size') + ': ' + obj.attr('rackx') + 'm /' + obj.attr('racky') + 'm /' + obj.attr('rackz') + 'm' + '</div>');
+    resObj.append($('<div>' + Translator.trans('Actions') + ': </div>').append('<a href="#" class="removeRack"><i class="icon-trash"></i></a> - <a class="rotateRack" href="#"><i class="icon-repeat" style="transform: rotateZ(' + (objToRot(obj) + 90) + 'deg);"></i></a>'
 		+ '<br /><br />X: <input type="text" style="width: 100px;" value="' + customPosX.val() + '" class="syncwith" syncwith="#' + customPosX.attr('id') + '" placeholder="' + toNextTen(posX / 100) + '" />m'
 		+ '<br />Y: <input type="text" style="width: 100px;" value="' + customPosY.val() + '" class="syncwith" syncwith="#' + customPosY.attr('id') + '" placeholder="' + toNextTen(posY / 100) + '" />m'
 		+ '<br />Z: <input type="text" style="width: 100px;" value="' + customPosZ.val() + '" class="syncwith" syncwith="#' + customPosZ.attr('id') + '" placeholder="' + toNextTen(posZ.val() / 100) + '" />m'));

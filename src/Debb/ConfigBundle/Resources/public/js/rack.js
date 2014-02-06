@@ -82,7 +82,7 @@ $(function ()
                   updateRack();
               }
               else {
-                  alert(Translator.get('nospace'));
+                  alert(Translator.trans('nospace'));
               }
 
           }
@@ -192,7 +192,7 @@ function updateRack()
         $('#selectedUnit').html(parseInt($('#debb_configbundle_racktype_nodegroups_' + selectedFieldId + '_field').val()) + 1);
     }
     else {
-        $('#selectedUnit').html(Translator.get('none'));
+        $('#selectedUnit').html(Translator.trans('none'));
     }
 
     // names of node groups in rack

@@ -39,7 +39,7 @@ $(function()
 			}
 			else
 			{
-				alert(Translator.get('only.one.of.this'));
+				alert(Translator.trans('only.one.of.this'));
 			}
 			e.preventDefault();
 		});

@@ -34,6 +34,7 @@ use Debb\ManagementBundle\Entity\NodegroupToRack;
 use Debb\ManagementBundle\Entity\RackToRoom;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Rack
@@ -73,6 +74,21 @@ class Rack extends DEBBComponent
 	 * @var RackToRoom[]
 	 */
 	private $rooms;
+
+	/**
+	 * @var string
+	 *
+	 * @Assert\Choice(callback={"Debb\ConfigBundle\Form\RackType", "getFlowDirections"}, message="Choose a valid flow direction.")
+	 * @ORM\Column(name="flow_direction", type="string", length=2, nullable=true)
+	 */
+	private $flowDirection;
+
+	/**
+	 * @var float
+	 *
+	 * @ORM\Column(name="current_power_usage", type="decimal", precision=18, scale=9, nullable=true)
+	 */
+	private $currentPowerUsage;
 
 	/**
 	 * Constructor
@@ -429,4 +445,50 @@ class Rack extends DEBBComponent
 
 		return $costs;
 	}
+
+    /**
+     * Set flowDirection
+     *
+     * @param string $flowDirection
+     * @return Rack
+     */
+    public function setFlowDirection($flowDirection)
+    {
+        $this->flowDirection = $flowDirection;
+    
+        return $this;
+    }
+
+    /**
+     * Get flowDirection
+     *
+     * @return string 
+     */
+    public function getFlowDirection()
+    {
+        return $this->flowDirection;
+    }
+
+    /**
+     * Set currentPowerUsage
+     *
+     * @param float $currentPowerUsage
+     * @return Rack
+     */
+    public function setCurrentPowerUsage($currentPowerUsage)
+    {
+        $this->currentPowerUsage = $currentPowerUsage;
+    
+        return $this;
+    }
+
+    /**
+     * Get currentPowerUsage
+     *
+     * @return float 
+     */
+    public function getCurrentPowerUsage()
+    {
+        return $this->currentPowerUsage;
+    }
 }

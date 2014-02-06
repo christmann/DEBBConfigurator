@@ -76,6 +76,14 @@ class FlowPump extends DEBBSimple
 	private $flowPumpToRooms;
 
 	/**
+	 * @var string
+	 *
+	 * @Assert\Choice(callback={"Debb\ConfigBundle\Form\RackType", "getFlowDirections"}, message="Choose a valid flow direction.")
+	 * @ORM\Column(name="flow_direction", type="string", length=2, nullable=true)
+	 */
+	private $flowDirection;
+
+	/**
 	 * Returns a array for later converting
 	 *
 	 * @return array the array for later converting
@@ -332,5 +340,28 @@ class FlowPump extends DEBBSimple
 	public function getParents()
 	{
 		return array_merge($this->getFlowPumpToChassis()->toArray(), $this->getFlowPumpToRooms()->toArray());
+	}
+
+	/**
+	 * Set flowDirection
+	 *
+	 * @param string $flowDirection
+	 * @return FlowPump
+	 */
+	public function setFlowDirection($flowDirection)
+	{
+		$this->flowDirection = $flowDirection;
+
+		return $this;
+	}
+
+	/**
+	 * Get flowDirection
+	 *
+	 * @return string
+	 */
+	public function getFlowDirection()
+	{
+		return $this->flowDirection;
 	}
 }
