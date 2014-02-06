@@ -5,8 +5,8 @@ $(function()
         e.preventDefault();
         $.fileDownload($(this).prop('href'),
         {
-            preparingMessageHtml: Translator.get('preparing file') + '<br /><img src="/bundles/debbconfig/img/ajax-loader.gif" />',
-            failMessageHtml: Translator.get('failed file')
+            preparingMessageHtml: Translator.trans('preparing file') + '<br /><img src="/bundles/debbconfig/img/ajax-loader.gif" />',
+            failMessageHtml: Translator.trans('failed file')
         });
     });
 

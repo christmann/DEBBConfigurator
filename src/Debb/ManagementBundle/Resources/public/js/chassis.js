@@ -98,7 +98,7 @@ function generateTipContent()
 	}
 	if(isSize == true)
 	{
-		resObj.append('<div>' + Translator.get('Size') + ': ' + obj.attr('sizex') + 'm /' + obj.attr('sizey') + 'm /' + obj.attr('sizez') + 'm' + '</div>');
+		resObj.append('<div>' + Translator.trans('Size') + ': ' + obj.attr('sizex') + 'm /' + obj.attr('sizey') + 'm /' + obj.attr('sizez') + 'm' + '</div>');
 	}
 
 	var posX = parseInt(obj.find('[name*="posX"]').val()),
@@ -118,7 +118,7 @@ function generateTipContent()
 		posX += obj.outerWidth(true) - 1;
 	}
 
-    resObj.append($('<div>' + Translator.get('Actions') + ': </div>').append('<a href="#" class="removeNode"><i class="icon-trash"></i></a> - <a class="rotateNode" href="#"><i class="icon-repeat" style="transform: rotateZ(' + (objToRot(obj) + 90) + 'deg);"></i></a>'
+    resObj.append($('<div>' + Translator.trans('Actions') + ': </div>').append('<a href="#" class="removeNode"><i class="icon-trash"></i></a> - <a class="rotateNode" href="#"><i class="icon-repeat" style="transform: rotateZ(' + (objToRot(obj) + 90) + 'deg);"></i></a>'
 	+ '<br /><br />X: <input type="text" style="width: 100px;" value="' + customPosX.val() + '" class="syncwith" syncwith="#' + customPosX.attr('id') + '" placeholder="' + (posX / 1000) + '" />m'
 	+ '<br />Y: <input type="text" style="width: 100px;" value="' + customPosY.val() + '" class="syncwith" syncwith="#' + customPosY.attr('id') + '" placeholder="' + (posY / 1000) + '" />m'
 	+ '<br />Z: <input type="text" style="width: 100px;" value="' + customPosZ.val() + '" class="syncwith" syncwith="#' + customPosZ.attr('id') + '" placeholder="' + (posZ.val() / 1000) + '" />m'));

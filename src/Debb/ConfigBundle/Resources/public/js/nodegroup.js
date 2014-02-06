@@ -29,7 +29,7 @@ $(function () {
         $('.adopt').show();
         $('.adopt').attr('field', field);
         var typspec = $(this).parents('.node[specification]').attr('specification');
-        $('#nodegroupType').html(' (' + Translator.get('Type') + ' ' + typspec + ')');
+        $('#nodegroupType').html(' (' + Translator.trans('Type') + ' ' + typspec + ')');
         $('#node-chooser option').each(function () {
             if (typeof($(this).attr('nodetyp')) != 'undefined') {
                 if ($(this).attr('nodetyp') != typspec && typspec != '') {
