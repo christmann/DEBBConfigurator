@@ -49,8 +49,10 @@ class RackType extends BaseType
 			->add('spaceFront', null, array('required' => false, 'label' => 'SpaceFront'))
 			->add('nodeGroupSize', 'choice', array('choices' => $this->getNodeGroupSizeChoices(), 'required' => false, 'label' => 'RackSize',
 				'empty_value' => false, 'attr' => array('class' => 'updateRackSize noBreakAfterThis')))
-	        ->add('meshResolution', null, array('required' => false, 'attr' => array('placeholder' => '0 0 0')))
+			->add('flowDirection', 'choice', array('required' => false, 'choices' => $this->getFlowDirections(true)))
+	        ->add('meshResolution', null, array('required' => false, 'attr' => array('placeholder' => '0 0 0', 'class' => 'noBreakAfterThis')))
 	        ->add('locationInMesh', null, array('required' => false, 'attr' => array('placeholder' => '0 0 0')))
+	        ->add('currentPowerUsage', 'decimal', array('required' => false))
 	        ->add('nodegroups', 'collection', array(
 		        'type' => new \Debb\ManagementBundle\Form\NodegroupToRackType(),
 		        'allow_add' => true,
@@ -80,6 +82,26 @@ class RackType extends BaseType
 			$res[$x] = $x;
 		}
 		return $res;
+	}
+
+	/**
+	 * @return array the array with valid flow directions
+	 */
+	public static function getFlowDirections($inclKeys = false)
+	{
+		$ret = array();
+		foreach(array('+x', '-x', '+y', '-y', '+z', '-z') as $class)
+		{
+			if($inclKeys)
+			{
+				$ret[$class] = $class;
+			}
+			else
+			{
+				$ret[] = $class;
+			}
+		}
+		return $ret;
 	}
 
     /**

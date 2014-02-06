@@ -210,6 +210,31 @@ class Transformation
 	}
 
 	/**
+	 *
+	 * @param Base $children the base entity
+	 */
+
+	/**
+	 * Generates a transformation matrix string for bounding box
+	 *
+	 * @param Room|Rack|NodeGroup|Node $children
+	 * @return string
+	 */
+	public static function generateBound($children)
+	{
+		$bound = array(
+			0,
+			0,
+			0,
+			$children->getSizeX() / 2,
+			$children->getSizeZ() / 2,
+			$children->getSizeY() / 2
+		);
+
+		return implode(' ', $bound);
+	}
+
+	/**
 	 * Generates a transformation matrix string
 	 *
 	 * @param string $separator the separator for output
