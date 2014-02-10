@@ -623,7 +623,7 @@ abstract class XMLController extends BaseController
 		{
 			$userValue = $userData->addChild('UserValue');
 			$userValue->addAttribute('title', 'CurrentPowerUsage');
-			$userValue->addAttribute('value', DecimalTransformer::convert($entity->getCurrentPowerUsage());
+			$userValue->addAttribute('value', DecimalTransformer::convert($entity->getCurrentPowerUsage()));
 		}
 
 		if ($transform != null)
@@ -717,7 +717,7 @@ abstract class XMLController extends BaseController
 				$userValue->addAttribute('value', $meshResolution); // example: 0 0 0
 				$userValue->addAttribute('title', 'MeshResolution'); // example: MeshResolution
 			}
-			if ($real_class_name == 'Rack' || ($entity instanceof FlowPump && $entity->isInlet()))
+			if ($real_class_name == 'Rack')
 			{
 				/** @var $entity Rack|FlowPump */
 				$userValue = $userData->addChild('UserValue');

@@ -50,9 +50,8 @@ class FlowPumpType extends DEBBSimpleType
 	        ->add('sizeY', null, array('required' => false, 'label' => 'SizeY'))
 	        ->add('sizeZ', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis'), 'label' => 'SizeZ'))
 	        ->add('maxRPM', null, array('required' => false))
-			->add('flowDirection', 'choice', array('required' => false, 'choices' => RackType::getFlowDirections(true), 'attr' => array('class' => 'noBreakAfterThis')))
-			->add('inlet', 'choice', array('choices' => array(0 => 'Outlet', 1 => 'Inlet'), 'label' => 'Mode'))
-	        ->add('efficiency', null, array('required' => false, 'attr' => array('class' => 'noBreakAfterThis')))
+			->add('inlet', 'choice', array('choices' => array(0 => 'Outlet', 1 => 'Inlet'), 'label' => 'Mode', 'attr' => array('class' => 'noBreakAfterThis')))
+	        ->add('efficiency', null, array('required' => false))
 			->add($transform)
 			->add($references)
         ;
