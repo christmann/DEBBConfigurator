@@ -761,7 +761,6 @@ abstract class XMLController extends BaseController
 		if (count($cache) > 1)
 		{
 			$last = & $cache[count($cache) - 1];
-			$last = sprintf('%02d', $last);
 		}
 		return implode('_', $cache);
 	}
