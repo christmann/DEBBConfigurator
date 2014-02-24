@@ -23,6 +23,8 @@ namespace Debb\ManagementBundle\Controller;
 
 use Debb\ConfigBundle\Controller\XMLController;
 use Debb\ManagementBundle\Entity\Base;
+use Debb\ManagementBundle\Entity\CoolingEER;
+use Debb\ManagementBundle\Entity\FlowProfile;
 use Localdev\AdminBundle\Controller\CRUDController;
 use Localdev\AdminBundle\Util\ControllerUtils;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -76,7 +78,7 @@ class BaseController extends CRUDController
 	 */
 	public function createForm($type, $data = null, array $options = array())
 	{
-		if($data instanceof Base && method_exists($data, 'setUser') && method_exists($data, 'getUser') && $data->getUser() === null)
+		if(($data instanceof Base || $data instanceof FlowProfile || $data instanceof CoolingEER) && method_exists($data, 'setUser') && method_exists($data, 'getUser') && $data->getUser() === null)
 		{
 			$data->setUser($this->getUser());
 		}
