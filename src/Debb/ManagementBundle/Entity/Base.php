@@ -574,7 +574,7 @@ class Base
      */
     public function setPowerUsageProfile(\Debb\ManagementBundle\Entity\FlowProfile $powerUsageProfile = null)
     {
-        $this->powerUsageProfil = $powerUsageProfile;
+        $this->powerUsageProfile = $powerUsageProfile;
     
         return $this;
     }
